@@ -7,6 +7,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -56,6 +57,9 @@ private int driveMotorId;
       turnConfig
       .inverted(turnMotorReversed)
       .idleMode(IdleMode.kCoast);
+
+      driveMotor = new PearadoxSparkMax(driveMotorId,MotorType.kBrushless,driveConfig);
+      turnMotor = new PearadoxSparkMax(turnMotorId,MotorType.kBrushless,turnConfig);
       // driveMotor = new PearadoxSparkMax(driveMotorId, MotorType.kBrushless, IdleMode.kCoast, 45, driveMotorReversed);
       // turnMotor = new PearadoxSparkMax(turnMotorId, MotorType.kBrushless, IdleMode.kCoast, 25, turnMotorReversed);
 
