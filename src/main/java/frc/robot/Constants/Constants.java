@@ -1,0 +1,112 @@
+package frc.robot.Constants;
+
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
+
+public class Constants {
+    
+    public class IntakeConstants{
+        public static final int intakeSparkMaxID = 20; // Change this later
+        public static final double intakeOutSpeed = 0.5;
+        public static final double intakeInSpeed = -0.5;
+    }
+
+    public class ControllerConstants{
+        public static final int driverControllerPort = 0;
+        public static final int operatorControllerPort = 1;
+    }
+
+    public class ElevatorConstants{
+        public static final int leftElevatorSparkMaxID = 12;
+        public static final int rightElevatorSparkMaxID = 11;
+        public static final double elevatorUpSpeed = 0.2;
+        public static final double elevatorDownSpeed = -0.2;
+        public static final int laserCanId = 30;
+        public static final double kPUp = 0.0;
+        public static final double kIUp = 0.0;
+        public static final double kDUp = 0.0;
+
+        
+        public static final double kPDown = 0.0;   
+        public static final double kIDown = 0.0;
+        public static final double kDDown = 0.0;
+
+        public static final double kExampleSetpoint = 10;
+    }
+
+    public static final class SwerveConstants{
+
+  //INPUT IDS NEED TO BE CHECKED
+    
+        //COMPETITION IDS
+    
+         public static final int LEFT_FRONT_DRIVE_ID = 6;
+         public static final int RIGHT_FRONT_DRIVE_ID = 8;
+         public static final int LEFT_BACK_DRIVE_ID = 4; // 5
+         public static final int RIGHT_BACK_DRIVE_ID = 2; // 3
+        
+         public static final int LEFT_FRONT_TURN_ID = 5;
+         public static final int RIGHT_FRONT_TURN_ID = 7;
+         public static  final int LEFT_BACK_TURN_ID = 3; 
+         public static final int RIGHT_BACK_TURN_ID = 1;
+        
+        public static final int LEFT_FRONT_CANCODER_ID = 33;
+        public static final int RIGHT_FRONT_CANCODER_ID = 34;
+        public static final int LEFT_BACK_CANCODER_ID = 31; // 2
+        public static final int RIGHT_BACK_CANCODER_ID = 32;
+    
+        public static final int PIGEON_ID = 0;
+    
+    
+        //COMP OFFSETS
+        public static  double LEFT_FRONT_OFFSET = -0.272705;
+        public static  double RIGHT_FRONT_OFFSET = 0.033203;
+        public static  double LEFT_BACK_OFFSET = 0.154541;
+        public static  double RIGHT_BACK_OFFSET = -0.119873;
+    
+        public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00); //originally 4 in template
+        public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
+        public static final double TURN_MOTOR_GEAR_RATIO = 150.0/7;
+        public static final double DRIVE_MOTOR_PCONVERSION = WHEEL_DIAMETER * Math.PI / DRIVE_MOTOR_GEAR_RATIO;
+        public static final double TURN_MOTOR_PCONVERSION = 2 * Math.PI / TURN_MOTOR_GEAR_RATIO;//2 * Math.PI
+        public static final double DRIVE_MOTOR_VCONVERSION = DRIVE_MOTOR_PCONVERSION / 60.0;
+        public static final double TURN_MOTOR_VCONVERSION = TURN_MOTOR_PCONVERSION / 60.0;
+        public static final double KP_TURNING = 0.575;
+    
+        public static final double DRIVETRAIN_MAX_SPEED = 5.3;//4.0, 5.5;
+        public static final double DRIVETRAIN_MAX_ANGULAR_SPEED = 5 * Math.PI; //3.5, 4.25, 5
+    
+        //Teleop constraints
+        public static final double TELE_DRIVE_MAX_SPEED = DRIVETRAIN_MAX_SPEED / 0.85;
+        public static final double TELE_DRIVE_MAX_ANGULAR_SPEED = DRIVETRAIN_MAX_ANGULAR_SPEED / 1.75;
+        public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5; //3
+        public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
+    
+        public static final double AUTO_KP_TTANSLATION = 1.35; //1.15
+        public static final double AUTO_KP_ROTATIONAL = 0.1; //0.1
+    
+        public static final double TRACK_WIDTH = Units.inchesToMeters(23.875);
+        public static final double WHEEL_BASE = Units.inchesToMeters(23.875);
+        public static final double DRIVE_BASE_RADIUS = Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
+    
+        
+    
+        //CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
+        //Swerve Kinematics
+        public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
+            new Translation2d(WHEEL_BASE / 2, TRACK_WIDTH / 2),
+            new Translation2d(WHEEL_BASE / 2, -TRACK_WIDTH / 2),
+            new Translation2d(-WHEEL_BASE / 2, TRACK_WIDTH / 2),
+            new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2)
+        );
+    
+      }
+
+}
