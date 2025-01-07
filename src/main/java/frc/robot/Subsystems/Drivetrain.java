@@ -8,6 +8,10 @@ import java.text.DecimalFormat;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -102,6 +106,8 @@ public class Drivetrain extends SubsystemBase {
 
   private static final Drivetrain drivetrain = new Drivetrain();
 
+  private RobotConfig config;
+
   public SwerveDriveOdometry odometry = new SwerveDriveOdometry(Constants.SwerveConstants.DRIVE_KINEMATICS, getHeadingRotation2d(), getModulePositions(), new Pose2d());
 
   public static Drivetrain getInstance(){
@@ -127,6 +133,38 @@ public class Drivetrain extends SubsystemBase {
     //   () -> isRedAlliance(),
     //   this
     // );
+
+     // Load the RobotConfig from the GUI settings. You should probably
+    // store this in your Constants file
+    
+    try{
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
+
+    // Configure AutoBuilder last
+    AutoBuilder.configure(
+            this::getPose2d, // Robot pose supplier
+            this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            Constants.SwerveConstants.pid_controls,
+            config, // The robot configuration
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
 
     SmartDashboard.putData("Swerve Drive", new Sendable() {
       @Override
@@ -327,6 +365,19 @@ public class Drivetrain extends SubsystemBase {
   public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
     SwerveModuleState[] moduleStates = Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
     setModuleStates(moduleStates);
+  }
+
+   public void visionDrive(AprilTagStats april,double angle){
+     try{
+        // Load the path you want to follow using its name in the GUI
+        PathPlannerPath path = april.robotPath(angle);
+
+        // Create a path following command using AutoBuilder. This will also trigger event markers.
+        AutoBuilder.followPath(path);
+    } catch (Exception e) {
+        DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+    }
+
   }
 
   public boolean isRedAlliance(){

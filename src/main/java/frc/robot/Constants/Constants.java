@@ -1,6 +1,10 @@
 package frc.robot.Constants;
 
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import java.util.Arrays;
+import java.util.List;
+
 import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -11,6 +15,40 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
+
+     public static class VisionConstants {
+    public static class cameraTranslationConstants {
+      //translation of camera in meters (change when camera has been mounted on robot)
+      public static final double tX = -32 * 0.01;
+      public static final double tY = 0.0 * 0.01;
+      public static final double tZ = 32 * 0.01;
+    }
+    public static class cameraRotationConstants {
+      //rotation of camera (change when camera has been mounted on robot)
+      public static final double rRoll = 0.0;
+      public static final double rPitch = 0.0;
+      public static final double rYaw = 0.0;
+    }
+
+    public static class distanceConstants {
+      public static final double goalMeterDistance = 3.0;
+      public static final double visionAngleDegrees = 0.0;
+      public static final List<Integer> useableIDs = Arrays.asList(6,7,8,9,10,11,17,18,19,20,21,22);
+    }
+
+    public static class nameConstants{
+      public static final String cameraName = "Arducam_OV9281_USB_Camera (1)";
+      public static final String tabName = "Vision";
+      public static final String publishName = "VisionPose";
+    }
+
+    public static class VisionPIDConstants {
+      public static final double kPVisionTurning = 0.01;
+      public static final double kPVisionMoving = 0.5;
+    }
+ }
+
+ 
     
     public class IntakeConstants{
         public static final int intakeSparkMaxID = 20; // Change this later
@@ -63,7 +101,18 @@ public class Constants {
         public static final int RIGHT_BACK_CANCODER_ID = 32;
     
         public static final int PIGEON_ID = 0;
+
+        public static class PoseConfig {
+          // Increase these numbers to trust your model's state estimates less.
+          public static final double kPositionStdDevX = 0.1;
+          public static final double kPositionStdDevY = 0.1;
+          public static final double kPositionStdDevTheta = 10;
     
+          // Increase these numbers to trust global measurements from vision less.
+          public static final double kVisionStdDevX = 2;
+          public static final double kVisionStdDevY = 2;
+          public static final double kVisionStdDevTheta = 1;
+        }
     
         //COMP OFFSETS
         public static  double LEFT_FRONT_OFFSET = -0.272705;
@@ -96,7 +145,9 @@ public class Constants {
         public static final double WHEEL_BASE = Units.inchesToMeters(23.875);
         public static final double DRIVE_BASE_RADIUS = Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
     
-        
+        public static final PPHolonomicDriveController pid_controls = new PPHolonomicDriveController(
+            new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
+      new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0));
     
         //CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
         //Swerve Kinematics
