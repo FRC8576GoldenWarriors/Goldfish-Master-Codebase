@@ -26,13 +26,13 @@ public class RobotContainer {
 
   private final JoystickButton resetHeading_Start = new JoystickButton(driverController.getHID(), XboxController.Button.kStart.value);
 
-  private final SendableChooser<Command> autoChooser;
+  //private final SendableChooser<Command> autoChooser;
 
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
    //Add all the choise of Autonomous modes to the Smart Dashboard
-    autoChooser = AutoBuilder.buildAutoChooser();
+    //autoChooser = AutoBuilder.buildAutoChooser();
     
     configureBindings();
   }
