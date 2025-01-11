@@ -5,6 +5,7 @@
 package frc.lib.drivers;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.Preferences;
@@ -19,8 +20,13 @@ public class PearadoxSparkMax extends SparkMax {
      * @param limit The current limit.
      * @param isInverted The invert type of the motor.
      */
-    public PearadoxSparkMax(int deviceId, MotorType m, SparkMaxConfig config){//IdleMode mode, int limit, boolean isInverted){
+    private SparkMaxConfig config;
+    public PearadoxSparkMax(int deviceId, MotorType m, boolean inverted, IdleMode brakeMode){//IdleMode mode, int limit, boolean isInverted){
         super(deviceId, m);
+        config = new SparkMaxConfig();
+        config
+        .inverted(inverted)
+        .idleMode(brakeMode);
         this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
         //this.restoreFactoryDefaults();
         //this.setSmartCurrentLimit(limit);
@@ -29,6 +35,14 @@ public class PearadoxSparkMax extends SparkMax {
         //this.burnFlash();
         String key = "Spark " + this.getDeviceId() + " Flashes";
         Preferences.setDouble(key, Preferences.getDouble(key, 0) + 1);
+    }
+    public void setInverted(boolean isInverted){
+        config.inverted(isInverted);
+        this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+    }
+    public void setIdleMode(IdleMode brakeMode){
+        config.idleMode(brakeMode);
+        this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
     }
 
     /**

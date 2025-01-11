@@ -1,6 +1,7 @@
 package frc.robot.Constants;
 
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.controllers.PathFollowingController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Robot;
 
 public class Constants {
 
@@ -82,6 +84,14 @@ public class Constants {
     public static final class SwerveConstants{
 
   //INPUT IDS NEED TO BE CHECKED
+    public static class DriverConstants{
+      public static final double xDeadband = 0.0825;
+      public static final double yDeadband = 0.0825;
+      public static final double turnDeadband = 0.0825;
+      public static final double xCoefficient = 2.05;
+      public static final double yCoefficient = 2.05;
+      public static final double turnCoefficient = 1.675;
+    }
     
         //COMPETITION IDS
     
@@ -141,10 +151,10 @@ public class Constants {
         public static final double AUTO_KP_TTANSLATION = 1.35; //1.15
         public static final double AUTO_KP_ROTATIONAL = 0.1; //0.1
     
-        public static final double TRACK_WIDTH = Units.inchesToMeters(23.875);
-        public static final double WHEEL_BASE = Units.inchesToMeters(23.875);
+        public static final double TRACK_WIDTH = Units.inchesToMeters(25.0);// Y WIDTH
+        public static final double WHEEL_BASE = Units.inchesToMeters(21.0); // X LENGTH
         public static final double DRIVE_BASE_RADIUS = Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
-    
+
         public static final PPHolonomicDriveController pid_controls = new PPHolonomicDriveController(
             new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
       new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0));

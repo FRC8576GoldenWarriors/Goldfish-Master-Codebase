@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,18 +15,18 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Commands.AdjustRobotPos;
+//import frc.robot.Commands.AdjustRobotPos;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Constants.Constants;
-import frc.robot.Subsystems.AprilTagStats;
+//import frc.robot.Subsystems.AprilTagStats;
 import frc.robot.Subsystems.Drivetrain;
 
 
 public class RobotContainer {
   public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
-  public static final AprilTagStats m_aprilTagStats = new AprilTagStats(Constants.VisionConstants.nameConstants.cameraName,
-  Constants.VisionConstants.nameConstants.publishName,
-  Constants.VisionConstants.nameConstants.tabName);
+ // public static final AprilTagStats m_aprilTagStats = new AprilTagStats(Constants.VisionConstants.nameConstants.cameraName,
+ // Constants.VisionConstants.nameConstants.publishName,
+  //Constants.VisionConstants.nameConstants.tabName);
 
   public static final CommandXboxController driverController = new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
   CommandXboxController operatorController = new CommandXboxController(Constants.ControllerConstants.operatorControllerPort);
@@ -48,13 +49,18 @@ public class RobotContainer {
     //Driver controller
     resetHeading_Start.onTrue(
       new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-    driverController.a().onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, 15));
-    driverController.a().and(driverController.b()).onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, -15));
+   // driverController.a().onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, 15));
+   // driverController.a().and(driverController.b()).onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, -15));
     // operatorController.y().whileTrue(new ElevatorUpCommand(m_elevator));
     // operatorController.a().whileTrue(new ElevatorDownCommand(m_elevator));
   }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
+  }
+
+  public void registerNamedCommands(){
+    NamedCommands.registerCommand("Reset Swerve Encoders", new InstantCommand(()->m_drivetrain.resetAllEncoders()));
+    NamedCommands.registerCommand("Reset Heading", new InstantCommand(()->m_drivetrain.zeroHeading()));
   }
 }

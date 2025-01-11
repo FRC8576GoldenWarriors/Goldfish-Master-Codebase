@@ -29,10 +29,10 @@ private int driveMotorId;
   private PearadoxSparkMax driveMotor;
   private PearadoxSparkMax turnMotor;
 
-  private RelativeEncoder driveEncoder;
-  private RelativeEncoder turnEncoder;
-  private SparkMaxConfig driveConfig;
-  private SparkMaxConfig turnConfig;
+   private RelativeEncoder driveEncoder;
+   private RelativeEncoder turnEncoder;
+  // private SparkMaxConfig driveConfig;
+  // private SparkMaxConfig turnConfig;
   
 
   private PIDController turnPIDController;
@@ -49,19 +49,19 @@ private int driveMotorId;
       this.turnMotorId = turnMotorId;
       this.driveMotorId = driveMotorId;
 
-      driveConfig = new SparkMaxConfig();
-      turnConfig = new SparkMaxConfig();
+      // driveConfig = new SparkMaxConfig();
+      // turnConfig = new SparkMaxConfig();
 
-      driveConfig
-      .inverted(driveMotorReversed)
-      .idleMode(IdleMode.kCoast);
+      // driveConfig
+      // .inverted(driveMotorReversed)
+      // .idleMode(IdleMode.kCoast);
 
-      turnConfig
-      .inverted(turnMotorReversed)
-      .idleMode(IdleMode.kCoast);
+      // turnConfig
+      // .inverted(turnMotorReversed)
+      // .idleMode(IdleMode.kCoast);
 
-      driveMotor = new PearadoxSparkMax(driveMotorId,MotorType.kBrushless,driveConfig);
-      turnMotor = new PearadoxSparkMax(turnMotorId,MotorType.kBrushless,turnConfig);
+      driveMotor = new PearadoxSparkMax(driveMotorId,MotorType.kBrushless,driveMotorReversed, IdleMode.kCoast);
+      turnMotor = new PearadoxSparkMax(turnMotorId,MotorType.kBrushless,turnMotorReversed, IdleMode.kCoast);
       // driveMotor = new PearadoxSparkMax(driveMotorId, MotorType.kBrushless, IdleMode.kCoast, 45, driveMotorReversed);
       // turnMotor = new PearadoxSparkMax(turnMotorId, MotorType.kBrushless, IdleMode.kCoast, 25, turnMotorReversed);
 
@@ -88,20 +88,16 @@ private int driveMotorId;
 
   public void setBrake(boolean brake){
     if(brake){
-      driveConfig.idleMode(IdleMode.kBrake);
-      driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      driveMotor.setIdleMode(IdleMode.kBrake);
       //driveMotor.setIdleMode(IdleMode.kBrake);
       //turnMotor.setIdleMode(IdleMode.kCoast);
       //turnMotor.setIdleMode(IdleMode.kBrake);
-      turnConfig.idleMode(IdleMode.kBrake);
-      turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      turnMotor.setIdleMode(IdleMode.kBrake);
     }
     else{
       //driveMotor.setIdleMode(IdleMode.kCoast);
-      driveConfig.idleMode(IdleMode.kCoast);
-      driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      turnConfig.idleMode(IdleMode.kCoast);
-      turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      driveMotor.setIdleMode(IdleMode.kCoast);
+      turnMotor.setIdleMode(IdleMode.kCoast);
       //turnMotor.setIdleMode(IdleMode.kCoast);
     }
   }
