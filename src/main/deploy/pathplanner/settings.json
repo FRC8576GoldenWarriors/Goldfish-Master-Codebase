@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.71755,
-  "robotLength": 0.61555,
+  "robotWidth": 0.818,
+  "robotLength": 0.716,
   "holonomicMode": true,
   "pathFolders": [],
   "autoFolders": [],
@@ -28,7 +28,5 @@
   "brModuleY": -0.318,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": [
-    "{\"name\":\"Circle\",\"type\":\"circle\",\"data\":{\"center\":{\"x\":-0.0,\"y\":0.0},\"radius\":0.1,\"strokeWidth\":0.02,\"filled\":false}}"
-  ]
+  "robotFeatures": []
 }

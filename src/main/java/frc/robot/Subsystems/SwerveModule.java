@@ -71,7 +71,7 @@ private int driveMotorId;
 
       absoluteEncoder = new CANcoder(absoluteEncoderId);
 
-      turnPIDController = new PIDController(Constants.SwerveConstants.KP_TURNING, 0, 0.001); //0.001);
+      turnPIDController = new PIDController(Constants.SwerveConstants.KP_TURNING, 0, 0.003); //0.001);
       turnPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
       resetEncoders();

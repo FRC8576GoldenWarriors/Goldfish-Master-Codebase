@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -15,6 +16,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -40,7 +42,7 @@ public class Drivetrain extends SubsystemBase {
    private SwerveModule leftFront = new SwerveModule(
     Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID, 
     Constants.SwerveConstants.LEFT_FRONT_TURN_ID, 
-    false, //false
+    true, //false
     true, //true
     Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID, 
     Constants.SwerveConstants.LEFT_FRONT_OFFSET);
@@ -56,7 +58,7 @@ public class Drivetrain extends SubsystemBase {
   private SwerveModule leftBack = new SwerveModule(
     Constants.SwerveConstants.LEFT_BACK_DRIVE_ID, 
     Constants.SwerveConstants.LEFT_BACK_TURN_ID, 
-    true, 
+    false, 
     true, 
     Constants.SwerveConstants.LEFT_BACK_CANCODER_ID, 
     Constants.SwerveConstants.LEFT_BACK_OFFSET);
@@ -79,11 +81,13 @@ public class Drivetrain extends SubsystemBase {
 
   private RobotConfig config;
 
-  public SwerveDriveOdometry odometry = new SwerveDriveOdometry(Constants.SwerveConstants.DRIVE_KINEMATICS, getHeadingRotation2d(), getModulePositions(), new Pose2d());
+  //getHeadingRotation2d()
+  public SwerveDriveOdometry odometry = new SwerveDriveOdometry(Constants.SwerveConstants.DRIVE_KINEMATICS,  getHeadingRotation2d() , getModulePositions(), new Pose2d());
   private Field2d field;
   //private final StructPublisher<Pose2d> m_posePublish;
     private final StructArrayPublisher<SwerveModuleState> m_ModulePublisherIn;
     private final StructArrayPublisher<SwerveModuleState> m_ModuleStatesActual;
+    private final StructPublisher<Pose2d> m_pose;
   public static Drivetrain getInstance(){
     return drivetrain;
   }
@@ -118,6 +122,29 @@ public class Drivetrain extends SubsystemBase {
       e.printStackTrace();
     }
 
+        // test
+    // AutoBuilder.configure(
+    //         this::getPose2d, // Robot pose supplier
+    //         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting pose)
+    //         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+    //         Constants.SwerveConstants.pid_controls,
+    //         config, // The robot configuration
+    //         () -> {
+    //           // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //           // This will flip the path being followed to the red side of the field.
+    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+    //           var alliance = DriverStation.getAlliance();
+    //           if (alliance.isPresent()) {
+    //             return alliance.get() == DriverStation.Alliance.Red;
+    //           }
+    //           return false;
+    //         },
+    //         this // Reference to this subsystem to set requirements
+    // );
+  
+    //original
     // Configure AutoBuilder last
     AutoBuilder.configure(
             this::getPose2d, // Robot pose supplier
@@ -142,6 +169,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putData("GWR Field",field);
     m_ModulePublisherIn = NetworkTableInstance.getDefault().getTable("Goldfish").getStructArrayTopic("SwerveStates/In", SwerveModuleState.struct).publish();
     m_ModuleStatesActual = NetworkTableInstance.getDefault().getTable("Goldfish").getStructArrayTopic("SwerveStates/Actual", SwerveModuleState.struct).publish();
+   m_pose = NetworkTableInstance.getDefault().getTable("Goldfish").getStructTopic("Pose",Pose2d.struct).publish();
     //m_posePublish = NetworkTableInstance.getDefault().getTable("Goldfish").getStructTopic("Robot Pose", Pose2d.struct).publish();
     SmartDashboard.putData("Swerve Drive", new Sendable() {
       @Override
@@ -175,6 +203,7 @@ public class Drivetrain extends SubsystemBase {
     field.setRobotPose(getPose2d());
    // m_posePublish.set(getPose2d());
     m_ModuleStatesActual.set(getModuleStates());
+    m_pose.set(odometry.getPoseMeters());
     //rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
     // Logger.recordOutput("Robot Angle", getHeading());
@@ -278,6 +307,12 @@ public class Drivetrain extends SubsystemBase {
   public void zeroHeading(){
     gyro.setYaw(0);
     odometry.resetRotation(gyro.getRotation2d());
+  }
+  public void autonReset(){
+    Pose2d pose = AutoBuilder.getCurrentPose();
+    double[] xy = {pose.getX(),pose.getY()};
+    Pose2d calcpose = new Pose2d(xy[0], xy[1], Rotation2d.fromDegrees(180));
+    odometry.resetPose(calcpose);
   }
 
   public void setHeading(double heading){

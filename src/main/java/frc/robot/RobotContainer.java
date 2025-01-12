@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import frc.robot.Commands.AdjustRobotPos;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Constants.Constants;
@@ -60,7 +61,13 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands(){
-    NamedCommands.registerCommand("Reset Swerve Encoders", new InstantCommand(()->m_drivetrain.resetAllEncoders()));
-    NamedCommands.registerCommand("Reset Heading", new InstantCommand(()->m_drivetrain.zeroHeading()));
+    NamedCommands.registerCommand("Reset Swerve Encoders", new InstantCommand(()->m_drivetrain.resetAllEncoders()).
+    withDeadline(new InstantCommand(()-> new WaitCommand(0.1))));
+
+    NamedCommands.registerCommand("Reset Heading", new InstantCommand(()->m_drivetrain.zeroHeading()).
+    withDeadline(new InstantCommand(()-> new WaitCommand(0.1))));
+
+    NamedCommands.registerCommand("Auton Reset", new InstantCommand(()->m_drivetrain.autonReset()).
+    withDeadline(new InstantCommand(()->new WaitCommand(0.1))));
   }
 }

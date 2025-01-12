@@ -125,10 +125,10 @@ public class Constants {
         }
     
         //COMP OFFSETS
-        public static  double LEFT_FRONT_OFFSET = -0.272705;
-        public static  double RIGHT_FRONT_OFFSET = 0.033203;
-        public static  double LEFT_BACK_OFFSET = 0.154541;
-        public static  double RIGHT_BACK_OFFSET = -0.119873;
+        public static  double LEFT_FRONT_OFFSET = 0.228027;//-0.272705;
+        public static  double RIGHT_FRONT_OFFSET = -0.099609;//0.033203;//0.033203;
+        public static  double LEFT_BACK_OFFSET = -0.000244;//0.154541;
+        public static  double RIGHT_BACK_OFFSET = -0.113525;//-0.119385;//-0.119873;
     
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00); //originally 4 in template
         public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
