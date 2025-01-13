@@ -14,66 +14,40 @@ import edu.wpi.first.math.util.Units;
 public class Constants {
 
   public static class VisionConstants {
-      public static class cameraTranslationConstants {
-        //translation of camera in meters (change when camera has been mounted on robot)
-        public static final double tX = -32 * 0.01;
-        public static final double tY = 0.0 * 0.01;
-        public static final double tZ = 32 * 0.01;
-      }
-      public static class cameraRotationConstants {
-        //rotation of camera (change when camera has been mounted on robot)
-        public static final double rRoll = 0.0;
-        public static final double rPitch = 0.0;
-        public static final double rYaw = 0.0;
-      }
+    public static class cameraTranslationConstants {
+      //translation of camera in meters (change when camera has been mounted on robot)
+      public static final double tX = -32 * 0.01;
+      public static final double tY = 0.0 * 0.01;
+      public static final double tZ = 32 * 0.01;
+    }
+    public static class cameraRotationConstants {
+      //rotation of camera (change when camera has been mounted on robot)
+      public static final double rRoll = 0.0;
+      public static final double rPitch = 0.0;
+      public static final double rYaw = 0.0;
+    }
 
-      public static class distanceConstants {
-        public static final double goalMeterDistance = 3.0;
-        public static final double visionAngleDegrees = 0.0;
-        public static final List<Integer> useableIDs = Arrays.asList(6,7,8,9,10,11,17,18,19,20,21,22);
-      }
+    public static class distanceConstants {
+      public static final double goalMeterDistance = 3.0;
+      public static final double visionAngleDegrees = 0.0;
+      public static final List<Integer> useableIDs = Arrays.asList(6,7,8,9,10,11,17,18,19,20,21,22);
+    }
 
-      public static class nameConstants{
-        public static final String cameraName = "Arducam_OV9281_USB_Camera (1)";
-        public static final String tabName = "Vision";
-        public static final String publishName = "VisionPose";
-      }
+    public static class nameConstants{
+      public static final String cameraName = "Arducam_OV9281_USB_Camera (1)";
+      public static final String tabName = "Vision";
+      public static final String publishName = "VisionPose";
+    }
 
-      public static class VisionPIDConstants {
-        public static final double kPVisionTurning = 0.01;
-        public static final double kPVisionMoving = 0.5;
-      }
+    public static class VisionPIDConstants {
+      public static final double kPVisionTurning = 0.01;
+      public static final double kPVisionMoving = 0.5;
+    }
  }
 
- 
-    
-  public class IntakeConstants{
-        public static final int intakeSparkMaxID = 20; // Change this later
-        public static final double intakeOutSpeed = 0.5;
-        public static final double intakeInSpeed = -0.5;
-  }
-
   public class ControllerConstants{
-        public static final int driverControllerPort = 0;
-        public static final int operatorControllerPort = 1;
-  }
-
-  public class ElevatorConstants{
-      public static final int leftElevatorSparkMaxID = 12;
-      public static final int rightElevatorSparkMaxID = 11;
-      public static final double elevatorUpSpeed = 0.2;
-      public static final double elevatorDownSpeed = -0.2;
-      public static final int laserCanId = 30;
-      public static final double kPUp = 0.0;
-      public static final double kIUp = 0.0;
-      public static final double kDUp = 0.0;
-
-      
-      public static final double kPDown = 0.0;   
-      public static final double kIDown = 0.0;
-      public static final double kDDown = 0.0;
-
-      public static final double kExampleSetpoint = 10;
+    public static final int driverControllerPort = 0;
+    public static final int operatorControllerPort = 1;
   }
 
   public static final class SwerveConstants{
@@ -87,8 +61,7 @@ public class Constants {
       public static final double turnCoefficient = 1.675;
     }
     
-       
-    
+      
     public static final int LEFT_FRONT_DRIVE_ID = 6;
     public static final int RIGHT_FRONT_DRIVE_ID = 8;
     public static final int LEFT_BACK_DRIVE_ID = 4; // 5
@@ -119,12 +92,12 @@ public class Constants {
     }
     
 
-    public static  double LEFT_FRONT_OFFSET = 0.228027;//-0.272705;
-    public static  double RIGHT_FRONT_OFFSET = -0.099609;//0.033203;//0.033203;
-    public static  double LEFT_BACK_OFFSET = -0.000244;//0.154541;
-    public static  double RIGHT_BACK_OFFSET = -0.113525;//-0.119385;//-0.119873;
+    public static  double LEFT_FRONT_OFFSET = 0.228027;
+    public static  double RIGHT_FRONT_OFFSET = -0.099609;
+    public static  double LEFT_BACK_OFFSET = -0.000244;
+    public static  double RIGHT_BACK_OFFSET = -0.113525;
 
-    public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00); //originally 4 in template
+    public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00); 
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
     public static final double TURN_MOTOR_GEAR_RATIO = 150.0/7;
     public static final double DRIVE_MOTOR_PCONVERSION = WHEEL_DIAMETER * Math.PI / DRIVE_MOTOR_GEAR_RATIO;
