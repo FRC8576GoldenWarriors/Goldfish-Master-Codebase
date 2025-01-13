@@ -17,7 +17,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.PearadoxSparkMax;
-import frc.robot.Constants.Constants;
+import frc.robot.Constants;
+
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 public class SwerveModule extends SubsystemBase {

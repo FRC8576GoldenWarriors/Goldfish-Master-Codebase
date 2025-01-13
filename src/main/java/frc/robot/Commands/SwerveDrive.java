@@ -7,8 +7,8 @@ package frc.robot.Commands;
 import edu.wpi.first.math.geometry.Translation2d;
 //import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.Constants;
 import frc.robot.Subsystems.Drivetrain;
 
 public class SwerveDrive extends Command {
