@@ -12,16 +12,11 @@ import edu.wpi.first.wpilibj.Preferences;
 
 /** Add your docs here. */
 public class WarriorSparkMax extends SparkMax {
-    /**
-     * Creates a new CANSparkMax with the necessary configurations.
-     * @param deviceId The device ID.
-     * @param m The motor type (Brushed/Brushless).
-     * @param mode The idle mode (kBrake/kCoast).
-     * @param limit The current limit.
-     * @param isInverted The invert type of the motor.
-     */
+    
     private SparkMaxConfig config;
-    public WarriorSparkMax(int deviceId, MotorType motorType, boolean inverted, IdleMode brakeMode){//IdleMode mode, int limit, boolean isInverted){
+    
+
+    public WarriorSparkMax(int deviceId, MotorType motorType, boolean inverted, IdleMode brakeMode){
         super(deviceId, motorType);
         config = new SparkMaxConfig();
         config
@@ -29,15 +24,12 @@ public class WarriorSparkMax extends SparkMax {
         .idleMode(brakeMode);
         
         this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
-        //this.restoreFactoryDefaults();
-        //this.setSmartCurrentLimit(limit);
-        // this.setInverted(isInverted);
-        // this.setIdleMode(mode);
-        //this.burnFlash();
+     
         String key = "Spark " + this.getDeviceId() + " Flashes";
         Preferences.setDouble(key, Preferences.getDouble(key, 0) + 1);
     }
-    public WarriorSparkMax(int deviceId, MotorType motorType, boolean inverted, IdleMode brakeMode, int currentLimit){//IdleMode mode, int limit, boolean isInverted){
+
+    public WarriorSparkMax(int deviceId, MotorType motorType, boolean inverted, IdleMode brakeMode, int currentLimit){
         super(deviceId, motorType);
         config = new SparkMaxConfig();
         config
@@ -46,15 +38,10 @@ public class WarriorSparkMax extends SparkMax {
         .smartCurrentLimit(currentLimit);
         
         this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
-        //this.restoreFactoryDefaults();
-        //this.setSmartCurrentLimit(limit);
-        // this.setInverted(isInverted);
-        // this.setIdleMode(mode);
-        //this.burnFlash();
+
         String key = "Spark " + this.getDeviceId() + " Flashes";
         Preferences.setDouble(key, Preferences.getDouble(key, 0) + 1);
     }
-
 
 
 
