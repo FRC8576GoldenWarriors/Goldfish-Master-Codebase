@@ -21,12 +21,13 @@ public class WarriorSparkMax extends SparkMax {
      * @param isInverted The invert type of the motor.
      */
     private SparkMaxConfig config;
-    public WarriorSparkMax(int deviceId, MotorType m, boolean inverted, IdleMode brakeMode){//IdleMode mode, int limit, boolean isInverted){
-        super(deviceId, m);
+    public WarriorSparkMax(int deviceId, MotorType motorType, boolean inverted, IdleMode brakeMode){//IdleMode mode, int limit, boolean isInverted){
+        super(deviceId, motorType);
         config = new SparkMaxConfig();
         config
         .inverted(inverted)
         .idleMode(brakeMode);
+        
         this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
         //this.restoreFactoryDefaults();
         //this.setSmartCurrentLimit(limit);
@@ -36,41 +37,41 @@ public class WarriorSparkMax extends SparkMax {
         String key = "Spark " + this.getDeviceId() + " Flashes";
         Preferences.setDouble(key, Preferences.getDouble(key, 0) + 1);
     }
+    public WarriorSparkMax(int deviceId, MotorType motorType, boolean inverted, IdleMode brakeMode, int currentLimit){//IdleMode mode, int limit, boolean isInverted){
+        super(deviceId, motorType);
+        config = new SparkMaxConfig();
+        config
+        .inverted(inverted)
+        .idleMode(brakeMode)
+        .smartCurrentLimit(currentLimit);
+        
+        this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+        //this.restoreFactoryDefaults();
+        //this.setSmartCurrentLimit(limit);
+        // this.setInverted(isInverted);
+        // this.setIdleMode(mode);
+        //this.burnFlash();
+        String key = "Spark " + this.getDeviceId() + " Flashes";
+        Preferences.setDouble(key, Preferences.getDouble(key, 0) + 1);
+    }
+
+
+
+
+
+
     public void setInverted(boolean isInverted){
         config.inverted(isInverted);
         this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
     }
+
     public void setIdleMode(IdleMode brakeMode){
         config.idleMode(brakeMode);
         this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
     }
 
-    /**
-     * Creates a new CANSparkMax with the necessary motor and PID configurations.
-     * @param deviceId The device ID.
-     * @param m The motor type (Brushed/Brushless).
-     * @param mode The idle mode (kBrake/kCoast).
-     * @param limit The current limit.
-     * @param isInverted The invert type of the motor.
-     * @param kP The proportional gain value.
-     * @param kI The integral gain value.
-     * @param kD The derivative gain value.
-     * @param minOutput Reverse power minimum to allow the controller to output
-     * @param maxOutput Reverse power maximum to allow the controller to output
-     */
-    // public PearadoxSparkMax(int deviceId, MotorType m, IdleMode mode, int limit, boolean isInverted, 
-    //     double kP, double kI, double kD, double minOutput, double maxOutput){
-    //     super(deviceId, m);
-    //     this.restoreFactoryDefaults();
-    //     this.setSmartCurrentLimit(limit);
-    //     this.setInverted(isInverted);
-    //     this.setIdleMode(mode);
-    //     this.getPIDController().setP(kP, 0);
-    //     this.getPIDController().setI(kI, 0);
-    //     this.getPIDController().setD(kD, 0);
-    //     this.getPIDController().setOutputRange(minOutput, maxOutput, 0);
-    //     this.burnFlash();
-    //     String key = "Spark " + this.getDeviceId() + " Flashes";
-    //     Preferences.setDouble(key, Preferences.getDouble(key, 0) + 1);
-    // }
+    public void setCurrentLimit(int currentLimit){
+        config.smartCurrentLimit(currentLimit);
+        this.configure(config,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+    }
 }
