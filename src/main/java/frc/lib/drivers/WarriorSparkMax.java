@@ -11,7 +11,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.Preferences;
 
 /** Add your docs here. */
-public class PearadoxSparkMax extends SparkMax {
+public class WarriorSparkMax extends SparkMax {
     /**
      * Creates a new CANSparkMax with the necessary configurations.
      * @param deviceId The device ID.
@@ -21,7 +21,7 @@ public class PearadoxSparkMax extends SparkMax {
      * @param isInverted The invert type of the motor.
      */
     private SparkMaxConfig config;
-    public PearadoxSparkMax(int deviceId, MotorType m, boolean inverted, IdleMode brakeMode){//IdleMode mode, int limit, boolean isInverted){
+    public WarriorSparkMax(int deviceId, MotorType m, boolean inverted, IdleMode brakeMode){//IdleMode mode, int limit, boolean isInverted){
         super(deviceId, m);
         config = new SparkMaxConfig();
         config
