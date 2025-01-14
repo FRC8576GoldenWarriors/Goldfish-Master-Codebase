@@ -5,33 +5,31 @@
 package frc.robot.Subsystems;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.drivers.PearadoxSparkMax;
-import frc.robot.Constants.Constants;
+import frc.lib.drivers.WarriorSparkMax;
+import frc.robot.Constants;
+
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 public class SwerveModule extends SubsystemBase {
+
 private int turnMotorId;
 private int driveMotorId;
 
 
-  private PearadoxSparkMax driveMotor;
-  private PearadoxSparkMax turnMotor;
+
+  private WarriorSparkMax driveMotor;
+  private WarriorSparkMax turnMotor;
 
   private RelativeEncoder driveEncoder;
   private RelativeEncoder turnEncoder;
-  private SparkMaxConfig driveConfig;
-  private SparkMaxConfig turnConfig;
+ 
   
 
   private PIDController turnPIDController;
@@ -48,21 +46,8 @@ private int driveMotorId;
       this.turnMotorId = turnMotorId;
       this.driveMotorId = driveMotorId;
 
-      driveConfig = new SparkMaxConfig();
-      turnConfig = new SparkMaxConfig();
-
-      driveConfig
-      .inverted(driveMotorReversed)
-      .idleMode(IdleMode.kCoast);
-
-      turnConfig
-      .inverted(turnMotorReversed)
-      .idleMode(IdleMode.kCoast);
-
-      driveMotor = new PearadoxSparkMax(driveMotorId,MotorType.kBrushless,driveConfig);
-      turnMotor = new PearadoxSparkMax(turnMotorId,MotorType.kBrushless,turnConfig);
-      // driveMotor = new PearadoxSparkMax(driveMotorId, MotorType.kBrushless, IdleMode.kCoast, 45, driveMotorReversed);
-      // turnMotor = new PearadoxSparkMax(turnMotorId, MotorType.kBrushless, IdleMode.kCoast, 25, turnMotorReversed);
+      driveMotor = new WarriorSparkMax(driveMotorId,MotorType.kBrushless,driveMotorReversed, IdleMode.kCoast, Constants.SwerveConstants.DRIVE_CURRENT_LIMIT);
+      turnMotor = new WarriorSparkMax(turnMotorId,MotorType.kBrushless,turnMotorReversed, IdleMode.kCoast, Constants.SwerveConstants.ROTATION_CURRENT_LIMIT);
 
       
       driveEncoder = driveMotor.getEncoder();
@@ -70,7 +55,7 @@ private int driveMotorId;
 
       absoluteEncoder = new CANcoder(absoluteEncoderId);
 
-      turnPIDController = new PIDController(Constants.SwerveConstants.KP_TURNING, 0, 0.001); //0.001);
+      turnPIDController = new PIDController(Constants.SwerveConstants.KP_TURNING, 0, 0.001);
       turnPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
       resetEncoders();
@@ -87,21 +72,12 @@ private int driveMotorId;
 
   public void setBrake(boolean brake){
     if(brake){
-      driveConfig.idleMode(IdleMode.kBrake);
-      driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      //driveMotor.setIdleMode(IdleMode.kBrake);
-      //turnMotor.setIdleMode(IdleMode.kCoast);
-      //turnMotor.setIdleMode(IdleMode.kBrake);
-      turnConfig.idleMode(IdleMode.kBrake);
-      turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      driveMotor.setIdleMode(IdleMode.kBrake);
+      turnMotor.setIdleMode(IdleMode.kBrake);
     }
     else{
-      //driveMotor.setIdleMode(IdleMode.kCoast);
-      driveConfig.idleMode(IdleMode.kCoast);
-      driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      turnConfig.idleMode(IdleMode.kCoast);
-      turnMotor.configure(turnConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      //turnMotor.setIdleMode(IdleMode.kCoast);
+      driveMotor.setIdleMode(IdleMode.kCoast);
+      turnMotor.setIdleMode(IdleMode.kCoast);
     }
   }
   

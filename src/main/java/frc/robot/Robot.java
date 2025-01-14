@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Subsystems.Drivetrain;
@@ -13,9 +16,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
-
   private RobotContainer m_robotContainer;
-
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -23,6 +24,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+
+    SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
+    SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
     CommandScheduler.getInstance().run();
   }
 

@@ -8,9 +8,15 @@ import java.text.DecimalFormat;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -19,54 +25,25 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.Constants;
+import frc.robot.Constants;
 
 public class Drivetrain extends SubsystemBase {
-  //PRACTICE MODULES
-  // private SwerveModule leftFront = new SwerveModule(
-  //   Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID, 
-  //   Constants.SwerveConstants.LEFT_FRONT_TURN_ID, 
-  //   false, 
-  //   true, 
-  //   Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID, 
-  //   Constants.SwerveConstants.LEFT_FRONT_OFFSET);
-
-  // private SwerveModule rightFront = new SwerveModule(
-  //   Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID, 
-  //   Constants.SwerveConstants.RIGHT_FRONT_TURN_ID, 
-  //   true, //used to be true, might have to change back - Om: 2/14/24
-  //   true, 
-  //   Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID, 
-  //   Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
-
-  // private SwerveModule leftBack = new SwerveModule(
-  //   Constants.SwerveConstants.LEFT_BACK_DRIVE_ID, 
-  //   Constants.SwerveConstants.LEFT_BACK_TURN_ID, 
-  //   true, 
-  //   true, 
-  //   Constants.SwerveConstants.LEFT_BACK_CANCODER_ID, 
-  //   Constants.SwerveConstants.LEFT_BACK_OFFSET);
-
-  //   private SwerveModule rightBack = new SwerveModule(
-  //   Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID, 
-  //   Constants.SwerveConstants.RIGHT_BACK_TURN_ID, 
-  //   true, 
-  //   true, 
-  //   Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID, 
-  //   Constants.SwerveConstants.RIGHT_BACK_OFFSET);
 
 
-  //COMPETITIOM MODULES
    private SwerveModule leftFront = new SwerveModule(
     Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID, 
     Constants.SwerveConstants.LEFT_FRONT_TURN_ID, 
-    false, 
-    true, 
+    true, //false
+    true, //true
     Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID, 
     Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
@@ -81,7 +58,7 @@ public class Drivetrain extends SubsystemBase {
   private SwerveModule leftBack = new SwerveModule(
     Constants.SwerveConstants.LEFT_BACK_DRIVE_ID, 
     Constants.SwerveConstants.LEFT_BACK_TURN_ID, 
-    true, 
+    false, 
     true, 
     Constants.SwerveConstants.LEFT_BACK_CANCODER_ID, 
     Constants.SwerveConstants.LEFT_BACK_OFFSET);
@@ -102,8 +79,15 @@ public class Drivetrain extends SubsystemBase {
 
   private static final Drivetrain drivetrain = new Drivetrain();
 
-  public SwerveDriveOdometry odometry = new SwerveDriveOdometry(Constants.SwerveConstants.DRIVE_KINEMATICS, getHeadingRotation2d(), getModulePositions(), new Pose2d());
+  private RobotConfig config;
 
+  //getHeadingRotation2d()
+  public SwerveDriveOdometry odometry = new SwerveDriveOdometry(Constants.SwerveConstants.DRIVE_KINEMATICS,  getHeadingRotation2d() , getModulePositions(), new Pose2d());
+  private Field2d field;
+  //private final StructPublisher<Pose2d> m_posePublish;
+    private final StructArrayPublisher<SwerveModuleState> m_ModulePublisherIn;
+    private final StructArrayPublisher<SwerveModuleState> m_ModuleStatesActual;
+    private final StructPublisher<Pose2d> m_pose;
   public static Drivetrain getInstance(){
     return drivetrain;
   }
@@ -117,7 +101,7 @@ public class Drivetrain extends SubsystemBase {
       }
       catch(Exception e){}
     }).start();
-
+    field = new Field2d();
     // AutoBuilder.configureHolonomic(
     //   this::getPose2d,
     //   this::resetPose2d,
@@ -128,6 +112,65 @@ public class Drivetrain extends SubsystemBase {
     //   this
     // );
 
+     // Load the RobotConfig from the GUI settings. You should probably
+    // store this in your Constants file
+    
+    try{
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
+
+        // test
+    // AutoBuilder.configure(
+    //         this::getPose2d, // Robot pose supplier
+    //         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting pose)
+    //         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+    //         Constants.SwerveConstants.pid_controls,
+    //         config, // The robot configuration
+    //         () -> {
+    //           // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //           // This will flip the path being followed to the red side of the field.
+    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+    //           var alliance = DriverStation.getAlliance();
+    //           if (alliance.isPresent()) {
+    //             return alliance.get() == DriverStation.Alliance.Red;
+    //           }
+    //           return false;
+    //         },
+    //         this // Reference to this subsystem to set requirements
+    // );
+  
+    //original
+    // Configure AutoBuilder last
+    AutoBuilder.configure(
+            this::getPose2d, // Robot pose supplier
+            this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            Constants.SwerveConstants.pid_controls,
+            config, // The robot configuration
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
+    SmartDashboard.putData("GWR Field",field);
+    m_ModulePublisherIn = NetworkTableInstance.getDefault().getTable("Goldfish").getStructArrayTopic("SwerveStates/In", SwerveModuleState.struct).publish();
+    m_ModuleStatesActual = NetworkTableInstance.getDefault().getTable("Goldfish").getStructArrayTopic("SwerveStates/Actual", SwerveModuleState.struct).publish();
+   m_pose = NetworkTableInstance.getDefault().getTable("Goldfish").getStructTopic("Pose",Pose2d.struct).publish();
+    //m_posePublish = NetworkTableInstance.getDefault().getTable("Goldfish").getStructTopic("Robot Pose", Pose2d.struct).publish();
     SmartDashboard.putData("Swerve Drive", new Sendable() {
       @Override
       public void initSendable(SendableBuilder builder){
@@ -157,6 +200,10 @@ public class Drivetrain extends SubsystemBase {
     
     double yaw = gyro.getYaw().getValueAsDouble();
     SmartDashboard.putNumber("Robot Angle", getHeading());
+    field.setRobotPose(getPose2d());
+   // m_posePublish.set(getPose2d());
+    m_ModuleStatesActual.set(getModuleStates());
+    m_pose.set(odometry.getPoseMeters());
     //rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
     // Logger.recordOutput("Robot Angle", getHeading());
@@ -211,9 +258,9 @@ public class Drivetrain extends SubsystemBase {
     boolean fieldOriented, Translation2d centerOfRotation, boolean deadband){ 
       //Drive with rotational speed control w/ joystick
     if(deadband){
-      frontSpeed = Math.abs(frontSpeed) > 0.15 ? frontSpeed : 0;
-      sideSpeed = Math.abs(sideSpeed) > 0.15 ? sideSpeed : 0;
-      turnSpeed = Math.abs(turnSpeed) > 0.15 ? turnSpeed : 0;
+      frontSpeed = Math.abs(frontSpeed) > Constants.SwerveConstants.DriverConstants.xDeadband ? frontSpeed : 0;
+      sideSpeed = Math.abs(sideSpeed) > Constants.SwerveConstants.DriverConstants.yDeadband ? sideSpeed : 0;
+      turnSpeed = Math.abs(turnSpeed) >Constants.SwerveConstants.DriverConstants.turnDeadband? turnSpeed : 0;
     }
 
     frontSpeed = frontLimiter.calculate(frontSpeed) * Constants.SwerveConstants.TELE_DRIVE_MAX_SPEED;
@@ -229,7 +276,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     SwerveModuleState[] moduleStates = Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds, centerOfRotation);
-
+     m_ModulePublisherIn.set(moduleStates);
     setModuleStates(moduleStates);
   }
 
@@ -254,10 +301,18 @@ public class Drivetrain extends SubsystemBase {
     rightFront.resetEncoders();
     leftBack.resetEncoders();
     rightBack.resetEncoders();
+    odometry.resetPose(new Pose2d());
   }
 
   public void zeroHeading(){
     gyro.setYaw(0);
+    odometry.resetRotation(gyro.getRotation2d());
+  }
+  public void autonReset(){
+    Pose2d pose = AutoBuilder.getCurrentPose();
+    double[] xy = {pose.getX(),pose.getY()};
+    Pose2d calcpose = new Pose2d(xy[0], xy[1], Rotation2d.fromDegrees(180));
+    odometry.resetPose(calcpose);
   }
 
   public void setHeading(double heading){
@@ -328,6 +383,19 @@ public class Drivetrain extends SubsystemBase {
     SwerveModuleState[] moduleStates = Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
     setModuleStates(moduleStates);
   }
+
+  //  public void visionDrive(AprilTagStats april,double angle){
+  //    try{
+  //       // Load the path you want to follow using its name in the GUI
+  //       PathPlannerPath path = april.robotPath(angle);
+
+  //       // Create a path following command using AutoBuilder. This will also trigger event markers.
+  //       AutoBuilder.followPath(path);
+  //   } catch (Exception e) {
+  //       DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+  //   }
+
+  // }
 
   public boolean isRedAlliance(){
     if (DriverStation.getAlliance().isPresent()){
