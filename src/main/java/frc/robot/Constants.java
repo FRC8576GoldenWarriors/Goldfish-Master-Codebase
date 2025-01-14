@@ -60,6 +60,19 @@ public class Constants {
       public static final double yCoefficient = 2.05;
       public static final double turnCoefficient = 1.675;
     }
+
+    public static class PoseConfig {
+      // Increase these numbers to trust your model's state estimates less.
+      public static final double kPositionStdDevX = 0.1;
+      public static final double kPositionStdDevY = 0.1;
+      public static final double kPositionStdDevTheta = 10;
+
+      // Increase these numbers to trust global measurements from vision less.
+      public static final double kVisionStdDevX = 2;
+      public static final double kVisionStdDevY = 2;
+      public static final double kVisionStdDevTheta = 1;
+    }
+
     
       
     public static final int LEFT_FRONT_DRIVE_ID = 6;
@@ -78,18 +91,6 @@ public class Constants {
     public static final int RIGHT_BACK_CANCODER_ID = 32;
 
     public static final int PIGEON_ID = 0;
-
-    public static class PoseConfig {
-      // Increase these numbers to trust your model's state estimates less.
-      public static final double kPositionStdDevX = 0.1;
-      public static final double kPositionStdDevY = 0.1;
-      public static final double kPositionStdDevTheta = 10;
-
-      // Increase these numbers to trust global measurements from vision less.
-      public static final double kVisionStdDevX = 2;
-      public static final double kVisionStdDevY = 2;
-      public static final double kVisionStdDevTheta = 1;
-    }
     
 
     public static  double LEFT_FRONT_OFFSET = 0.228027;
@@ -117,6 +118,9 @@ public class Constants {
 
     public static final double AUTO_KP_TTANSLATION = 1.35; //1.15
     public static final double AUTO_KP_ROTATIONAL = 0.1; //0.1
+
+    public static final int ROTATION_CURRENT_LIMIT = 30;
+    public static final int DRIVE_CURRENT_LIMIT = 45;
 
     public static final double TRACK_WIDTH = Units.inchesToMeters(25.0);// Y WIDTH
     public static final double WHEEL_BASE = Units.inchesToMeters(21.0); // X LENGTH
