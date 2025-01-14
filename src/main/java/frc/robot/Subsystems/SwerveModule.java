@@ -27,10 +27,9 @@ private int driveMotorId;
   private WarriorSparkMax driveMotor;
   private WarriorSparkMax turnMotor;
 
-   private RelativeEncoder driveEncoder;
-   private RelativeEncoder turnEncoder;
-  // private SparkMaxConfig driveConfig;
-  // private SparkMaxConfig turnConfig;
+  private RelativeEncoder driveEncoder;
+  private RelativeEncoder turnEncoder;
+ 
   
 
   private PIDController turnPIDController;
