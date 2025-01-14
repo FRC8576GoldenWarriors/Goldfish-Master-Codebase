@@ -47,21 +47,8 @@ private int driveMotorId;
       this.turnMotorId = turnMotorId;
       this.driveMotorId = driveMotorId;
 
-      // driveConfig = new SparkMaxConfig();
-      // turnConfig = new SparkMaxConfig();
-
-      // driveConfig
-      // .inverted(driveMotorReversed)
-      // .idleMode(IdleMode.kCoast);
-
-      // turnConfig
-      // .inverted(turnMotorReversed)
-      // .idleMode(IdleMode.kCoast);
-
-      driveMotor = new WarriorSparkMax(driveMotorId,MotorType.kBrushless,driveMotorReversed, IdleMode.kCoast);
-      turnMotor = new WarriorSparkMax(turnMotorId,MotorType.kBrushless,turnMotorReversed, IdleMode.kCoast);
-      // driveMotor = new PearadoxSparkMax(driveMotorId, MotorType.kBrushless, IdleMode.kCoast, 45, driveMotorReversed);
-      // turnMotor = new PearadoxSparkMax(turnMotorId, MotorType.kBrushless, IdleMode.kCoast, 25, turnMotorReversed);
+      driveMotor = new WarriorSparkMax(driveMotorId,MotorType.kBrushless,driveMotorReversed, IdleMode.kCoast, Constants.SwerveConstants.DRIVE_CURRENT_LIMIT);
+      turnMotor = new WarriorSparkMax(turnMotorId,MotorType.kBrushless,turnMotorReversed, IdleMode.kCoast, Constants.SwerveConstants.ROTATION_CURRENT_LIMIT);
 
       
       driveEncoder = driveMotor.getEncoder();
@@ -69,7 +56,7 @@ private int driveMotorId;
 
       absoluteEncoder = new CANcoder(absoluteEncoderId);
 
-      turnPIDController = new PIDController(Constants.SwerveConstants.KP_TURNING, 0, 0.003); //0.001);
+      turnPIDController = new PIDController(Constants.SwerveConstants.KP_TURNING, 0, 0.001);
       turnPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
       resetEncoders();
@@ -87,16 +74,11 @@ private int driveMotorId;
   public void setBrake(boolean brake){
     if(brake){
       driveMotor.setIdleMode(IdleMode.kBrake);
-      //driveMotor.setIdleMode(IdleMode.kBrake);
-      //turnMotor.setIdleMode(IdleMode.kCoast);
-      //turnMotor.setIdleMode(IdleMode.kBrake);
       turnMotor.setIdleMode(IdleMode.kBrake);
     }
     else{
-      //driveMotor.setIdleMode(IdleMode.kCoast);
       driveMotor.setIdleMode(IdleMode.kCoast);
       turnMotor.setIdleMode(IdleMode.kCoast);
-      //turnMotor.setIdleMode(IdleMode.kCoast);
     }
   }
   
