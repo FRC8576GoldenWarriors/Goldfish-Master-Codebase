@@ -7,6 +7,10 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,23 +26,30 @@ import frc.robot.Subsystems.Drivetrain;
 
 
 public class RobotContainer {
+
   public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
- // public static final AprilTagStats m_aprilTagStats = new AprilTagStats(Constants.VisionConstants.nameConstants.cameraName,
- // Constants.VisionConstants.nameConstants.publishName,
-  //Constants.VisionConstants.nameConstants.tabName);
 
   public static final CommandXboxController driverController = new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
-  CommandXboxController operatorController = new CommandXboxController(Constants.ControllerConstants.operatorControllerPort);
+  public static final CommandXboxController operatorController = new CommandXboxController(Constants.ControllerConstants.operatorControllerPort);
 
   private final JoystickButton resetHeading_Start = new JoystickButton(driverController.getHID(), XboxController.Button.kStart.value);
 
   public final SendableChooser<Command> autoChooser;
+
+  public final UsbCamera camera;
 
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
    //Add all the choise of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
+
+    camera = CameraServer.startAutomaticCapture(0);
+    camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
+
+    
+    
     
     configureBindings();
     SmartDashboard.putData("Auto Chooser",autoChooser);
