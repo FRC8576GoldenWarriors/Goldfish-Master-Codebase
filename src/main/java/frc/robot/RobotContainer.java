@@ -19,10 +19,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-//import frc.robot.Commands.AdjustRobotPos;
+import frc.robot.Commands.AlgaePincherIn;
+import frc.robot.Commands.AlgaePincherOut;
+import frc.robot.Commands.CoralRollerIn;
+import frc.robot.Commands.CoralRollerOut;
 import frc.robot.Commands.SwerveDrive;
-//import frc.robot.Subsystems.AprilTagStats;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.AlgaePincher;
+import frc.robot.Subsystems.CoralRoller;
 
 
 public class RobotContainer {
@@ -38,6 +42,9 @@ public class RobotContainer {
 
   public final UsbCamera camera;
 
+  // subsystems
+  public static final CoralRoller coralRoller = new CoralRoller();
+  public static final AlgaePincher algaePincher = new AlgaePincher();
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
@@ -47,10 +54,7 @@ public class RobotContainer {
     camera = CameraServer.startAutomaticCapture(0);
     camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
-
-    
-    
-    
+        
     configureBindings();
     SmartDashboard.putData("Auto Chooser",autoChooser);
   }
@@ -59,10 +63,12 @@ public class RobotContainer {
     //Driver controller
     resetHeading_Start.onTrue(
       new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-   // driverController.a().onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, 15));
-   // driverController.a().and(driverController.b()).onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, -15));
-    // operatorController.y().whileTrue(new ElevatorUpCommand(m_elevator));
-    // operatorController.a().whileTrue(new ElevatorDownCommand(m_elevator));
+    
+    //operator controller
+    operatorController.leftTrigger().whileTrue(new CoralRollerIn(coralRoller));
+    operatorController.rightTrigger().whileTrue(new CoralRollerOut(coralRoller));
+    operatorController.leftBumper().whileTrue(new AlgaePincherIn(algaePincher));
+    operatorController.rightBumper().whileTrue(new AlgaePincherOut(algaePincher));
   }
 
   public Command getAutonomousCommand() {

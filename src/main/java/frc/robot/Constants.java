@@ -43,7 +43,7 @@ public class Constants {
       public static final double kPVisionTurning = 0.01;
       public static final double kPVisionMoving = 0.5;
     }
- }
+  }
 
   public class ControllerConstants{
     public static final int driverControllerPort = 0;
@@ -72,8 +72,6 @@ public class Constants {
       public static final double kVisionStdDevY = 2;
       public static final double kVisionStdDevTheta = 1;
     }
-
-    
       
     public static final int LEFT_FRONT_DRIVE_ID = 2; //6
     public static final int RIGHT_FRONT_DRIVE_ID = 4;
@@ -138,7 +136,24 @@ public class Constants {
       new Translation2d(-WHEEL_BASE / 2, TRACK_WIDTH / 2),
       new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2)
     );
-
   }
 
+  public static class IntakeConstants {
+    // intake ids
+    public static final byte coralIntakeID= 10;
+    public static final byte coralIntakeDigiSensorID = 1;
+
+    // speed values
+    public static final double coralIntakeInSpeed = 0.5;
+    public static final double coralIntakeOutSpeed = -0.5;
+  }
+  public static class PincherConstants {
+    // pincher ids
+    public static final byte pincherID = 20;
+    public static final byte pincherDigiSensorID = 2;
+
+    // speed values
+    public static final double pincherInSpeed = 0.5;
+    public static final double pincherOutSpeed = -0.5;
+  }
 }
