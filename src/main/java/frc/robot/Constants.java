@@ -153,23 +153,23 @@ public class Constants {
     public static final class PatternConfig {
       // robot disabled - scrolling pattern
       public static final LEDPattern kLEDDisabledPattern = LEDPattern.gradient(GradientType.kContinuous, new Color(255, 90, 0), new Color(241, 174, 92));
-      public static final double kLEDDisabledScrollSpeed = 25;
+      public static final double kLEDDisabledPatternSpeed = 25;
       
       // robot idle (no status) - breathing pattern
-      public static final LEDPattern kLEDIdlePattern = LEDPattern.solid(Color.kRed);
-      public static final double kLEDIdleBreatheSpeed = 2;
+      public static final LEDPattern kLEDNoStatusPattern = LEDPattern.solid(Color.kRed);
+      public static final double kLEDNoStatusPatternSpeed = 2;
       
       // lg ground intake
       public static final LEDPattern kLEDAlgaeIntakePattern = LEDPattern.solid(Color.kAqua);
-      public static final double kLEDAlgaeIntakeBlinkSpeed = 0.075;
+      public static final double kLEDAlgaeIntakePatternSpeed = 0.075;
       
       // lg arm intake
       public static final LEDPattern kLEDAlgaePincherPattern = LEDPattern.solid(Color.kAqua);
-      public static final double kLEDAlgaePincherBreatheSpeed = 2;
+      public static final double kLEDAlgaePincherPatternSpeed = 2;
       
       // coral
       public static final LEDPattern kLEDCoralDetectedPattern = LEDPattern.solid(Color.kPurple);
-      public static final double kLEDCoralDetectedBreatheSpeed = 2;
+      public static final double kLEDCoralDetectedPatternSpeed = 2;
       
       // test
       public static final double kLEDRainbowScrollSize = 0.5; // 0.0 - 1.0

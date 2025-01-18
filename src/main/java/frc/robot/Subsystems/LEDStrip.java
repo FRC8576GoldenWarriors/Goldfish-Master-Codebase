@@ -91,15 +91,15 @@ public class LEDStrip extends SubsystemBase {
     if (driverController.getYButton()) { // gradient progress
       progress(Constants.LEDConstants.PatternConfig.kLEDProgressGradientPattern, driverController.getLeftTriggerAxis());
     } else if (driverController.getXButton()) { // algae pincher
-      breathe(Constants.LEDConstants.PatternConfig.kLEDAlgaePincherPattern, Constants.LEDConstants.PatternConfig.kLEDAlgaeIntakeBlinkSpeed);
+      breathe(Constants.LEDConstants.PatternConfig.kLEDAlgaePincherPattern, Constants.LEDConstants.PatternConfig.kLEDAlgaePincherPatternSpeed);
     } else if (driverController.getAButton()) { // algae intake
-      blink(Constants.LEDConstants.PatternConfig.kLEDAlgaeIntakePattern, Constants.LEDConstants.PatternConfig.kLEDAlgaeIntakeBlinkSpeed);
+      blink(Constants.LEDConstants.PatternConfig.kLEDAlgaeIntakePattern, Constants.LEDConstants.PatternConfig.kLEDAlgaeIntakePatternSpeed);
     } else if (driverController.getBButton()) { // coral detected
-      breathe(Constants.LEDConstants.PatternConfig.kLEDCoralDetectedPattern, Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
+      breathe(Constants.LEDConstants.PatternConfig.kLEDCoralDetectedPattern, Constants.LEDConstants.PatternConfig.kLEDCoralDetectedPatternSpeed);
     } else if (DriverStation.isDisabled()) { // disabled
-      scroll(Constants.LEDConstants.PatternConfig.kLEDDisabledPattern, Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed); 
+      scroll(Constants.LEDConstants.PatternConfig.kLEDDisabledPattern, Constants.LEDConstants.PatternConfig.kLEDDisabledPatternSpeed); 
     } else { // red breathe idle
-      breathe(Constants.LEDConstants.PatternConfig.kLEDIdlePattern, Constants.LEDConstants.PatternConfig.kLEDIdleBreatheSpeed);
+      breathe(Constants.LEDConstants.PatternConfig.kLEDNoStatusPattern, Constants.LEDConstants.PatternConfig.kLEDNoStatusPatternSpeed);
     }
 
     led.setData(buffer);
