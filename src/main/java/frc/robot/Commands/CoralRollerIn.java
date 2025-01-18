@@ -5,6 +5,8 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Subsystems.CoralRoller;
 
@@ -12,9 +14,14 @@ public class CoralRollerIn extends Command {
 
   private CoralRoller coralRoller;
 
+  private boolean isFinished;
+
   /** Creates a new CoralRollerIn. */
   public CoralRollerIn(CoralRoller coralRoller) {
     this.coralRoller = coralRoller;
+
+    isFinished = false;
+
     addRequirements(coralRoller);
   }
 
@@ -29,17 +36,20 @@ public class CoralRollerIn extends Command {
       coralRoller.setRollerSpeed(Constants.CoralRollerConstants.coralIntakeInSpeed);
     }
     else {
-      coralRoller.setRollerSpeed(0);
+      isFinished = true;
     }
   }
 
   @Override
   public void end(boolean interrupted) {
+    
+    new WaitCommand(0.25);
+
     coralRoller.setRollerSpeed(0);
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }

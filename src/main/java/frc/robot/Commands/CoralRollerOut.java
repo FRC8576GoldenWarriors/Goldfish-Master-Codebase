@@ -14,8 +14,13 @@ public class CoralRollerOut extends Command {
 
   private CoralRoller coralRoller;
 
+  private boolean isFinished;
+
   public CoralRollerOut(CoralRoller coralRoller) {
     this.coralRoller = coralRoller;
+    
+    isFinished = false;
+
     addRequirements(coralRoller);
   }
 
@@ -32,19 +37,22 @@ public class CoralRollerOut extends Command {
       coralRoller.setRollerSpeed(Constants.CoralRollerConstants.coralIntakeOutSpeed);
     }
     else {
-      coralRoller.setRollerSpeed(0);
+      isFinished = true;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
+    new WaitCommand(0.25);
+
     coralRoller.setRollerSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }

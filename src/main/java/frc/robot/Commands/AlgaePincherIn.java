@@ -13,9 +13,15 @@ public class AlgaePincherIn extends Command {
   
   private AlgaePincher algaePincher;
 
+  private boolean isFinished;
+
   public AlgaePincherIn(AlgaePincher algaePincher) {
     this.algaePincher = algaePincher;
+
+    isFinished = false;
+
     addRequirements(algaePincher);
+
   }
 
   @Override
@@ -27,20 +33,22 @@ public class AlgaePincherIn extends Command {
       algaePincher.setPincherSpeed(Constants.AlgaeArmConstants.PincherConstants.pincherInSpeed);
     }
     else {
-      new WaitCommand(0.25); // time needs to be adjusted so it works
-      algaePincher.setPincherSpeed(0);
+      isFinished = true;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
+    new WaitCommand(0.25);
+    
     algaePincher.setPincherSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }
