@@ -1,11 +1,10 @@
 package frc.robot;
 
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-
 import java.util.Arrays;
 import java.util.List;
 
 import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -138,22 +137,62 @@ public class Constants {
     );
   }
 
-  public static class IntakeConstants {
+  public static final class CoralRollerConstants {
     // intake ids
-    public static final byte coralIntakeID= 10;
-    public static final byte coralIntakeDigiSensorID = 1;
+    public static final int coralRollerID= 10;
+    public static final int coralRollerDigiSensorID = 1;
 
     // speed values
     public static final double coralIntakeInSpeed = 0.5;
     public static final double coralIntakeOutSpeed = -0.5;
   }
-  public static class PincherConstants {
-    // pincher ids
-    public static final byte pincherID = 20;
-    public static final byte pincherDigiSensorID = 2;
 
-    // speed values
-    public static final double pincherInSpeed = 0.5;
-    public static final double pincherOutSpeed = -0.5;
+
+  public static final class AlgaeArmConstants{
+
+    public static class PincherConstants {
+        // pincher ids
+        public static final int pincherID = 20;
+        public static final int pincherDigiSensorID = 2;
+
+        // speed values
+        public static final double pincherInSpeed = 0.5;
+        public static final double pincherOutSpeed = -0.5;
+
+      }
+    
+    public static final class ArmConstants{
+
+      public static final int armMotorID = 21;
+      public static final int armEncoderDIO = 3;
+      
+      //https://www.reca.lc/arm
+      //ks needs to be measured empirically, measure minimum voltage for motor movement
+      
+      //feed forward constants
+
+      //need to convert to rads
+      public static final double kS = 0.1;
+      public static final double kG = 0.1;
+      public static final double kV = 0.1;
+      public static final double kA = 0.1; 
+
+      public static final double kP = 0.1;
+      public static final double kI = 0;
+      public static final double kD = 0;
+
+
+      //in rotations
+      public static final double startPosition = 0;
+      public static final double lowReefPosition = 0.3;
+      public static final double highReefPosition = 0.45;
+      public static final double transportPosition = 0.65;
+
+      public static final double lowSoftStopPositon = -0.05;
+      public static final double highSoftStopPosition = 0.75;
+
+
+    }
   }
+  
 }

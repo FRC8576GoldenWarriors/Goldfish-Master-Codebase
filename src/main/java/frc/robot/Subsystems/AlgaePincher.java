@@ -17,8 +17,8 @@ public class AlgaePincher extends SubsystemBase {
   private DigitalInput intakeSensor;
 
   public AlgaePincher() {
-    algaePincher = new SparkMax(Constants.PincherConstants.pincherID, MotorType.kBrushless);
-    intakeSensor = new DigitalInput(Constants.PincherConstants.pincherDigiSensorID);
+    algaePincher = new SparkMax(Constants.AlgaeArmConstants.PincherConstants.pincherID, MotorType.kBrushless);
+    intakeSensor = new DigitalInput(Constants.AlgaeArmConstants.PincherConstants.pincherDigiSensorID);
   }
 
   public void setPincherSpeed(double speed) {
