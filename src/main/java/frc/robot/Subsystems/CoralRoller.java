@@ -17,8 +17,8 @@ public class CoralRoller extends SubsystemBase {
     private DigitalInput intakeSensor;
 
     public CoralRoller() {
-        coralRoller = new SparkMax(Constants.IntakeConstants.coralIntakeID, MotorType.kBrushless);
-        intakeSensor = new DigitalInput(Constants.IntakeConstants.coralIntakeDigiSensorID);
+        coralRoller = new SparkMax(Constants.CoralRollerConstants.coralRollerID, MotorType.kBrushless);
+        intakeSensor = new DigitalInput(Constants.CoralRollerConstants.coralRollerDigiSensorID);
     }
 
     public void setRollerSpeed(double speed){
