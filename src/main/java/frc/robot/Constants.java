@@ -142,6 +142,8 @@ public class Constants {
     public static final int coralRollerID= 10;
     public static final int coralRollerDigiSensorID = 1;
 
+    public static final boolean motorIsInverted = false;
+
     // speed values
     public static final double coralIntakeInSpeed = 0.5;
     public static final double coralIntakeOutSpeed = -0.5;
@@ -155,6 +157,8 @@ public class Constants {
         public static final int pincherID = 20;
         public static final int pincherDigiSensorID = 2;
 
+        public static final boolean motorIsInverted = false;
+
         // speed values
         public static final double pincherInSpeed = 0.5;
         public static final double pincherOutSpeed = -0.5;
@@ -165,6 +169,8 @@ public class Constants {
 
       public static final int armMotorID = 21;
       public static final int armEncoderDIO = 3;
+
+      public static final boolean motorIsInverted = false;
       
       //https://www.reca.lc/arm
       //ks needs to be measured empirically, measure minimum voltage for motor movement

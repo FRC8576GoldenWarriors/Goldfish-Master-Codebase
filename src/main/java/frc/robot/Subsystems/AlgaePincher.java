@@ -6,23 +6,32 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgaePincher extends SubsystemBase {
   
-  private SparkMax algaePincher;
+  private WarriorSparkMax pincherMotor;
   private DigitalInput intakeSensor;
 
   public AlgaePincher() {
-    algaePincher = new SparkMax(Constants.AlgaeArmConstants.PincherConstants.pincherID, MotorType.kBrushless);
+
+    pincherMotor = new WarriorSparkMax(
+      Constants.AlgaeArmConstants.PincherConstants.pincherID, 
+      MotorType.kBrushless, 
+      Constants.AlgaeArmConstants.PincherConstants.motorIsInverted, 
+      IdleMode.kBrake
+    );
+
     intakeSensor = new DigitalInput(Constants.AlgaeArmConstants.PincherConstants.pincherDigiSensorID);
   }
 
   public void setPincherSpeed(double speed) {
-    algaePincher.set(speed);
+    pincherMotor.set(speed);
   }
   public DigitalInput getDigitalInput(){
     return intakeSensor;

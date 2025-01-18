@@ -29,7 +29,7 @@ public class CoralRollerOut extends Command {
   @Override
   public void execute() {
     if (coralRoller.hasCoral()) {
-      coralRoller.setRollerSpeed(Constants.IntakeConstants.coralIntakeOutSpeed);
+      coralRoller.setRollerSpeed(Constants.CoralRollerConstants.coralIntakeOutSpeed);
     }
     else {
       coralRoller.setRollerSpeed(0);
