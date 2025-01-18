@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0,
+        "x": 6.5,
         "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.0,
+        "x": 7.5,
         "y": 7.0
       },
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "debug paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

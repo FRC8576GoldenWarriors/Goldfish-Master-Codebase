@@ -36,7 +36,7 @@ public class RobotContainer {
 
   public final SendableChooser<Command> autoChooser;
 
-  public final UsbCamera camera;
+ // public final UsbCamera camera;
 
 
   public RobotContainer() {
@@ -44,9 +44,9 @@ public class RobotContainer {
    //Add all the choise of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    camera = CameraServer.startAutomaticCapture(0);
-    camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
+    // camera = CameraServer.startAutomaticCapture(0);
+    // camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    // camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
 
     
     
@@ -59,6 +59,9 @@ public class RobotContainer {
     //Driver controller
     resetHeading_Start.onTrue(
       new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
+
+      
+      
    // driverController.a().onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, 15));
    // driverController.a().and(driverController.b()).onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, -15));
     // operatorController.y().whileTrue(new ElevatorUpCommand(m_elevator));

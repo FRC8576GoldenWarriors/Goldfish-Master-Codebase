@@ -141,4 +141,20 @@ public class Constants {
 
   }
 
+  public static final class CoralRollerConstants{
+    
+  }
+
+  public static final class AlgaeArmConstants{
+
+  }
+
+  public static final class AlgaeShintakeConstants{
+
+  }
+
+  public static final class ClimberConstants{
+    
+  }
+
 }
