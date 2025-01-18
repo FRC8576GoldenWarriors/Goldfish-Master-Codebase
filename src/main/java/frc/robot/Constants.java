@@ -10,6 +10,9 @@ import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.LEDPattern.GradientType;
+import edu.wpi.first.wpilibj.util.Color;
 
 public class Constants {
 
@@ -144,7 +147,35 @@ public class Constants {
   public static final class LEDConstants {
     public static final class HardwareConstants {
       public static final int kLEDPort = 0;
-      public static final int kLEDLength = 36;
+      public static final int kLEDLength = 100;
+    }
+
+    public static final class PatternConfig {
+      // robot disabled - scrolling pattern
+      public static final LEDPattern kLEDDisabledPattern = LEDPattern.gradient(GradientType.kContinuous, new Color(255, 90, 0), new Color(241, 174, 92));
+      public static final double kLEDDisabledScrollSpeed = 25;
+      
+      // robot idle (no status) - breathing pattern
+      public static final LEDPattern kLEDIdlePattern = LEDPattern.solid(Color.kRed);
+      public static final double kLEDIdleBreatheSpeed = 2;
+      
+      // lg ground intake
+      public static final LEDPattern kLEDAlgaeIntakePattern = LEDPattern.solid(Color.kAqua);
+      public static final double kLEDAlgaeIntakeBlinkSpeed = 0.075;
+      
+      // lg arm intake
+      public static final LEDPattern kLEDAlgaePincherPattern = LEDPattern.solid(Color.kAqua);
+      public static final double kLEDAlgaePincherBreatheSpeed = 2;
+      
+      // coral
+      public static final LEDPattern kLEDCoralDetectedPattern = LEDPattern.solid(Color.kPurple);
+      public static final double kLEDCoralDetectedBreatheSpeed = 2;
+      
+      // test
+      public static final double kLEDRainbowScrollSize = 0.5; // 0.0 - 1.0
+      public static final int kLEDRainbowScrollSpeed = 150;
+      public static final LEDPattern kLEDProgressGradientPattern = LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed, Color.kBlue);
+      // public static final double kLEDBreatheSpeedSlow = 2;
     }
   }
 
