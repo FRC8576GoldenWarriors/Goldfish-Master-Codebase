@@ -200,5 +200,47 @@ public class Constants {
 
     }
   }
+
+  public static final class GroundIntakeConstants{
+
+
+    public static class HardwareConstants{
+
+      public static final int rollerMotorID = 30;
+      public static final boolean rollerMotorIsInverted = false;
+
+      public static final int pivotMotorID = 31;
+      public static final boolean pivotMotorIsInverted = false;
+
+      public static final int pivotEncoderDIO = 4;
+      public static final double pivotEncoderFullRange = 1.0;
+      public static final double pivotEncoderZero = 0.0; //change to zero position later
+    }
+
+    public static class ControlConstants{
+
+
+    }
+  
+  }
+
+  public static final class ShintakeConstants{
+    public static class HardwareConstants{
+
+      public static final int rollerMotorLowID = 32;
+      public static final boolean rollerMotorLowIsInverted = false;
+    
+      public static final int rollerMotorHighID = 33;
+      public static final boolean rollerMotorHighIsInverted = false;
+
+      public static final int pivotMotorID = 34;
+      public static final boolean pivotMotorIsInverted = false;
+
+      public static final int pivotMotorEncoderDIO = 5;
+      public static final double pivotEncoderFullRange = 1.0;
+      public static final double pivotEncoderZero = 0.0;
+
+    }
+  }
   
 }
