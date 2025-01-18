@@ -24,7 +24,7 @@ public class AlgaePincherIn extends Command {
   @Override
   public void execute() {
     if (!algaePincher.hasAlgae()) {
-      algaePincher.setPincherSpeed(Constants.PincherConstants.pincherInSpeed);
+      algaePincher.setPincherSpeed(Constants.AlgaeArmConstants.PincherConstants.pincherInSpeed);
     }
     else {
       new WaitCommand(0.25); // time needs to be adjusted so it works
