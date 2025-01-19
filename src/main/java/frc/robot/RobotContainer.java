@@ -65,10 +65,10 @@ public class RobotContainer {
       new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
     
     //operator controller
-    operatorController.leftTrigger().whileTrue(new CoralRollerIn(coralRoller));
-    operatorController.rightTrigger().whileTrue(new CoralRollerOut(coralRoller));
-    operatorController.leftBumper().whileTrue(new AlgaePincherIn(algaePincher));
-    operatorController.rightBumper().whileTrue(new AlgaePincherOut(algaePincher));
+    operatorController.leftBumper().whileTrue(new CoralRollerIn(coralRoller));
+    operatorController.rightBumper().whileTrue(new CoralRollerOut(coralRoller));
+    operatorController.y().whileTrue(new AlgaePincherIn(algaePincher));
+    operatorController.b().whileTrue(new AlgaePincherOut(algaePincher));
   }
 
   public Command getAutonomousCommand() {
