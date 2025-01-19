@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -19,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Commands.AlgaePincherIn;
 import frc.robot.Commands.AlgaePincherOut;
 import frc.robot.Commands.CoralRollerIn;
@@ -27,7 +24,7 @@ import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.AlgaePincher;
 import frc.robot.Subsystems.CoralRoller;
-
+import frc.robot.Subsystems.ClimbMech; // Import the ClimbMech subsystem
 
 public class RobotContainer {
 
@@ -42,48 +39,53 @@ public class RobotContainer {
 
   public final UsbCamera camera;
 
-  // subsystems
+  // Subsystems
   public static final CoralRoller coralRoller = new CoralRoller();
   public static final AlgaePincher algaePincher = new AlgaePincher();
+  public static final ClimbMech climbMech = new ClimbMech(); // Add ClimbMech subsystem
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
-   //Add all the choise of Autonomous modes to the Smart Dashboard
+    // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
 
     camera = CameraServer.startAutomaticCapture(0);
     camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
-        
+
     configureBindings();
-    SmartDashboard.putData("Auto Chooser",autoChooser);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureBindings() {
-    //Driver controller
+    // Driver controller
     resetHeading_Start.onTrue(
       new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
     
-    //operator controller
+    // Operator controller
     operatorController.leftBumper().whileTrue(new CoralRollerIn(coralRoller));
     operatorController.rightBumper().whileTrue(new CoralRollerOut(coralRoller));
     operatorController.y().whileTrue(new AlgaePincherIn(algaePincher));
     operatorController.b().whileTrue(new AlgaePincherOut(algaePincher));
+
+    // ClimbMech bindings
+    operatorController.a().whileTrue(new RunCommand(climbMech::windRope, climbMech)); // A button winds the rope
+    operatorController.x().whileTrue(new RunCommand(climbMech::unwindRope, climbMech)); // X button unwinds the rope
+    operatorController.back().onTrue(new InstantCommand(climbMech::stop, climbMech)); // Back button stops the motor
   }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
 
+  public void registerNamedCommands() {
+    NamedCommands.registerCommand("Reset Swerve Encoders", new InstantCommand(() -> m_drivetrain.resetAllEncoders())
+        .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-  public void registerNamedCommands(){
-    NamedCommands.registerCommand("Reset Swerve Encoders", new InstantCommand(()->m_drivetrain.resetAllEncoders()).
-    withDeadline(new InstantCommand(()-> new WaitCommand(0.1))));
+    NamedCommands.registerCommand("Reset Heading", new InstantCommand(() -> m_drivetrain.zeroHeading())
+        .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-    NamedCommands.registerCommand("Reset Heading", new InstantCommand(()->m_drivetrain.zeroHeading()).
-    withDeadline(new InstantCommand(()-> new WaitCommand(0.1))));
-
-    NamedCommands.registerCommand("Auton Reset", new InstantCommand(()->m_drivetrain.autonReset()).
-    withDeadline(new InstantCommand(()->new WaitCommand(0.1))));
+    NamedCommands.registerCommand("Auton Reset", new InstantCommand(() -> m_drivetrain.autonReset())
+        .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
   }
 }
