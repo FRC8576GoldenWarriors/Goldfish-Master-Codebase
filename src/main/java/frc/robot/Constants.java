@@ -43,6 +43,8 @@ public class Constants {
       public static final double kPVisionTurning = 0.01;
       public static final double kPVisionMoving = 0.5;
     }
+
+    public static final boolean driverMode = true;
  }
 
   public class ControllerConstants{
