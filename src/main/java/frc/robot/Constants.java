@@ -215,10 +215,21 @@ public class Constants {
       public static final int pivotEncoderDIO = 4;
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0; //change to zero position later
+
+      public static final int digitalInputDIO = 5;
     }
 
     public static class ControlConstants{
 
+      public static final double groundIntakeUpPosition = 0.0;
+      public static final double groundIntakeDownPosition = 0.25;
+
+
+
+      public static final double groundIntakeInSpeed = 0.5;
+      public static final double groundIntakeOutSpeed = -0.5;
+
+      
 
     }
   
@@ -238,7 +249,7 @@ public class Constants {
 
       public static final int pivotMotorEncoderDIO = 5;
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = 0.0;
+      public static final double pivotEncoderZero = 0.0; //change
 
     }
   }
