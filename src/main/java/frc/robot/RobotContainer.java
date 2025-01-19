@@ -36,7 +36,7 @@ public class RobotContainer {
 
   public final SendableChooser<Command> autoChooser;
 
-  public final UsbCamera camera;
+  //public final UsbCamera camera;
 
 
   public RobotContainer() {
@@ -44,9 +44,9 @@ public class RobotContainer {
    //Add all the choise of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    camera = CameraServer.startAutomaticCapture(0);
-    camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
+    // camera = CameraServer.startAutomaticCapture(0);
+    // camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    // camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
 
     
     
