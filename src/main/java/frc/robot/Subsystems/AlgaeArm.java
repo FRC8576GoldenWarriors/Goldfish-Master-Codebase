@@ -23,7 +23,7 @@ public class AlgaeArm extends SubsystemBase {
     armMotor = new WarriorSparkMax(Constants.AlgaeArmConstants.ArmConstants.armMotorID, 
     MotorType.kBrushless, 
     Constants.AlgaeArmConstants.ArmConstants.motorIsInverted, 
-    IdleMode.kBrake
+    IdleMode.kBrake, 40
   );
 
     armAbsEncoder = new DutyCycleEncoder(Constants.AlgaeArmConstants.ArmConstants.armEncoderDIO);
@@ -50,7 +50,7 @@ public class AlgaeArm extends SubsystemBase {
 
   //radians per second
   public double getArmVelocity(){
-   return getMotor().getEncoder().getVelocity()/60; //rpm/60 
+   return (getMotor().getEncoder().getVelocity()/60.0); //rpm/60 
 
   }
   

@@ -7,18 +7,23 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
 
+
 public class GroundIntake extends SubsystemBase {
 
-  WarriorSparkMax pivotMotor;
-  WarriorSparkMax rollerMotor;
+  private WarriorSparkMax pivotMotor;
+  private WarriorSparkMax rollerMotor;
 
-  DutyCycleEncoder encoder;
-  
+  private DutyCycleEncoder encoder;
+
+  private DigitalInput algaeSensor;
+
 
   public GroundIntake() {
     pivotMotor = new WarriorSparkMax(
@@ -40,7 +45,10 @@ public class GroundIntake extends SubsystemBase {
       Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderFullRange,
       Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderZero
     );
-    
+
+    algaeSensor = new DigitalInput(Constants.GroundIntakeConstants.HardwareConstants.digitalInputDIO);
+   
+
   }
 
   @Override
@@ -62,6 +70,10 @@ public class GroundIntake extends SubsystemBase {
 
   public DutyCycleEncoder getEncoder(){
     return encoder;
+  }
+
+  public DigitalInput getDigitalInput(){
+    return algaeSensor;
   }
 
 
