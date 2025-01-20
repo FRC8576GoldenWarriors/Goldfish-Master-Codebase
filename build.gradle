@@ -148,4 +148,5 @@ spotless {
         indentWithSpaces(2)
         endWithNewline()
     }
+
 }
