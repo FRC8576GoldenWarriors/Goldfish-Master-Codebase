@@ -360,9 +360,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void autonReset() {
-    Pose2d pose = AutoBuilder.getCurrentPose();
-    double[] xy = {pose.getX(), pose.getY()};
-    Pose2d calcpose = new Pose2d(xy[0], xy[1], Rotation2d.fromDegrees(180));
+    Pose2d calcpose = new Pose2d(8, 7, Rotation2d.fromDegrees(180));
     odometry.resetPose(calcpose);
   }
 

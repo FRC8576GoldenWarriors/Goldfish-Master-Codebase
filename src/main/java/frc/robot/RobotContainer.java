@@ -75,6 +75,6 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "Auton Reset",
         new InstantCommand(() -> m_drivetrain.autonReset())
-            .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+            .withDeadline(new InstantCommand(() -> new WaitCommand(2))));
   }
 }

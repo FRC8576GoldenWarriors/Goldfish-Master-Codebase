@@ -9,12 +9,6 @@
           "data": {
             "pathName": "test from mid path 1"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "test from mid path 2"
-          }
         }
       ]
     }
