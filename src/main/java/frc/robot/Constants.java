@@ -43,6 +43,8 @@ public class Constants {
       public static final double kPVisionTurning = 0.01;
       public static final double kPVisionMoving = 0.5;
     }
+
+    public static final boolean driverMode = true;
  }
 
   public class ControllerConstants{
@@ -139,6 +141,22 @@ public class Constants {
       new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2)
     );
 
+  }
+
+  public static final class CoralRollerConstants{
+    
+  }
+
+  public static final class AlgaeArmConstants{
+
+  }
+
+  public static final class AlgaeShintakeConstants{
+
+  }
+
+  public static final class ClimberConstants{
+    
   }
 
 }
