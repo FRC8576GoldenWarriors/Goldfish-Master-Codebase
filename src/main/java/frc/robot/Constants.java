@@ -91,10 +91,10 @@ public class Constants {
 
     public static final int PIGEON_ID = 0;
 
-    public static double LEFT_FRONT_OFFSET = -0.482422; // -0.344971;//0.228027;
-    public static double RIGHT_FRONT_OFFSET = -0.482178; // -0.397217;//-0.099609;
-    public static double LEFT_BACK_OFFSET = 0.000977; // 0.032959;//-0.000244;
-    public static double RIGHT_BACK_OFFSET = 0.479736; // -0.324463;//-0.113525;
+    public static double LEFT_FRONT_OFFSET = 0.499023;//-0.482422; // -0.344971;//0.228027;
+    public static double RIGHT_FRONT_OFFSET = 0.011475;//-0.482178; // -0.397217;//-0.099609;
+    public static double LEFT_BACK_OFFSET = -0.000244;//0.478027;//0.000977; // 0.032959;//-0.000244;
+    public static double RIGHT_BACK_OFFSET = -0.024902;//0.479736; // -0.324463;//-0.113525;
 
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00);
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
