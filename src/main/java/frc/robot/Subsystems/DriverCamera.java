@@ -7,7 +7,7 @@ import org.photonvision.PhotonCamera;
 
 public class DriverCamera extends SubsystemBase {
 
-  private PhotonCamera m_arduCam;
+  private PhotonCamera m_arduCm;
   private ShuffleboardTab m_tab;
 
   public DriverCamera(String cameraName) {
