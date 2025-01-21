@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,7 +51,11 @@ public class RobotContainer {
   private void configureBindings() {
     // Driver controller
     resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-
+    if (DriverStation.getMatchTime() == 20
+        || DriverStation.getMatchTime() == 19 && DriverStation.isTeleop()) {
+      driverController.setRumble(RumbleType.kBothRumble, 0.8);
+      operatorController.setRumble(RumbleType.kBothRumble, 0.8);
+    }
     // driverController.a().onTrue(new AdjustRobotPos(m_drivetrain, m_aprilTagStats, 15));
     // driverController.a().and(driverController.b()).onTrue(new AdjustRobotPos(m_drivetrain,
     // m_aprilTagStats, -15));

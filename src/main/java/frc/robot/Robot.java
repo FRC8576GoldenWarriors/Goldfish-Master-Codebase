@@ -25,16 +25,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
     SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
     SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
     CommandScheduler.getInstance().run();
   }
 
   @Override
-  public void disabledInit() {
-    // rushaank x vamsi
-  }
+  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}
