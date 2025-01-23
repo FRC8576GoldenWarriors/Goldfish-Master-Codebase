@@ -1,68 +1,60 @@
 package frc.robot.Subsystems;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType; 
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode; 
-import com.revrobotics.RelativeEncoder; 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimbMech extends SubsystemBase {
 
-    private final WarriorSparkMax climbMotor;
-    private final RelativeEncoder climbEncoder;
+  private final WarriorSparkMax climbMotor;
+  private final RelativeEncoder climbEncoder;
 
-    public ClimbMech() {
-        
-        climbMotor = new WarriorSparkMax(
+  public ClimbMech() {
+
+    climbMotor =
+        new WarriorSparkMax(
             Constants.ClimberConstants.motorID,
-            MotorType.kBrushless, 
+            MotorType.kBrushless,
             Constants.ClimberConstants.motorIsInverted,
-            IdleMode.kBrake 
-        );
+            IdleMode.kBrake);
 
-        
-        climbEncoder = climbMotor.getEncoder();
-    }
+    climbEncoder = climbMotor.getEncoder();
+  }
 
-    
-    public void windRope() {
-        climbMotor.set(0.5); // Adjust speed as needed
-    }
+  public void windRope() {
+    climbMotor.set(0.5); // Adjust speed as needed
+  }
 
-    
-    public void unwindRope() {
-        climbMotor.set(-0.5); // Adjust speed as needed
-    }
+  public void unwindRope() {
+    climbMotor.set(-0.5); // Adjust speed as needed
+  }
 
-    
-    public void stop() {
-        climbMotor.set(0);
-    }
+  public void stop() {
+    climbMotor.set(0);
+  }
 
-    
-    public void setMotorVoltage(double voltage) {
-        climbMotor.setVoltage(voltage);
-    }
+  public void setMotorVoltage(double voltage) {
+    climbMotor.setVoltage(voltage);
+  }
 
-    
-    public double getEncoderPosition() {
-        return climbEncoder.getPosition(); 
-    }
+  public double getEncoderPosition() {
+    return climbEncoder.getPosition();
+  }
 
-    
-    public double getEncoderVelocity() {
-        return climbEncoder.getVelocity(); 
-    }
+  public double getEncoderVelocity() {
+    return climbEncoder.getVelocity();
+  }
 
-    // Reset the encoder to zero
-    public void resetEncoder() {
-        climbEncoder.setPosition(0);
-    }
+  // Reset the encoder to zero
+  public void resetEncoder() {
+    climbEncoder.setPosition(0);
+  }
 
-    @Override
-    public void periodic() {
-        // Optionally log encoder values to SmartDashboard or other telemetry
-    }
+  @Override
+  public void periodic() {
+    // Optionally log encoder values to SmartDashboard or other telemetry
+  }
 }
- 

@@ -14,9 +14,10 @@ import frc.robot.Subsystems.Drivetrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  
+
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
   private RobotContainer m_robotContainer;
+
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -42,14 +43,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    
+
     m_drivetrain.resetAllEncoders();
     m_drivetrain.setAllIdleMode(true);
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    
+
     m_drivetrain.zeroHeading();
   }
 
@@ -61,14 +62,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
 
     m_drivetrain.resetAllEncoders();
     m_drivetrain.setAllIdleMode(true);
-
   }
 
   @Override

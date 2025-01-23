@@ -17,7 +17,7 @@ public class CoralRollerOut extends Command {
 
   public CoralRollerOut(CoralRoller coralRoller) {
     this.coralRoller = coralRoller;
-    
+
     isFinished = false;
 
     addRequirements(coralRoller);
@@ -26,7 +26,7 @@ public class CoralRollerOut extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //dunno what to put here since we don't have an encoder associated with this
+    // dunno what to put here since we don't have an encoder associated with this
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,8 +34,7 @@ public class CoralRollerOut extends Command {
   public void execute() {
     if (coralRoller.hasCoral()) {
       coralRoller.setRollerSpeed(Constants.CoralRollerConstants.coralIntakeOutSpeed);
-    }
-    else {
+    } else {
       isFinished = true;
     }
   }

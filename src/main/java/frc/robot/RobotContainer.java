@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
@@ -11,29 +10,32 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Commands.AlgaePincherIn;
 import frc.robot.Commands.AlgaePincherOut;
 import frc.robot.Commands.CoralRollerIn;
 import frc.robot.Commands.CoralRollerOut;
 import frc.robot.Commands.SwerveDrive;
-import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.AlgaePincher;
-import frc.robot.Subsystems.CoralRoller;
 import frc.robot.Subsystems.ClimbMech; // Import the ClimbMech subsystem
+import frc.robot.Subsystems.CoralRoller;
+import frc.robot.Subsystems.Drivetrain;
 
 public class RobotContainer {
 
   public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
 
-  public static final CommandXboxController driverController = new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
-  public static final CommandXboxController operatorController = new CommandXboxController(Constants.ControllerConstants.operatorControllerPort);
+  public static final CommandXboxController driverController =
+      new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
+  public static final CommandXboxController operatorController =
+      new CommandXboxController(Constants.ControllerConstants.operatorControllerPort);
 
-  private final JoystickButton resetHeading_Start = new JoystickButton(driverController.getHID(), XboxController.Button.kStart.value);
+  private final JoystickButton resetHeading_Start =
+      new JoystickButton(driverController.getHID(), XboxController.Button.kStart.value);
 
   public final SendableChooser<Command> autoChooser;
 
@@ -59,9 +61,8 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Driver controller
-    resetHeading_Start.onTrue(
-      new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-    
+    resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
+
     // Operator controller
     operatorController.leftBumper().whileTrue(new CoralRollerIn(coralRoller));
     operatorController.rightBumper().whileTrue(new CoralRollerOut(coralRoller));
@@ -69,9 +70,15 @@ public class RobotContainer {
     operatorController.b().whileTrue(new AlgaePincherOut(algaePincher));
 
     // ClimbMech bindings
-    operatorController.a().whileTrue(new RunCommand(climbMech::windRope, climbMech)); // A button winds the rope
-    operatorController.x().whileTrue(new RunCommand(climbMech::unwindRope, climbMech)); // X button unwinds the rope
-    operatorController.back().onTrue(new InstantCommand(climbMech::stop, climbMech)); // Back button stops the motor
+    operatorController
+        .a()
+        .whileTrue(new RunCommand(climbMech::windRope, climbMech)); // A button winds the rope
+    operatorController
+        .x()
+        .whileTrue(new RunCommand(climbMech::unwindRope, climbMech)); // X button unwinds the rope
+    operatorController
+        .back()
+        .onTrue(new InstantCommand(climbMech::stop, climbMech)); // Back button stops the motor
   }
 
   public Command getAutonomousCommand() {
@@ -79,13 +86,19 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
-    NamedCommands.registerCommand("Reset Swerve Encoders", new InstantCommand(() -> m_drivetrain.resetAllEncoders())
-        .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+    NamedCommands.registerCommand(
+        "Reset Swerve Encoders",
+        new InstantCommand(() -> m_drivetrain.resetAllEncoders())
+            .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-    NamedCommands.registerCommand("Reset Heading", new InstantCommand(() -> m_drivetrain.zeroHeading())
-        .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+    NamedCommands.registerCommand(
+        "Reset Heading",
+        new InstantCommand(() -> m_drivetrain.zeroHeading())
+            .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-    NamedCommands.registerCommand("Auton Reset", new InstantCommand(() -> m_drivetrain.autonReset())
-        .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+    NamedCommands.registerCommand(
+        "Auton Reset",
+        new InstantCommand(() -> m_drivetrain.autonReset())
+            .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
   }
 }

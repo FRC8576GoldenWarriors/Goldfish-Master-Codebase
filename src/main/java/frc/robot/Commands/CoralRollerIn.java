@@ -26,22 +26,21 @@ public class CoralRollerIn extends Command {
 
   @Override
   public void initialize() {
-    //dunno what to put here since we don't have an encoder associated with this
+    // dunno what to put here since we don't have an encoder associated with this
   }
 
   @Override
   public void execute() {
     if (!coralRoller.hasCoral()) {
       coralRoller.setRollerSpeed(Constants.CoralRollerConstants.coralIntakeInSpeed);
-    }
-    else {
+    } else {
       isFinished = true;
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    
+
     new WaitCommand(0.25);
 
     coralRoller.setRollerSpeed(0);

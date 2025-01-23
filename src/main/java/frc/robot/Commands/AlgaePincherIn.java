@@ -10,7 +10,7 @@ import frc.robot.Constants;
 import frc.robot.Subsystems.AlgaePincher;
 
 public class AlgaePincherIn extends Command {
-  
+
   private AlgaePincher algaePincher;
 
   private boolean isFinished;
@@ -21,7 +21,6 @@ public class AlgaePincherIn extends Command {
     isFinished = false;
 
     addRequirements(algaePincher);
-
   }
 
   @Override
@@ -31,8 +30,7 @@ public class AlgaePincherIn extends Command {
   public void execute() {
     if (!algaePincher.hasAlgae()) {
       algaePincher.setPincherSpeed(Constants.AlgaeArmConstants.PincherConstants.pincherInSpeed);
-    }
-    else {
+    } else {
       isFinished = true;
     }
   }
@@ -42,7 +40,7 @@ public class AlgaePincherIn extends Command {
   public void end(boolean interrupted) {
 
     new WaitCommand(0.25);
-    
+
     algaePincher.setPincherSpeed(0);
   }
 

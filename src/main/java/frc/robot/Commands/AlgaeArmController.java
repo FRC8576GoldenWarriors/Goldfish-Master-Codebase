@@ -24,29 +24,26 @@ public class AlgaeArmController extends Command {
   private double setpoint;
   private double voltage;
 
-
   public AlgaeArmController(AlgaeArm algaeArm, double setpoint) {
-    
+
     this.algaeArm = algaeArm;
 
-    this.feedForward = new ArmFeedforward(
-      Constants.AlgaeArmConstants.ArmConstants.kS, 
-      Constants.AlgaeArmConstants.ArmConstants.kG,
-      Constants.AlgaeArmConstants.ArmConstants.kV, 
-      Constants.AlgaeArmConstants.ArmConstants.kA
-    );
+    this.feedForward =
+        new ArmFeedforward(
+            Constants.AlgaeArmConstants.ArmConstants.kS,
+            Constants.AlgaeArmConstants.ArmConstants.kG,
+            Constants.AlgaeArmConstants.ArmConstants.kV,
+            Constants.AlgaeArmConstants.ArmConstants.kA);
 
-    this.feedback = new PIDController(
-      Constants.AlgaeArmConstants.ArmConstants.kP, 
-      Constants.AlgaeArmConstants.ArmConstants.kI, 
-      Constants.AlgaeArmConstants.ArmConstants.kD
-    );
-
+    this.feedback =
+        new PIDController(
+            Constants.AlgaeArmConstants.ArmConstants.kP,
+            Constants.AlgaeArmConstants.ArmConstants.kI,
+            Constants.AlgaeArmConstants.ArmConstants.kD);
 
     this.setpoint = setpoint;
 
     this.encoder = algaeArm.getEncoder();
-
 
     addRequirements(algaeArm);
   }
@@ -59,9 +56,10 @@ public class AlgaeArmController extends Command {
   @Override
   public void execute() {
 
-    voltage = feedForward.calculate(encoder.get(), algaeArm.getArmVelocity()) + feedback.calculate(encoder.get(), setpoint);
+    voltage =
+        feedForward.calculate(encoder.get(), algaeArm.getArmVelocity())
+            + feedback.calculate(encoder.get(), setpoint);
     algaeArm.setArmVoltage(voltage);
-
   }
 
   // Called once the command ends or is interrupted.
@@ -73,7 +71,8 @@ public class AlgaeArmController extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return encoder.get()>Constants.AlgaeArmConstants.ArmConstants.highSoftStopPosition
-    || encoder.get()<Constants.AlgaeArmConstants.ArmConstants.lowSoftStopPositon; //make constant later
+    return encoder.get() > Constants.AlgaeArmConstants.ArmConstants.highSoftStopPosition
+        || encoder.get()
+            < Constants.AlgaeArmConstants.ArmConstants.lowSoftStopPositon; // make constant later
   }
 }

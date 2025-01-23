@@ -11,10 +11,10 @@ import frc.robot.Subsystems.AlgaePincher;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AlgaePincherOut extends Command {
-  
+
   private AlgaePincher algaePincher;
 
-  private boolean isFinished; 
+  private boolean isFinished;
 
   public AlgaePincherOut(AlgaePincher algaePincher) {
     this.algaePincher = algaePincher;
@@ -31,8 +31,7 @@ public class AlgaePincherOut extends Command {
   public void execute() {
     if (algaePincher.hasAlgae()) {
       algaePincher.setPincherSpeed(Constants.AlgaeArmConstants.PincherConstants.pincherOutSpeed);
-    }
-    else {
+    } else {
       isFinished = true;
     }
   }
