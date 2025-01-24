@@ -11,31 +11,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
 
-public class CoralRoller extends SubsystemBase {
+public class EndEffector extends SubsystemBase {
 
-  private WarriorSparkMax coralRoller;
+  private WarriorSparkMax pincherMotor;
   private DigitalInput intakeSensor;
 
-  public CoralRoller() {
-    coralRoller =
+  public EndEffector() {
+
+    pincherMotor =
         new WarriorSparkMax(
-            Constants.CoralRollerConstants.coralRollerID,
+            Constants.AlgaeArmConstants.PincherConstants.pincherID,
             MotorType.kBrushless,
-            Constants.CoralRollerConstants.motorIsInverted,
+            Constants.AlgaeArmConstants.PincherConstants.motorIsInverted,
             IdleMode.kBrake);
 
-    intakeSensor = new DigitalInput(Constants.CoralRollerConstants.coralRollerDigiSensorID);
+    intakeSensor =
+        new DigitalInput(Constants.AlgaeArmConstants.PincherConstants.pincherDigiSensorID);
   }
 
-  public void setRollerSpeed(double speed) {
-    coralRoller.set(speed);
+  public void setPincherSpeed(double speed) {
+    pincherMotor.set(speed);
   }
 
   public DigitalInput getDigitalInput() {
     return intakeSensor;
   }
 
-  public boolean hasCoral() {
+  public boolean hasAlgae() {
     return intakeSensor.get();
   }
 

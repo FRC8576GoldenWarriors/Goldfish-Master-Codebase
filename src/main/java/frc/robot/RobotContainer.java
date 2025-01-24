@@ -17,12 +17,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlgaePincherIn;
 import frc.robot.Commands.AlgaePincherOut;
-import frc.robot.Commands.CoralRollerIn;
-import frc.robot.Commands.CoralRollerOut;
 import frc.robot.Commands.SwerveDrive;
-import frc.robot.Subsystems.AlgaePincher;
+import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.ClimbMech; // Import the ClimbMech subsystem
-import frc.robot.Subsystems.CoralRoller;
+import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.Drivetrain;
 
 public class RobotContainer {
@@ -42,8 +40,7 @@ public class RobotContainer {
   public final UsbCamera camera;
 
   // Subsystems
-  public static final CoralRoller coralRoller = new CoralRoller();
-  public static final AlgaePincher algaePincher = new AlgaePincher();
+  public static final EndEffector algaePincher = new EndEffector();
   public static final ClimbMech climbMech = new ClimbMech(); // Add ClimbMech subsystem
 
   public RobotContainer() {
@@ -64,8 +61,7 @@ public class RobotContainer {
     resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
 
     // Operator controller
-    operatorController.leftBumper().whileTrue(new CoralRollerIn(coralRoller));
-    operatorController.rightBumper().whileTrue(new CoralRollerOut(coralRoller));
+    //operatorController.leftBumper().whileTrue(new EndEffector(coralRoller));
     operatorController.y().whileTrue(new AlgaePincherIn(algaePincher));
     operatorController.b().whileTrue(new AlgaePincherOut(algaePincher));
 
