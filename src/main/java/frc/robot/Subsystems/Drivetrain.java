@@ -423,7 +423,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetPose2d(Pose2d pose) {
-    odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
+    odometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
   }
 
   public ChassisSpeeds getRobotRelativeSpeeds() {

@@ -34,7 +34,6 @@ public class RobotContainer {
   public final SendableChooser<Command> autoChooser;
 
   // public final UsbCamera camera;
-
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
     // Add all the choise of Autonomous modes to the Smart Dashboard
