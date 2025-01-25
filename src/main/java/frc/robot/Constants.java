@@ -151,26 +151,44 @@ public class Constants {
     }
 
     public static final class PatternConfig {
-      // robot disabled - scrolling pattern
-      public static final LEDPattern kLEDDisabledPattern = LEDPattern.gradient(GradientType.kContinuous, new Color(255, 90, 0), new Color(241, 174, 92));
-      public static final double kLEDDisabledPatternSpeed = 25;
+      // climbing
+      // rainbowScroll() in LEDStrip
+
+      // Drivetrain posed and shooter rpm ready
+      public static final LEDPattern kLEDPosedSolid = LEDPattern.solid(Color.kGreen);
       
-      // robot idle (no status) - breathing pattern
-      public static final LEDPattern kLEDNoStatusPattern = LEDPattern.solid(Color.kRed);
-      public static final double kLEDNoStatusPatternSpeed = 2;
+      // Drivetrain posing or Shooter revving
+      public static final LEDPattern kLEDPosingBlink = LEDPattern.solid(Color.kYellow);
+      public static final double kLEDPosingBlinkSpeed = 0.075;
+
+      // VISION searching for target
+      public static final LEDPattern kLEDVisionSearchingBlink = LEDPattern.solid(Color.kWhite);
+      public static final double kLEDVisionSearchingBlinkSpeed = 0.075;
       
       // lg ground intake
-      public static final LEDPattern kLEDAlgaeIntakePattern = LEDPattern.solid(Color.kAqua);
-      public static final double kLEDAlgaeIntakePatternSpeed = 0.075;
+      public static final LEDPattern kLEDAlgaeShintakeBreathe = LEDPattern.solid(Color.kAqua);
+      public static final double kLEDAlgaeShintakeBreatheSpeed = 2;
       
       // lg arm intake
-      public static final LEDPattern kLEDAlgaePincherPattern = LEDPattern.solid(Color.kAqua);
-      public static final double kLEDAlgaePincherPatternSpeed = 2;
+      public static final LEDPattern kLEDAlgaePincherBlink = LEDPattern.solid(Color.kAqua);
+      public static final double kLEDAlgaePincherBlinkSpeed = 0.075;
       
-      // coral
-      public static final LEDPattern kLEDCoralDetectedPattern = LEDPattern.solid(Color.kPurple);
-      public static final double kLEDCoralDetectedPatternSpeed = 2;
-      
+      // coral photoeletric detects coral
+      public static final LEDPattern kLEDCoralDetectedBreathe = LEDPattern.solid(Color.kPurple);
+      public static final double kLEDCoralDetectedBreatheSpeed = 2;
+
+      // coral intake running
+      public static final LEDPattern kLEDCoralIntakeBlink = LEDPattern.solid(Color.kPurple);
+      public static final double kLEDCoralIntakeBlinkSpeed = 0.075;
+
+      // robot idle (no status) - breathing pattern
+      public static final LEDPattern kLEDNoStatusBreathe = LEDPattern.solid(Color.kRed);
+      public static final double kLEDNoStatusBreatheSpeed = 2;  
+
+      // robot disabled - scrolling pattern
+      public static final LEDPattern kLEDDisabledScroll = LEDPattern.gradient(GradientType.kContinuous, new Color(255, 90, 0), new Color(241, 174, 92));
+      public static final double kLEDDisabledScrollSpeed = 25;
+
       // test
       public static final double kLEDRainbowScrollSize = 0.5; // 0.0 - 1.0
       public static final int kLEDRainbowScrollSpeed = 150;
