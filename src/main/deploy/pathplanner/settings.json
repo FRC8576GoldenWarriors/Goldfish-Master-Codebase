@@ -1,11 +1,15 @@
 {
-  "robotWidth": 0.818,
-  "robotLength": 0.716,
+  "robotWidth": 0.787,
+  "robotLength": 0.787,
   "holonomicMode": true,
   "pathFolders": [
-    "debug paths"
+    "Coral Spam B1 Left Station Paths",
+    "Coral Spam B1 Right Station Paths",
+    "Coral Spam B3 Right Station Paths"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Coral Spam Autos"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
@@ -20,14 +24,14 @@
   "driveMotorType": "NEO",
   "driveCurrentLimit": 60.0,
   "wheelCOF": 1.2,
-  "flModuleX": 0.254,
-  "flModuleY": 0.318,
-  "frModuleX": 0.254,
-  "frModuleY": -0.318,
-  "blModuleX": -0.254,
-  "blModuleY": 0.318,
-  "brModuleX": -0.254,
-  "brModuleY": -0.318,
+  "flModuleX": 0.3,
+  "flModuleY": 0.3,
+  "frModuleX": 0.3,
+  "frModuleY": -0.3,
+  "blModuleX": -0.3,
+  "blModuleY": 0.3,
+  "brModuleX": -0.3,
+  "brModuleY": -0.3,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
   "robotFeatures": []

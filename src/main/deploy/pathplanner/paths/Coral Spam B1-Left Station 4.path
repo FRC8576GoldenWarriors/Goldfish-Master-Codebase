@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 7.0
+        "x": 3.871,
+        "y": 5.595
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.0,
-        "y": 7.0
+        "x": 2.408250000003214,
+        "y": 6.871999999994964
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.378340292275574,
-        "y": 7.0
+        "x": 1.336,
+        "y": 7.038
       },
       "prevControl": {
-        "x": 5.378340292275574,
-        "y": 7.0
+        "x": 2.2425000000032136,
+        "y": 5.5752499999949645
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -55.0
   },
   "reversed": false,
-  "folder": "debug paths",
+  "folder": "Coral Spam B1 Left Station Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }
