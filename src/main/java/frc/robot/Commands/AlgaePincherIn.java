@@ -19,6 +19,7 @@ public class AlgaePincherIn extends Command {
     this.algaePincher = algaePincher;
 
     isFinished = false;
+    
 
     addRequirements(algaePincher);
   }

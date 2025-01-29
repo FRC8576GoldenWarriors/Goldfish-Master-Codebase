@@ -280,12 +280,12 @@ public class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final double changeY;
+    public static final double changeY = -1; //CHANGE
     public static final double gravity = 9.81;
     public static final double accelerationX = 0;
     public static final double accelerationY = 0;
     public static final double flywheelDiameter = Units.inchesToMeters(4.0);
-    public static final double algaeHoldingHeight;
-    public static final double bargeHeight;
+    public static final double algaeHoldingHeight = -1; //CHANGE
+    public static final double bargeHeight = -1; //CHANGE 
   }
 }

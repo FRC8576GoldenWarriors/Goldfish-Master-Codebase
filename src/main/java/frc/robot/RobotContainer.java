@@ -2,10 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
-import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,7 +17,6 @@ import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
 import frc.robot.Subsystems.ClimbMech; // Import the ClimbMech subsystem
-import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.Drivetrain;
 
 public class RobotContainer {
@@ -38,7 +33,6 @@ public class RobotContainer {
 
   public final SendableChooser<Command> autoChooser;
 
-  public final UsbCamera camera;
 
   // Subsystems
   public static final EndEffector algaePincher = new EndEffector();
@@ -49,10 +43,6 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
     // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
-
-    camera = CameraServer.startAutomaticCapture(0);
-    camera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    camera.setVideoMode(PixelFormat.kMJPEG, 400, 400, 40);
 
     configureBindings();
     SmartDashboard.putData("Auto Chooser", autoChooser);
