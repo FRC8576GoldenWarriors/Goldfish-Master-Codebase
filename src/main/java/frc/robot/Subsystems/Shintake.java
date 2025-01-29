@@ -21,7 +21,7 @@ public class Shintake extends SubsystemBase {
 
   private DutyCycleEncoder encoder;
 
-  private InterpolatingDoubleTreeMap voltageToRPM;
+  private InterpolatingDoubleTreeMap RPMtoVoltage;
 
   public Shintake() {
     lowerRollerMotor =
@@ -54,9 +54,9 @@ public class Shintake extends SubsystemBase {
             Constants.ShintakeConstants.HardwareConstants.pivotEncoderFullRange,
             Constants.ShintakeConstants.HardwareConstants.pivotEncoderZero);
 
-    voltageToRPM = new InterpolatingDoubleTreeMap(); // use to interpolate (volts, rpm) values
+    RPMtoVoltage = new InterpolatingDoubleTreeMap(); // use to interpolate (volts, rpm) values
 
-    voltageToRPM.put(Double.valueOf(0), Double.valueOf(0)); // (0 volts, 0 rpm)
+    RPMtoVoltage.put(Double.valueOf(0), Double.valueOf(0)); // (0 rpm, 0 voltage)
   }
 
   @Override
@@ -86,6 +86,15 @@ public class Shintake extends SubsystemBase {
 
   public void setUpperRollerVoltage(double voltage) {
     upperRollerMotor.setVoltage(voltage);
+  }
+
+  public void setRollersVoltage(double voltage){
+    setLowerRollerVoltage(voltage);
+    setUpperRollerVoltage(voltage);
+  }
+
+  public double calculateMotorVoltage(double rpm){
+    return RPMtoVoltage.get(Double.valueOf(rpm));
   }
 
   public DutyCycleEncoder getEncoder() {

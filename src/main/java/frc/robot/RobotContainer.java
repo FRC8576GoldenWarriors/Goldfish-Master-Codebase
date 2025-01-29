@@ -19,6 +19,7 @@ import frc.robot.Commands.AlgaePincherIn;
 import frc.robot.Commands.AlgaePincherOut;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.EndEffector;
+import frc.robot.Subsystems.GroundIntake;
 import frc.robot.Subsystems.ClimbMech; // Import the ClimbMech subsystem
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.Drivetrain;
@@ -42,6 +43,7 @@ public class RobotContainer {
   // Subsystems
   public static final EndEffector algaePincher = new EndEffector();
   public static final ClimbMech climbMech = new ClimbMech(); // Add ClimbMech subsystem
+  public static final GroundIntake m_groundIntake = new GroundIntake();
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
