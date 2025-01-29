@@ -7,15 +7,15 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.Subsystems.AlgaePincher;
+import frc.robot.Subsystems.EndEffector;
 
 public class AlgaePincherIn extends Command {
 
-  private AlgaePincher algaePincher;
+  private EndEffector algaePincher;
 
   private boolean isFinished;
 
-  public AlgaePincherIn(AlgaePincher algaePincher) {
+  public AlgaePincherIn(EndEffector algaePincher) {
     this.algaePincher = algaePincher;
 
     isFinished = false;

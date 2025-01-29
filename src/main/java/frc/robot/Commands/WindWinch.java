@@ -1,12 +1,13 @@
-package frc.robot.commands;
+package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClimbMech;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Subsystems.ClimbMech;
 
-public class WindRope extends CommandBase {
+
+public class WindWinch extends Command {
   private final ClimbMech climbMech;
 
-  public WindRope(ClimbMech climbMech) {
+  public WindWinch(ClimbMech climbMech) {
     this.climbMech = climbMech;
     addRequirements(climbMech);
   }
