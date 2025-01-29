@@ -128,33 +128,6 @@ public class Drivetrain extends SubsystemBase {
       e.printStackTrace();
     }
 
-    // test
-    // AutoBuilder.configure(
-    //         this::getPose2d, // Robot pose supplier
-    //         this::resetPose2d, // Method to reset odometry (will be called if your auto has a
-    // starting pose)
-    //         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE
-    // ChassisSpeeds. Also optionally outputs individual module feedforwards
-    //         Constants.SwerveConstants.pid_controls,
-    //         config, // The robot configuration
-    //         () -> {
-    //           // Boolean supplier that controls when the path will be mirrored for the red
-    // alliance
-    //           // This will flip the path being followed to the red side of the field.
-    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-    //           var alliance = DriverStation.getAlliance();
-    //           if (alliance.isPresent()) {
-    //             return alliance.get() == DriverStation.Alliance.Red;
-    //           }
-    //           return false;
-    //         },
-    //         this // Reference to this subsystem to set requirements
-    // );
-
-    // original
-    // Configure AutoBuilder last
     AutoBuilder.configure(
         this::getPose2d, // Robot pose supplier
         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
@@ -179,6 +152,8 @@ public class Drivetrain extends SubsystemBase {
         },
         this // Reference to this subsystem to set requirements
         );
+
+        
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
         NetworkTableInstance.getDefault()
@@ -432,6 +407,8 @@ public class Drivetrain extends SubsystemBase {
   public ChassisSpeeds getRobotRelativeSpeeds() {
     return Constants.SwerveConstants.DRIVE_KINEMATICS.toChassisSpeeds(getModuleStates());
   }
+
+
 
   public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
     SwerveModuleState[] moduleStates =
