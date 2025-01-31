@@ -155,8 +155,8 @@ public class Constants {
     public static final int ROTATION_CURRENT_LIMIT = 30;
     public static final int DRIVE_CURRENT_LIMIT = 45;
 
-    public static final double TRACK_WIDTH = Units.inchesToMeters(25.0);
-    public static final double WHEEL_BASE = Units.inchesToMeters(21.0);
+    public static final double TRACK_WIDTH = Units.inchesToMeters(29);
+    public static final double WHEEL_BASE = Units.inchesToMeters(29);
     public static final double DRIVE_BASE_RADIUS =
         Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
 
