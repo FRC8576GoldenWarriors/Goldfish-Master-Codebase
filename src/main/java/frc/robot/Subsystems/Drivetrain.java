@@ -359,10 +359,10 @@ public class Drivetrain extends SubsystemBase {
     odometry.resetRotation(gyro.getRotation2d());
   }
 
-  public void autonReset() {
-    Pose2d calcpose = new Pose2d(8, 7, Rotation2d.fromDegrees(180));
-    odometry.resetPose(calcpose);
-  }
+  // public void autonReset() {
+  //   Pose2d calcpose = new Pose2d(8, 7, Rotation2d.fromDegrees(180));
+  //   odometry.resetPose(calcpose);
+  // }
 
   public void setHeading(double heading) {
     gyro.setYaw(heading);
