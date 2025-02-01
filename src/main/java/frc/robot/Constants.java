@@ -74,28 +74,41 @@ public class Constants {
       public static final double kVisionStdDevTheta = 1;
     }
 
-    public static final int LEFT_FRONT_DRIVE_ID = 7; // 2; //6
-    public static final int RIGHT_FRONT_DRIVE_ID = 1; // 4;
-    public static final int LEFT_BACK_DRIVE_ID = 4; // 6; // 5
-    public static final int RIGHT_BACK_DRIVE_ID = 3; // 8; // 2
-
-    public static final int LEFT_FRONT_TURN_ID = 6; // 1; //5
-    public static final int RIGHT_FRONT_TURN_ID = 8; // 3;
-    public static final int LEFT_BACK_TURN_ID = 5;
-    public static final int RIGHT_BACK_TURN_ID = 2; // 7; //1
-
-    public static final int LEFT_FRONT_CANCODER_ID = 3; // 0;
-    public static final int RIGHT_FRONT_CANCODER_ID = 4; // 1;
-    public static final int LEFT_BACK_CANCODER_ID = 0; // 2; // 2
-    public static final int RIGHT_BACK_CANCODER_ID = 1; // 3;
-
     public static final int PIGEON_ID = 0;
 
-    public static double LEFT_FRONT_OFFSET = 0.499023;//0.451904;//-0.496826;//0.499023; // -0.482422; // -0.344971;//0.228027;
-    public static double RIGHT_FRONT_OFFSET = 0.011475;//0.493652;//-0.474365;//0.011475; // -0.482178; // -0.397217;//-0.099609;
-    public static double LEFT_BACK_OFFSET =
-    0.478027;//-0.009766;//-0.004150;//-0.000244; // 0.478027;//0.000977; // 0.032959;//-0.000244;
-    public static double RIGHT_BACK_OFFSET = -0.024902;//-0.042236;//-0.027344;//-0.024902; // 0.479736; // -0.324463;//-0.113525;
+    public static final int LEFT_FRONT_DRIVE_ID = 2; 
+    public static final int RIGHT_FRONT_DRIVE_ID = 4;
+    public static final int LEFT_BACK_DRIVE_ID = 8;
+    public static final int RIGHT_BACK_DRIVE_ID = 6;
+
+    public static final int LEFT_FRONT_TURN_ID = 1;
+    public static final int RIGHT_FRONT_TURN_ID = 3;
+    public static final int LEFT_BACK_TURN_ID = 7;
+    public static final int RIGHT_BACK_TURN_ID = 5;
+
+    public static final int LEFT_FRONT_CANCODER_ID = 1; 
+    public static final int RIGHT_FRONT_CANCODER_ID = 2;
+    public static final int LEFT_BACK_CANCODER_ID = 4;
+    public static final int RIGHT_BACK_CANCODER_ID = 3; 
+
+    public static double LEFT_FRONT_OFFSET = 0.372314;
+    public static double RIGHT_FRONT_OFFSET = 0.485840;
+    public static double LEFT_BACK_OFFSET = 0.005127;
+    public static double RIGHT_BACK_OFFSET = -0.350586;
+
+    public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_BACK_DRIVE_INVERTED = true;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = false;
+
+    public static boolean LEFT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_BACK_TURN_INVERTED = true;
+    public static boolean LEFT_BACK_TURN_INVERTED = true;
+    
+    
+
+
 
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00);
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
@@ -131,7 +144,7 @@ public class Constants {
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
             new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0.2, 0.01));//changed I and D terms
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0.32, 0.01)); // changed I and D terms
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
     // Swerve Kinematics
