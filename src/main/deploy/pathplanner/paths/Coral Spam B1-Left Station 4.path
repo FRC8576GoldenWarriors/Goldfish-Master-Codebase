@@ -12,7 +12,7 @@
         "y": 6.364999999994964
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Spam Left 3"
     },
     {
       "anchor": {
@@ -45,7 +45,7 @@
     "rotation": -55.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Coral Spam B1 Left Station Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

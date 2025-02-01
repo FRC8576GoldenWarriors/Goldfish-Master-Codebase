@@ -51,7 +51,7 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-          false, // true,
+          true,//false, // true,
           true,
           Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
           Constants.SwerveConstants.LEFT_BACK_OFFSET);
@@ -351,7 +351,7 @@ public class Drivetrain extends SubsystemBase {
     rightFront.resetEncoders();
     leftBack.resetEncoders();
     rightBack.resetEncoders();
-    odometry.resetPose(new Pose2d());
+    odometry.resetPosition(getHeadingRotation2d(),getModulePositions(),getPose2d());
   }
 
   public void zeroHeading() {
@@ -423,6 +423,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetPose2d(Pose2d pose) {
+    gyro.setYaw(pose.getRotation().getDegrees());
     odometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
   }
 

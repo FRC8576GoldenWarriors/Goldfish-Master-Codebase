@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.985,
-        "y": 6.345
+        "x": 5.945901639344262,
+        "y": 4.036987704918033
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.984999999999994,
-        "y": 6.345
+        "x": 6.617213114754098,
+        "y": 4.048975409836066
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "End 1"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 6.345
+        "x": 7.300512295081968,
+        "y": 0.9561475409836078
       },
       "prevControl": {
-        "x": 5.0,
-        "y": 6.345
+        "x": 5.730122950819672,
+        "y": 0.776331967213116
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "End 2"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 91.71137696889468
+    "rotation": 18.97040780848643
   },
   "reversed": false,
-  "folder": "Tuning Paths",
+  "folder": "Dealgae Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -5,10 +5,15 @@
   "pathFolders": [
     "Coral Spam B1 Left Station Paths",
     "Coral Spam B1 Right Station Paths",
-    "Coral Spam B3 Right Station Paths"
+    "Coral Spam B3 Right Station Paths",
+    "Dealgae Paths",
+    "test paths",
+    "Tuning Paths"
   ],
   "autoFolders": [
     "Coral Spam Autos",
+    "Dealgae Path",
+    "test paths",
     "Tuning Paths"
   ],
   "defaultMaxVel": 3.0,

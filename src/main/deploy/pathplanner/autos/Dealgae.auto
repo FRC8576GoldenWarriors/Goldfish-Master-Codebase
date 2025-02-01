@@ -5,45 +5,57 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Reset Heading"
+            "pathName": "Dealgae1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Coral Spam B1-Left Station 1 "
+            "pathName": "Dealgae2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Coral Spam B1-Left Station 2"
+            "pathName": "Dealgae3"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Coral Spam B1-Left Station 3"
+            "pathName": "Dealgae4"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Coral Spam B1-Left Station 4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Coral Spam B1-Left Station 3"
+            "waitTime": 1.0
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Coral Spam Autos",
+  "folder": "Dealgae Path",
   "choreoAuto": false
 }
