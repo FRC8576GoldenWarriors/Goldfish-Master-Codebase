@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.336,
-        "y": 7.038
+        "x": 1.234733606557377,
+        "y": 6.8660860655737705
       },
       "prevControl": {
-        "x": 2.2425000000032136,
-        "y": 5.5752499999949645
+        "x": 2.141233606560591,
+        "y": 5.403336065568735
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral Station"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": -55.0
   },
   "reversed": false,
-  "folder": "Coral Spam B1 Left Station Paths",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

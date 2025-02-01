@@ -7,6 +7,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Coral Spam Autos",
+  "folder": null,
   "choreoAuto": false
 }

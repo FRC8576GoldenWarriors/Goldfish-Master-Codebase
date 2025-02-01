@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Reset Heading"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Coral Spam B1-Left Station 1 "
@@ -38,6 +44,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Coral Spam Autos",
+  "folder": null,
   "choreoAuto": false
 }

@@ -118,7 +118,7 @@ public class Constants {
     public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
 
     public static final double AUTO_KP_TTANSLATION = 1.35; // 1.15
-    public static final double AUTO_KP_ROTATIONAL = 0.15; // 0.1
+    public static final double AUTO_KP_ROTATIONAL = 0.35; // 0.1
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
     public static final int DRIVE_CURRENT_LIMIT = 45;
@@ -131,7 +131,7 @@ public class Constants {
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
             new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0));
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0.32, 0.01));//changed I and D terms
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
     // Swerve Kinematics

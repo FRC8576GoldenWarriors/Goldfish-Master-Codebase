@@ -76,10 +76,5 @@ public class RobotContainer {
         "Reset Heading",
         new InstantCommand(() -> m_drivetrain.zeroHeading())
             .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
-
-    NamedCommands.registerCommand(
-        "Auton Reset",
-        new InstantCommand(() -> m_drivetrain.autonReset())
-            .withDeadline(new InstantCommand(() -> new WaitCommand(2))));
   }
 }

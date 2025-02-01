@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.336,
-        "y": 7.038
+        "x": 1.234733606557377,
+        "y": 6.8660860655737705
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0767552222251444,
-        "y": 6.160254407162202
+        "x": 1.9754888287825212,
+        "y": 5.988340472735972
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral Station"
     },
     {
       "anchor": {
@@ -45,7 +45,7 @@
     "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Coral Spam B1 Left Station Paths",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -55.0
