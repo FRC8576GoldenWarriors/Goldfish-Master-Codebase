@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+// import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -33,8 +34,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
-          Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED, 
-          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
+          true, // false
+          true, // true
           Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
@@ -42,8 +43,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
-          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_INVERTED, // false, // used to be true, might have to change back - Om: 2/14/24
-          Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
+          false, // used to be true, might have to change back - Om: 2/14/24
+          true,
           Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
 
@@ -51,8 +52,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-          Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED, // true,
-          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
+          false,
+          true,
           Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
           Constants.SwerveConstants.LEFT_BACK_OFFSET);
 
@@ -60,8 +61,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
-          Constants.SwerveConstants.RIGHT_BACK_DRIVE_INVERTED,
-          Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
+          true,
+          true,
           Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_BACK_OFFSET);
 
@@ -127,8 +128,6 @@ public class Drivetrain extends SubsystemBase {
       e.printStackTrace();
     }
 
-    // original
-    // Configure AutoBuilder last
     AutoBuilder.configure(
         this::getPose2d, // Robot pose supplier
         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
@@ -153,6 +152,7 @@ public class Drivetrain extends SubsystemBase {
         },
         this // Reference to this subsystem to set requirements
         );
+
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
         NetworkTableInstance.getDefault()
@@ -214,6 +214,52 @@ public class Drivetrain extends SubsystemBase {
     // m_posePublish.set(getPose2d());
     m_ModuleStatesActual.set(getModuleStates());
     m_pose.set(odometry.getPoseMeters());
+    // rates 2 is yaw (XYZ in order )
+    /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
+    // Logger.recordOutput("Robot Angle", getHeading());
+    // Logger.recordOutput("Robot Pitch", getPitch());
+    // Logger.recordOutput("Robot Roll", getRoll());
+    // Logger.recordOutput("Pose", getPose().toString());
+    // Logger.recordOutput("Angular Speed", new DecimalFormat("#.00").format((yaw / 180)) + "pi rad/s" );
+
+    SmartDashboard.putString("Pose", getPose2d().toString());
+
+    //new values
+    SmartDashboard.putNumber("Left Front Module Velocity", leftFront.getDriveMotorVelocity());
+    SmartDashboard.putNumber("Right Front Module Velocity", rightFront.getDriveMotorVelocity());
+    SmartDashboard.putNumber("Left Back Module Velocity", leftBack.getDriveMotorVelocity());
+    SmartDashboard.putNumber("Right Back Module Velocity", rightBack.getDriveMotorVelocity());
+    SmartDashboard.putNumber("Left Front Module abs angle", leftFront.getAbsoluteEncoderAngle());
+    SmartDashboard.putNumber("Right Front Module abs angle", rightFront.getAbsoluteEncoderAngle());
+    SmartDashboard.putNumber("Left Back Module abs angle", leftBack.getAbsoluteEncoderAngle());
+    SmartDashboard.putNumber("Right Back Module abs angle", rightBack.getAbsoluteEncoderAngle());*/
+
+    /*SmartDashboard.putData("Swerve Drive", new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder){
+        builder.setSmartDashboardType("SwerveDrive");
+
+        builder.addDoubleProperty("Front Left Angle", () -> leftFront.getTurnMotorPosition(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> leftFront.getDriveMotorVelocity(), null);
+
+        builder.addDoubleProperty("Front Right Angle", () -> rightFront.getTurnMotorPosition(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> rightFront.getDriveMotorVelocity(), null);
+
+        builder.addDoubleProperty("Back Left Angle", () -> leftBack.getTurnMotorPosition(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> leftBack.getDriveMotorVelocity(), null);
+
+        builder.addDoubleProperty("Back Right Angle", () -> rightBack.getTurnMotorPosition(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> rightBack.getDriveMotorVelocity(), null);
+
+        builder.addDoubleProperty("Robot Angle", () -> getHeading(), null);
+      }
+    });// */
+
+    // Logger.recordOutput("Drivetrain/Robot Angle", getHeadingRotation2d().getRadians());
+    // Logger.recordOutput("Drivetrain/Pose", getPose());
+    // Logger.recordOutput("Drivetrain/Angular Speed", yaw / 180);
+    // Logger.recordOutput("Drivetrain/Module States", getModuleStates());
+
     odometry.update(getHeadingRotation2d(), getModulePositions());
   }
 
@@ -280,7 +326,7 @@ public class Drivetrain extends SubsystemBase {
     rightFront.resetEncoders();
     leftBack.resetEncoders();
     rightBack.resetEncoders();
-    odometry.resetPosition(getHeadingRotation2d(),getModulePositions(),getPose2d());
+    odometry.resetPose(new Pose2d());
   }
 
   public void zeroHeading() {
@@ -288,10 +334,12 @@ public class Drivetrain extends SubsystemBase {
     odometry.resetRotation(gyro.getRotation2d());
   }
 
-  // public void autonReset() {
-  //   Pose2d calcpose = new Pose2d(8, 7, Rotation2d.fromDegrees(180));
-  //   odometry.resetPose(calcpose);
-  // }
+  public void autonReset() {
+    Pose2d pose = AutoBuilder.getCurrentPose();
+    double[] xy = {pose.getX(), pose.getY()};
+    Pose2d calcpose = new Pose2d(xy[0], xy[1], Rotation2d.fromDegrees(180));
+    odometry.resetPose(calcpose);
+  }
 
   public void setHeading(double heading) {
     gyro.setYaw(heading);
@@ -352,8 +400,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetPose2d(Pose2d pose) {
-    gyro.setYaw(pose.getRotation().getDegrees());
-    odometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
+    odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
   }
 
   public ChassisSpeeds getRobotRelativeSpeeds() {
@@ -379,6 +426,33 @@ public class Drivetrain extends SubsystemBase {
   //   }
 
   // }
+
+  public void drive(
+      Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop) {
+    ChassisSpeeds chassisSpeeds;
+    if (fieldRelative) {
+      chassisSpeeds =
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              translation.getX(), translation.getY(), rotation, getGyroscopeRotation());
+    } else {
+      chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    }
+
+    SwerveModuleState[] moduleStates =
+        Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+
+    leftFront.setDesiredState(moduleStates[0]);
+    rightFront.setDesiredState(moduleStates[1]);
+
+    leftBack.setDesiredState(moduleStates[2]);
+    rightBack.setDesiredState(moduleStates[3]);
+  }
+
+  public Rotation2d getGyroscopeRotation() {
+    return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
+  }
 
   public boolean isRedAlliance() {
     if (DriverStation.getAlliance().isPresent()) {
