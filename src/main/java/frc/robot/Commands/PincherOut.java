@@ -40,8 +40,8 @@ public class PincherOut extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    new WaitCommand(Constants.EndEffectorConstants.pincherOutRunExtension);
-    endEffector.setSpeed(Constants.EndEffectorConstants.pincherOutSpeed);
+    //new WaitCommand(Constants.EndEffectorConstants.pincherOutRunExtension);
+    endEffector.setSpeed(0.0);
   }
 
   @Override

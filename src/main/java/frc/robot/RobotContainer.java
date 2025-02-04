@@ -19,6 +19,7 @@ import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
+import frc.robot.Subsystems.GroundIntake;
 import frc.robot.Subsystems.Shintake;
 
 
@@ -31,7 +32,7 @@ public class RobotContainer {
   public static final CommandXboxController operatorController =
       new CommandXboxController(Constants.ControllerConstants.operatorControllerPort);
 
-  private final JoystickButton resetHeading_Start =
+  public final JoystickButton resetHeading_Start =
       new JoystickButton(driverController.getHID(), XboxController.Button.kStart.value);
 
   public final SendableChooser<Command> autoChooser;
@@ -39,6 +40,7 @@ public class RobotContainer {
   public static final Shintake m_shintake = new Shintake();
   public static final EndEffector m_endEffector = new EndEffector();
   public static final Arm m_arm = new Arm();
+  public static final GroundIntake m_groundIntake = new GroundIntake();
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
@@ -60,8 +62,8 @@ public class RobotContainer {
     operatorController.x().whileTrue(new PincherOut(m_endEffector));//X Pincher out
     operatorController.a().whileTrue(new PincherIn(m_endEffector)); //A Pincher in
 
-    operatorController.povUp().whileTrue(new StartEndCommand(()-> m_arm.setArmSpeed(0.3), ()->m_arm.setArmSpeed(0), m_arm)); //Up arrow arm rotates to front
-    operatorController.povDown().whileTrue(new StartEndCommand(() -> m_arm.setArmSpeed(-0.3), ()-> m_arm.setArmSpeed(0), m_arm)); //Down arrow arm rotates to back
+    operatorController.povUp().whileTrue(new StartEndCommand(()-> m_arm.setArmSpeed(-0.3), ()->m_arm.setArmSpeed(0), m_arm)); //Up arrow arm rotates to front
+    operatorController.povDown().whileTrue(new StartEndCommand(() -> m_arm.setArmSpeed(0.3), ()-> m_arm.setArmSpeed(0), m_arm)); //Down arrow arm rotates to back
     
   }
 

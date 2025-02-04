@@ -40,9 +40,9 @@ public class PincherIn extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    new WaitCommand(Constants.EndEffectorConstants.pincherInRunExtension);
+    //new WaitCommand(Constants.EndEffectorConstants.pincherInRunExtension);
 
-    algaePincher.setSpeed(Constants.EndEffectorConstants.pincherInSpeed);
+    algaePincher.setSpeed(0.0);
   }
 
   // Returns true when the command should end.

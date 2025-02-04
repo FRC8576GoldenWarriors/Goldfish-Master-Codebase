@@ -67,6 +67,10 @@ public class GroundIntake extends SubsystemBase {
     return encoder;
   }
 
+  public double getEncoderPosition(){
+    return getEncoder().get();
+  }
+
   public DigitalInput getDigitalInput() {
     return algaeSensor;
   }

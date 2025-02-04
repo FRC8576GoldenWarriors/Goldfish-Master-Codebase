@@ -190,8 +190,8 @@ public class Constants {
 
     public static final boolean motorIsInverted = false;
 
-    public static final double pincherInSpeed = 0.2;
-    public static final double pincherOutSpeed = -0.2;
+    public static final double pincherInSpeed = -1.0;
+    public static final double pincherOutSpeed = 1.0;
 
     public static final double pincherInRunExtension = 0.25;
     public static final double pincherOutRunExtension = 0.25;
