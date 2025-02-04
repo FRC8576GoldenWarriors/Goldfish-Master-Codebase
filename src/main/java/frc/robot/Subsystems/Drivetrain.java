@@ -153,7 +153,6 @@ public class Drivetrain extends SubsystemBase {
         this // Reference to this subsystem to set requirements
         );
 
-        
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
         NetworkTableInstance.getDefault()
@@ -408,8 +407,6 @@ public class Drivetrain extends SubsystemBase {
     return Constants.SwerveConstants.DRIVE_KINEMATICS.toChassisSpeeds(getModuleStates());
   }
 
-
-
   public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
     SwerveModuleState[] moduleStates =
         Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
@@ -417,40 +414,45 @@ public class Drivetrain extends SubsystemBase {
   }
 
   //  public void visionDrive(AprilTagStats april,double angle){
-    //    try{
-      //       // Load the path you want to follow using its name in the GUI
-      //       PathPlannerPath path = april.robotPath(angle);
-      
-      //       // Create a path following command using AutoBuilder. This will also trigger event
-      // markers.
-      //       AutoBuilder.followPath(path);
-      //   } catch (Exception e) {
-        //       DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
-        //   }
-        
-        // }
+  //    try{
+  //       // Load the path you want to follow using its name in the GUI
+  //       PathPlannerPath path = april.robotPath(angle);
 
-        public void drive (Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop){
-          ChassisSpeeds chassisSpeeds;
-          if(fieldRelative) {
-            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getGyroscopeRotation());
-          } else {
-            chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
-          }
-      
-          SwerveModuleState[] moduleStates = Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-          SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
-      
-          leftFront.setDesiredState(moduleStates[0]);
-          rightFront.setDesiredState(moduleStates[1]);
-      
-          leftBack.setDesiredState(moduleStates[2]);
-          rightBack.setDesiredState(moduleStates[3]);
-        }
-      
-        public Rotation2d getGyroscopeRotation() {
-          return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
-        }
+  //       // Create a path following command using AutoBuilder. This will also trigger event
+  // markers.
+  //       AutoBuilder.followPath(path);
+  //   } catch (Exception e) {
+  //       DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+  //   }
+
+  // }
+
+  public void drive(
+      Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop) {
+    ChassisSpeeds chassisSpeeds;
+    if (fieldRelative) {
+      chassisSpeeds =
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              translation.getX(), translation.getY(), rotation, getGyroscopeRotation());
+    } else {
+      chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    }
+
+    SwerveModuleState[] moduleStates =
+        Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+
+    leftFront.setDesiredState(moduleStates[0]);
+    rightFront.setDesiredState(moduleStates[1]);
+
+    leftBack.setDesiredState(moduleStates[2]);
+    rightBack.setDesiredState(moduleStates[3]);
+  }
+
+  public Rotation2d getGyroscopeRotation() {
+    return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
+  }
 
   public boolean isRedAlliance() {
     if (DriverStation.getAlliance().isPresent()) {

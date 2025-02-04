@@ -11,7 +11,7 @@ import java.util.List;
 public class Constants {
 
   public static class VisionConstants {
-    public static class limeLightDistanceConstants{
+    public static class limeLightDistanceConstants {
       public static final double DESIRED_APRIL_TAG_DISTANCE = 0.3;
       public static final double ALLOWED_ANGLE_ERROR = 0.01;
       public static final double ALLOWED_DISTANCE_ERROR = 0.1;
@@ -19,22 +19,23 @@ public class Constants {
 
     // In meters and degrees
     // change later once we get true mesurements
-    public static class limeLightDimensionConstants{
-      public static final double CAMERA_HEIGHT = 0.267;  
-      //public static final double TARGET_HEIGHT = 2.0; // hight of the speaker
+    public static class limeLightDimensionConstants {
+      public static final double CAMERA_HEIGHT = 0.267;
+      // public static final double TARGET_HEIGHT = 2.0; // hight of the speaker
       public static final double CAMERA_PITCH = 0;
     }
 
-    public static class aprilTagConstants{
+    public static class aprilTagConstants {
       public static class IDs {
-        public static final List<Integer> REEF_TAG_IDS = Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
+        public static final List<Integer> REEF_TAG_IDS =
+            Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
         public static final List<Integer> BARGE_TAG_IDS = Arrays.asList(4, 5, 14, 15);
         public static final List<Integer> PROCESSOR_TAG_IDS = Arrays.asList(3, 16);
         public static final List<Integer> CORAL_STATION_TAG_IDS = Arrays.asList(1, 2, 12, 13);
       }
-      
+
       public static class heights {
-        //In meters
+        // In meters
         public static final double REEF_TAG_HEIGHT = 0.305;
         public static final double BARGE_TAG_HEIGHT = 1.915;
         public static final double PROCESSOR_TAG_HEIGHT = 1.305;
@@ -42,15 +43,15 @@ public class Constants {
       }
     }
 
-   public static class limelightNetworkTableKey{
-    public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight";
-   }
+    public static class limelightNetworkTableKey {
+      public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight";
+    }
 
-   public static class limelightCameraDimensions{
-    public static final double FOCAL_LENGTH = 4.1;
-    public static final double REAL_WIDTH = 165.0;
-    public static final double PIXEL_WIDTH = 320.0;
-   }
+    public static class limelightCameraDimensions {
+      public static final double FOCAL_LENGTH = 4.1;
+      public static final double REAL_WIDTH = 165.0;
+      public static final double PIXEL_WIDTH = 320.0;
+    }
 
     public static class cameraTranslationConstants {
       public static final double tX = -32 * 0.01;
@@ -183,42 +184,42 @@ public class Constants {
     public static final double coralIntakeOutSpeed = -0.5;
   }
 
-  public static final class AlgaeArmConstants {
+  public static class EndEffectorConstants {
+    public static final int pincherID = 20;
+    public static final int pincherDigiSensorID = 2;
 
-    public static class PincherConstants {
-      public static final int pincherID = 20;
-      public static final int pincherDigiSensorID = 2;
+    public static final boolean motorIsInverted = false;
 
-      public static final boolean motorIsInverted = false;
+    public static final double pincherInSpeed = 0.2;
+    public static final double pincherOutSpeed = -0.2;
 
-      public static final double pincherInSpeed = 0.5;
-      public static final double pincherOutSpeed = -0.5;
-    }
+    public static final double pincherInRunExtension = 0.25;
+    public static final double pincherOutRunExtension = 0.25;
+  }
 
-    public static final class ArmConstants {
+  public static final class ArmConstants {
 
-      public static final int armMotorID = 21;
-      public static final int armEncoderDIO = 3;
+    public static final int armMotorID = 21;
+    public static final int armEncoderDIO = 3;
 
-      public static final boolean motorIsInverted = false;
+    public static final boolean motorIsInverted = false;
 
-      public static final double kS = 0.1;
-      public static final double kG = 0.1;
-      public static final double kV = 0.1;
-      public static final double kA = 0.1;
+    public static final double kS = 0.1;
+    public static final double kG = 0.1;
+    public static final double kV = 0.1;
+    public static final double kA = 0.1;
 
-      public static final double kP = 0.1;
-      public static final double kI = 0;
-      public static final double kD = 0;
+    public static final double kP = 0.1;
+    public static final double kI = 0;
+    public static final double kD = 0;
 
-      public static final double startPosition = 0;
-      public static final double lowReefPosition = 0.3;
-      public static final double highReefPosition = 0.45;
-      public static final double transportPosition = 0.65;
+    public static final double startPosition = 0;
+    public static final double lowReefPosition = 0.3;
+    public static final double highReefPosition = 0.45;
+    public static final double transportPosition = 0.65;
 
-      public static final double lowSoftStopPositon = -0.05;
-      public static final double highSoftStopPosition = 0.75;
-    }
+    public static final double lowSoftStopPositon = -0.05;
+    public static final double highSoftStopPosition = 0.75;
   }
 
   public static final class GroundIntakeConstants {
@@ -280,12 +281,12 @@ public class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final double changeY = -1; //CHANGE
+    public static final double changeY = -1; // CHANGE
     public static final double gravity = 9.81;
     public static final double accelerationX = 0;
     public static final double accelerationY = 0;
     public static final double flywheelDiameter = Units.inchesToMeters(4.0);
-    public static final double algaeHoldingHeight = -1; //CHANGE
-    public static final double bargeHeight = -1; //CHANGE 
+    public static final double algaeHoldingHeight = -1; // CHANGE
+    public static final double bargeHeight = -1; // CHANGE
   }
 }

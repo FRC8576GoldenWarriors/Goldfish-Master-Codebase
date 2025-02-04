@@ -12,22 +12,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
 
-public class AlgaeArm extends SubsystemBase {
+public class Arm extends SubsystemBase {
   /** Creates a new AlgaeArm. */
   private WarriorSparkMax armMotor;
 
   private DutyCycleEncoder armAbsEncoder;
 
-  public AlgaeArm() {
+  public Arm() {
     armMotor =
         new WarriorSparkMax(
-            Constants.AlgaeArmConstants.ArmConstants.armMotorID,
+            Constants.ArmConstants.armMotorID,
             MotorType.kBrushless,
-            Constants.AlgaeArmConstants.ArmConstants.motorIsInverted,
+            Constants.ArmConstants.motorIsInverted,
             IdleMode.kBrake,
             40);
 
-    armAbsEncoder = new DutyCycleEncoder(Constants.AlgaeArmConstants.ArmConstants.armEncoderDIO);
+    armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.armEncoderDIO);
   }
 
   @Override

@@ -5,23 +5,15 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
-import frc.robot.Subsystems.EndEffector;
+import frc.robot.Subsystems.ClimbMech;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AlgaePincherOut extends Command {
+public class ClimbDown extends Command {
+  private final ClimbMech climbMech;
 
-  private EndEffector endEffector;
-
-  private boolean isFinished;
-
-  public AlgaePincherOut(EndEffector endEffector) {
-    this.endEffector = endEffector;
-
-    isFinished = false;
-
-    addRequirements(endEffector);
+  public ClimbDown(ClimbMech climbMech) {
+    this.climbMech = climbMech;
+    addRequirements(climbMech);
   }
 
   @Override
@@ -29,22 +21,16 @@ public class AlgaePincherOut extends Command {
 
   @Override
   public void execute() {
-    if (endEffector.hasAlgae()) {
-      endEffector.setPincherSpeed(Constants.AlgaeArmConstants.PincherConstants.pincherOutSpeed);
-    } else {
-      isFinished = true;
-    }
+    climbMech.unwindRope();
   }
 
   @Override
   public void end(boolean interrupted) {
-
-    new WaitCommand(0.25);
-    endEffector.setPincherSpeed(0);
+    climbMech.stop();
   }
 
   @Override
   public boolean isFinished() {
-    return isFinished;
+    return false;
   }
 }

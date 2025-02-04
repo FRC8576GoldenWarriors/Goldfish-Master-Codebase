@@ -20,16 +20,16 @@ public class EndEffector extends SubsystemBase {
 
     pincherMotor =
         new WarriorSparkMax(
-            Constants.AlgaeArmConstants.PincherConstants.pincherID,
+            Constants.EndEffectorConstants.pincherID,
             MotorType.kBrushless,
-            Constants.AlgaeArmConstants.PincherConstants.motorIsInverted,
+            Constants.EndEffectorConstants.motorIsInverted,
             IdleMode.kBrake);
 
     intakeSensor =
-        new DigitalInput(Constants.AlgaeArmConstants.PincherConstants.pincherDigiSensorID);
+        new DigitalInput(Constants.EndEffectorConstants.pincherDigiSensorID);
   }
 
-  public void setPincherSpeed(double speed) {
+  public void setSpeed(double speed) {
     pincherMotor.set(speed);
   }
 

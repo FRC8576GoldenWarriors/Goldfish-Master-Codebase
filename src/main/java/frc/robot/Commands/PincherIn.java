@@ -9,17 +9,16 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Subsystems.EndEffector;
 
-public class AlgaePincherIn extends Command {
+public class PincherIn extends Command {
 
   private EndEffector algaePincher;
 
   private boolean isFinished;
 
-  public AlgaePincherIn(EndEffector algaePincher) {
+  public PincherIn(EndEffector algaePincher) {
     this.algaePincher = algaePincher;
 
     isFinished = false;
-    
 
     addRequirements(algaePincher);
   }
@@ -29,20 +28,21 @@ public class AlgaePincherIn extends Command {
 
   @Override
   public void execute() {
-    if (!algaePincher.hasAlgae()) {
-      algaePincher.setPincherSpeed(Constants.AlgaeArmConstants.PincherConstants.pincherInSpeed);
-    } else {
-      isFinished = true;
-    }
+    // if (!algaePincher.hasAlgae()) {
+    //   algaePincher.setSpeed(Constants.EndEffectorConstants.pincherInSpeed);
+    // } else {
+    //   isFinished = true;
+    // }
+    algaePincher.setSpeed(Constants.EndEffectorConstants.pincherInSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
 
-    new WaitCommand(0.25);
+    new WaitCommand(Constants.EndEffectorConstants.pincherInRunExtension);
 
-    algaePincher.setPincherSpeed(0);
+    algaePincher.setSpeed(Constants.EndEffectorConstants.pincherInSpeed);
   }
 
   // Returns true when the command should end.

@@ -6,18 +6,21 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Commands.AlgaePincherIn;
-import frc.robot.Commands.AlgaePincherOut;
+import frc.robot.Commands.PincherIn;
+import frc.robot.Commands.PincherOut;
 import frc.robot.Commands.SwerveDrive;
-import frc.robot.Subsystems.EndEffector;
-import frc.robot.Subsystems.GroundIntake;
-import frc.robot.Subsystems.ClimbMech; // Import the ClimbMech subsystem
+import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.EndEffector;
+import frc.robot.Subsystems.Shintake;
+
 
 public class RobotContainer {
 
@@ -33,11 +36,9 @@ public class RobotContainer {
 
   public final SendableChooser<Command> autoChooser;
 
-
-  // Subsystems
-  public static final EndEffector algaePincher = new EndEffector();
-  public static final ClimbMech climbMech = new ClimbMech(); // Add ClimbMech subsystem
-  public static final GroundIntake m_groundIntake = new GroundIntake();
+  public static final Shintake m_shintake = new Shintake();
+  public static final EndEffector m_endEffector = new EndEffector();
+  public static final Arm m_arm = new Arm();
 
   public RobotContainer() {
     m_drivetrain.setDefaultCommand(new SwerveDrive());
@@ -52,21 +53,16 @@ public class RobotContainer {
     // Driver controller
     resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
 
-    // Operator controller
-    //operatorController.leftBumper().whileTrue(new EndEffector(coralRoller));
-    operatorController.y().whileTrue(new AlgaePincherIn(algaePincher));
-    operatorController.b().whileTrue(new AlgaePincherOut(algaePincher));
+    //Operator controller
+    operatorController.y().whileTrue(new StartEndCommand((() -> m_shintake.setRollersSpeed(1.0)),(() -> m_shintake.setRollersSpeed(0.0)), m_shintake));//Y Shintake Shoot
+    operatorController.b().whileTrue(new StartEndCommand((() -> m_shintake.setRollersSpeed(-0.4)),(() -> m_shintake.setRollersSpeed(0.0)),m_shintake)); //B Shintake Intake
 
-    // ClimbMech bindings
-    operatorController
-        .a()
-        .whileTrue(new RunCommand(climbMech::windRope, climbMech)); // A button winds the rope
-    operatorController
-        .x()
-        .whileTrue(new RunCommand(climbMech::unwindRope, climbMech)); // X button unwinds the rope
-    operatorController
-        .back()
-        .onTrue(new InstantCommand(climbMech::stop, climbMech)); // Back button stops the motor
+    operatorController.x().whileTrue(new PincherOut(m_endEffector));//X Pincher out
+    operatorController.a().whileTrue(new PincherIn(m_endEffector)); //A Pincher in
+
+    operatorController.povUp().whileTrue(new StartEndCommand(()-> m_arm.setArmSpeed(0.3), ()->m_arm.setArmSpeed(0), m_arm)); //Up arrow arm rotates to front
+    operatorController.povDown().whileTrue(new StartEndCommand(() -> m_arm.setArmSpeed(-0.3), ()-> m_arm.setArmSpeed(0), m_arm)); //Down arrow arm rotates to back
+    
   }
 
   public Command getAutonomousCommand() {

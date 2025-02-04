@@ -48,13 +48,12 @@ public class ClimbMech extends SubsystemBase {
     return climbEncoder.getVelocity();
   }
 
-  
   public void resetEncoder() {
     climbEncoder.setPosition(0);
   }
 
   @Override
   public void periodic() {
-    // Optionally log encoder values to SmartDashboard 
+    // Optionally log encoder values to SmartDashboard
   }
 }

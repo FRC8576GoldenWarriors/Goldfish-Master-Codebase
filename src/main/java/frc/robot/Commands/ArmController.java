@@ -9,12 +9,12 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Subsystems.AlgaeArm;
+import frc.robot.Subsystems.Arm;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AlgaeArmController extends Command {
+public class ArmController extends Command {
 
-  private AlgaeArm algaeArm;
+  private Arm algaeArm;
 
   private DutyCycleEncoder encoder;
 
@@ -24,22 +24,22 @@ public class AlgaeArmController extends Command {
   private double setpoint;
   private double voltage;
 
-  public AlgaeArmController(AlgaeArm algaeArm, double setpoint) {
+  public ArmController(Arm algaeArm, double setpoint) {
 
     this.algaeArm = algaeArm;
 
     this.feedForward =
         new ArmFeedforward(
-            Constants.AlgaeArmConstants.ArmConstants.kS,
-            Constants.AlgaeArmConstants.ArmConstants.kG,
-            Constants.AlgaeArmConstants.ArmConstants.kV,
-            Constants.AlgaeArmConstants.ArmConstants.kA);
+            Constants.ArmConstants.kS,
+            Constants.ArmConstants.kG,
+            Constants.ArmConstants.kV,
+            Constants.ArmConstants.kA);
 
     this.feedback =
         new PIDController(
-            Constants.AlgaeArmConstants.ArmConstants.kP,
-            Constants.AlgaeArmConstants.ArmConstants.kI,
-            Constants.AlgaeArmConstants.ArmConstants.kD);
+            Constants.ArmConstants.kP,
+            Constants.ArmConstants.kI,
+            Constants.ArmConstants.kD);
 
     this.setpoint = setpoint;
 
@@ -71,8 +71,8 @@ public class AlgaeArmController extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return encoder.get() > Constants.AlgaeArmConstants.ArmConstants.highSoftStopPosition
+    return encoder.get() > Constants.ArmConstants.highSoftStopPosition
         || encoder.get()
-            < Constants.AlgaeArmConstants.ArmConstants.lowSoftStopPositon; // make constant later
+            < Constants.ArmConstants.lowSoftStopPositon; // make constant later
   }
 }

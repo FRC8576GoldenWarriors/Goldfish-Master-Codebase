@@ -40,19 +40,19 @@ public class Shintake extends SubsystemBase {
             IdleMode.kBrake,
             40);
 
-    pivotMotor =
-        new WarriorSparkMax(
-            Constants.ShintakeConstants.HardwareConstants.pivotMotorID,
-            MotorType.kBrushless,
-            Constants.ShintakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kBrake,
-            40);
+    // pivotMotor =
+    //     new WarriorSparkMax(
+    //         Constants.ShintakeConstants.HardwareConstants.pivotMotorID,
+    //         MotorType.kBrushless,
+    //         Constants.ShintakeConstants.HardwareConstants.pivotMotorIsInverted,
+    //         IdleMode.kBrake,
+    //         40);
 
-    encoder =
-        new DutyCycleEncoder(
-            Constants.ShintakeConstants.HardwareConstants.pivotMotorEncoderDIO,
-            Constants.ShintakeConstants.HardwareConstants.pivotEncoderFullRange,
-            Constants.ShintakeConstants.HardwareConstants.pivotEncoderZero);
+    // encoder =
+    //     new DutyCycleEncoder(
+    //         Constants.ShintakeConstants.HardwareConstants.pivotMotorEncoderDIO,
+    //         Constants.ShintakeConstants.HardwareConstants.pivotEncoderFullRange,
+    //         Constants.ShintakeConstants.HardwareConstants.pivotEncoderZero);
 
     RPMtoVoltage = new InterpolatingDoubleTreeMap(); // use to interpolate (volts, rpm) values
 
@@ -88,12 +88,17 @@ public class Shintake extends SubsystemBase {
     upperRollerMotor.setVoltage(voltage);
   }
 
-  public void setRollersVoltage(double voltage){
+  public void setRollersSpeed(double speed) {
+    setLowerRollerSpeed(-0.95*speed);
+    setUpperRollerSpeed(speed);
+  }
+
+  public void setRollersVoltage(double voltage) {
     setLowerRollerVoltage(voltage);
     setUpperRollerVoltage(voltage);
   }
 
-  public double calculateMotorVoltage(double rpm){
+  public double calculateMotorVoltage(double rpm) {
     return RPMtoVoltage.get(Double.valueOf(rpm));
   }
 
