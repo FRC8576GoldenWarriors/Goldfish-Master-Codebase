@@ -73,8 +73,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Arm Encoder Abs. Rotation", RobotContainer.m_arm.getEncoderPosition());
-    SmartDashboard.putNumber("Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
+    SmartDashboard.putNumber(
+        "Arm Encoder Abs. Rotation", RobotContainer.m_arm.getEncoderPosition());
+    SmartDashboard.putNumber(
+        "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
   }
 
   @Override

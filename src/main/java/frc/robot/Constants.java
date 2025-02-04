@@ -120,9 +120,9 @@ public class Constants {
     public static final int LEFT_BACK_TURN_ID = 5;
     public static final int RIGHT_BACK_TURN_ID = 7;
 
-    public static final int LEFT_FRONT_CANCODER_ID = 0;
-    public static final int RIGHT_FRONT_CANCODER_ID = 1;
-    public static final int LEFT_BACK_CANCODER_ID = 2;
+    public static final int LEFT_FRONT_CANCODER_ID = 1;
+    public static final int RIGHT_FRONT_CANCODER_ID = 2;
+    public static final int LEFT_BACK_CANCODER_ID = 4;
     public static final int RIGHT_BACK_CANCODER_ID = 3;
 
     public static final int PIGEON_ID = 0;
@@ -190,8 +190,8 @@ public class Constants {
 
     public static final boolean motorIsInverted = false;
 
-    public static final double pincherInSpeed = -1.0;
-    public static final double pincherOutSpeed = 1.0;
+    public static final double pincherInSpeed = -0.5;
+    public static final double pincherOutSpeed = 0.5;
 
     public static final double pincherInRunExtension = 0.25;
     public static final double pincherOutRunExtension = 0.25;
@@ -262,10 +262,8 @@ public class Constants {
       public static final int rollerMotorHighID = 33;
       public static final boolean rollerMotorHighIsInverted = false;
 
-      public static final int pivotMotorID = 34;
-      public static final boolean pivotMotorIsInverted = false;
 
-      public static final int pivotMotorEncoderDIO = 5;
+      
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;
     }

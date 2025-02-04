@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
 
-public class ClimbMech extends SubsystemBase {
+public class Climber extends SubsystemBase {
 
   private final WarriorSparkMax climbMotor;
   private final RelativeEncoder climbEncoder;
 
-  public ClimbMech() {
+  public Climber() {
 
     climbMotor =
         new WarriorSparkMax(
@@ -38,6 +38,10 @@ public class ClimbMech extends SubsystemBase {
 
   public void setMotorVoltage(double voltage) {
     climbMotor.setVoltage(voltage);
+  }
+
+  public void setMotorSpeed(double speed){
+    climbMotor.set(speed);
   }
 
   public double getEncoderPosition() {

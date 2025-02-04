@@ -37,9 +37,7 @@ public class ArmController extends Command {
 
     this.feedback =
         new PIDController(
-            Constants.ArmConstants.kP,
-            Constants.ArmConstants.kI,
-            Constants.ArmConstants.kD);
+            Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
 
     this.setpoint = setpoint;
 
@@ -59,6 +57,7 @@ public class ArmController extends Command {
     voltage =
         feedForward.calculate(encoder.get(), algaeArm.getArmVelocity())
             + feedback.calculate(encoder.get(), setpoint);
+
     algaeArm.setArmVoltage(voltage);
   }
 
@@ -72,7 +71,6 @@ public class ArmController extends Command {
   @Override
   public boolean isFinished() {
     return encoder.get() > Constants.ArmConstants.highSoftStopPosition
-        || encoder.get()
-            < Constants.ArmConstants.lowSoftStopPositon; // make constant later
+        || encoder.get() < Constants.ArmConstants.lowSoftStopPositon; // make constant later
   }
 }

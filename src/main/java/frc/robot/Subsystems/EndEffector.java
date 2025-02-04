@@ -25,8 +25,7 @@ public class EndEffector extends SubsystemBase {
             Constants.EndEffectorConstants.motorIsInverted,
             IdleMode.kBrake);
 
-    intakeSensor =
-        new DigitalInput(Constants.EndEffectorConstants.pincherDigiSensorID);
+    intakeSensor = new DigitalInput(Constants.EndEffectorConstants.pincherDigiSensorID);
   }
 
   public void setSpeed(double speed) {

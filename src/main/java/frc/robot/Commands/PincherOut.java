@@ -5,7 +5,6 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Subsystems.EndEffector;
 
@@ -40,7 +39,7 @@ public class PincherOut extends Command {
   @Override
   public void end(boolean interrupted) {
 
-    //new WaitCommand(Constants.EndEffectorConstants.pincherOutRunExtension);
+    // new WaitCommand(Constants.EndEffectorConstants.pincherOutRunExtension);
     endEffector.setSpeed(0.0);
   }
 
