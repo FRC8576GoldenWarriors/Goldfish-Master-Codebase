@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 7.65
+        "x": 3.754,
+        "y": 5.088
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.260750000000001,
-        "y": 7.5882499999999995
+        "x": 2.291250000003214,
+        "y": 6.364999999994964
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Spam Left 3"
     },
     {
       "anchor": {
-        "x": 3.15,
-        "y": 4.0
+        "x": 1.234733606557377,
+        "y": 6.8660860655737705
       },
       "prevControl": {
-        "x": -0.41925000000000034,
-        "y": 6.16025
+        "x": 2.141233606560591,
+        "y": 5.403336065568735
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Spam Left 1"
+      "linkedName": "Coral Station"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -55.0
   },
   "reversed": false,
   "folder": "Coral Spam B1 Left Station Paths",
   "idealStartingState": {
-    "velocity": 0.0,
-    "rotation": 180.0
+    "velocity": 0,
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

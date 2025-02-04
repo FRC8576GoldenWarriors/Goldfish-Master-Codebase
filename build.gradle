@@ -141,8 +141,8 @@ spotless {
     }
     format 'misc', {
         target fileTree('.') {
-            include '**/.gitignore'
-            exclude '**/build/**', '**/build-*/**','**/*.md'
+            include '**/*.md', '**/.gitignore'
+            exclude '**/build/**', '**/build-*/**'
         }
         trimTrailingWhitespace()
         indentWithSpaces(2)

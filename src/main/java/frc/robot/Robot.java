@@ -25,7 +25,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
     SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
     SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
     CommandScheduler.getInstance().run();
@@ -51,7 +50,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    m_drivetrain.zeroHeading();
+    //m_drivetrain.zeroHeading();
   }
 
   @Override
@@ -66,7 +65,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
+   // m_drivetrain.setHeading((m_drivetrain.getHeading()+180));
     m_drivetrain.resetAllEncoders();
     m_drivetrain.setAllIdleMode(true);
   }
