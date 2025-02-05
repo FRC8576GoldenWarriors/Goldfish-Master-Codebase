@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 7.65
+        "x": 7.300512295081968,
+        "y": 0.9561475409836078
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.260750000000001,
-        "y": 7.5882499999999995
+        "x": 7.0508242103625065,
+        "y": 0.96863194521958
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "End 2"
     },
     {
       "anchor": {
-        "x": 3.15,
-        "y": 4.0
+        "x": 5.262602459016393,
+        "y": 2.466598360655738
       },
       "prevControl": {
-        "x": -0.41925000000000034,
-        "y": 6.16025
+        "x": 5.742110655737704,
+        "y": 1.9631147540983602
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Spam Left 1"
+      "linkedName": "End 3"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 122.619
   },
   "reversed": false,
-  "folder": "Coral Spam B1 Left Station Paths",
+  "folder": "Dealgae Paths",
   "idealStartingState": {
-    "velocity": 0.0,
-    "rotation": 180.0
+    "velocity": 0,
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

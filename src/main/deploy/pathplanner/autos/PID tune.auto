@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "test from mid path"
+            "pathName": "forward 4"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Tuning Paths",
   "choreoAuto": false
 }
