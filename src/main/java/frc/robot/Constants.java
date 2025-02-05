@@ -262,8 +262,6 @@ public class Constants {
       public static final int rollerMotorHighID = 33;
       public static final boolean rollerMotorHighIsInverted = false;
 
-
-      
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;
     }

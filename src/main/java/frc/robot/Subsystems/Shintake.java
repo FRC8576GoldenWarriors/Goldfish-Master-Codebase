@@ -40,7 +40,6 @@ public class Shintake extends SubsystemBase {
             IdleMode.kBrake,
             40);
 
-
     RPMtoVoltage = new InterpolatingDoubleTreeMap(); // use to interpolate (volts, rpm) values
 
     RPMtoVoltage.put(Double.valueOf(0), Double.valueOf(0)); // (0 rpm, 0 voltage)

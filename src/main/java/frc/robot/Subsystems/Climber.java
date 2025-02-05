@@ -40,7 +40,7 @@ public class Climber extends SubsystemBase {
     climbMotor.setVoltage(voltage);
   }
 
-  public void setMotorSpeed(double speed){
+  public void setMotorSpeed(double speed) {
     climbMotor.set(speed);
   }
 

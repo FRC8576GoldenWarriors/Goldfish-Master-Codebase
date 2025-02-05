@@ -1,4 +1,3 @@
-
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -91,7 +90,7 @@ public class RobotContainer {
                 () -> m_arm.setArmSpeed(0),
                 m_arm)); // Down arrow arm rotates to back
 
-    //left bumper eject intake
+    // left bumper eject intake
     operatorController
         .leftBumper()
         .whileTrue(
@@ -99,7 +98,7 @@ public class RobotContainer {
                 () -> m_groundIntake.setRollerSpeed(0.6),
                 () -> m_groundIntake.setRollerSpeed(0),
                 m_groundIntake));
-    //right bumper intake in
+    // right bumper intake in
     operatorController
         .rightBumper()
         .whileTrue(
@@ -108,7 +107,7 @@ public class RobotContainer {
                 () -> m_groundIntake.setRollerSpeed(0),
                 m_groundIntake));
 
-    //left arrow pivot down
+    // left arrow pivot down
     operatorController
         .povLeft()
         .whileTrue(
@@ -116,7 +115,7 @@ public class RobotContainer {
                 () -> m_groundIntake.setPivotSpeed(-0.3),
                 () -> m_groundIntake.setPivotSpeed(0),
                 m_groundIntake));
-    //right arrow pivot up
+    // right arrow pivot up
     operatorController
         .povRight()
         .whileTrue(
@@ -125,12 +124,19 @@ public class RobotContainer {
                 () -> m_groundIntake.setPivotSpeed(0),
                 m_groundIntake));
 
+    // left center button climber down
+    operatorController
+        .back()
+        .whileTrue(
+            new StartEndCommand(
+                () -> m_climber.setMotorSpeed(0.5), () -> m_climber.setMotorSpeed(0.0), m_climber));
 
-    //left center button climber down
-    operatorController.back().whileTrue(new StartEndCommand(()-> m_climber.setMotorSpeed(0.5), ()->m_climber.setMotorSpeed(0.0), m_climber));
-
-    //right center button climb up
-    operatorController.start().whileTrue(new StartEndCommand(()-> m_climber.setMotorSpeed(0.5), ()->m_climber.setMotorSpeed(0.0), m_climber));
+    // right center button climb up
+    operatorController
+        .start()
+        .whileTrue(
+            new StartEndCommand(
+                () -> m_climber.setMotorSpeed(0.5), () -> m_climber.setMotorSpeed(0.0), m_climber));
   }
 
   public Command getAutonomousCommand() {
