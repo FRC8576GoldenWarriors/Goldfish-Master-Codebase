@@ -11,15 +11,55 @@ import java.util.List;
 public class Constants {
 
   public static class VisionConstants {
+    public static class limeLightDistanceConstants {
+      public static final double DESIRED_APRIL_TAG_DISTANCE = 0.3;
+      public static final double ALLOWED_ANGLE_ERROR = 0.01;
+      public static final double ALLOWED_DISTANCE_ERROR = 0.1;
+    }
+
+    // In meters and degrees
+    // change later once we get true mesurements
+    public static class limeLightDimensionConstants {
+      public static final double CAMERA_HEIGHT = 0.267;
+      // public static final double TARGET_HEIGHT = 2.0; // hight of the speaker
+      public static final double CAMERA_PITCH = 0;
+    }
+
+    public static class aprilTagConstants {
+      public static class IDs {
+        public static final List<Integer> REEF_TAG_IDS =
+            Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
+        public static final List<Integer> BARGE_TAG_IDS = Arrays.asList(4, 5, 14, 15);
+        public static final List<Integer> PROCESSOR_TAG_IDS = Arrays.asList(3, 16);
+        public static final List<Integer> CORAL_STATION_TAG_IDS = Arrays.asList(1, 2, 12, 13);
+      }
+
+      public static class heights {
+        // In meters
+        public static final double REEF_TAG_HEIGHT = 0.305;
+        public static final double BARGE_TAG_HEIGHT = 1.915;
+        public static final double PROCESSOR_TAG_HEIGHT = 1.305;
+        public static final double CORAL_STATION_TAG_HEIGHT = 1.485;
+      }
+    }
+
+    public static class limelightNetworkTableKey {
+      public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight";
+    }
+
+    public static class limelightCameraDimensions {
+      public static final double FOCAL_LENGTH = 4.1;
+      public static final double REAL_WIDTH = 165.0;
+      public static final double PIXEL_WIDTH = 320.0;
+    }
+
     public static class cameraTranslationConstants {
-      // translation of camera in meters (change when camera has been mounted on robot)
       public static final double tX = -32 * 0.01;
       public static final double tY = 0.0 * 0.01;
       public static final double tZ = 32 * 0.01;
     }
 
     public static class cameraRotationConstants {
-      // rotation of camera (change when camera has been mounted on robot)
       public static final double rRoll = 0.0;
       public static final double rPitch = 0.0;
       public static final double rYaw = 0.0;
@@ -42,8 +82,6 @@ public class Constants {
       public static final double kPVisionTurning = 0.01;
       public static final double kPVisionMoving = 0.5;
     }
-
-    public static final boolean driverMode = true;
   }
 
   public class ControllerConstants {
@@ -63,91 +101,71 @@ public class Constants {
     }
 
     public static class PoseConfig {
-      // Increase these numbers to trust your model's state estimates less.
       public static final double kPositionStdDevX = 0.1;
       public static final double kPositionStdDevY = 0.1;
       public static final double kPositionStdDevTheta = 10;
 
-      // Increase these numbers to trust global measurements from vision less.
       public static final double kVisionStdDevX = 2;
       public static final double kVisionStdDevY = 2;
       public static final double kVisionStdDevTheta = 1;
     }
 
-    public static final int PIGEON_ID = 0;
-
-    public static final int LEFT_FRONT_DRIVE_ID = 2; 
+    public static final int LEFT_FRONT_DRIVE_ID = 2;
     public static final int RIGHT_FRONT_DRIVE_ID = 4;
-    public static final int LEFT_BACK_DRIVE_ID = 8;
-    public static final int RIGHT_BACK_DRIVE_ID = 6;
+    public static final int LEFT_BACK_DRIVE_ID = 6;
+    public static final int RIGHT_BACK_DRIVE_ID = 8;
 
     public static final int LEFT_FRONT_TURN_ID = 1;
     public static final int RIGHT_FRONT_TURN_ID = 3;
-    public static final int LEFT_BACK_TURN_ID = 7;
-    public static final int RIGHT_BACK_TURN_ID = 5;
+    public static final int LEFT_BACK_TURN_ID = 5;
+    public static final int RIGHT_BACK_TURN_ID = 7;
 
-    public static final int LEFT_FRONT_CANCODER_ID = 1; 
+    public static final int LEFT_FRONT_CANCODER_ID = 1;
     public static final int RIGHT_FRONT_CANCODER_ID = 2;
     public static final int LEFT_BACK_CANCODER_ID = 4;
-    public static final int RIGHT_BACK_CANCODER_ID = 3; 
+    public static final int RIGHT_BACK_CANCODER_ID = 3;
 
-    public static double LEFT_FRONT_OFFSET = 0.372314;
-    public static double RIGHT_FRONT_OFFSET = 0.485840;
-    public static double LEFT_BACK_OFFSET = 0.005127;
-    public static double RIGHT_BACK_OFFSET = -0.350586;
+    public static final int PIGEON_ID = 0;
 
-    public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
-    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
-    public static boolean RIGHT_BACK_DRIVE_INVERTED = true;
-    public static boolean LEFT_BACK_DRIVE_INVERTED = false;
-
-    public static boolean LEFT_FRONT_TURN_INVERTED = true;
-    public static boolean RIGHT_FRONT_TURN_INVERTED = true;
-    public static boolean RIGHT_BACK_TURN_INVERTED = true;
-    public static boolean LEFT_BACK_TURN_INVERTED = true;
-    
-    
-
-
+    public static double LEFT_FRONT_OFFSET = 0.228027;
+    public static double RIGHT_FRONT_OFFSET = -0.099609;
+    public static double LEFT_BACK_OFFSET = -0.000244;
+    public static double RIGHT_BACK_OFFSET = -0.113525;
 
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00);
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
     public static final double TURN_MOTOR_GEAR_RATIO = 150.0 / 7;
     public static final double DRIVE_MOTOR_PCONVERSION =
         WHEEL_DIAMETER * Math.PI / DRIVE_MOTOR_GEAR_RATIO;
-    public static final double TURN_MOTOR_PCONVERSION =
-        2 * Math.PI / TURN_MOTOR_GEAR_RATIO; // 2 * Math.PI
+    public static final double TURN_MOTOR_PCONVERSION = 2 * Math.PI / TURN_MOTOR_GEAR_RATIO;
     public static final double DRIVE_MOTOR_VCONVERSION = DRIVE_MOTOR_PCONVERSION / 60.0;
     public static final double TURN_MOTOR_VCONVERSION = TURN_MOTOR_PCONVERSION / 60.0;
     public static final double KP_TURNING = 0.575;
 
-    public static final double DRIVETRAIN_MAX_SPEED = 5.3; // 4.0, 5.5;
-    public static final double DRIVETRAIN_MAX_ANGULAR_SPEED = 5 * Math.PI; // 3.5, 4.25, 5
+    public static final double DRIVETRAIN_MAX_SPEED = 5.3;
+    public static final double DRIVETRAIN_MAX_ANGULAR_SPEED = 5 * Math.PI;
 
-    // Teleop constraints
     public static final double TELE_DRIVE_MAX_SPEED = DRIVETRAIN_MAX_SPEED / 0.85;
     public static final double TELE_DRIVE_MAX_ANGULAR_SPEED = DRIVETRAIN_MAX_ANGULAR_SPEED / 1.75;
-    public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5; // 3
-    public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
+    public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5;
+    public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15;
 
-    public static final double AUTO_KP_TTANSLATION = 1.35; // 1.15
-    public static final double AUTO_KP_ROTATIONAL = 0.5; // 0.1
+    public static final double AUTO_KP_TTANSLATION = 1.35;
+    public static final double AUTO_KP_ROTATIONAL = 0.1;
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
     public static final int DRIVE_CURRENT_LIMIT = 45;
 
-    public static final double TRACK_WIDTH = Units.inchesToMeters(29.0); // Y WIDTH
-    public static final double WHEEL_BASE = Units.inchesToMeters(29.0); // X LENGTH
+    public static final double TRACK_WIDTH = Units.inchesToMeters(29);
+    public static final double WHEEL_BASE = Units.inchesToMeters(29);
     public static final double DRIVE_BASE_RADIUS =
         Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
 
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
             new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0.32, 0.01)); // changed I and D terms
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0));
 
-    // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
-    // Swerve Kinematics
     public static final SwerveDriveKinematics DRIVE_KINEMATICS =
         new SwerveDriveKinematics(
             new Translation2d(WHEEL_BASE / 2, TRACK_WIDTH / 2),
@@ -156,11 +174,115 @@ public class Constants {
             new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2));
   }
 
-  public static final class CoralRollerConstants {}
+  public static final class CoralRollerConstants {
+    public static final int coralRollerID = 10;
+    public static final int coralRollerDigiSensorID = 1;
 
-  public static final class AlgaeArmConstants {}
+    public static final boolean motorIsInverted = false;
 
-  public static final class AlgaeShintakeConstants {}
+    public static final double coralIntakeInSpeed = 0.5;
+    public static final double coralIntakeOutSpeed = -0.5;
+  }
 
-  public static final class ClimberConstants {}
+  public static class EndEffectorConstants {
+    public static final int pincherID = 20;
+    public static final int pincherDigiSensorID = 2;
+
+    public static final boolean motorIsInverted = false;
+
+    public static final double pincherInSpeed = -0.5;
+    public static final double pincherOutSpeed = 0.5;
+
+    public static final double pincherInRunExtension = 0.25;
+    public static final double pincherOutRunExtension = 0.25;
+  }
+
+  public static final class ArmConstants {
+
+    public static final int armMotorID = 21;
+    public static final int armEncoderDIO = 3;
+
+    public static final boolean motorIsInverted = false;
+
+    public static final double kS = 0.1;
+    public static final double kG = 0.1;
+    public static final double kV = 0.1;
+    public static final double kA = 0.1;
+
+    public static final double kP = 0.1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    public static final double startPosition = 0;
+    public static final double lowReefPosition = 0.3;
+    public static final double highReefPosition = 0.45;
+    public static final double transportPosition = 0.65;
+
+    public static final double lowSoftStopPositon = -0.05;
+    public static final double highSoftStopPosition = 0.75;
+  }
+
+  public static final class GroundIntakeConstants {
+
+    public static class HardwareConstants {
+
+      public static final int rollerMotorID = 30;
+      public static final boolean rollerMotorIsInverted = false;
+
+      public static final int pivotMotorID = 31;
+      public static final boolean pivotMotorIsInverted = false;
+
+      public static final int pivotEncoderDIO = 4;
+      public static final double pivotEncoderFullRange = 1.0;
+      public static final double pivotEncoderZero = 0.0;
+
+      public static final int digitalInputDIO = 5;
+    }
+
+    public static class ControlConstants {
+      public static final double groundIntakeUpPosition = 0.0;
+      public static final double groundIntakeDownPosition = 0.25;
+
+      public static final double groundIntakeInSpeed = 0.5;
+      public static final double groundIntakeOutSpeed = -0.5;
+
+      public static final double kS = 0;
+      public static final double kG = 0;
+      public static final double kV = 0;
+      public static final double kA = 0;
+    }
+  }
+
+  public static final class ShintakeConstants {
+    public static class HardwareConstants {
+
+      public static final int rollerMotorLowID = 32;
+      public static final boolean rollerMotorLowIsInverted = false;
+
+      public static final int rollerMotorHighID = 33;
+      public static final boolean rollerMotorHighIsInverted = false;
+
+      public static final double pivotEncoderFullRange = 1.0;
+      public static final double pivotEncoderZero = 0.0;
+    }
+  }
+
+  public static final class ClimberConstants {
+    public static final int motorID = 40;
+    public static final boolean motorIsInverted = false;
+
+    public static final double windingSpeed = 0.5;
+    public static final double unwindingSpeed = -0.5;
+    public static final double brakeVoltage = 0;
+  }
+
+  public static final class ShooterConstants {
+    public static final double changeY = -1; // CHANGE
+    public static final double gravity = 9.81;
+    public static final double accelerationX = 0;
+    public static final double accelerationY = 0;
+    public static final double flywheelDiameter = Units.inchesToMeters(4.0);
+    public static final double algaeHoldingHeight = -1; // CHANGE
+    public static final double bargeHeight = -1; // CHANGE
+  }
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+// import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -33,8 +34,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
-          Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED, 
-          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
+          true, // false
+          true, // true
           Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
@@ -42,8 +43,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
-          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_INVERTED, // false, // used to be true, might have to change back - Om: 2/14/24
-          Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
+          false, // used to be true, might have to change back - Om: 2/14/24
+          true,
           Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
 
@@ -51,8 +52,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-          Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED, // true,
-          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
+          false,
+          true,
           Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
           Constants.SwerveConstants.LEFT_BACK_OFFSET);
 
@@ -60,8 +61,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
-          Constants.SwerveConstants.RIGHT_BACK_DRIVE_INVERTED,
-          Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
+          true,
+          true,
           Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_BACK_OFFSET);
 
@@ -127,33 +128,6 @@ public class Drivetrain extends SubsystemBase {
       e.printStackTrace();
     }
 
-    // test
-    // AutoBuilder.configure(
-    //         this::getPose2d, // Robot pose supplier
-    //         this::resetPose2d, // Method to reset odometry (will be called if your auto has a
-    // starting pose)
-    //         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE
-    // ChassisSpeeds. Also optionally outputs individual module feedforwards
-    //         Constants.SwerveConstants.pid_controls,
-    //         config, // The robot configuration
-    //         () -> {
-    //           // Boolean supplier that controls when the path will be mirrored for the red
-    // alliance
-    //           // This will flip the path being followed to the red side of the field.
-    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-    //           var alliance = DriverStation.getAlliance();
-    //           if (alliance.isPresent()) {
-    //             return alliance.get() == DriverStation.Alliance.Red;
-    //           }
-    //           return false;
-    //         },
-    //         this // Reference to this subsystem to set requirements
-    // );
-
-    // original
-    // Configure AutoBuilder last
     AutoBuilder.configure(
         this::getPose2d, // Robot pose supplier
         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
@@ -178,6 +152,7 @@ public class Drivetrain extends SubsystemBase {
         },
         this // Reference to this subsystem to set requirements
         );
+
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
         NetworkTableInstance.getDefault()
@@ -351,7 +326,7 @@ public class Drivetrain extends SubsystemBase {
     rightFront.resetEncoders();
     leftBack.resetEncoders();
     rightBack.resetEncoders();
-    odometry.resetPosition(getHeadingRotation2d(),getModulePositions(),getPose2d());
+    odometry.resetPose(new Pose2d());
   }
 
   public void zeroHeading() {
@@ -359,10 +334,12 @@ public class Drivetrain extends SubsystemBase {
     odometry.resetRotation(gyro.getRotation2d());
   }
 
-  // public void autonReset() {
-  //   Pose2d calcpose = new Pose2d(8, 7, Rotation2d.fromDegrees(180));
-  //   odometry.resetPose(calcpose);
-  // }
+  public void autonReset() {
+    Pose2d pose = AutoBuilder.getCurrentPose();
+    double[] xy = {pose.getX(), pose.getY()};
+    Pose2d calcpose = new Pose2d(xy[0], xy[1], Rotation2d.fromDegrees(180));
+    odometry.resetPose(calcpose);
+  }
 
   public void setHeading(double heading) {
     gyro.setYaw(heading);
@@ -423,8 +400,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetPose2d(Pose2d pose) {
-    gyro.setYaw(pose.getRotation().getDegrees());
-    odometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
+    odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
   }
 
   public ChassisSpeeds getRobotRelativeSpeeds() {
@@ -450,6 +426,33 @@ public class Drivetrain extends SubsystemBase {
   //   }
 
   // }
+
+  public void drive(
+      Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop) {
+    ChassisSpeeds chassisSpeeds;
+    if (fieldRelative) {
+      chassisSpeeds =
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              translation.getX(), translation.getY(), rotation, getGyroscopeRotation());
+    } else {
+      chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    }
+
+    SwerveModuleState[] moduleStates =
+        Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+
+    leftFront.setDesiredState(moduleStates[0]);
+    rightFront.setDesiredState(moduleStates[1]);
+
+    leftBack.setDesiredState(moduleStates[2]);
+    rightBack.setDesiredState(moduleStates[3]);
+  }
+
+  public Rotation2d getGyroscopeRotation() {
+    return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
+  }
 
   public boolean isRedAlliance() {
     if (DriverStation.getAlliance().isPresent()) {
