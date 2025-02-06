@@ -4,6 +4,15 @@
 
 package frc.robot;
 
+import java.net.URI;
+
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -11,13 +20,48 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Constants.*;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
   private RobotContainer m_robotContainer;
 
+
+  public Robot(){
+    
+
+
+    switch (Constants.SimulationConstants.currentMode){
+      case REAL:
+        Logger.addDataReceiver(new WPILOGWriter());
+        Logger.addDataReceiver(new NT4Publisher());
+        break;
+
+        case SIMULATION:
+          // Run a physics simulator, log it NT
+          Logger.addDataReceiver(new NT4Publisher());
+          break;
+
+          case REPLAY:
+            // Replaying a log, set up the replay source
+            setUseTiming(false);
+            String logPath = LogFileUtil.findReplayLog();
+            Logger.setReplaySource(new WPILOGReader(logPath));
+            Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+            break;
+    }
+
+    // Initilize URCL
+    //Logger.registerURCL(URCL.startExternal());
+
+    Logger.start();
+
+    m_robotContainer = new RobotContainer();
+  }
+ 
+  
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -86,4 +130,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testExit() {}
+
+  @Override
+  public void simulationPeriodic() {}
 }

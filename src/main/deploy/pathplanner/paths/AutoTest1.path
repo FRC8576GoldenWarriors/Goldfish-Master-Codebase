@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 7.65
+        "x": 7.010250000000001,
+        "y": 6.209
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.260750000000001,
-        "y": 7.5882499999999995
+        "x": 6.302975409836066,
+        "y": 6.205977459016393
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AlgeaTestShoot"
     },
     {
       "anchor": {
-        "x": 3.15,
-        "y": 4.0
+        "x": 2.001946721311475,
+        "y": 5.877100409836065
       },
       "prevControl": {
-        "x": -0.41925000000000034,
-        "y": 6.16025
+        "x": 3.1767418032786887,
+        "y": 5.9130635245901635
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 180.0
   },
   "useDefaultConstraints": true

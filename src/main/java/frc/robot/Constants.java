@@ -2,13 +2,93 @@ package frc.robot;
 
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.RobotBase;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
+
+  public static class SimulationConstants{
+    public static final Mode simulationMode = Mode.SIMULATION;
+    public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simulationMode;
+
+    public static enum Mode {
+      // Running on a real robot
+      REAL, 
+
+      // Running on a physics simulator
+      SIMULATION,
+
+      // Running from a log file
+      REPLAY,
+    }
+
+    public static class DrivetrainConstants{
+      // Drive motor configuration
+      public static final int driveMotorCurrentLimit = 45;
+      public static final double wheelRadiusMeters = Units.inchesToMeters(1.5);
+      public static final double driveMotorReduction = (45.0 * 22.0) / (16.0 * 15.0); // SDS MK4i
+      public static final DCMotor driveGearbox = DCMotor.getNeoVortex(1);
+      public static final double trackWidth = Units.inchesToMeters(27);
+      public static final double wheelBase = Units.inchesToMeters(27);
+      public static final double driveBaseRadius = Math.hypot(trackWidth / 2.0, wheelBase / 2.0);
+      public static final double odomoetyFrequency = 100.0; // in Hz
+
+      public static final Translation2d[] moduleTranslations =
+      new Translation2d[] {
+        new Translation2d(trackWidth / 2.0, wheelBase / 2.0),
+        new Translation2d(trackWidth / 2.0, -wheelBase / 2.0),
+        new Translation2d(-trackWidth / 2.0, wheelBase / 2.0),
+        new Translation2d(-trackWidth / 2.0, -wheelBase / 2.0)
+      };
+
+      public static final Rotation2d frontLeftZeroRotation = new Rotation2d(0.0);
+      public static final Rotation2d frontRightZeroRotation = new Rotation2d(0.0);
+      public static final Rotation2d backLeftZeroRotation = new Rotation2d(0.0);
+      public static final Rotation2d backRightZeroRotation = new Rotation2d(0.0);
+
+      public static final double driveKp = 0.0;
+      public static final double driveKd = 0.0;
+      public static final double driveKs = 0.0;
+      public static final double driveKv = 0.1;
+      public static final double driveSimP = 0.05;
+      public static final double driveSimD = 0.0;
+      public static final double driveSimKs = 0.0;
+      public static final double driveSimKv = 0.0789;
+
+      // Turn motor configuration
+      public static final boolean turnInverted = false;
+      public static final int turnMotorCurrentLimit = 20;
+      public static final double turnMotorReduction = 9424.0 / 203.0;
+      public static final DCMotor turnGearbox = DCMotor.getNeo550(1);
+
+      // Turn encoder configuration
+      public static final boolean turnEncoderInverted = true;
+      public static final double turnEncoderPositionFactor = 2 * Math.PI; // Rotations -> Radians
+      public static final double turnEncoderVelocityFactor = (2 * Math.PI) / 60.0; // RPM -> Rad/Sec
+
+        // Drive encoder configuration
+        public static final double driveEncoderPositionFactor = 2 * Math.PI / driveMotorReduction; // Rotor Rotations -> Wheel Radians
+        public static final double driveEncoderVelocityFactor = (2 * Math.PI) / 60.0 / driveMotorReduction; // Rotor RPM -> Wheel Rad/Sec
+
+
+      // Turn PID configuration
+      public static final double turnKp = 2.0;
+      public static final double turnKd = 0.0;
+      public static final double turnSimP = 8.0;
+      public static final double turnSimD = 0.0;
+      public static final double turnPIDMinInput = 0; // Radians
+      public static final double turnPIDMaxInput = 2 * Math.PI; // Radians
+
+    }
+  }
 
   public static class VisionConstants {
     public static class cameraTranslationConstants {
@@ -52,7 +132,6 @@ public class Constants {
   }
 
   public static final class SwerveConstants {
-
     public static class DriverConstants {
       public static final double xDeadband = 0.0825;
       public static final double yDeadband = 0.0825;
@@ -131,7 +210,7 @@ public class Constants {
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
             new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0.32, 0.01));//changed I and D terms
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0.32, 0.01)); // changed I and D terms
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
     // Swerve Kinematics
