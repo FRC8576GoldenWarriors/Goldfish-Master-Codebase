@@ -11,11 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.DrivetrainSim;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private Drivetrain m_drivetrain = Drivetrain.getInstance();
+  private DrivetrainSim m_drivetrain = DrivetrainSim.getInstance();
   private RobotContainer m_robotContainer;
 
   @Override
@@ -44,7 +45,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     m_drivetrain.resetAllEncoders();
-    m_drivetrain.setAllIdleMode(true);
+    //m_drivetrain.setAllIdleMode(true);
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -67,7 +68,7 @@ public class Robot extends TimedRobot {
     }
     // m_drivetrain.setHeading((m_drivetrain.getHeading()+180));
     m_drivetrain.resetAllEncoders();
-    m_drivetrain.setAllIdleMode(true);
+    //m_drivetrain.setAllIdleMode(true);
   }
 
   @Override

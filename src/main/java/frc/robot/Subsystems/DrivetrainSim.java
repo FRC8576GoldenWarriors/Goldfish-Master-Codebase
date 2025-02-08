@@ -28,43 +28,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Drivetrain extends SubsystemBase {
+public class DrivetrainSim extends SubsystemBase {
 
-  private SwerveModule leftFront =
-      new SwerveModule(
+  private SwerveModuleSim.ModuleIOSim leftFront =
+      new SwerveModuleSim().new ModuleIOSim(
           Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
           true, // false
-          true, // true
-          Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
-          Constants.SwerveConstants.LEFT_FRONT_OFFSET);
+          true);
 
-  private SwerveModule rightFront =
-      new SwerveModule(
+  private SwerveModuleSim.ModuleIOSim rightFront =
+      new SwerveModuleSim().new ModuleIOSim(
           Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
           false, // used to be true, might have to change back - Om: 2/14/24
-          true,
-          Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
-          Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
+          true);
 
-  private SwerveModule leftBack =
-      new SwerveModule(
+  private SwerveModuleSim.ModuleIOSim leftBack =
+      new SwerveModuleSim().new ModuleIOSim(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
           false,
-          true,
-          Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
-          Constants.SwerveConstants.LEFT_BACK_OFFSET);
+          true);
 
-  private SwerveModule rightBack =
-      new SwerveModule(
+  private SwerveModuleSim.ModuleIOSim rightBack =
+      new SwerveModuleSim().new ModuleIOSim(
           Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
           true,
-          true,
-          Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
-          Constants.SwerveConstants.RIGHT_BACK_OFFSET);
+          true);
 
   private SlewRateLimiter frontLimiter =
       new SlewRateLimiter(Constants.SwerveConstants.TELE_DRIVE_MAX_ACCELERATION);
@@ -75,7 +67,7 @@ public class Drivetrain extends SubsystemBase {
 
   private Pigeon2 gyro = new Pigeon2(Constants.SwerveConstants.PIGEON_ID);
 
-  //private static final Drivetrain drivetrain = new Drivetrain();
+  private static final DrivetrainSim drivetrainSim = new DrivetrainSim();
 
   private RobotConfig config;
 
@@ -92,12 +84,12 @@ public class Drivetrain extends SubsystemBase {
   private final StructArrayPublisher<SwerveModuleState> m_ModuleStatesActual;
   private final StructPublisher<Pose2d> m_pose;
 
-  public static Drivetrain getInstance() {
-    return null;
+  public static DrivetrainSim getInstance() {
+    return drivetrainSim;
   }
 
   /** Creates a new SwerveDrivetrain. */
-  public Drivetrain() {
+  public DrivetrainSim() {
     new Thread(
             () -> {
               try {
@@ -213,6 +205,12 @@ public class Drivetrain extends SubsystemBase {
     field.setRobotPose(getPose2d());
     // m_posePublish.set(getPose2d());
     m_ModuleStatesActual.set(getModuleStates());
+
+    leftBack.updateBoard();
+    leftFront.updateBoard();
+    rightBack.updateBoard();
+    rightFront.updateBoard();
+
     m_pose.set(odometry.getPoseMeters());
     // rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
@@ -306,19 +304,19 @@ public class Drivetrain extends SubsystemBase {
     setModuleStates(moduleStates);
   }
 
-  public void setAllIdleMode(boolean brake) {
-    if (brake) {
-      leftFront.setBrake(true);
-      rightFront.setBrake(true);
-      leftBack.setBrake(true);
-      rightBack.setBrake(true);
-    } else {
-      leftFront.setBrake(false);
-      rightFront.setBrake(false);
-      leftBack.setBrake(false);
-      rightBack.setBrake(false);
-    }
-  }
+//   public void setAllIdleMode(boolean brake) {
+//     if (brake) {
+//       leftFront.setBrake(true);
+//       rightFront.setBrake(true);
+//       leftBack.setBrake(true);
+//       rightBack.setBrake(true);
+//     } else {
+//       leftFront.setBrake(false);
+//       rightFront.setBrake(false);
+//       leftBack.setBrake(false);
+//       rightBack.setBrake(false);
+//     }
+//   }
 
   public void resetAllEncoders() {
     System.out.println("resetAllEncoders()");
@@ -362,8 +360,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] moduleStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+    //SwerveDriveKinematics.desaturateWheelSpeeds(
+    //    moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
     leftFront.setDesiredState(moduleStates[0]);
     rightFront.setDesiredState(moduleStates[1]);
     leftBack.setDesiredState(moduleStates[2]);
@@ -411,6 +409,10 @@ public class Drivetrain extends SubsystemBase {
     SwerveModuleState[] moduleStates =
         Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
     setModuleStates(moduleStates);
+  }
+
+  public void update() {
+
   }
 
   //  public void visionDrive(AprilTagStats april,double angle){

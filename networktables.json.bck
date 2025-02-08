@@ -1,0 +1,122 @@
+[
+  {
+    "name": "/Preferences/Spark 2 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 1 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 4 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 3 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 6 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 5 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 8 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 7 Flashes",
+    "type": "double",
+    "value": 20.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 32 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 33 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 20 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 21 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 31 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 30 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Spark 40 Flashes",
+    "type": "double",
+    "value": 18.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

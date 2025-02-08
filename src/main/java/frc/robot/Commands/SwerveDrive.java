@@ -10,14 +10,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.DrivetrainSim;
 
 public class SwerveDrive extends Command {
-  private Drivetrain drivetrain = Drivetrain.getInstance();
+  private DrivetrainSim m_drivetrainSim = DrivetrainSim.getInstance();
 
   /** Creates a new SwerveDrive. */
   public SwerveDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
+    addRequirements(m_drivetrainSim);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +28,7 @@ public class SwerveDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_drivetrain.swerveDrive(
+    RobotContainer.m_drivetrainSim.swerveDrive(
         -RobotContainer.driverController.getLeftY()
             * Math.abs(RobotContainer.driverController.getLeftY())
             * Constants.SwerveConstants.DriverConstants.xCoefficient, // 2.25
@@ -45,7 +46,7 @@ public class SwerveDrive extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_drivetrain.stopModules();
+    RobotContainer.m_drivetrainSim.stopModules();
   }
 
   // Returns true when the command should end.

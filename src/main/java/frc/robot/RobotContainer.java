@@ -17,13 +17,15 @@ import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivetrain;
+import frc.robot.Subsystems.DrivetrainSim;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
 import frc.robot.Subsystems.Shintake;
 
 public class RobotContainer {
 
-  public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
+  //public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
+  public static final DrivetrainSim m_drivetrainSim = DrivetrainSim.getInstance();
 
   public static final CommandXboxController driverController =
       new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
@@ -42,7 +44,7 @@ public class RobotContainer {
   public static final Climber m_climber = new Climber();
 
   public RobotContainer() {
-    m_drivetrain.setDefaultCommand(new SwerveDrive());
+    m_drivetrainSim.setDefaultCommand(new SwerveDrive());
     // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -52,7 +54,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     // Driver controller
-    resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
+    resetHeading_Start.onTrue(new InstantCommand(m_drivetrainSim::zeroHeading, m_drivetrainSim));
 
     // Operator controller
     operatorController
@@ -146,17 +148,17 @@ public class RobotContainer {
   public void registerNamedCommands() {
     NamedCommands.registerCommand(
         "Reset Swerve Encoders",
-        new InstantCommand(() -> m_drivetrain.resetAllEncoders())
+        new InstantCommand(() -> m_drivetrainSim.resetAllEncoders())
             .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
     NamedCommands.registerCommand(
         "Reset Heading",
-        new InstantCommand(() -> m_drivetrain.zeroHeading())
+        new InstantCommand(() -> m_drivetrainSim.zeroHeading())
             .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
     NamedCommands.registerCommand(
         "Auton Reset",
-        new InstantCommand(() -> m_drivetrain.autonReset())
+        new InstantCommand(() -> m_drivetrainSim.autonReset())
             .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
   }
 }
