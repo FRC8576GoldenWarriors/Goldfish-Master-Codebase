@@ -21,10 +21,10 @@ public class ArmController extends Command {
   private ArmFeedforward feedForward;
   private PIDController feedback;
 
-  private double setpoint;
+  private double setAngle;
   private double voltage;
 
-  public ArmController(Arm algaeArm, double setpoint) {
+  public ArmController(Arm algaeArm, double setAngle) {
 
     this.algaeArm = algaeArm;
 
@@ -39,7 +39,7 @@ public class ArmController extends Command {
         new PIDController(
             Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
 
-    this.setpoint = setpoint;
+    this.setAngle = setAngle;
 
     this.encoder = algaeArm.getEncoder();
 
@@ -56,7 +56,7 @@ public class ArmController extends Command {
 
     voltage =
         feedForward.calculate(encoder.get(), algaeArm.getArmVelocity())
-            + feedback.calculate(encoder.get(), setpoint);
+            + feedback.calculate(encoder.get(), setAngle);
 
     algaeArm.setArmVoltage(voltage);
   }

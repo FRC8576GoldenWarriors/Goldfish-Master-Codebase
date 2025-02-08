@@ -27,6 +27,20 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
     SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
+
+    SmartDashboard.putNumber(
+        "Arm Encoder Abs. Rotation", RobotContainer.m_arm.getEncoderPosition());
+    SmartDashboard.putNumber("Arm Encoder Velocity", RobotContainer.m_arm.getArmVelocity());
+    SmartDashboard.putNumber(
+        "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
+    SmartDashboard.putNumber("Shooter Average RPM", RobotContainer.m_shintake.getAverageRPM());
+
+    SmartDashboard.putNumber(
+        "Shooter Avg. Current",
+        (RobotContainer.m_shintake.getUpperRollerCurrent()
+                + RobotContainer.m_shintake.getLowerRollerCurrent())
+            / 2.0);
+
     CommandScheduler.getInstance().run();
   }
 
@@ -71,12 +85,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
-    SmartDashboard.putNumber(
-        "Arm Encoder Abs. Rotation", RobotContainer.m_arm.getEncoderPosition());
-    SmartDashboard.putNumber(
-        "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void teleopExit() {}

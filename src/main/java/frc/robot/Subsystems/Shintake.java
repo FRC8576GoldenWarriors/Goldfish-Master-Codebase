@@ -75,8 +75,13 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setRollersSpeed(double speed) {
-    setLowerRollerSpeed(-0.95 * speed);
+    setLowerRollerSpeed(-speed); //-0.95
     setUpperRollerSpeed(speed);
+  }
+
+  public void setRollersSpeed(double upperSpeed, double lowerSpeed){
+    setLowerRollerSpeed(-lowerSpeed);
+    setUpperRollerSpeed(upperSpeed);
   }
 
   public void setRollersVoltage(double voltage) {
@@ -86,6 +91,28 @@ public class Shintake extends SubsystemBase {
 
   public double calculateMotorVoltage(double rpm) {
     return RPMtoVoltage.get(Double.valueOf(rpm));
+  }
+
+  public double getAverageRPM() {
+    return (lowerRollerMotor.getEncoder().getVelocity()
+            + upperRollerMotor.getEncoder().getVelocity())
+        / 2.0;
+  }
+
+  public double getUpperRPM() {
+    return upperRollerMotor.getEncoder().getVelocity();
+  }
+
+  public double getLowerRPM() {
+    return lowerRollerMotor.getEncoder().getVelocity();
+  }
+
+  public double getUpperRollerCurrent() {
+    return upperRollerMotor.getAppliedOutput();
+  }
+
+  public double getLowerRollerCurrent() {
+    return lowerRollerMotor.getAppliedOutput();
   }
 
   public DutyCycleEncoder getEncoder() {

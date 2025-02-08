@@ -112,13 +112,13 @@ public class Constants {
 
     public static final int LEFT_FRONT_DRIVE_ID = 2;
     public static final int RIGHT_FRONT_DRIVE_ID = 4;
-    public static final int LEFT_BACK_DRIVE_ID = 6;
-    public static final int RIGHT_BACK_DRIVE_ID = 8;
+    public static final int LEFT_BACK_DRIVE_ID = 8;
+    public static final int RIGHT_BACK_DRIVE_ID = 6;
 
     public static final int LEFT_FRONT_TURN_ID = 1;
     public static final int RIGHT_FRONT_TURN_ID = 3;
-    public static final int LEFT_BACK_TURN_ID = 5;
-    public static final int RIGHT_BACK_TURN_ID = 7;
+    public static final int LEFT_BACK_TURN_ID = 7;
+    public static final int RIGHT_BACK_TURN_ID = 5;
 
     public static final int LEFT_FRONT_CANCODER_ID = 1;
     public static final int RIGHT_FRONT_CANCODER_ID = 2;
@@ -127,10 +127,20 @@ public class Constants {
 
     public static final int PIGEON_ID = 0;
 
-    public static double LEFT_FRONT_OFFSET = 0.228027;
-    public static double RIGHT_FRONT_OFFSET = -0.099609;
-    public static double LEFT_BACK_OFFSET = -0.000244;
-    public static double RIGHT_BACK_OFFSET = -0.113525;
+    public static double LEFT_FRONT_OFFSET = 0.372314;
+    public static double RIGHT_FRONT_OFFSET = 0.485840;
+    public static double LEFT_BACK_OFFSET = 0.005127;
+    public static double RIGHT_BACK_OFFSET = -0.350586;
+
+    public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_BACK_DRIVE_INVERTED = true;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = false;
+
+    public static boolean LEFT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_BACK_TURN_INVERTED = true;
+    public static boolean LEFT_BACK_TURN_INVERTED = true;
 
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00);
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
@@ -200,7 +210,7 @@ public class Constants {
   public static final class ArmConstants {
 
     public static final int armMotorID = 21;
-    public static final int armEncoderDIO = 3;
+    public static final int armEncoderDIO = 9; // 3
 
     public static final boolean motorIsInverted = false;
 
@@ -232,7 +242,7 @@ public class Constants {
       public static final int pivotMotorID = 31;
       public static final boolean pivotMotorIsInverted = false;
 
-      public static final int pivotEncoderDIO = 4;
+      public static final int pivotEncoderDIO = 8; // 4
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;
 
@@ -245,6 +255,10 @@ public class Constants {
 
       public static final double groundIntakeInSpeed = 0.5;
       public static final double groundIntakeOutSpeed = -0.5;
+
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
 
       public static final double kS = 0;
       public static final double kG = 0;
@@ -274,6 +288,7 @@ public class Constants {
     public static final double windingSpeed = 0.5;
     public static final double unwindingSpeed = -0.5;
     public static final double brakeVoltage = 0;
+    public static final double climbPosition = 0;
   }
 
   public static final class ShooterConstants {

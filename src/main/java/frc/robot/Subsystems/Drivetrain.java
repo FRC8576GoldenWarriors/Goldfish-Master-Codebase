@@ -34,8 +34,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
-          true, // false
-          true, // true
+          Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED,
+          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
           Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
@@ -43,8 +43,10 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
-          false, // used to be true, might have to change back - Om: 2/14/24
-          true,
+          Constants.SwerveConstants
+              .RIGHT_FRONT_DRIVE_INVERTED, // false, // used to be true, might have to change back -
+          // Om: 2/14/24
+          Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
           Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
 
@@ -52,8 +54,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-          false,
-          true,
+          Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED, // true,
+          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
           Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
           Constants.SwerveConstants.LEFT_BACK_OFFSET);
 
@@ -61,8 +63,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
-          true,
-          true,
+          Constants.SwerveConstants.RIGHT_BACK_DRIVE_INVERTED,
+          Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
           Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_BACK_OFFSET);
 

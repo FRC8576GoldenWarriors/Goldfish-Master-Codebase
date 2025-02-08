@@ -23,13 +23,20 @@ public class EndEffector extends SubsystemBase {
             Constants.EndEffectorConstants.pincherID,
             MotorType.kBrushless,
             Constants.EndEffectorConstants.motorIsInverted,
-            IdleMode.kBrake);
+            IdleMode.kBrake,
+            50);
 
     intakeSensor = new DigitalInput(Constants.EndEffectorConstants.pincherDigiSensorID);
   }
 
   public void setSpeed(double speed) {
-    pincherMotor.set(speed);
+    // pincherMotor.set(speed);
+
+    if (pincherMotor.getOutputCurrent() > 50) {
+      pincherMotor.set(0);
+    } else {
+      pincherMotor.set(speed);
+    }
   }
 
   public DigitalInput getDigitalInput() {

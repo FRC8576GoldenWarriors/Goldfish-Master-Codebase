@@ -55,15 +55,15 @@ public class RobotContainer {
     resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
 
     // Operator controller
-    operatorController
+    driverController
         .y()
         .whileTrue(
             new StartEndCommand(
-                (() -> m_shintake.setRollersSpeed(1.0)),
+                (() -> m_shintake.setRollersSpeed(1.0, 0.8)),
                 (() -> m_shintake.setRollersSpeed(0.0)),
                 m_shintake)); // Y Shintake Shoot
 
-    operatorController
+    driverController
         .b()
         .whileTrue(
             new StartEndCommand(
@@ -71,18 +71,18 @@ public class RobotContainer {
                 (() -> m_shintake.setRollersSpeed(0.0)),
                 m_shintake)); // B Shintake Intake
 
-    operatorController.x().whileTrue(new PincherOut(m_endEffector)); // X Pincher out
+    driverController.x().whileTrue(new PincherOut(m_endEffector)); // X Pincher out
 
-    operatorController.a().whileTrue(new PincherIn(m_endEffector)); // A Pincher in
+    driverController.a().whileTrue(new PincherIn(m_endEffector)); // A Pincher in
 
-    operatorController
+    driverController
         .povUp()
         .whileTrue(
             new StartEndCommand(
                 () -> m_arm.setArmSpeed(-0.3),
                 () -> m_arm.setArmSpeed(0),
                 m_arm)); // Up arrow arm rotates to front
-    operatorController
+    driverController
         .povDown()
         .whileTrue(
             new StartEndCommand(
@@ -91,7 +91,7 @@ public class RobotContainer {
                 m_arm)); // Down arrow arm rotates to back
 
     // left bumper eject intake
-    operatorController
+    driverController
         .leftBumper()
         .whileTrue(
             new StartEndCommand(
@@ -99,7 +99,7 @@ public class RobotContainer {
                 () -> m_groundIntake.setRollerSpeed(0),
                 m_groundIntake));
     // right bumper intake in
-    operatorController
+    driverController
         .rightBumper()
         .whileTrue(
             new StartEndCommand(
@@ -108,7 +108,7 @@ public class RobotContainer {
                 m_groundIntake));
 
     // left arrow pivot down
-    operatorController
+    driverController
         .povLeft()
         .whileTrue(
             new StartEndCommand(
@@ -116,7 +116,7 @@ public class RobotContainer {
                 () -> m_groundIntake.setPivotSpeed(0),
                 m_groundIntake));
     // right arrow pivot up
-    operatorController
+    driverController
         .povRight()
         .whileTrue(
             new StartEndCommand(

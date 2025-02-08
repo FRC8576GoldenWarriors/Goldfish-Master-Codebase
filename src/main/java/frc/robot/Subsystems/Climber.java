@@ -24,6 +24,10 @@ public class Climber extends SubsystemBase {
     climbEncoder = climbMotor.getEncoder();
   }
 
+  public RelativeEncoder getRelativeEncoder() {
+    return climbEncoder;
+  }
+
   public void windRope() {
     climbMotor.set(0.5); // Adjust speed as needed
   }
