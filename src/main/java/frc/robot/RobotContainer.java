@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.IntakeFFController;
@@ -23,13 +24,18 @@ public class RobotContainer {
       new CommandXboxController(0);
   public static final Drivetrain m_drivetrain = new Drivetrain();
   public RobotContainer() {
-    m_drivetrain.setDefaultCommand(new SwerveDrive());
+   m_drivetrain.setDefaultCommand(new SwerveDrive());
     configureBindings();
   }
 
   private void configureBindings() {
     resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-    driverController.a().onTrue(new IntakeFFController(90, m_intake));
+    driverController.a().onTrue(new IntakeFFController(45, m_intake));
+    driverController.x().whileTrue(new StartEndCommand(()->m_intake.setVoltage(0.5),()->m_intake.setMotorSpeed(0) , m_intake));
+    driverController.y().onTrue(new IntakeFFController(0, m_intake));
+    driverController.b().onTrue(new IntakeFFController(180, m_intake));
+  
+    
   }
 
   public Command getAutonomousCommand() {

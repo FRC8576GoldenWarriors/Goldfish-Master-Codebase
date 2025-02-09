@@ -90,23 +90,23 @@ public class Constants {
         public static final class HardwareConstants{
             public static final int pivotMotorId = 13;
             public static final int pivotAbsoluteEncoder = 1;
-            public static final double pivotEncoderZero = 0;
+            public static final double pivotEncoderZero = -2.48;
             public static final double pivotEncoderRange = 20;
-            public static final double kMaxArmVelocity = 0.5;//3.55;
-            public static final double kMaxArmAcceleration = 0.1;
+            public static final double kMaxArmVelocity = 3;//3.55;
+            public static final double kMaxArmAcceleration = 3;
         }
 
         public static final class ControlConstants{
             //PID Constants
-            public static final double kP = 0.01;
-            public static final double kI = 0;
-            public static final double kD = 0;
+            public static final double kP = 1.8;//1.5;
+            public static final double kI = 0.01;//0.05;
+            public static final double kD = 0.02;
 
             //Feed Forward COnstants
-            public static final double kS = 0;
-            public static final double kV = 0.49;
-            public static final double kG = 2.11;
-            public static final double kA = 0.05;
+            public static final double kS =0;//0.5;//0.5;
+            public static final double kV = 0.25;
+            public static final double kG = 0.7212;//2.11;
+            public static final double kA = 0;//0.05;
 
         }
     }

@@ -6,6 +6,8 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Intake;
@@ -14,7 +16,7 @@ import frc.robot.Subsystems.Intake;
 public class IntakeFFController extends Command {
   private ArmFeedforward armFF;
   private PIDController armPID;
-  private double goalEndPoint;
+  private double goalEndPoint;//Radians
   private Intake intake;
   /** Creates a new IntakeFFController. */
   public IntakeFFController(double goalPoint,Intake intake){
@@ -25,9 +27,11 @@ public class IntakeFFController extends Command {
     armPID = new PIDController(Constants.IntakeConstants.ControlConstants.kP,
     Constants.IntakeConstants.ControlConstants.kI,
     Constants.IntakeConstants.ControlConstants.kD);
+    
 
-    goalEndPoint = goalPoint;
+    goalEndPoint = Units.degreesToRadians(goalPoint);//Degrees to radians
 
+    armPID.setIZone(goalEndPoint/1.3);
     this.intake = intake;
 
     addRequirements(intake);
@@ -41,9 +45,24 @@ public class IntakeFFController extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setVoltage(armPID.calculate(intake.getRelativeEncoder(),goalEndPoint)+armFF.calculate(goalEndPoint,
+    
+
+    double voltagePID = armPID.calculate(intake.getAbsoluteEncoderPosition(),goalEndPoint);
+
+    double voltageFF = armFF.calculate(goalEndPoint,
     Constants.IntakeConstants.HardwareConstants.kMaxArmVelocity,
-    Constants.IntakeConstants.HardwareConstants.kMaxArmAcceleration));
+    Constants.IntakeConstants.HardwareConstants.kMaxArmAcceleration);
+
+    double voltage = voltagePID + voltageFF;
+
+    if(intake.getAbsoluteEncoderPosition()>=3.114 && voltage>0){
+      voltage = 0;
+    };
+
+    SmartDashboard.putNumber("Intake FF Volts", voltageFF);
+    SmartDashboard.putNumber("Intake PID Volts", voltagePID);
+
+    intake.setVoltage(voltage);
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +74,6 @@ public class IntakeFFController extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return false; 
   }
 }

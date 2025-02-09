@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -29,15 +30,18 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     intakeMotor = new WarriorSparkMax(Constants.IntakeConstants.HardwareConstants.pivotMotorId,
-     MotorType.kBrushless, false, null,45);
-     intakeMotor.configure(null, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+     MotorType.kBrushless, false, IdleMode.kCoast,45);
+    
      armRelativeEncoder = intakeMotor.getEncoder();
+
     armAbsoluteEncoder = new DutyCycleEncoder(Constants.IntakeConstants.HardwareConstants.pivotAbsoluteEncoder,2*Math.PI,
     Constants.IntakeConstants.HardwareConstants.pivotEncoderZero);
+
+    armAbsoluteEncoder.setInverted(true);
     
   }
 
-  public double getAbsoluteEncoder(){
+  public double getAbsoluteEncoderPosition(){
     return armAbsoluteEncoder.get();
     }
   public double getRelativeEncoder(){
@@ -47,10 +51,16 @@ public class Intake extends SubsystemBase {
     intakeMotor.setVoltage(voltage);
   }
 
+  public void setMotorSpeed(double speed){
+    intakeMotor.set(speed);
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Relative Encoder",getRelativeEncoder());
-    SmartDashboard.putNumber("Absolute Encoder", getAbsoluteEncoder());
+    SmartDashboard.putNumber("Absolute Encoder", getAbsoluteEncoderPosition());
+    SmartDashboard.putNumber("Voltage Output", intakeMotor.getAppliedOutput());
     // This method will be called once per scheduler run
   }
 }
+
