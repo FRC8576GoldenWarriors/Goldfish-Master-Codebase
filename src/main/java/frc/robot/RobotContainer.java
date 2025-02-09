@@ -13,17 +13,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.PincherIn;
 import frc.robot.Commands.PincherOut;
+import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.DrivetrainSim;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
 import frc.robot.Subsystems.Shintake;
+import frc.robot.Subsystems.Simulation.DrivetrainSim;
+import frc.robot.Subsystems.Simulation.SimConstants;
 
 public class RobotContainer {
-
   //public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
   public static final DrivetrainSim m_drivetrainSim = DrivetrainSim.getInstance();
 
@@ -44,7 +45,7 @@ public class RobotContainer {
   public static final Climber m_climber = new Climber();
 
   public RobotContainer() {
-    m_drivetrainSim.setDefaultCommand(new SwerveDrive());
+    m_drivetrainSim.setDefaultCommand(new SimSwerveDrive());
     // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
 

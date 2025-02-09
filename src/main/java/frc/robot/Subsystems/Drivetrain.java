@@ -293,7 +293,7 @@ public class Drivetrain extends SubsystemBase {
     ChassisSpeeds chassisSpeeds;
     if (fieldOriented) {
       chassisSpeeds =
-          ChassisSpeeds.fromFieldRelativeSpeeds(
+          ChassisSpeeds.fromRobotRelativeSpeeds(
               frontSpeed, sideSpeed, turnSpeed, getHeadingRotation2d());
     } else {
       chassisSpeeds = new ChassisSpeeds(frontSpeed, sideSpeed, turnSpeed);

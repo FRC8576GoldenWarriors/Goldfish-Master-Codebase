@@ -12,11 +12,11 @@ import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
 
-public class SwerveDrive extends Command {
+public class SimSwerveDrive extends Command {
   private DrivetrainSim m_drivetrainSim = DrivetrainSim.getInstance();
 
   /** Creates a new SwerveDrive. */
-  public SwerveDrive() {
+  public SimSwerveDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrainSim);
   }

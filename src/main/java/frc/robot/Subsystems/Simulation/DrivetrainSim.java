@@ -2,9 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Subsystems;
+package frc.robot.Subsystems.Simulation;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix6.hardware.core.CorePigeon2;
+import com.ctre.phoenix6.sim.Pigeon2SimState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -27,46 +29,46 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Subsystems.Simulation.SwerveModuleSim;
 
 public class DrivetrainSim extends SubsystemBase {
 
-  private SwerveModuleSim.ModuleIOSim leftFront =
-      new SwerveModuleSim().new ModuleIOSim(
+  private SwerveModuleSim leftFront =
+      new SwerveModuleSim(
           Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
           true, // false
           true);
 
-  private SwerveModuleSim.ModuleIOSim rightFront =
-      new SwerveModuleSim().new ModuleIOSim(
+  private SwerveModuleSim rightFront =
+      new SwerveModuleSim(
           Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
           false, // used to be true, might have to change back - Om: 2/14/24
           true);
 
-  private SwerveModuleSim.ModuleIOSim leftBack =
-      new SwerveModuleSim().new ModuleIOSim(
+  private SwerveModuleSim leftBack =
+      new SwerveModuleSim(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
           false,
           true);
 
-  private SwerveModuleSim.ModuleIOSim rightBack =
-      new SwerveModuleSim().new ModuleIOSim(
+  private SwerveModuleSim rightBack =
+      new SwerveModuleSim(
           Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
           true,
           true);
 
   private SlewRateLimiter frontLimiter =
-      new SlewRateLimiter(Constants.SwerveConstants.TELE_DRIVE_MAX_ACCELERATION);
+      new SlewRateLimiter(SimConstants.Swerve.driveAcceleraionSpeed);
   private SlewRateLimiter sideLimiter =
-      new SlewRateLimiter(Constants.SwerveConstants.TELE_DRIVE_MAX_ACCELERATION);
+      new SlewRateLimiter(SimConstants.Swerve.driveAcceleraionSpeed);
   private SlewRateLimiter turnLimiter =
-      new SlewRateLimiter(Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION);
+      new SlewRateLimiter(SimConstants.Swerve.angularAccelationSpeed);
 
-  private Pigeon2 gyro = new Pigeon2(Constants.SwerveConstants.PIGEON_ID);
-
+  private Pigeon2 gyro = new Pigeon2(0);
   private static final DrivetrainSim drivetrainSim = new DrivetrainSim();
 
   private RobotConfig config;
@@ -196,7 +198,7 @@ public class DrivetrainSim extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
+  public void simulationPeriodic() {
     // This method will be called once per scheduler run
     // RobotContainer.poseEstimator.updateOdometry(getHeadingRotation2d(), getModulePositions());
 
@@ -212,6 +214,7 @@ public class DrivetrainSim extends SubsystemBase {
     rightFront.updateBoard();
 
     m_pose.set(odometry.getPoseMeters());
+    drivetrainSim.update();
     // rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
     // Logger.recordOutput("Robot Angle", getHeading());
@@ -302,6 +305,7 @@ public class DrivetrainSim extends SubsystemBase {
             chassisSpeeds, centerOfRotation);
     m_ModulePublisherIn.set(moduleStates);
     setModuleStates(moduleStates);
+    odometry.update(getHeadingRotation2d(), getModulePositions());
   }
 
 //   public void setAllIdleMode(boolean brake) {
@@ -343,6 +347,16 @@ public class DrivetrainSim extends SubsystemBase {
     gyro.setYaw(heading);
   }
 
+  public void updateSimHeading(SwerveModuleState[] states) {
+    double currentHeadingAngle = this.getHeading();
+    double turnAngle = states[0].angle.getDegrees();
+    double getTurnVelocity = states[0].speedMetersPerSecond;
+    if(states[1].angle.getDegrees()!=turnAngle)
+    this.setHeading(currentHeadingAngle + (turnAngle * getTurnVelocity) * leftFront.getInterval());
+    else
+    return;
+  }
+
   public double getHeading() {
     return (Math.IEEEremainder(
         gyro.getYaw().getValueAsDouble(), 360)); // clamp heading between -180 and 180
@@ -360,12 +374,17 @@ public class DrivetrainSim extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] moduleStates) {
-    //SwerveDriveKinematics.desaturateWheelSpeeds(
-    //    moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        moduleStates, SimConstants.Swerve.driveSpeed);
     leftFront.setDesiredState(moduleStates[0]);
     rightFront.setDesiredState(moduleStates[1]);
     leftBack.setDesiredState(moduleStates[2]);
     rightBack.setDesiredState(moduleStates[3]);
+    updateSimHeading(moduleStates);
+  }
+
+  public void updateMotorPosition() {
+    
   }
 
   // public void setModuleZero(){ Not Called Anywhere
@@ -412,7 +431,7 @@ public class DrivetrainSim extends SubsystemBase {
   }
 
   public void update() {
-
+    odometry.update(getGyroscopeRotation(), getModulePositions());
   }
 
   //  public void visionDrive(AprilTagStats april,double angle){
@@ -443,7 +462,7 @@ public class DrivetrainSim extends SubsystemBase {
     SwerveModuleState[] moduleStates =
         Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+        moduleStates, SimConstants.Swerve.driveSpeed);
 
     leftFront.setDesiredState(moduleStates[0]);
     rightFront.setDesiredState(moduleStates[1]);

@@ -6,11 +6,6 @@
 package frc.lib.drivers;
 
 import com.revrobotics.sim.SparkMaxSim;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.BatterySim;
@@ -59,6 +54,14 @@ public class WarriorSparkMaxSim extends SparkMaxSim {
 
     public void setInterval(double updateInterval) {
         this.updateInterval = updateInterval;
+    }
+
+    public void setAngle(double angle) {
+        this.getAbsoluteEncoderSim().setPosition(angle);
+    }
+
+    public double getAngle() {
+        return this.getAbsoluteEncoderSim().getPosition();
     }
 
 
