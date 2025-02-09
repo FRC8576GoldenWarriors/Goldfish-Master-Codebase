@@ -129,14 +129,14 @@ public class RobotContainer {
         .back()
         .whileTrue(
             new StartEndCommand(
-                () -> m_climber.setMotorSpeed(0.5), () -> m_climber.setMotorSpeed(0.0), m_climber));
+                () -> m_climber.setMotorSpeed(0.9), () -> m_climber.setMotorSpeed(0.0), m_climber));
 
     // right center button climb up
     operatorController
         .start()
         .whileTrue(
             new StartEndCommand(
-                () -> m_climber.setMotorSpeed(0.5), () -> m_climber.setMotorSpeed(0.0), m_climber));
+                () -> m_climber.setMotorSpeed(-0.9), () -> m_climber.setMotorSpeed(0.0), m_climber));
   }
 
   public Command getAutonomousCommand() {
