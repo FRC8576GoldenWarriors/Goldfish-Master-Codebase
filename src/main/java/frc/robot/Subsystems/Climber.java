@@ -16,20 +16,16 @@ public class Climber extends SubsystemBase {
 
     climbMotor =
         new WarriorSparkMax(
-            Constants.ClimberConstants.motorID,
+            Constants.ClimberConstants.HardwareConstants.motorID,
             MotorType.kBrushless,
-            Constants.ClimberConstants.motorIsInverted,
+            Constants.ClimberConstants.HardwareConstants.motorIsInverted,
             IdleMode.kBrake);
 
     climbEncoder = climbMotor.getEncoder();
   }
 
-  public void windRope() {
-    climbMotor.set(0.5); // Adjust speed as needed
-  }
-
-  public void unwindRope() {
-    climbMotor.set(-0.5); // Adjust speed as needed
+  public void windRope(double speed) {
+    climbMotor.set(speed); // Adjust speed as needed
   }
 
   public void stop() {

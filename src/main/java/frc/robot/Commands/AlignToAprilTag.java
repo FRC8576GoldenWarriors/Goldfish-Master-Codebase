@@ -43,15 +43,27 @@ public class AlignToAprilTag extends Command {
     this.aprilTagStatsLimelight = aprilTagStatsLimelight;
     this.drivetrain = drivetrain;
 
-    rotationPID = new PIDController(0.08, 0.008, 0.001);
+    rotationPID =
+        new PIDController(
+            Constants.VisionConstants.VisionPIDConstants.rotationkP,
+            Constants.VisionConstants.VisionPIDConstants.rotationkI,
+            Constants.VisionConstants.VisionPIDConstants.rotationkD);
     rotationPID.setTolerance(
         Constants.VisionConstants.limeLightDistanceConstants.ALLOWED_ANGLE_ERROR);
 
-    forwardPID = new PIDController(1.5, 0.001, 0.001);
+    forwardPID =
+        new PIDController(
+            Constants.VisionConstants.VisionPIDConstants.forwardkP,
+            Constants.VisionConstants.VisionPIDConstants.forwardkI,
+            Constants.VisionConstants.VisionPIDConstants.forwardkD);
     forwardPID.setTolerance(
         Constants.VisionConstants.limeLightDistanceConstants.ALLOWED_DISTANCE_ERROR);
 
-    sidePID = new PIDController(1.5, 0.001, 0.001);
+    sidePID =
+        new PIDController(
+            Constants.VisionConstants.VisionPIDConstants.sidekP,
+            Constants.VisionConstants.VisionPIDConstants.sidekI,
+            Constants.VisionConstants.VisionPIDConstants.sidekD);
     sidePID.setTolerance(
         Constants.VisionConstants.limeLightDistanceConstants.ALLOWED_DISTANCE_ERROR);
 

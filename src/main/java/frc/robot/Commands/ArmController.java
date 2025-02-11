@@ -30,14 +30,16 @@ public class ArmController extends Command {
 
     this.feedForward =
         new ArmFeedforward(
-            Constants.ArmConstants.kS,
-            Constants.ArmConstants.kG,
-            Constants.ArmConstants.kV,
-            Constants.ArmConstants.kA);
+            Constants.ArmConstants.ControlConstants.kS,
+            Constants.ArmConstants.ControlConstants.kG,
+            Constants.ArmConstants.ControlConstants.kV,
+            Constants.ArmConstants.ControlConstants.kA);
 
     this.feedback =
         new PIDController(
-            Constants.ArmConstants.kP, Constants.ArmConstants.kI, Constants.ArmConstants.kD);
+            Constants.ArmConstants.ControlConstants.kP,
+            Constants.ArmConstants.ControlConstants.kI,
+            Constants.ArmConstants.ControlConstants.kD);
 
     this.setpoint = setpoint;
 
@@ -70,7 +72,10 @@ public class ArmController extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return encoder.get() > Constants.ArmConstants.highSoftStopPosition
-        || encoder.get() < Constants.ArmConstants.lowSoftStopPositon; // make constant later
+    return false;
+
+    // return encoder.get() > Constants.ArmConstants.ControlConstants.highSoftStopPosition
+    //     || encoder.get() < Constants.ArmConstants.ControlConstants.lowSoftStopPositon; // make
+    // constant later
   }
 }

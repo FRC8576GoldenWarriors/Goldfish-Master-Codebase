@@ -21,13 +21,13 @@ public class Arm extends SubsystemBase {
   public Arm() {
     armMotor =
         new WarriorSparkMax(
-            Constants.ArmConstants.armMotorID,
+            Constants.ArmConstants.HardwareConstants.armMotorID,
             MotorType.kBrushless,
-            Constants.ArmConstants.motorIsInverted,
+            Constants.ArmConstants.HardwareConstants.motorIsInverted,
             IdleMode.kBrake,
             45);
 
-    armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.armEncoderDIO);
+    armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.HardwareConstants.armEncoderDIO);
   }
 
   @Override

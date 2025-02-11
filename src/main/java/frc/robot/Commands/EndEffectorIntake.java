@@ -5,20 +5,20 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.Subsystems.EndEffector;
 
-public class PincherIn extends Command {
+public class EndEffectorIntake extends Command {
 
   private EndEffector algaePincher;
 
   private boolean isFinished;
+  private double speed;
 
-  public PincherIn(EndEffector algaePincher) {
+  public EndEffectorIntake(EndEffector algaePincher, double speed) {
     this.algaePincher = algaePincher;
 
     isFinished = false;
-
+    this.speed = speed;
     addRequirements(algaePincher);
   }
 
@@ -32,7 +32,7 @@ public class PincherIn extends Command {
     // } else {
     //   isFinished = true;
     // }
-    algaePincher.setSpeed(Constants.EndEffectorConstants.pincherInSpeed);
+    algaePincher.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Commands.PincherIn;
-import frc.robot.Commands.PincherOut;
+import frc.robot.Commands.EndEffectorIntake;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Climber;
@@ -71,9 +70,19 @@ public class RobotContainer {
                 (() -> m_shintake.setRollersSpeed(0.0)),
                 m_shintake)); // B Shintake Intake
 
-    operatorController.x().whileTrue(new PincherOut(m_endEffector)); // X Pincher out
+    operatorController
+        .x()
+        .whileTrue(
+            new EndEffectorIntake(
+                m_endEffector,
+                Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)); // X Pincher out
 
-    operatorController.a().whileTrue(new PincherIn(m_endEffector)); // A Pincher in
+    operatorController
+        .a()
+        .whileTrue(
+            new EndEffectorIntake(
+                m_endEffector,
+                Constants.EndEffectorConstants.ControlConstants.pincherOutSpeed)); // A Pincher in
 
     operatorController
         .povUp()

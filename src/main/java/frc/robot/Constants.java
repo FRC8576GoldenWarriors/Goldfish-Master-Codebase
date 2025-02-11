@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -53,18 +55,6 @@ public class Constants {
       public static final double PIXEL_WIDTH = 320.0;
     }
 
-    public static class cameraTranslationConstants {
-      public static final double tX = -32 * 0.01;
-      public static final double tY = 0.0 * 0.01;
-      public static final double tZ = 32 * 0.01;
-    }
-
-    public static class cameraRotationConstants {
-      public static final double rRoll = 0.0;
-      public static final double rPitch = 0.0;
-      public static final double rYaw = 0.0;
-    }
-
     public static class distanceConstants {
       public static final double goalMeterDistance = 3.0;
       public static final double visionAngleDegrees = 0.0;
@@ -79,8 +69,17 @@ public class Constants {
     }
 
     public static class VisionPIDConstants {
-      public static final double kPVisionTurning = 0.01;
-      public static final double kPVisionMoving = 0.5;
+      public static final double rotationkP = 0.08;
+      public static final double rotationkI = 0.008;
+      public static final double rotationkD = 0.001;
+
+      public static final double forwardkP = 1.5;
+      public static final double forwardkI = 0.001;
+      public static final double forwardkD = 0.001;
+
+      public static final double sidekP = 1.5;
+      public static final double sidekI = 0.001;
+      public static final double sidekD = 0.001;
     }
   }
 
@@ -98,16 +97,6 @@ public class Constants {
       public static final double xCoefficient = 2.05;
       public static final double yCoefficient = 2.05;
       public static final double turnCoefficient = 1.675;
-    }
-
-    public static class PoseConfig {
-      public static final double kPositionStdDevX = 0.1;
-      public static final double kPositionStdDevY = 0.1;
-      public static final double kPositionStdDevTheta = 10;
-
-      public static final double kVisionStdDevX = 2;
-      public static final double kVisionStdDevY = 2;
-      public static final double kVisionStdDevTheta = 1;
     }
 
     public static final int LEFT_FRONT_DRIVE_ID = 2;
@@ -175,51 +164,64 @@ public class Constants {
   }
 
   public static final class CoralRollerConstants {
-    public static final int coralRollerID = 10;
-    public static final int coralRollerDigiSensorID = 1;
+    public static final class HardwareConstants {
+      public static final int coralRollerID = 10;
+      public static final int coralRollerDigiSensorID = 1;
 
-    public static final boolean motorIsInverted = false;
+      public static final boolean motorIsInverted = false;
+    }
 
-    public static final double coralIntakeInSpeed = 0.5;
-    public static final double coralIntakeOutSpeed = -0.5;
+    public static final class ControlConstants {
+      public static final double coralIntakeInSpeed = 0.5;
+      public static final double coralIntakeOutSpeed = -0.5;
+    }
   }
 
   public static class EndEffectorConstants {
-    public static final int pincherID = 20;
-    public static final int pincherDigiSensorID = 2;
+    public static final class HardwareConstants {
+      public static final int pincherID = 20;
+      public static final int pincherDigiSensorID = 2;
 
-    public static final boolean motorIsInverted = false;
+      public static final boolean motorIsInverted = false;
+    }
 
-    public static final double pincherInSpeed = -0.5;
-    public static final double pincherOutSpeed = 0.5;
+    public static final class ControlConstants {
+      public static final double pincherInSpeed = -0.5;
+      public static final double pincherOutSpeed = 0.5;
 
-    public static final double pincherInRunExtension = 0.25;
-    public static final double pincherOutRunExtension = 0.25;
+      public static final double pincherInRunExtension = 0.25;
+      public static final double pincherOutRunExtension = 0.25;
+    }
   }
 
   public static final class ArmConstants {
+    public static final class HardwareConstants {
 
-    public static final int armMotorID = 21;
-    public static final int armEncoderDIO = 3;
+      public static final int armMotorID = 21;
+      public static final int armEncoderDIO = 3;
 
-    public static final boolean motorIsInverted = false;
+      public static final boolean motorIsInverted = false;
+    }
 
-    public static final double kS = 0.1;
-    public static final double kG = 0.1;
-    public static final double kV = 0.1;
-    public static final double kA = 0.1;
+    public static final class ControlConstants {
 
-    public static final double kP = 0.1;
-    public static final double kI = 0;
-    public static final double kD = 0;
+      public static final double kS = 0.1;
+      public static final double kG = 0.1;
+      public static final double kV = 0.1;
+      public static final double kA = 0.1;
 
-    public static final double startPosition = 0;
-    public static final double lowReefPosition = 0.3;
-    public static final double highReefPosition = 0.45;
-    public static final double transportPosition = 0.65;
+      public static final double kP = 0.1;
+      public static final double kI = 0;
+      public static final double kD = 0;
 
-    public static final double lowSoftStopPositon = -0.05;
-    public static final double highSoftStopPosition = 0.75;
+      public static final double startPosition = 0;
+      public static final double lowReefPosition = 0.3;
+      public static final double highReefPosition = 0.45;
+      public static final double transportPosition = 0.65;
+
+      public static final double lowSoftStopPositon = -0.05;
+      public static final double highSoftStopPosition = 0.75;
+    }
   }
 
   public static final class GroundIntakeConstants {
@@ -268,21 +270,23 @@ public class Constants {
   }
 
   public static final class ClimberConstants {
-    public static final int motorID = 40;
-    public static final boolean motorIsInverted = false;
+    public static final class HardwareConstants {
+      public static final int motorID = 40;
+      public static final boolean motorIsInverted = false;
+    }
 
-    public static final double windingSpeed = 0.5;
-    public static final double unwindingSpeed = -0.5;
-    public static final double brakeVoltage = 0;
-  }
-
-  public static final class ShooterConstants {
-    public static final double changeY = -1; // CHANGE
-    public static final double gravity = 9.81;
-    public static final double accelerationX = 0;
-    public static final double accelerationY = 0;
-    public static final double flywheelDiameter = Units.inchesToMeters(4.0);
-    public static final double algaeHoldingHeight = -1; // CHANGE
-    public static final double bargeHeight = -1; // CHANGE
+    public static final class ControlConstants {
+      public static final double windingSpeed = 0.5;
+      public static final double unwindingSpeed = -0.5;
+      public static final double brakeVoltage = 0;
+      public static final double kS = 0;
+      public static final double kG = 0;
+      public static final double kV = 0;
+      public static final double kA = 0;
+      public static final PIDController windPID = new PIDController(0, 0, 0);
+      public static final PIDController unwindPID = new PIDController(0, 0, -0);
+      public static final ElevatorFeedforward climbFeedforward =
+          new ElevatorFeedforward(kS, kG, kV, kA);
+    }
   }
 }
