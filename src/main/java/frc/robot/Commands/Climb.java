@@ -33,6 +33,7 @@ public class Climb extends Command {
           Constants.ClimberConstants.ControlConstants.climbFeedforward.calculate(
               Constants.ClimberConstants.ControlConstants.unwindingSpeed);
       SmartDashboard.putNumber("Climb FeedForward", FFVal);
+      climbMech.climbing(true);
       climbMech.windRope(PIDVal + FFVal);
 
     } else {

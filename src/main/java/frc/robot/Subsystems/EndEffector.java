@@ -14,7 +14,8 @@ import frc.robot.Constants;
 public class EndEffector extends SubsystemBase {
 
   private WarriorSparkMax pincherMotor;
-  private DigitalInput intakeSensor;
+  private DigitalInput coralDigitalInput;
+  private DigitalInput algaeDigitalInput;
 
   public EndEffector() {
 
@@ -25,20 +26,26 @@ public class EndEffector extends SubsystemBase {
             Constants.EndEffectorConstants.HardwareConstants.motorIsInverted,
             IdleMode.kBrake);
 
-    intakeSensor =
-        new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.pincherDigiSensorID);
+    coralDigitalInput =
+        new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.coralDigiSensorID);
+    algaeDigitalInput =
+        new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.algaeDigiSensorID);
   }
 
   public void setSpeed(double speed) {
     pincherMotor.set(speed);
   }
 
-  public DigitalInput getDigitalInput() {
-    return intakeSensor;
+  public DigitalInput getCoralDigitalInput() {
+    return coralDigitalInput;
   }
 
-  public boolean hasAlgae() {
-    return intakeSensor.get();
+  public DigitalInput getAlgaeDigitalInput() {
+    return algaeDigitalInput;
+  }
+
+  public boolean motorRunning() {
+    return pincherMotor.get() != 0;
   }
 
   @Override

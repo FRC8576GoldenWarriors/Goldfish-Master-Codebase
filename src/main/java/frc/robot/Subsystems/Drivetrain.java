@@ -79,6 +79,8 @@ public class Drivetrain extends SubsystemBase {
 
   private RobotConfig config;
 
+  private boolean isAutoPosed;
+
   // getHeadingRotation2d()
   public SwerveDriveOdometry odometry =
       new SwerveDriveOdometry(
@@ -459,5 +461,13 @@ public class Drivetrain extends SubsystemBase {
       return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
     }
     return false;
+  }
+
+  public void setAutoPose(boolean autoPosed) {
+    isAutoPosed = autoPosed;
+  }
+
+  public boolean getAutoPose() {
+    return isAutoPosed;
   }
 }

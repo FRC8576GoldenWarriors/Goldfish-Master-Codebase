@@ -77,6 +77,7 @@ public class AlignToAprilTag extends Command {
 
   @Override
   public void execute() {
+    drivetrain.setAutoPose(false);
 
     detectedWidth =
         realWidth
@@ -111,6 +112,7 @@ public class AlignToAprilTag extends Command {
 
   @Override
   public void end(boolean interrupted) {
+    drivetrain.setAutoPose(true);
     drivetrain.stopModules();
   }
 

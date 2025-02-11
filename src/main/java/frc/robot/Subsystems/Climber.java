@@ -11,6 +11,7 @@ public class Climber extends SubsystemBase {
 
   private final WarriorSparkMax climbMotor;
   private final RelativeEncoder climbEncoder;
+  private boolean isClimbing;
 
   public Climber() {
 
@@ -30,6 +31,14 @@ public class Climber extends SubsystemBase {
 
   public void stop() {
     climbMotor.set(0);
+  }
+
+  public void climbing(boolean value) {
+    isClimbing = value;
+  }
+
+  public boolean getClimbing() {
+    return isClimbing;
   }
 
   public void setMotorVoltage(double voltage) {

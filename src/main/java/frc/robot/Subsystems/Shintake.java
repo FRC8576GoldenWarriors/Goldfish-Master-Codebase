@@ -23,6 +23,8 @@ public class Shintake extends SubsystemBase {
 
   private InterpolatingDoubleTreeMap RPMtoVoltage;
 
+  private boolean isRevved;
+
   public Shintake() {
     lowerRollerMotor =
         new WarriorSparkMax(
@@ -84,11 +86,25 @@ public class Shintake extends SubsystemBase {
     setUpperRollerVoltage(voltage);
   }
 
+  public double getAverageEncoderVelocity() {
+    return (lowerRollerMotor.getEncoder().getVelocity()
+            + upperRollerMotor.getEncoder().getVelocity())
+        / 2.0;
+  }
+
   public double calculateMotorVoltage(double rpm) {
     return RPMtoVoltage.get(Double.valueOf(rpm));
   }
 
   public DutyCycleEncoder getEncoder() {
     return encoder;
+  }
+
+  public void setIsRevved(boolean isRevved) {
+    this.isRevved = isRevved;
+  }
+
+  public boolean getIsRevved() {
+    return isRevved;
   }
 }
