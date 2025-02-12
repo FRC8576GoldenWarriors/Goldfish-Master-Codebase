@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
@@ -280,7 +282,7 @@ public class Drivetrain extends SubsystemBase {
       }
     });// */
 
-    // Logger.recordOutput("Drivetrain/Robot Angle", getHeadingRotation2d().getRadians());
+    // Logger.recordOutput("Turn", getHeadingRotation2d().getRadians());
     // Logger.recordOutput("Drivetrain/Pose", getPose());
     // Logger.recordOutput("Drivetrain/Angular Speed", yaw / 180);
     // Logger.recordOutput("Drivetrain/Module States", getModuleStates());

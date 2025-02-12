@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -33,6 +35,8 @@ public class SwerveModule extends SubsystemBase {
   private double absoluteEncoderOffset;
   private Rotation2d lastAngle;
 
+  private int encoderID;
+
   /** Creates a new SwerveModule. */
   public SwerveModule(
       int driveMotorId,
@@ -45,6 +49,7 @@ public class SwerveModule extends SubsystemBase {
 
     this.turnMotorId = turnMotorId;
     this.driveMotorId = driveMotorId;
+    this.encoderID = absoluteEncoderId;
 
     driveMotor =
         new WarriorSparkMax(
@@ -77,6 +82,13 @@ public class SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Logger.recordOutput("Drive voltage of " + encoderID, driveMotor.getBusVoltage());
+    Logger.recordOutput("Turn voltage of " + encoderID, turnMotor.getBusVoltage());
+    Logger.recordOutput("Drive Faults of " + encoderID, driveMotor.getFaults().toString());
+    Logger.recordOutput("Turn Faults of " + encoderID, driveMotor.getFaults().toString());
+    Logger.recordOutput("Drive current of " + encoderID, driveMotor.getOutputCurrent());
+    Logger.recordOutput("Turn current of " + encoderID, turnMotor.getOutputCurrent());
+
     // SmartDashboard.putNumber(turnMotorId+"", turnMotor.getEncoder().getPosition());
     // SmartDashboard.putNumber(driveMotorId+" Current: ", driveMotor.getOutputCurrent() );
   }
