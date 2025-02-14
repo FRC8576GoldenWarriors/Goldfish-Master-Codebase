@@ -6,12 +6,13 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class Climber extends SubsystemBase {
 
   private final WarriorSparkMax climbMotor;
   private final RelativeEncoder climbEncoder;
-  private boolean isClimbing;
+  private boolean isClimbingUp;
 
   public Climber() {
 
@@ -33,12 +34,12 @@ public class Climber extends SubsystemBase {
     climbMotor.set(0);
   }
 
-  public void climbing(boolean value) {
-    isClimbing = value;
+  public void setClimbingDirection(boolean isClimbingUp) {
+    this.isClimbingUp = isClimbingUp;
   }
 
-  public boolean getClimbing() {
-    return isClimbing;
+  public boolean isClimbingUp() {
+    return isClimbingUp;
   }
 
   public void setMotorVoltage(double voltage) {
@@ -63,6 +64,10 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Optionally log encoder values to SmartDashboard
+    Logger.recordOutput("Climber/Climb_Voltage", climbMotor.getBusVoltage());
+    Logger.recordOutput("Climber/Climb_Current", climbMotor.getOutputCurrent());
+    Logger.recordOutput("Climber/Climb_Position", getEncoderPosition());
+    Logger.recordOutput("Climber/Climb_Velocity", getEncoderVelocity());
+    Logger.recordOutput("Climber/Climbing", isClimbingUp());
   }
 }

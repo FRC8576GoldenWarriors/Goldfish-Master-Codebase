@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
   /** Creates a new AlgaeArm. */
@@ -33,6 +34,11 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    Logger.recordOutput("Arm/Arm_Voltage", armMotor.getBusVoltage());
+    Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
+    Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
+    Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
   }
 
   public void setArmVoltage(double volts) {

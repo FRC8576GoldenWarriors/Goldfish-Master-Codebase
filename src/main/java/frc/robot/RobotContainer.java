@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.EndEffectorIntake;
+import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Climber;
@@ -19,10 +20,15 @@ import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
 import frc.robot.Subsystems.Shintake;
+import frc.robot.Subsystems.Simulation.DrivetrainSim;
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 public class RobotContainer {
 
-  public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
+  //   public static final Drivetrain m_drivetrain = Drivetrain.getInstance();
 
   public static final CommandXboxController driverController =
       new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
@@ -34,14 +40,33 @@ public class RobotContainer {
 
   public final SendableChooser<Command> autoChooser;
 
-  public static final Shintake m_shintake = new Shintake();
-  public static final EndEffector m_endEffector = new EndEffector();
-  public static final Arm m_arm = new Arm();
-  public static final GroundIntake m_groundIntake = new GroundIntake();
-  public static final Climber m_climber = new Climber();
+  public static Drivetrain m_drivetrain;
+  public static Shintake m_shintake;
+  public static EndEffector m_endEffector;
+  public static Arm m_arm;
+  public static GroundIntake m_groundIntake;
+  public static Climber m_climber;
+
+  public static DrivetrainSim m_drivetrainSim;
 
   public RobotContainer() {
-    m_drivetrain.setDefaultCommand(new SwerveDrive());
+
+    if (Constants.SimConstants.currentMode.equals(Constants.SimConstants.Mode.REAL)) {
+      m_drivetrain = new Drivetrain().getInstance();
+      m_shintake = new Shintake();
+      m_endEffector = new EndEffector();
+      m_arm = new Arm();
+      m_groundIntake = new GroundIntake();
+      m_climber = new Climber();
+      m_drivetrain.setDefaultCommand(new SwerveDrive());
+    } else if (Constants.SimConstants.currentMode.equals(Constants.SimConstants.Mode.SIM)) {
+      m_drivetrainSim = new DrivetrainSim();
+      m_drivetrainSim.setDefaultCommand(new SimSwerveDrive());
+    } else {
+      String logPath = LogFileUtil.findReplayLog();
+      Logger.setReplaySource(new WPILOGReader(logPath));
+      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+    }
     // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
 
