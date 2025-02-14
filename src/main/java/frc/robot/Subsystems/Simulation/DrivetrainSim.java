@@ -23,38 +23,40 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class DrivetrainSim extends SubsystemBase {
 
   private SwerveModuleSim leftFront =
       new SwerveModuleSim(
-          Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
-          Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
+          SimConstants.Swerve.LEFT_FRONT_DRIVE_ID,
+          SimConstants.Swerve.LEFT_FRONT_TURN_ID,
           true, // false
           true);
 
   private SwerveModuleSim rightFront =
       new SwerveModuleSim(
-          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
-          Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
+          SimConstants.Swerve.RIGHT_FRONT_DRIVE_ID,
+          SimConstants.Swerve.RIGHT_FRONT_TURN_ID,
           false, // used to be true, might have to change back - Om: 2/14/24
           true);
 
   private SwerveModuleSim leftBack =
       new SwerveModuleSim(
-          Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
-          Constants.SwerveConstants.LEFT_BACK_TURN_ID,
+          SimConstants.Swerve.LEFT_BACK_DRIVE_ID,
+          SimConstants.Swerve.LEFT_BACK_TURN_ID,
           false,
           true);
 
   private SwerveModuleSim rightBack =
       new SwerveModuleSim(
-          Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
-          Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
+          SimConstants.Swerve.RIGHT_BACK_DRIVE_ID,
+          SimConstants.Swerve.RIGHT_BACK_TURN_ID,
           true,
           true);
 
@@ -119,30 +121,30 @@ public class DrivetrainSim extends SubsystemBase {
       e.printStackTrace();
     }
 
-    AutoBuilder.configure(
-        this::getPose2d, // Robot pose supplier
-        this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
-        // pose)
-        this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-        (speeds, feedforwards) ->
-            driveRobotRelative(
-                speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds.
-        // Also optionally outputs individual module feedforwards
-        Constants.SwerveConstants.pid_controls,
-        config, // The robot configuration
-        () -> {
-          // Boolean supplier that controls when the path will be mirrored for the red alliance
-          // This will flip the path being followed to the red side of the field.
-          // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+    // AutoBuilder.configure(
+    //     this::getPose2d, // Robot pose supplier
+    //     this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
+    //     // pose)
+    //     this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //     (speeds, feedforwards) ->
+    //         driveRobotRelative(
+    //             speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds.
+    //     // Also optionally outputs individual module feedforwards
+    //     Constants.SwerveConstants.pid_controls,
+    //     config, // The robot configuration
+    //     () -> {
+    //       // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //       // This will flip the path being followed to the red side of the field.
+    //       // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-          var alliance = DriverStation.getAlliance();
-          if (alliance.isPresent()) {
-            return alliance.get() == DriverStation.Alliance.Red;
-          }
-          return false;
-        },
-        this // Reference to this subsystem to set requirements
-        );
+    //       var alliance = DriverStation.getAlliance();
+    //       if (alliance.isPresent()) {
+    //         return alliance.get() == DriverStation.Alliance.Red;
+    //       }
+    //       return false;
+    //     },
+    //     this // Reference to this subsystem to set requirements
+    //     );
 
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
@@ -345,13 +347,45 @@ public class DrivetrainSim extends SubsystemBase {
   }
 
   public void updateSimHeading(SwerveModuleState[] states) {
+    double[] moduleTurningAngles = {
+      states[0].angle.getDegrees(), 
+      states[1].angle.getDegrees(),
+      states[2].angle.getDegrees(),
+      states[3].angle.getDegrees()};
+    
+    double[] moduleDriveVelocitys = {
+      states[0].speedMetersPerSecond, 
+      states[1].speedMetersPerSecond,
+      states[2].speedMetersPerSecond,
+      states[3].speedMetersPerSecond};
+
     double currentHeadingAngle = this.getHeading();
-    double turnAngle = states[0].angle.getDegrees();
-    double getTurnVelocity = states[0].speedMetersPerSecond;
-    if (states[1].angle.getDegrees() != turnAngle)
-      this.setHeading(
-          currentHeadingAngle + (turnAngle * getTurnVelocity) * leftFront.getInterval());
-    else return;
+    double turnVelocity = 0;
+    double turnAngle = 0;
+    boolean shouldTurn = false;
+
+    for (int i = 1; i < moduleTurningAngles.length; i++) {
+      if(moduleTurningAngles[0] != moduleTurningAngles[i]) {
+        shouldTurn = true;
+        break;
+      }
+    }
+    if (shouldTurn) {
+
+      for (int i = 0; i < moduleTurningAngles.length; i++) turnAngle += Math.abs(moduleTurningAngles[i]);
+      for (int i = 0; i < moduleDriveVelocitys.length; i++ ) turnVelocity += Math.abs(moduleDriveVelocitys[i]);
+
+      turnAngle /= 4;
+      turnVelocity /= 4;
+
+      if (RobotContainer.driverController.getRightX() > 0) {
+        turnAngle *= -1;
+      }
+
+
+      
+      this.setHeading(currentHeadingAngle + (turnAngle * turnVelocity) * leftFront.getInterval());
+    }
   }
 
   public double getHeading() {

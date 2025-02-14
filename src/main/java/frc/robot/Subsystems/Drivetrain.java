@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Subsystems.Simulation.SimConstants;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -96,6 +97,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static Drivetrain getInstance() {
     return drivetrain;
+
   }
 
   /** Creates a new SwerveDrivetrain. */
@@ -129,7 +131,7 @@ public class Drivetrain extends SubsystemBase {
       // Handle exception as needed
       e.printStackTrace();
     }
-
+    if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
     AutoBuilder.configure(
         this::getPose2d, // Robot pose supplier
         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
@@ -154,6 +156,7 @@ public class Drivetrain extends SubsystemBase {
         },
         this // Reference to this subsystem to set requirements
         );
+      }
 
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
