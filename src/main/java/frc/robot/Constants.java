@@ -132,6 +132,11 @@ public class Constants {
     public static double LEFT_BACK_OFFSET = 0.005127;
     public static double RIGHT_BACK_OFFSET = -0.350586;
 
+    public static double PRACTICE_LEFT_FRONT_OFFSET = 0.372314; 
+    public static double PRACTICE_RIGHT_FRONT_OFFSET = 0.485840;
+    public static double PRACTICE_LEFT_BACK_OFFSET = 0.005127;
+    public static double PRACTICE_RIGHT_BACK_OFFSET = -0.350586;
+
     public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
     public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
     public static boolean RIGHT_BACK_DRIVE_INVERTED = true;

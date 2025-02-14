@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.252561475409835,
-        "y": 4.036987704918033
+        "x": 7.492315573770492,
+        "y": 5.7811987704918035
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.7249662526832275,
-        "y": 4.036987704918033
+        "x": 6.7251024590163935,
+        "y": 5.0379610655737705
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "shoota "
     },
     {
       "anchor": {
-        "x": 5.945901639344262,
-        "y": 4.036987704918033
+        "x": 5.8619877049180324,
+        "y": 4.00701844262295
       },
       "prevControl": {
-        "x": 6.569377550820353,
-        "y": 4.036987704918033
+        "x": 6.677151639344261,
+        "y": 5.00199795081967
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End 1"
+      "linkedName": "pickup 1"
     }
   ],
   "rotationTargets": [],
@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Dealgae Paths",
+  "folder": "algae shoot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

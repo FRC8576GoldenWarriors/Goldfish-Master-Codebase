@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.252561475409835,
-        "y": 4.036987704918033
+        "x": 7.588217213114754,
+        "y": 7.44748975409836
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.7249662526832275,
-        "y": 4.036987704918033
+        "x": 6.617213114754098,
+        "y": 6.5484118852459
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.945901639344262,
-        "y": 4.036987704918033
+        "x": 5.262602459016393,
+        "y": 5.217776639344262
       },
       "prevControl": {
-        "x": 6.569377550820353,
-        "y": 4.036987704918033
+        "x": 6.245594262295081,
+        "y": 6.104866803278688
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End 1"
+      "linkedName": "start pickup"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 57.33908727832617
   },
   "reversed": false,
-  "folder": "Dealgae Paths",
+  "folder": "algae shoot",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

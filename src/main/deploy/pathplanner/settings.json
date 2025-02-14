@@ -7,14 +7,15 @@
     "Coral Spam B1 Right Station Paths",
     "Coral Spam B3 Right Station Paths",
     "Dealgae Paths",
-    "test paths",
-    "Tuning Paths"
+    "Tuning Paths",
+    "algae shoot"
   ],
   "autoFolders": [
     "Coral Spam Autos",
     "Dealgae Path",
-    "test paths",
-    "Tuning Paths"
+    "New Folder",
+    "Tuning Paths",
+    "Algae Shoot Path"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
