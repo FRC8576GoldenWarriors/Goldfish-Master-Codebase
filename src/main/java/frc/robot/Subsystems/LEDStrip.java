@@ -100,7 +100,7 @@ public class LEDStrip extends SubsystemBase {
     //   blinkRed();
     // } else if (driverController.getXButton()) { // red solid progress
     // progress(LEDPattern.solid(Color.kRed), driverController.getLeftTriggerAxis());
-    if (RobotContainer.m_climber.getClimbing()) {
+    if (RobotContainer.m_climber.isClimbingUp()) {
       rainbowScroll();
     } else if (RobotContainer.m_drivetrain.getAutoPose()
         && RobotContainer.m_shintake.getIsRevved()) {

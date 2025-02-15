@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class GroundIntake extends SubsystemBase {
 
@@ -49,6 +50,8 @@ public class GroundIntake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
+    Logger.recordOutput("Ground_Intake/Ground_Intake_Digital_Input", getDigitalInputValue());
   }
 
   public void setPivotSpeed(double speed) {

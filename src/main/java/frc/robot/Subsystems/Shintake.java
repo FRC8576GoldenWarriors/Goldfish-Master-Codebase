@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class Shintake extends SubsystemBase {
 
@@ -50,6 +51,16 @@ public class Shintake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Logger.recordOutput("Shintake/IsRevved", getIsRevved());
+    Logger.recordOutput("Shintake/Average_Encoder_Velocity", getAverageEncoderVelocity());
+    Logger.recordOutput("Shintake/Lower_Roller_Motor_Voltage", lowerRollerMotor.getBusVoltage());
+    Logger.recordOutput("Shintake/Lower_Roller_Motor_Current", lowerRollerMotor.getOutputCurrent());
+    Logger.recordOutput(
+        "Shintake/Lower_Roller_Encoder_Position", lowerRollerMotor.getEncoder().getVelocity());
+    Logger.recordOutput("Shintake/Upper_Roller_Motor_Voltage", upperRollerMotor.getBusVoltage());
+    Logger.recordOutput("Shintake/Upper_Roller_Motor_Current", upperRollerMotor.getOutputCurrent());
+    Logger.recordOutput(
+        "Shintake/Upper_Roller_Encoder_Position", upperRollerMotor.getEncoder().getVelocity());
   }
 
   public void setPivotSpeed(double speed) {

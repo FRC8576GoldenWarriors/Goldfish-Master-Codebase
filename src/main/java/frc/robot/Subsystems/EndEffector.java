@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class EndEffector extends SubsystemBase {
 
@@ -49,5 +50,10 @@ public class EndEffector extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    Logger.recordOutput(
+        "EndEffector/EndEffector_Coral_Digital_Input", getCoralDigitalInput().get());
+    Logger.recordOutput(
+        "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
+  }
 }
