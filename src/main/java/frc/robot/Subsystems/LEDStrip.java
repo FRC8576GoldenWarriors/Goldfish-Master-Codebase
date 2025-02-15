@@ -102,14 +102,14 @@ public class LEDStrip extends SubsystemBase {
     // progress(LEDPattern.solid(Color.kRed), driverController.getLeftTriggerAxis());
     if (RobotContainer.m_climber.isClimbingUp()) {
       rainbowScroll();
-    } else if (RobotContainer.m_drivetrain.getAutoPose()
-        && RobotContainer.m_shintake.getIsRevved()) {
-      solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
-    } else if (RobotContainer.m_drivetrain.getAutoPose()
-        || RobotContainer.m_shintake.getIsRevved()) {
-      blink(
-          Constants.LEDConstants.PatternConfig.kshooterNotReady,
-          Constants.LEDConstants.PatternConfig.kshooterNotReadyBlinkSpeed);
+    // } else if (RobotContainer.m_drivetrain.getAutoPose()
+    //     && RobotContainer.m_shintake.getIsRevved()) {
+    //   solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
+    // } else if (RobotContainer.m_drivetrain.getAutoPose()
+    //     || RobotContainer.m_shintake.getIsRevved()) {
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kshooterNotReady,
+    //       Constants.LEDConstants.PatternConfig.kshooterNotReadyBlinkSpeed);
     } else if (driverController.getLeftBumper()) {
       blink(
           Constants.LEDConstants.PatternConfig.kAprilTags,

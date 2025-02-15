@@ -77,7 +77,7 @@ public class AlignToAprilTag extends Command {
 
   @Override
   public void execute() {
-    drivetrain.setAutoPose(false);
+    // drivetrain.setAutoPose(false);
 
     detectedWidth =
         realWidth
@@ -103,7 +103,7 @@ public class AlignToAprilTag extends Command {
         (currentDistance <= goalDistance) ? 0 : forwardPID.calculate(currentDistance, goalDistance);
     double sideOutput = sidePID.calculate(goalDistance * Math.sin(Math.toRadians(tx)), 0);
 
-    drivetrain.drive(new Translation2d(driveOutput, sideOutput), rotationOutput, false, true);
+    //drivetrain.drive(new Translation2d(driveOutput, sideOutput), rotationOutput, false, true);
     SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
     SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
     SmartDashboard.putNumber("Vision PID Side output", sideOutput);
@@ -112,7 +112,7 @@ public class AlignToAprilTag extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    drivetrain.setAutoPose(true);
+    // drivetrain.setAutoPose(true);
     drivetrain.stopModules();
   }
 
