@@ -4,19 +4,18 @@
 
 package frc.robot.Subsystems.Simulation;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 
 public class SimEndEffector extends SubsystemBase {
 
   Mechanism2d arm;
   MechanismLigament2d base;
   MechanismRoot2d root;
+
   /** Creates a new SimEndEffector. */
   public SimEndEffector() {
     arm = new Mechanism2d(1, 0);

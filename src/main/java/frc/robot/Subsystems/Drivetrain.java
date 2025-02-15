@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -12,7 +8,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-// import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -27,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Subsystems.Simulation.SimConstants;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -35,8 +29,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
-          true, // false
-          true, // true
+          Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED, // false,
+          Constants.SwerveConstants.LEFT_FRONT_TURN_INVERTED, // true
           Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
@@ -44,8 +38,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
-          false, // used to be true, might have to change back - Om: 2/14/24
-          true,
+          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_INVERTED, // false,
+          Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
           Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
 
@@ -53,8 +47,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
           Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-          false,
-          true,
+          Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED, // false,
+          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,//false, // true,
           Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
           Constants.SwerveConstants.LEFT_BACK_OFFSET);
 
@@ -62,8 +56,8 @@ public class Drivetrain extends SubsystemBase {
       new SwerveModule(
           Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
           Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
-          true,
-          true,
+          Constants.SwerveConstants.RIGHT_BACK_DRIVE_INVERTED, // false,
+          Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
           Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
           Constants.SwerveConstants.RIGHT_BACK_OFFSET);
 
@@ -80,8 +74,6 @@ public class Drivetrain extends SubsystemBase {
 
   private RobotConfig config;
 
-  private boolean isAutoPosed;
-
   // getHeadingRotation2d()
   public SwerveDriveOdometry odometry =
       new SwerveDriveOdometry(
@@ -97,7 +89,6 @@ public class Drivetrain extends SubsystemBase {
 
   public static Drivetrain getInstance() {
     return drivetrain;
-
   }
 
   /** Creates a new SwerveDrivetrain. */
@@ -131,7 +122,34 @@ public class Drivetrain extends SubsystemBase {
       // Handle exception as needed
       e.printStackTrace();
     }
-    if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
+
+    // test
+    // AutoBuilder.configure(
+    //         this::getPose2d, // Robot pose supplier
+    //         this::resetPose2d, // Method to reset odometry (will be called if your auto has a
+    // starting pose)
+    //         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE
+    // ChassisSpeeds. Also optionally outputs individual module feedforwards
+    //         Constants.SwerveConstants.pid_controls,
+    //         config, // The robot configuration
+    //         () -> {
+    //           // Boolean supplier that controls when the path will be mirrored for the red
+    // alliance
+    //           // This will flip the path being followed to the red side of the field.
+    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+    //           var alliance = DriverStation.getAlliance();
+    //           if (alliance.isPresent()) {
+    //             return alliance.get() == DriverStation.Alliance.Red;
+    //           }
+    //           return false;
+    //         },
+    //         this // Reference to this subsystem to set requirements
+    // );
+
+    // original
+    // Configure AutoBuilder last
     AutoBuilder.configure(
         this::getPose2d, // Robot pose supplier
         this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
@@ -156,8 +174,6 @@ public class Drivetrain extends SubsystemBase {
         },
         this // Reference to this subsystem to set requirements
         );
-      }
-
     SmartDashboard.putData("GWR Field", field);
     m_ModulePublisherIn =
         NetworkTableInstance.getDefault()
@@ -226,9 +242,7 @@ public class Drivetrain extends SubsystemBase {
     // Logger.recordOutput("Robot Roll", getRoll());
     // Logger.recordOutput("Pose", getPose().toString());
     // Logger.recordOutput("Angular Speed", new DecimalFormat("#.00").format((yaw / 180)) + "pi rad/s" );
-
     SmartDashboard.putString("Pose", getPose2d().toString());
-
     //new values
     SmartDashboard.putNumber("Left Front Module Velocity", leftFront.getDriveMotorVelocity());
     SmartDashboard.putNumber("Right Front Module Velocity", rightFront.getDriveMotorVelocity());
@@ -243,19 +257,14 @@ public class Drivetrain extends SubsystemBase {
       @Override
       public void initSendable(SendableBuilder builder){
         builder.setSmartDashboardType("SwerveDrive");
-
         builder.addDoubleProperty("Front Left Angle", () -> leftFront.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Front Left Velocity", () -> leftFront.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Front Right Angle", () -> rightFront.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Front Right Velocity", () -> rightFront.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Back Left Angle", () -> leftBack.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Back Left Velocity", () -> leftBack.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Back Right Angle", () -> rightBack.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Back Right Velocity", () -> rightBack.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Robot Angle", () -> getHeading(), null);
       }
     });// */
@@ -332,6 +341,7 @@ public class Drivetrain extends SubsystemBase {
     leftBack.resetEncoders();
     rightBack.resetEncoders();
     odometry.resetPose(new Pose2d());
+    odometry.resetPosition(getHeadingRotation2d(),getModulePositions(),getPose2d());
   }
 
   public void zeroHeading() {
@@ -339,12 +349,10 @@ public class Drivetrain extends SubsystemBase {
     odometry.resetRotation(gyro.getRotation2d());
   }
 
-  public void autonReset() {
-    Pose2d pose = AutoBuilder.getCurrentPose();
-    double[] xy = {pose.getX(), pose.getY()};
-    Pose2d calcpose = new Pose2d(xy[0], xy[1], Rotation2d.fromDegrees(180));
-    odometry.resetPose(calcpose);
-  }
+  // public void autonReset() {
+  //   Pose2d calcpose = new Pose2d(8, 7, Rotation2d.fromDegrees(180));
+  //   odometry.resetPose(calcpose);
+  // }
 
   public void setHeading(double heading) {
     gyro.setYaw(heading);
@@ -405,7 +413,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetPose2d(Pose2d pose) {
-    odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
+    gyro.setYaw(pose.getRotation().getDegrees());
+    odometry.resetPosition(pose.getRotation(), getModulePositions(), pose);
   }
 
   public ChassisSpeeds getRobotRelativeSpeeds() {
@@ -432,45 +441,10 @@ public class Drivetrain extends SubsystemBase {
 
   // }
 
-  public void drive(
-      Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop) {
-    ChassisSpeeds chassisSpeeds;
-    if (fieldRelative) {
-      chassisSpeeds =
-          ChassisSpeeds.fromFieldRelativeSpeeds(
-              translation.getX(), translation.getY(), rotation, getGyroscopeRotation());
-    } else {
-      chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
-    }
-
-    SwerveModuleState[] moduleStates =
-        Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
-
-    leftFront.setDesiredState(moduleStates[0]);
-    rightFront.setDesiredState(moduleStates[1]);
-
-    leftBack.setDesiredState(moduleStates[2]);
-    rightBack.setDesiredState(moduleStates[3]);
-  }
-
-  public Rotation2d getGyroscopeRotation() {
-    return Rotation2d.fromDegrees(gyro.getYaw().getValueAsDouble());
-  }
-
   public boolean isRedAlliance() {
     if (DriverStation.getAlliance().isPresent()) {
       return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
     }
     return false;
-  }
-
-  public void setAutoPose(boolean autoPosed) {
-    isAutoPosed = autoPosed;
-  }
-
-  public boolean getAutoPose() {
-    return isAutoPosed;
   }
 }

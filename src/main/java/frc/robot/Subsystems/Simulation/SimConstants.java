@@ -1,10 +1,8 @@
 package frc.robot.Subsystems.Simulation;
 
-import edu.wpi.first.wpilibj.RobotBase;
-
 public class SimConstants {
 
-  public static final Mode currentMode = Mode.SIM;
+  public static final Mode currentMode = Mode.REAL;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -16,8 +14,6 @@ public class SimConstants {
     /** Replaying from a log file. */
     REPLAY
   }
-
-  
 
   public static class Swerve {
     public static double driveSpeed = 3.2;
@@ -45,6 +41,4 @@ public class SimConstants {
     public static final double yCoefficient = 2.05;
     public static final double turnCoefficient = 1.675;
   }
-
-  
 }

@@ -23,7 +23,6 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.simulation.XboxControllerSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -123,7 +122,8 @@ public class DrivetrainSim extends SubsystemBase {
 
     // AutoBuilder.configure(
     //     this::getPose2d, // Robot pose supplier
-    //     this::resetPose2d, // Method to reset odometry (will be called if your auto has a starting
+    //     this::resetPose2d, // Method to reset odometry (will be called if your auto has a
+    // starting
     //     // pose)
     //     this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
     //     (speeds, feedforwards) ->
@@ -348,16 +348,18 @@ public class DrivetrainSim extends SubsystemBase {
 
   public void updateSimHeading(SwerveModuleState[] states) {
     double[] moduleTurningAngles = {
-      states[0].angle.getDegrees(), 
+      states[0].angle.getDegrees(),
       states[1].angle.getDegrees(),
       states[2].angle.getDegrees(),
-      states[3].angle.getDegrees()};
-    
+      states[3].angle.getDegrees()
+    };
+
     double[] moduleDriveVelocitys = {
-      states[0].speedMetersPerSecond, 
+      states[0].speedMetersPerSecond,
       states[1].speedMetersPerSecond,
       states[2].speedMetersPerSecond,
-      states[3].speedMetersPerSecond};
+      states[3].speedMetersPerSecond
+    };
 
     double currentHeadingAngle = this.getHeading();
     double turnVelocity = 0;
@@ -365,15 +367,17 @@ public class DrivetrainSim extends SubsystemBase {
     boolean shouldTurn = false;
 
     for (int i = 1; i < moduleTurningAngles.length; i++) {
-      if(moduleTurningAngles[0] != moduleTurningAngles[i]) {
+      if (moduleTurningAngles[0] != moduleTurningAngles[i]) {
         shouldTurn = true;
         break;
       }
     }
     if (shouldTurn) {
 
-      for (int i = 0; i < moduleTurningAngles.length; i++) turnAngle += Math.abs(moduleTurningAngles[i]);
-      for (int i = 0; i < moduleDriveVelocitys.length; i++ ) turnVelocity += Math.abs(moduleDriveVelocitys[i]);
+      for (int i = 0; i < moduleTurningAngles.length; i++)
+        turnAngle += Math.abs(moduleTurningAngles[i]);
+      for (int i = 0; i < moduleDriveVelocitys.length; i++)
+        turnVelocity += Math.abs(moduleDriveVelocitys[i]);
 
       turnAngle /= 4;
       turnVelocity /= 4;
@@ -382,8 +386,6 @@ public class DrivetrainSim extends SubsystemBase {
         turnAngle *= -1;
       }
 
-
-      
       this.setHeading(currentHeadingAngle + (turnAngle * turnVelocity) * leftFront.getInterval());
     }
   }

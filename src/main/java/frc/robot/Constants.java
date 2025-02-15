@@ -119,10 +119,35 @@ public class Constants {
 
     public static final int PIGEON_ID = 0;
 
-    public static double LEFT_FRONT_OFFSET = 0.228027;
-    public static double RIGHT_FRONT_OFFSET = -0.099609;
-    public static double LEFT_BACK_OFFSET = -0.000244;
-    public static double RIGHT_BACK_OFFSET = -0.113525;
+    public static double LEFT_FRONT_OFFSET = 0.345459; // 0.343018;//0.372314;
+    public static double RIGHT_FRONT_OFFSET = -0.314453; // -0.314697;//0.485840;
+    public static double LEFT_BACK_OFFSET = 0.014893;//0.496094; // 0.493164;//0.005127;
+    public static double RIGHT_BACK_OFFSET = 0.24951;//0.226318; // 0.235840;;//-0.350586;
+
+    public static double PRACTICE_LEFT_FRONT_OFFSET = 0.372314;
+    public static double PRACTICE_RIGHT_FRONT_OFFSET = 0.485840;
+    public static double PRACTICE_LEFT_BACK_OFFSET = 0.005127;
+    public static double PRACTICE_RIGHT_BACK_OFFSET = -0.350586;
+
+    public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = false;
+    public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = false;
+
+    public static boolean LEFT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_BACK_TURN_INVERTED = false;
+    public static boolean LEFT_BACK_TURN_INVERTED = false;
+
+    public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = false;
+
+    public static boolean PRACTICE_LEFT_FRONT_TURN_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_FRONT_TURN_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_BACK_TURN_INVERTED = true;
+    public static boolean PRACTICE_LEFT_BACK_TURN_INVERTED = true;
 
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00);
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;

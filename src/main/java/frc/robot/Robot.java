@@ -76,10 +76,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
-    SmartDashboard.putNumber(
-        "Arm Encoder Abs. Rotation", RobotContainer.m_arm.getEncoderPosition());
-    SmartDashboard.putNumber(
-        "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
+      SmartDashboard.putNumber(
+          "Arm Encoder Abs. Rotation", RobotContainer.m_arm.getEncoderPosition());
+      SmartDashboard.putNumber(
+          "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
     }
   }
 
