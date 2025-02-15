@@ -7,9 +7,9 @@ package frc.robot.Commands;
 import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
+import frc.robot.Subsystems.Simulation.SimConstants;
 
 public class SimSwerveDrive extends Command {
   private DrivetrainSim m_drivetrainSim = DrivetrainSim.getInstance();
@@ -30,13 +30,13 @@ public class SimSwerveDrive extends Command {
     RobotContainer.m_drivetrainSim.swerveDrive(
         -RobotContainer.driverController.getLeftY()
             * Math.abs(RobotContainer.driverController.getLeftY())
-            * Constants.SwerveConstants.DriverConstants.xCoefficient, // 2.25
+            * SimConstants.DriverConstants.xCoefficient, // 2.25
         -RobotContainer.driverController.getLeftX()
             * Math.abs(RobotContainer.driverController.getLeftX())
-            * Constants.SwerveConstants.DriverConstants.yCoefficient, // 2.25
+            * SimConstants.DriverConstants.yCoefficient, // 2.25
         -RobotContainer.driverController.getRightX()
             * Math.abs(RobotContainer.driverController.getRightX())
-            * Constants.SwerveConstants.DriverConstants.turnCoefficient, // 1.75
+            * SimConstants.DriverConstants.turnCoefficient, // 1.75
         true, // !RobotContainer.driverController.getHID().getRawButton(XboxController.Button.kB.value)
         new Translation2d(),
         true);

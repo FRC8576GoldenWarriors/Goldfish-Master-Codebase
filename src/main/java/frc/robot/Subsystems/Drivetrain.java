@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.Subsystems;
 
 import java.text.DecimalFormat;
@@ -211,9 +207,7 @@ public class Drivetrain extends SubsystemBase {
     // Logger.recordOutput("Robot Roll", getRoll());
     // Logger.recordOutput("Pose", getPose().toString());
     // Logger.recordOutput("Angular Speed", new DecimalFormat("#.00").format((yaw / 180)) + "pi rad/s" );
-
     SmartDashboard.putString("Pose", getPose2d().toString());
-
     //new values
     SmartDashboard.putNumber("Left Front Module Velocity", leftFront.getDriveMotorVelocity());
     SmartDashboard.putNumber("Right Front Module Velocity", rightFront.getDriveMotorVelocity());
@@ -228,19 +222,14 @@ public class Drivetrain extends SubsystemBase {
       @Override
       public void initSendable(SendableBuilder builder){
         builder.setSmartDashboardType("SwerveDrive");
-
         builder.addDoubleProperty("Front Left Angle", () -> leftFront.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Front Left Velocity", () -> leftFront.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Front Right Angle", () -> rightFront.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Front Right Velocity", () -> rightFront.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Back Left Angle", () -> leftBack.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Back Left Velocity", () -> leftBack.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Back Right Angle", () -> rightBack.getTurnMotorPosition(), null);
         builder.addDoubleProperty("Back Right Velocity", () -> rightBack.getDriveMotorVelocity(), null);
-
         builder.addDoubleProperty("Robot Angle", () -> getHeading(), null);
       }
     });// */
@@ -302,6 +291,7 @@ public class Drivetrain extends SubsystemBase {
     leftBack.resetEncoders();
     rightBack.resetEncoders();
     odometry.resetPose(new Pose2d());
+    odometry.resetPosition(getHeadingRotation2d(),getModulePositions(),getPose2d());
   }
 
   public void zeroHeading(){
@@ -403,4 +393,5 @@ public class Drivetrain extends SubsystemBase {
     }
     return false;
   }
+}
 }
