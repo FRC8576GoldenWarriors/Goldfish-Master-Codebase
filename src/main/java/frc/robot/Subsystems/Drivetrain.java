@@ -26,40 +26,49 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.SwerveConstants;
 
 public class Drivetrain extends SubsystemBase {
 
-  private SwerveModule leftFront = new SwerveModule(
-    Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID, 
-    Constants.SwerveConstants.LEFT_FRONT_TURN_ID, 
-    Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED,
-    Constants.SwerveConstants.LEFT_FRONT_TURN_INVERTED, //true
-    Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID, 
-    Constants.SwerveConstants.LEFT_FRONT_OFFSET);
+  private SwerveModule leftFront =
+      new SwerveModule(
+          Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
+          Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
+          Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED,
+          Constants.SwerveConstants.LEFT_FRONT_TURN_INVERTED, // true
+          Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
+          Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
-  private SwerveModule rightFront = new SwerveModule(
-    Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID, 
-    Constants.SwerveConstants.RIGHT_FRONT_TURN_ID, 
-    Constants.SwerveConstants.RIGHT_FRONT_DRIVE_INVERTED, //used to be true, Might have to change back - Om: 2/14/24
-    Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED, 
-    Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID, 
-    Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
+  private SwerveModule rightFront =
+      new SwerveModule(
+          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
+          Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
+          Constants.SwerveConstants
+              .RIGHT_FRONT_DRIVE_INVERTED, // used to be true, Might have to change back - Om:
+          // 2/14/24
+          Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
+          Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
+          Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
 
-  private SwerveModule leftBack = new SwerveModule(
-    Constants.SwerveConstants.LEFT_BACK_DRIVE_ID, 
-    Constants.SwerveConstants.LEFT_BACK_TURN_ID, 
-    Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED,
-    Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED, 
-    Constants.SwerveConstants.LEFT_BACK_CANCODER_ID, 
-    Constants.SwerveConstants.LEFT_BACK_OFFSET);
+  private SwerveModule leftBack =
+      new SwerveModule(
+          Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
+          Constants.SwerveConstants.LEFT_BACK_TURN_ID,
+          Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED,
+          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
+          Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
+          Constants.SwerveConstants.LEFT_BACK_OFFSET);
 
-    private SwerveModule rightBack = new SwerveModule(
-    Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID, 
-    Constants.SwerveConstants.RIGHT_BACK_TURN_ID, 
-    Constants.SwerveConstants.RIGHT_BACK_DRIVE_INVERTED, //used to be true, Might have to change back - Om: 2/14/24
-    Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED, 
-    Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID, 
-    Constants.SwerveConstants.RIGHT_BACK_OFFSET);
+  private SwerveModule rightBack =
+      new SwerveModule(
+          Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
+          Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
+          Constants.SwerveConstants
+              .RIGHT_BACK_DRIVE_INVERTED, // used to be true, Might have to change back - Om:
+          // 2/14/24
+          Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
+          Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
+          Constants.SwerveConstants.RIGHT_BACK_OFFSET);
 
   private SlewRateLimiter frontLimiter =
       new SlewRateLimiter(Constants.SwerveConstants.TELE_DRIVE_MAX_ACCELERATION);
@@ -347,7 +356,7 @@ public class Drivetrain extends SubsystemBase {
     rightFront.resetEncoders();
     leftBack.resetEncoders();
     rightBack.resetEncoders();
-    odometry.resetPosition(getHeadingRotation2d(),getModulePositions(),getPose2d());
+    odometry.resetPosition(getHeadingRotation2d(), getModulePositions(), getPose2d());
   }
 
   public void zeroHeading() {
@@ -452,5 +461,28 @@ public class Drivetrain extends SubsystemBase {
       return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
     }
     return false;
+  }
+
+  public void drive(
+      Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLooop) {
+    ChassisSpeeds chassisSpeeds;
+    if (fieldRelative) {
+      chassisSpeeds =
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              translation.getX(), translation.getY(), rotation, getHeadingRotation2d());
+    } else {
+      chassisSpeeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    }
+
+    SwerveModuleState[] moduleStates =
+        SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        moduleStates, Constants.SwerveConstants.DRIVETRAIN_MAX_SPEED);
+
+    leftFront.setDesiredState(moduleStates[0]);
+    rightFront.setDesiredState(moduleStates[1]);
+
+    leftBack.setDesiredState(moduleStates[2]);
+    rightBack.setDesiredState(moduleStates[3]);
   }
 }
