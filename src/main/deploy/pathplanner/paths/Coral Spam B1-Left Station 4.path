@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.754,
+        "y": 5.088
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.291250000003214,
+        "y": 6.364999999994964
+      },
+      "isLocked": false,
+      "linkedName": "Spam Left 3"
+    },
+    {
+      "anchor": {
+        "x": 1.234733606557377,
+        "y": 6.8660860655737705
+      },
+      "prevControl": {
+        "x": 2.141233606560591,
+        "y": 5.403336065568735
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Coral Station"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -55.0
+  },
+  "reversed": false,
+  "folder": "Coral Spam B1 Left Station Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 119.99999999999999
+  },
+  "useDefaultConstraints": true
+}

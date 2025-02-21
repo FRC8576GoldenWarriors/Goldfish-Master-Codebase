@@ -1,0 +1,64 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.354610655737705,
+        "y": 4.001024590163935
+      },
+      "prevControl": null,
+      "nextControl": {
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/straight path (working).path
+        "x": 3.0,
+        "y": 7.0
+=======
+        "x": 1.8940573770491804,
+        "y": 4.072950819672131
+>>>>>>> bf0934454ab6c8d20770d8b4fe7f7302d7ac94e0:src/main/deploy/pathplanner/paths/Example Path.path
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.0,
+        "y": 7.0
+      },
+      "prevControl": {
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/straight path (working).path
+        "x": 4.0,
+        "y": 7.0
+=======
+        "x": 2.19375,
+        "y": 4.025
+>>>>>>> bf0934454ab6c8d20770d8b4fe7f7302d7ac94e0:src/main/deploy/pathplanner/paths/Example Path.path
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}

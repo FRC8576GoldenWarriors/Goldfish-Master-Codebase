@@ -1,0 +1,49 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Reset Heading"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Spam B1-Left Station 1 "
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Spam B1-Left Station 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Spam B1-Left Station 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Spam B1-Left Station 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Spam B1-Left Station 3"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Coral Spam Autos",
+  "choreoAuto": false
+}
