@@ -91,7 +91,7 @@ public class RobotContainer {
           .y()
           .whileTrue(
               new StartEndCommand(
-                  (() -> m_shintake.setRollersSpeed(1.0)),
+                  (() -> m_shintake.setRollersSpeed(0.85, 0.80)), //1.0 0.95
                   (() -> m_shintake.setRollersSpeed(0.0)),
                   m_shintake)); // Y Shintake Shoot
 
@@ -99,7 +99,7 @@ public class RobotContainer {
           .b()
           .whileTrue(
               new StartEndCommand(
-                  (() -> m_shintake.setRollersSpeed(-0.4)),
+                  (() -> m_shintake.setRollersSpeed(-0.4, -0.4)),
                   (() -> m_shintake.setRollersSpeed(0.0)),
                   m_shintake)); // B Shintake Intake
 
@@ -137,7 +137,7 @@ public class RobotContainer {
           .leftBumper()
           .whileTrue(
               new StartEndCommand(
-                  () -> m_groundIntake.setRollerSpeed(0.6),
+                  () -> m_groundIntake.setRollerSpeed(0.3),
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
       // right bumper intake in
@@ -145,7 +145,7 @@ public class RobotContainer {
           .rightBumper()
           .whileTrue(
               new StartEndCommand(
-                  () -> m_groundIntake.setRollerSpeed(-0.6),
+                  () -> m_groundIntake.setRollerSpeed(-0.3),
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
 

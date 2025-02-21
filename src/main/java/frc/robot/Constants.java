@@ -103,90 +103,97 @@ public class Constants {
     }
 
     // 24K constants
-    public static final int LEFT_FRONT_DRIVE_ID = 7; // 2; //6
-    public static final int RIGHT_FRONT_DRIVE_ID = 1; // 4;
-    public static final int LEFT_BACK_DRIVE_ID = 4; // 6; // 5
-    public static final int RIGHT_BACK_DRIVE_ID = 3; // 8; // 2
+    // public static final int LEFT_FRONT_DRIVE_ID = 7; // 2; //6
+    // public static final int RIGHT_FRONT_DRIVE_ID = 1; // 4;
+    // public static final int LEFT_BACK_DRIVE_ID = 4; // 6; // 5
+    // public static final int RIGHT_BACK_DRIVE_ID = 3; // 8; // 2
 
-    public static final int LEFT_FRONT_TURN_ID = 6; // 1; //5
-    public static final int RIGHT_FRONT_TURN_ID = 8; // 3;
-    public static final int LEFT_BACK_TURN_ID = 5;
-    public static final int RIGHT_BACK_TURN_ID = 2; // 7; //1
-
-    public static final int LEFT_FRONT_CANCODER_ID = 3; // 0;
-    public static final int RIGHT_FRONT_CANCODER_ID = 4; // 1;
-    public static final int LEFT_BACK_CANCODER_ID = 0; // 2; // 2
-    public static final int RIGHT_BACK_CANCODER_ID = 1; // 3;
-
-    public static final int PIGEON_ID = 0;
-
-    public static double LEFT_FRONT_OFFSET =
-        0.239990; // -0.240723;//0.476074;//-0.482422;//-0.344971;//0.228027;
-    public static double RIGHT_FRONT_OFFSET =
-        0.269287; // -0.484131;//-0.482178;//-0.397217;//-0.099609;
-    public static double LEFT_BACK_OFFSET =
-        0.230469; // 0.229248;//0.243652;//-0.036865;//0.013184;//0.032959;//-0.000244;
-    public static double RIGHT_BACK_OFFSET =
-        -0.023682; // -0.347412;//0.466309;//0.479736;//-0.324463;//-0.113525;
-
-    public static boolean LEFT_FRONT_DRIVE_INVERTED = false;
-    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
-    public static boolean LEFT_BACK_DRIVE_INVERTED = true;
-    public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
-
-    public static boolean LEFT_FRONT_TURN_INVERTED = true;
-    public static boolean RIGHT_FRONT_TURN_INVERTED = true;
-    public static boolean LEFT_BACK_TURN_INVERTED = true;
-    public static boolean RIGHT_BACK_TURN_INVERTED = true;
-
-    // Practice & comp things
-
-    // public static final int LEFT_FRONT_DRIVE_ID = 2;
-    // public static final int RIGHT_FRONT_DRIVE_ID = 4;
-    // public static final int LEFT_BACK_DRIVE_ID = 6;
-    // public static final int RIGHT_BACK_DRIVE_ID = 8;
-
-    // public static final int LEFT_FRONT_TURN_ID = 1;
-    // public static final int RIGHT_FRONT_TURN_ID = 3;
+    // public static final int LEFT_FRONT_TURN_ID = 6; // 1; //5
+    // public static final int RIGHT_FRONT_TURN_ID = 8; // 3;
     // public static final int LEFT_BACK_TURN_ID = 5;
-    // public static final int RIGHT_BACK_TURN_ID = 7;
+    // public static final int RIGHT_BACK_TURN_ID = 2; // 7; //1
 
-    // public static final int LEFT_FRONT_CANCODER_ID = 1;
-    // public static final int RIGHT_FRONT_CANCODER_ID = 2;
-    // public static final int LEFT_BACK_CANCODER_ID = 4;
-    // public static final int RIGHT_BACK_CANCODER_ID = 3;
+    // public static final int LEFT_FRONT_CANCODER_ID = 3; // 0;
+    // public static final int RIGHT_FRONT_CANCODER_ID = 4; // 1;
+    // public static final int LEFT_BACK_CANCODER_ID = 0; // 2; // 2
+    // public static final int RIGHT_BACK_CANCODER_ID = 1; // 3;
 
     // public static final int PIGEON_ID = 0;
 
-    // public static double LEFT_FRONT_OFFSET = 0.345459; // 0.343018;//0.372314;
-    // public static double RIGHT_FRONT_OFFSET = -0.314453; // -0.314697;//0.485840;
-    // public static double LEFT_BACK_OFFSET = 0.014893;//0.496094; // 0.493164;//0.005127;
-    // public static double RIGHT_BACK_OFFSET = 0.24951;//0.226318; // 0.235840;;//-0.350586;
+    // public static double LEFT_FRONT_OFFSET =
+    //     0.239990; // -0.240723;//0.476074;//-0.482422;//-0.344971;//0.228027;
+    // public static double RIGHT_FRONT_OFFSET =
+    //     0.269287; // -0.484131;//-0.482178;//-0.397217;//-0.099609;
+    // public static double LEFT_BACK_OFFSET =
+    //     0.230469; // 0.229248;//0.243652;//-0.036865;//0.013184;//0.032959;//-0.000244;
+    // public static double RIGHT_BACK_OFFSET =
+    //     -0.023682; // -0.347412;//0.466309;//0.479736;//-0.324463;//-0.113525;
 
-    // public static double PRACTICE_LEFT_FRONT_OFFSET = 0.372314;
-    // public static double PRACTICE_RIGHT_FRONT_OFFSET = 0.485840;
-    // public static double PRACTICE_LEFT_BACK_OFFSET = 0.005127;
-    // public static double PRACTICE_RIGHT_BACK_OFFSET = -0.350586;
-
-    // public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
-    // public static boolean RIGHT_FRONT_DRIVE_INVERTED = false;
+    // public static boolean LEFT_FRONT_DRIVE_INVERTED = false;
+    // public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
+    // public static boolean LEFT_BACK_DRIVE_INVERTED = true;
     // public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
-    // public static boolean LEFT_BACK_DRIVE_INVERTED = false;
 
     // public static boolean LEFT_FRONT_TURN_INVERTED = true;
     // public static boolean RIGHT_FRONT_TURN_INVERTED = true;
-    // public static boolean RIGHT_BACK_TURN_INVERTED = false;
-    // public static boolean LEFT_BACK_TURN_INVERTED = false;
+    // public static boolean LEFT_BACK_TURN_INVERTED = true;
+    // public static boolean RIGHT_BACK_TURN_INVERTED = true;
 
-    // public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = true;
-    // public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = true;
-    // public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = true;
-    // public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = false;
+    // Practice & comp things
 
-    // public static boolean PRACTICE_LEFT_FRONT_TURN_INVERTED = true;
-    // public static boolean PRACTICE_RIGHT_FRONT_TURN_INVERTED = true;
-    // public static boolean PRACTICE_RIGHT_BACK_TURN_INVERTED = true;
-    // public static boolean PRACTICE_LEFT_BACK_TURN_INVERTED = true;
+    public static final int LEFT_FRONT_DRIVE_ID = 2;
+    public static final int RIGHT_FRONT_DRIVE_ID = 4;
+    public static final int LEFT_BACK_DRIVE_ID = 8;
+    public static final int RIGHT_BACK_DRIVE_ID = 6;
+
+    public static final int LEFT_FRONT_TURN_ID = 1;
+    public static final int RIGHT_FRONT_TURN_ID = 3;
+    public static final int LEFT_BACK_TURN_ID = 7;
+    public static final int RIGHT_BACK_TURN_ID = 5;
+
+    public static final int LEFT_FRONT_CANCODER_ID = 1;
+    public static final int RIGHT_FRONT_CANCODER_ID = 2;
+    public static final int LEFT_BACK_CANCODER_ID = 4;
+    public static final int RIGHT_BACK_CANCODER_ID = 3;
+
+    public static final int PIGEON_ID = 0;
+
+    public static double LEFT_FRONT_OFFSET = 0.330322; // -0.167236; //0.345459;
+    public static double RIGHT_FRONT_OFFSET =0.181885;// -0.318115; // 0.184326;//-0.314453;
+    public static double LEFT_BACK_OFFSET = 0.497803;//0.009277; // 0.012695; //0.014893;
+    public static double RIGHT_BACK_OFFSET = 0.178955;//0.242188; // 0.231445;//0.24951
+
+    public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;//false;
+    public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = true;//false;
+
+    public static boolean LEFT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_FRONT_TURN_INVERTED = true;
+    public static boolean RIGHT_BACK_TURN_INVERTED = true;
+    public static boolean LEFT_BACK_TURN_INVERTED = true;
+
+
+
+
+
+
+
+    public static double PRACTICE_LEFT_FRONT_OFFSET = -0.124268;
+    public static double PRACTICE_RIGHT_FRONT_OFFSET = -0.406738;
+    public static double PRACTICE_LEFT_BACK_OFFSET = 0.166260;
+    public static double PRACTICE_RIGHT_BACK_OFFSET = -0.214355;
+
+
+    public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = false;
+    public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = true;
+
+    public static boolean PRACTICE_LEFT_FRONT_TURN_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_FRONT_TURN_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_BACK_TURN_INVERTED = true;
+    public static boolean PRACTICE_LEFT_BACK_TURN_INVERTED = true;
 
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.00);
     public static final double DRIVE_MOTOR_GEAR_RATIO = 6.75;
@@ -258,8 +265,8 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -0.5;
-      public static final double pincherOutSpeed = 0.5;
+      public static final double pincherInSpeed = -0.45; //-0.25
+      public static final double pincherOutSpeed = 1.00;
 
       public static final double pincherInRunExtension = 0.25;
       public static final double pincherOutRunExtension = 0.25;
@@ -330,11 +337,11 @@ public class Constants {
   public static final class ShintakeConstants {
     public static class HardwareConstants {
 
-      public static final int rollerMotorLowID = 32;
+      public static final int rollerMotorLowID = 32 ;//32;
       public static final boolean rollerMotorLowIsInverted = false;
 
       public static final int rollerMotorHighID = 33;
-      public static final boolean rollerMotorHighIsInverted = false;
+      public static final boolean rollerMotorHighIsInverted = true;//false;
 
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;
