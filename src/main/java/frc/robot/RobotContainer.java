@@ -19,6 +19,7 @@ import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
+import frc.robot.Subsystems.LEDStrip;
 import frc.robot.Subsystems.Shintake;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
 import frc.robot.Subsystems.Simulation.SimConstants;
@@ -48,6 +49,7 @@ public class RobotContainer {
   public static Arm m_arm;
   public static GroundIntake m_groundIntake;
   public static Climber m_climber;
+  public static LEDStrip m_ledStrip;
 
   public static DrivetrainSim m_drivetrainSim;
   public static SimEndEffector m_SimEndEffector;
@@ -62,7 +64,13 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
+      m_ledStrip = new LEDStrip(1, 24);
+
+
+
+
       m_drivetrain.setDefaultCommand(new SwerveDrive());
+      
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();

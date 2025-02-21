@@ -14,7 +14,7 @@ import frc.robot.Subsystems.Arm;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ArmController extends Command {
 
-  private Arm algaeArm;
+  private Arm arm;
 
   private DutyCycleEncoder encoder;
 
@@ -22,11 +22,14 @@ public class ArmController extends Command {
   private PIDController feedback;
 
   private double setpoint;
+
+  private double FFVoltage;
+  private double PIDVoltage;
   private double voltage;
 
-  public ArmController(Arm algaeArm, double setpoint) {
+  public ArmController(Arm arm, double setpoint) {
 
-    this.algaeArm = algaeArm;
+    this.arm = arm;
 
     this.feedForward =
         new ArmFeedforward(
@@ -43,9 +46,9 @@ public class ArmController extends Command {
 
     this.setpoint = setpoint;
 
-    this.encoder = algaeArm.getEncoder();
+    this.encoder = arm.getEncoder();
 
-    addRequirements(algaeArm);
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
@@ -56,17 +59,26 @@ public class ArmController extends Command {
   @Override
   public void execute() {
 
-    voltage =
-        feedForward.calculate(encoder.get(), algaeArm.getArmVelocity())
-            + feedback.calculate(encoder.get(), setpoint);
+    FFVoltage = feedForward.calculate(encoder.get(), arm.getArmVelocity());
 
-    algaeArm.setArmVoltage(voltage);
+    PIDVoltage = feedback.calculate(encoder.get(), setpoint);
+
+    voltage = FFVoltage + PIDVoltage;
+
+    
+    //if(arm.getEncoderPosition())
+        
+            
+
+      
+
+    arm.setArmVoltage(voltage);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    algaeArm.setArmVoltage(0);
+    arm.setArmVoltage(0);
   }
 
   // Returns true when the command should end.

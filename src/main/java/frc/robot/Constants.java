@@ -279,15 +279,17 @@ public class Constants {
       public static final int armMotorID = 21;
       public static final int armEncoderDIO = 3;
 
-      public static final boolean motorIsInverted = false;
+      
     }
 
     public static final class ControlConstants {
 
-      public static final double kS = 0.1;
+      public static final boolean motorIsInverted = false;
+
+      public static final double kS = 0;
       public static final double kG = 0.1;
       public static final double kV = 0.1;
-      public static final double kA = 0.1;
+      public static final double kA = 0;
 
       public static final double kP = 0.1;
       public static final double kI = 0;
@@ -298,8 +300,11 @@ public class Constants {
       public static final double highReefPosition = 0.45;
       public static final double transportPosition = 0.65;
 
-      public static final double lowSoftStopPositon = -0.05;
+      public static final double lowSoftStopPositon = 0.0;
       public static final double highSoftStopPosition = 0.75;
+
+      public static final double armEncoderOffset = -0.467;
+      public static final boolean armEncoderIsInverted = true;
     }
   }
 
