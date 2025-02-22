@@ -51,7 +51,8 @@ public class Constants {
     }
 
     public static class limelightNetworkTableKey {
-      public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight";
+      public static final String REEF_NETWORKTABLE_KEY = "limelight-reef"; //! Make sur to change this before testing 
+      public static final String BARGE_NETWORKTABLE_KEY = "limelight-barge";
     }
 
     public static class limelightCameraDimensions {

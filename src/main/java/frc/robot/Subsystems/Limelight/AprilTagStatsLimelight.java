@@ -24,7 +24,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     this.table =
         NetworkTableInstance.getDefault()
             .getTable(
-                Constants.VisionConstants.limelightNetworkTableKey.LIMELIGHT_NETWORKTABLE_KEY);
+                Constants.VisionConstants.limelightNetworkTableKey.REEF_NETWORKTABLE_KEY);
     // configureAliance();
   }
 
