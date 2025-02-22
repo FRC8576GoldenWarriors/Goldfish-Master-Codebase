@@ -265,8 +265,8 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -0.45; //-0.25
-      public static final double pincherOutSpeed = 1.00;
+      public static final double pincherInSpeed = 0.45; //-0.25
+      public static final double pincherOutSpeed = -1.00;
 
       public static final double pincherInRunExtension = 0.25;
       public static final double pincherOutRunExtension = 0.25;
@@ -284,16 +284,16 @@ public class Constants {
 
     public static final class ControlConstants {
 
-      public static final boolean motorIsInverted = false;
+      public static final boolean motorIsInverted = true;
 
       public static final double kS = 0;
-      public static final double kG = 0.1;
-      public static final double kV = 0.1;
+      public static final double kG = 0.25;
+      public static final double kV = 0.117;//0.117;
       public static final double kA = 0;
 
-      public static final double kP = 0.1;
+      public static final double kP = 0.4;//0.3;
       public static final double kI = 0;
-      public static final double kD = 0;
+      public static final double kD = 0.05;
 
       public static final double startPosition = 0;
       public static final double lowReefPosition = 0.3;
@@ -303,7 +303,7 @@ public class Constants {
       public static final double lowSoftStopPositon = 0.0;
       public static final double highSoftStopPosition = 0.75;
 
-      public static final double armEncoderOffset = -0.467;
+      public static final double armEncoderOffset = -0.441;
       public static final boolean armEncoderIsInverted = true;
     }
   }
@@ -376,8 +376,8 @@ public class Constants {
 
   public static final class LEDConstants {
     public static final class HardwareConstants {
-      public static final int kLEDPort = 0;
-      public static final int kLEDLength = 100;
+      public static final int kLEDPort = 1;
+      public static final int kLEDLength = 25;
     }
 
     public static final class PatternConfig {

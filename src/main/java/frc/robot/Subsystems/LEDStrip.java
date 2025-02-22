@@ -128,10 +128,10 @@ public class LEDStrip extends SubsystemBase {
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
           Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
-    } else if (RobotContainer.m_endEffector.motorRunning()) {
-      blink(
-          Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
-          Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed);
+    // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be coral motor running
     } else if (DriverStation.isDisabled()) { // disabled
       scroll(
           Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,

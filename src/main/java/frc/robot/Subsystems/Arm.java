@@ -26,7 +26,7 @@ public class Arm extends SubsystemBase {
             Constants.ArmConstants.HardwareConstants.armMotorID,
             MotorType.kBrushless,
             Constants.ArmConstants.ControlConstants.motorIsInverted,
-            IdleMode.kBrake,
+            IdleMode.kCoast,
             45);
 
     armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.HardwareConstants.armEncoderDIO,
@@ -46,6 +46,8 @@ public class Arm extends SubsystemBase {
     Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
 
     SmartDashboard.putNumber("Arm Enocder Position", getEncoderPosition());
+    SmartDashboard.putNumber("Arm Motor Voltage", armMotor.getBusVoltage());
+    SmartDashboard.putNumber("Arm Encoder Velocity", getArmVelocity());
   }
 
   public void setArmVoltage(double volts) {
@@ -75,5 +77,9 @@ public class Arm extends SubsystemBase {
 
   public DutyCycleEncoder getEncoder() {
     return armAbsEncoder;
+  }
+
+  public void setArmMotorIdleMode(IdleMode idleMode){
+    armMotor.setIdleMode(idleMode);
   }
 }

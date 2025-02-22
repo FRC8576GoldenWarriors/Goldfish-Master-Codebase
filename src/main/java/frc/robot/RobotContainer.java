@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Commands.ArmController;
 import frc.robot.Commands.EndEffectorIntake;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
@@ -64,7 +65,7 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
-      m_ledStrip = new LEDStrip(1, 24);
+      m_ledStrip = new LEDStrip(Constants.LEDConstants.HardwareConstants.kLEDPort, Constants.LEDConstants.HardwareConstants.kLEDLength);
 
 
 
@@ -89,10 +90,16 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // Driver controller
+    
+
 
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
+        // Driver controller
+        driverController.y().onTrue(new ArmController(m_arm, 0.25));
+
+
+
 
       // Operator controller
       operatorController
@@ -129,14 +136,14 @@ public class RobotContainer {
           .povUp()
           .whileTrue(
               new StartEndCommand(
-                  () -> m_arm.setArmSpeed(-0.3),
+                  () -> m_arm.setArmSpeed(0.3),
                   () -> m_arm.setArmSpeed(0),
                   m_arm)); // Up arrow arm rotates to front
       operatorController
           .povDown()
           .whileTrue(
               new StartEndCommand(
-                  () -> m_arm.setArmSpeed(0.3),
+                  () -> m_arm.setArmSpeed(-0.3),
                   () -> m_arm.setArmSpeed(0),
                   m_arm)); // Down arrow arm rotates to back
 
