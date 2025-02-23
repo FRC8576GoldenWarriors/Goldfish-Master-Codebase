@@ -24,7 +24,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     this.table =
         NetworkTableInstance.getDefault()
             .getTable(
-                Constants.VisionConstants.limelightNetworkTableKey.LIMELIGHT_NETWORKTABLE_KEY);
+                Constants.VisionConstants.limelightNetworkTableKey.REEF_NETWORKTABLE_KEY);
     // configureAliance();
   }
 
@@ -35,10 +35,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     double id = getID();
 
     if (hasValidTargets()) {
-      SmartDashboard.putBoolean("Has Targets", true);
+      SmartDashboard.putBoolean(" Reef Has Targets", true);
       updateRobotPoseInSmartDashboard();
     } else {
-      SmartDashboard.putBoolean("Has Targets", false);
+      SmartDashboard.putBoolean("Reef Has Targets", false);
     }
 
     updateValues(x, y, area, id);
@@ -53,7 +53,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   public boolean hasValidTargets() {
-    return getEntryValue("tv") == 1;
+    return getEntryValue("tv") == 1.0;
   }
 
   public double getArea() {
@@ -61,8 +61,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   public int getID() {
-    if (hasValidTargets()) return (int) getEntryValue("tid");
-    return -1;
+    //if (hasValidTargets()) 
+    return (int) getEntryValue("tid");
+    //return (int) table.getEntry("tid").getDouble(1);
+    //return -1;
   }
 
   public Pose3d getBotPose() {
@@ -87,10 +89,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   private void updateValues(double x, double y, double area, double id) {
-    SmartDashboard.putNumber("Limelight X", x);
-    SmartDashboard.putNumber("Limelight Y", y);
-    SmartDashboard.putNumber("Limelight Area", area);
-    SmartDashboard.putNumber("Limelight ID", id);
+    SmartDashboard.putNumber("Reef Limelight X", x);
+    SmartDashboard.putNumber("Reef Limelight Y", y);
+    SmartDashboard.putNumber("Reef Limelight Area", area);
+    SmartDashboard.putNumber("Reef Limelight ID", id);
   }
 
   public double getPitch() {
@@ -110,7 +112,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
   private void updateRobotPoseInSmartDashboard() {
     boolean hasTarget = hasValidTargets();
-    SmartDashboard.putBoolean("Limelight/Has Target", hasTarget);
+    SmartDashboard.putBoolean(" Reef Limelight/Has Target", hasTarget);
 
     if (hasTarget) {
       Pose3d pose = getBotPose();
@@ -156,43 +158,32 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   // }
 
   // ! Using the april tag area
-  // public double calculateDistance(double focalLength, double realWidth, double pixelWidth) {
-  //   if (hasValidTargets()) {
-  //     return (focalLength * realWidth) / pixelWidth;
-  //   } else {
-  //     return 0.0;
-  //   }
-  // }
+  public double calculateDistance(double focalLength, double realWidth, double pixelWidth) {
+    if (hasValidTargets()) {
+      return (focalLength * realWidth) / pixelWidth;
+    } else {
+      return 0.0;
+    }
+  }
 
   // ! Using trig
-  public double calculateDistance() {
-    double targetOffsetAngle_Vertical = getTY();
-    List<Integer> bargeTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.BARGE_TAG_IDS;
-    List<Integer> reefTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.REEF_TAG_IDS;
+  // public double calculateDistance() {
+  //   int tagID = this.getID();
+  //   SmartDashboard.putNumber("Tag id/calcDis", tagID);
+  //   if (tagID == -1) return 0.0;
+  //   // List<Integer> bargeTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.BARGE_TAG_IDS;
+  //   // List<Integer> reefTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.REEF_TAG_IDS;
 
-    double cameraHeight = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
-    double cameraPitch = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
-    double heightGroundToTarget;
-    double angleTargetToDegrees = cameraPitch + getTY();
-    double angleTargetToRadians = angleTargetToDegrees * (Math.PI / 180.0);
-    double distanceFromTarget;
-    // if we scan a barge tag
-    if (bargeTagIDs.contains(getID())) {
-      heightGroundToTarget = Constants.VisionConstants.aprilTagConstants.IDs.BARGE_HEIGHT_INCHES;
+  //   double cameraHeight = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
+  //   double cameraPitch = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
 
-      return distanceFromTarget =
-          (heightGroundToTarget - cameraHeight) / Math.tan(angleTargetToRadians);
-    }
-
-    if (reefTagIDs.contains(getID())) {
-      heightGroundToTarget = Constants.VisionConstants.aprilTagConstants.IDs.REEF_HEIGHT_INCHES;
-
-      return distanceFromTarget =
-          (heightGroundToTarget - cameraHeight) / Math.tan(angleTargetToRadians);
-    }
-
-    return 0.0;
-  }
+  //   double heightGroundToTarget = getTagHeight(tagID);
+  //   double angleTargetToDegrees = cameraPitch + getTY();
+  //   double angleTargetToRadians = angleTargetToDegrees * (Math.PI / 180.0);
+  //   double distanceFromTarget =
+  //   (cameraHeight - heightGroundToTarget) / Math.tan(angleTargetToRadians);
+  //   return distanceFromTarget;
+  // }
 
   // public void configureAliance(){
   //     var allianceColor = DriverStation.getAlliance();

@@ -17,7 +17,8 @@ public class Constants {
 
   public static class VisionConstants {
     public static class limeLightDistanceConstants {
-      public static final double DESIRED_APRIL_TAG_DISTANCE = 0.3;
+      public static final double DESIRED_APRIL_TAG_DISTANCE_REEF = 0.3;
+      public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE = 0.3; // MAKE SURE TO TUNE THIS 
       public static final double ALLOWED_ANGLE_ERROR = 0.01;
       public static final double ALLOWED_DISTANCE_ERROR = 0.1;
     }
@@ -25,8 +26,8 @@ public class Constants {
     // In meters and degrees
     // change later once we get true mesurements
     public static class limeLightDimensionConstants {
-      public static final double CAMERA_HEIGHT = 0.267; // In inches
-      public static final double CAMERA_PITCH = 0; // In degrees
+      public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
+      public static final double CAMERA_PITCH = -45; // In degrees
     }
 
     public static class aprilTagConstants {
@@ -51,7 +52,8 @@ public class Constants {
     }
 
     public static class limelightNetworkTableKey {
-      public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight";
+      public static final String REEF_NETWORKTABLE_KEY = "limelight-reef";
+      public static final String BARGE_NETWORKTABLE_KEY = "limelight-barge";
     }
 
     public static class limelightCameraDimensions {
