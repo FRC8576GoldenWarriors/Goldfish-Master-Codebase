@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
 
@@ -127,7 +128,6 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;   
 
 
-        rotationOutput = rotationPID.calculate(tx, 0);
         // if(rotationOutput<0){
         //     rotationOutput+=(-0.04);
         // }
@@ -139,15 +139,19 @@ public class AlignToAprilTag extends Command {
             (currentDistance <= goalDistance) ? 0 : forwardPID.calculate(currentDistance, goalDistance);
         
 
-        sideOutput = aprilTagStatsLimelight.isBargeLimelight() 
-        ? 0 : 
-        sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
+        if (aprilTagStatsLimelight.isBargeLimelight()) {
+            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
+            sideOutput = -RobotContainer.driverController.getLeftX();
+        } else {
+            rotationOutput = rotationPID.calculate(tx, 0);
+            sideOutput = sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
+            SmartDashboard.putNumber("Vision PID Side output", sideOutput);
+        }
 
         drivetrain.drive(new Translation2d(driveOutput, sideOutput), rotationOutput, false, true);
     
         SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
         SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
-        SmartDashboard.putNumber("Vision PID Side output", sideOutput);
         SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
         SmartDashboard.putNumber("Tag distance", currentDistance);
     }
