@@ -177,14 +177,14 @@ public class Constants {
     public static boolean RIGHT_BACK_TURN_INVERTED = true;
     public static boolean LEFT_BACK_TURN_INVERTED = true;
 
-    public static double PRACTICE_LEFT_FRONT_OFFSET = -0.124268;
-    public static double PRACTICE_RIGHT_FRONT_OFFSET = -0.406738;
-    public static double PRACTICE_LEFT_BACK_OFFSET = 0.166260;
-    public static double PRACTICE_RIGHT_BACK_OFFSET = -0.214355;
+    public static double PRACTICE_LEFT_FRONT_OFFSET = 0.377930;
+    public static double PRACTICE_RIGHT_FRONT_OFFSET = 0.094727;
+    public static double PRACTICE_LEFT_BACK_OFFSET = 0.161377;
+    public static double PRACTICE_RIGHT_BACK_OFFSET = 0.274658;
 
-    public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = false;
-    public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = true;
-    public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = false;
+    public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = false;
     public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = true;
 
     public static boolean PRACTICE_LEFT_FRONT_TURN_INVERTED = true;
