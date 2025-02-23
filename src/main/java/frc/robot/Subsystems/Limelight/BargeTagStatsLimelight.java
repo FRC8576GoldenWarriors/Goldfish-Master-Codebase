@@ -101,22 +101,22 @@ public class BargeTagStatsLimelight extends SubsystemBase{
         else return Constants.VisionConstants.aprilTagConstants.heights.CORAL_STATION_TAG_HEIGHT;
     }
     
-    public double calculateDistance() {
-        int tagID = this.getID();
-        if (tagID == -1) return 0.0;
-        // List<Integer> bargeTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.BARGE_TAG_IDS;
-        // List<Integer> reefTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.REEF_TAG_IDS;
+  //   public double calculateDistance() {
+  //       int tagID = this.getID();
+  //       if (tagID == -1) return 0.0;
+  //       // List<Integer> bargeTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.BARGE_TAG_IDS;
+  //       // List<Integer> reefTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.REEF_TAG_IDS;
 
-        double cameraHeight = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
-        double cameraPitch = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
+  //       double cameraHeight = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
+  //       double cameraPitch = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
 
-        double heightGroundToTarget = getTagHeight(tagID);
-        double angleTargetToDegrees = cameraPitch + getTY();
-        double angleTargetToRadians = angleTargetToDegrees * (Math.PI / 180.0);
-        double distanceFromTarget =
-        (heightGroundToTarget - cameraHeight) / Math.tan(angleTargetToRadians);
-        return distanceFromTarget;
-  }
+  //       double heightGroundToTarget = getTagHeight(tagID);
+  //       double angleTargetToDegrees = cameraPitch + getTY();
+  //       double angleTargetToRadians = angleTargetToDegrees * (Math.PI / 180.0);
+  //       double distanceFromTarget =
+  //       (heightGroundToTarget - cameraHeight) / Math.tan(angleTargetToRadians);
+  //       return distanceFromTarget;
+  // }
 
     public double getPitch() {
         Pose3d pose = getBotPose();
