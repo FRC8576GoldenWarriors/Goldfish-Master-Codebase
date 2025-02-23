@@ -8,43 +8,47 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
-import frc.robot.Subsystems.Limelight.BargeTagStatsLimelight;
 
 // import frc.robot.subsystems.Limelight.SpeakerAllignment;
 
 public class AlignToAprilTag extends Command {
   // private final SpeakerAllignment speakerAllignment;
   private AprilTagStatsLimelight aprilTagStatsLimelight;
-  private BargeTagStatsLimelight bargeTagStatsLimelight; 
   private Drivetrain drivetrain;
 
   private final PIDController rotationPID;
   private final PIDController forwardPID;
   private final PIDController sidePID;
 
-  private final double focalLength = Constants.VisionConstants.limelightCameraDimensions.FOCAL_LENGTH;
-  private final double pixelWidth = Constants.VisionConstants.limelightCameraDimensions.PIXEL_WIDTH;
-  private final double realWidth = Constants.VisionConstants.limelightCameraDimensions.REAL_WIDTH;
+  private final double focalLength = Constants.VisionConstants.LimelightConstants.FOCAL_LENGTH;
+  private final double pixelWidth = Constants.VisionConstants.LimelightConstants.PIXEL_WIDTH;
+  private final double realWidth = Constants.VisionConstants.LimelightConstants.REAL_WIDTH;
+  private double detectedWidth; // This is only needed for the distance calc using area
 
   private double driveOutput;
-  private double detectedWidth; //This is only needed for the distance calc using area
-
+  private double sideOutput;
   private double rotationOutput;
 
+
   private double callibrationFactor = 1.2;
+
+  private double cameraPitch = aprilTagStatsLimelight.isBargeLimelight() 
+  ? Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.DimensionConstants.CAMERA_PITCH : 
+  Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.DimensionConstants.CAMERA_PITCH;
 
   private double currentDistance;
   private double tx;
   private double ty;
+
   private double goalDistance;
 
   private CommandXboxController c =
       new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
 
-      
-  public AlignToAprilTag(AprilTagStatsLimelight aprilTagStatsLimelight,BargeTagStatsLimelight bargeTagStatsLimelight, Drivetrain drivetrain) {
+  public AlignToAprilTag(
+      AprilTagStatsLimelight aprilTagStatsLimelight,
+      Drivetrain drivetrain) {
     this.aprilTagStatsLimelight = aprilTagStatsLimelight;
-    this.bargeTagStatsLimelight = bargeTagStatsLimelight;
     this.drivetrain = drivetrain;
 
     rotationPID =
@@ -53,7 +57,7 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.rotationkI,
             Constants.VisionConstants.VisionPIDConstants.rotationkD);
     rotationPID.setTolerance(
-        Constants.VisionConstants.limeLightDistanceConstants.ALLOWED_ANGLE_ERROR);
+        Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR);
 
     forwardPID =
         new PIDController(
@@ -61,7 +65,7 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.forwardkI,
             Constants.VisionConstants.VisionPIDConstants.forwardkD);
     forwardPID.setTolerance(
-        Constants.VisionConstants.limeLightDistanceConstants.ALLOWED_DISTANCE_ERROR);
+        Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
     sidePID =
         new PIDController(
@@ -69,9 +73,9 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.sidekI,
             Constants.VisionConstants.VisionPIDConstants.sidekD);
     sidePID.setTolerance(
-        Constants.VisionConstants.limeLightDistanceConstants.ALLOWED_DISTANCE_ERROR);
+        Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
-    addRequirements(aprilTagStatsLimelight, bargeTagStatsLimelight, drivetrain);
+    addRequirements(aprilTagStatsLimelight, drivetrain);
   }
 
   // @Override
@@ -79,10 +83,9 @@ public class AlignToAprilTag extends Command {
   //     speakerAllignment.configureAliance(alliance == Alliance.Blue);
   // }
 
-  private void GetCameraPriority(){
-    //if()
+  private void GetCameraPriority() {
+    // if()
   }
-
 
   @Override
   public void execute() {
@@ -95,16 +98,25 @@ public class AlignToAprilTag extends Command {
 
     tx = aprilTagStatsLimelight.getTX();
     ty = aprilTagStatsLimelight.getTY();
-    currentDistance = Math.abs(aprilTagStatsLimelight.calculateDistance(focalLength, realWidth,
-    detectedWidth) * 0.0002);
-    SmartDashboard.putNumber("Disatnce Abs", currentDistance);
-    currentDistance *= Math.toRadians(
-        ty+Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH);
+
+    currentDistance =
+        Math.abs(
+            aprilTagStatsLimelight.calculateDistance(focalLength, realWidth, detectedWidth) // This is the distance from the camera to the target
+                * 0.0002);
+    
+    currentDistance *=
+        Math.cos(Math.toRadians(ty + cameraPitch)); // This is the distance from the bot to what the target's wall (adjacent side)
+
     currentDistance = Math.abs(currentDistance);
-    //currentDistance += 0.1;
-    //currentDistance *= 1.8;
-    //currentDistance = aprilTagStatsLimelight.calculateDistance();
-    goalDistance = Constants.VisionConstants.limeLightDistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;
+    
+    // currentDistance += 0.1;
+    // currentDistance *= 1.8;
+    // currentDistance = aprilTagStatsLimelight.calculateDistance();
+
+    goalDistance =
+        aprilTagStatsLimelight.isBargeLimelight() 
+        ? Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_BARGE : 
+        Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;   
 
     SmartDashboard.putNumber("Tag distance", currentDistance);
 
@@ -118,13 +130,17 @@ public class AlignToAprilTag extends Command {
 
     driveOutput =
         (currentDistance <= goalDistance) ? 0 : forwardPID.calculate(currentDistance, goalDistance);
-    double sideOutput = sidePID.calculate(goalDistance * Math.sin(Math.toRadians(tx)), 0);
+    
+
+    sideOutput = aprilTagStatsLimelight.isBargeLimelight() 
+    ? 0 : 
+    sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
 
     drivetrain.drive(new Translation2d(driveOutput, sideOutput), rotationOutput, false, true);
     SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
     SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
     SmartDashboard.putNumber("Vision PID Side output", sideOutput);
-    SmartDashboard.putNumber("Side distance", goalDistance * Math.sin(Math.toRadians(tx)));
+    SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
   }
 
   @Override

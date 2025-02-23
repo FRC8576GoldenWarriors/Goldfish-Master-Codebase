@@ -249,7 +249,7 @@ public class Drivetrain extends SubsystemBase {
         "Swerve Drive",
         new Sendable() {
           @Override
-           public void initSendable(SendableBuilder builder) {
+          public void initSendable(SendableBuilder builder) {
             builder.setSmartDashboardType("SwerveDrive");
 
             builder.addDoubleProperty(

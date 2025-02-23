@@ -16,22 +16,56 @@ import java.util.List;
 public class Constants {
 
   public static class VisionConstants {
-    public static class limeLightDistanceConstants {
-      public static final double DESIRED_APRIL_TAG_DISTANCE_REEF = 0.3;
-      public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE = 0.3; // MAKE SURE TO TUNE THIS 
+
+    public static class LimelightConstants {
+
+      public static final double FOCAL_LENGTH = 4.1;
+      public static final double REAL_WIDTH = 165.0;
+      public static final double PIXEL_WIDTH = 320.0;
+
       public static final double ALLOWED_ANGLE_ERROR = 0.01;
       public static final double ALLOWED_DISTANCE_ERROR = 0.1;
-    }
 
-    // In meters and degrees
-    // change later once we get true mesurements
-    public static class limeLightDimensionConstants {
-      public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
-      public static final double CAMERA_PITCH = -45; // In degrees
+      public static class BargeLimelightConstants {
+
+        public static final String BARGE_NETWORKTABLE_KEY = "limelight-barge";
+
+        public static class DistanceConstants {
+
+          public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE = 0.3; // MAKE SURE TO TUNE THIS
+
+        }
+
+        public static class DimensionConstants {
+          public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
+          public static final double CAMERA_PITCH = 45; // In degrees
+        }
+
+      }
+
+      public static class ReefLimelightConstants {
+
+        public static final String REEF_NETWORKTABLE_KEY = "limelight-reef";
+
+        public static class DistanceConstants {
+
+          public static final double DESIRED_APRIL_TAG_DISTANCE_REEF = 0.3; // MAKE SURE TO TUNE THIS
+
+        }
+
+        public static class DimensionConstants {
+          public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
+          public static final double CAMERA_PITCH = -45; // In degrees
+        }
+
+
+      }
     }
 
     public static class aprilTagConstants {
+
       public static class IDs {
+
         public static final List<Integer> REEF_TAG_IDS =
             Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
         public static final List<Integer> BARGE_TAG_IDS = Arrays.asList(4, 5, 14, 15);
@@ -40,6 +74,10 @@ public class Constants {
 
         public static final double BARGE_HEIGHT_INCHES = 80;
         public static final double REEF_HEIGHT_INCHES = 17.25;
+
+        public static final double BARGE_HEIGHT_METERS = Units.inchesToMeters(BARGE_HEIGHT_INCHES);
+        public static final double REEF_HEIGHT_METERS = Units.inchesToMeters(REEF_HEIGHT_INCHES);
+
       }
 
       public static class heights {
@@ -49,24 +87,7 @@ public class Constants {
         public static final double PROCESSOR_TAG_HEIGHT = 1.305;
         public static final double CORAL_STATION_TAG_HEIGHT = 1.485;
       }
-    }
 
-    public static class limelightNetworkTableKey {
-      public static final String REEF_NETWORKTABLE_KEY = "limelight-reef";
-      public static final String BARGE_NETWORKTABLE_KEY = "limelight-barge";
-    }
-
-    public static class limelightCameraDimensions {
-      public static final double FOCAL_LENGTH = 4.1;
-      public static final double REAL_WIDTH = 165.0;
-      public static final double PIXEL_WIDTH = 320.0;
-    }
-
-    public static class distanceConstants {
-      public static final double goalMeterDistance = 3.0;
-      public static final double visionAngleDegrees = 0.0;
-      public static final List<Integer> useableIDs =
-          Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
     }
 
     public static class nameConstants {

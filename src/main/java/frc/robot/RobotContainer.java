@@ -20,9 +20,8 @@ import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
-import frc.robot.Subsystems.Shintake;
 import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
-import frc.robot.Subsystems.Limelight.BargeTagStatsLimelight;
+import frc.robot.Subsystems.Shintake;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
 import frc.robot.Subsystems.Simulation.SimConstants;
 import frc.robot.Subsystems.Simulation.SimEndEffector;
@@ -51,8 +50,9 @@ public class RobotContainer {
   public static Arm m_arm;
   public static GroundIntake m_groundIntake;
   public static Climber m_climber;
-  public static AprilTagStatsLimelight aprilTagStatsLimelight;
-  public static BargeTagStatsLimelight bargeTagStatsLimelight;
+
+  public static AprilTagStatsLimelight reefTagStatsLimelight;
+  public static AprilTagStatsLimelight bargeTagStatsLimelight;
 
   public static DrivetrainSim m_drivetrainSim;
   public static SimEndEffector m_SimEndEffector;
@@ -67,8 +67,14 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
-      aprilTagStatsLimelight = new AprilTagStatsLimelight();
-      bargeTagStatsLimelight = new BargeTagStatsLimelight();
+
+      reefTagStatsLimelight =
+        new AprilTagStatsLimelight(
+            Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.REEF_NETWORKTABLE_KEY);
+      bargeTagStatsLimelight = 
+        new AprilTagStatsLimelight(
+            Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.BARGE_NETWORKTABLE_KEY);
+    
       m_drivetrain.setDefaultCommand(new SwerveDrive());
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       System.out.println("is sim");
@@ -190,11 +196,22 @@ public class RobotContainer {
                   () -> m_climber.setMotorSpeed(0.9),
                   () -> m_climber.setMotorSpeed(0.0),
                   m_climber));
+
+      // up arrow align reef
       driverController
-        .povUp()
-        .whileTrue(
-            new AlignToAprilTag(aprilTagStatsLimelight, bargeTagStatsLimelight, m_drivetrain));
-        
+          .povUp()
+          .whileTrue(
+              new AlignToAprilTag(
+                reefTagStatsLimelight, 
+                m_drivetrain));
+
+      // down arrow align barge
+      driverController
+          .povDown()
+          .whileTrue(
+              new AlignToAprilTag(
+                reefTagStatsLimelight, 
+                m_drivetrain));
     }
   }
 

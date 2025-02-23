@@ -9,22 +9,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain;
-import java.util.List;
 
 public class AprilTagStatsLimelight extends SubsystemBase {
 
   private final Drivetrain drivetrain;
   private final NetworkTable table;
+  private final String networkTableKey;
+  private final String limelightName;
 
   // private AprilTagFieldLayout m_layout =
   // AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
 
-  public AprilTagStatsLimelight() {
+  public AprilTagStatsLimelight(String networkTableKey) {
     this.drivetrain = Drivetrain.getInstance();
+    this.networkTableKey = networkTableKey;
+    this.limelightName = networkTableKey.substring(networkTableKey.indexOf("-") + 1);
     this.table =
         NetworkTableInstance.getDefault()
-            .getTable(
-                Constants.VisionConstants.limelightNetworkTableKey.REEF_NETWORKTABLE_KEY);
+            .getTable(networkTableKey); // "limelight-reef"; // "limelight-processor";
     // configureAliance();
   }
 
@@ -35,10 +37,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     double id = getID();
 
     if (hasValidTargets()) {
-      SmartDashboard.putBoolean(" Reef Has Targets", true);
+      SmartDashboard.putBoolean(limelightName + " Has Targets", true);
       updateRobotPoseInSmartDashboard();
     } else {
-      SmartDashboard.putBoolean("Reef Has Targets", false);
+      SmartDashboard.putBoolean(limelightName + " Has Targets", false);
     }
 
     updateValues(x, y, area, id);
@@ -61,10 +63,8 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   public int getID() {
-    //if (hasValidTargets()) 
-    return (int) getEntryValue("tid");
-    //return (int) table.getEntry("tid").getDouble(1);
-    //return -1;
+    if (hasValidTargets()) return (int) getEntryValue("tid");
+    return -1;
   }
 
   public Pose3d getBotPose() {
@@ -89,10 +89,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   private void updateValues(double x, double y, double area, double id) {
-    SmartDashboard.putNumber("Reef Limelight X", x);
-    SmartDashboard.putNumber("Reef Limelight Y", y);
-    SmartDashboard.putNumber("Reef Limelight Area", area);
-    SmartDashboard.putNumber("Reef Limelight ID", id);
+    SmartDashboard.putNumber(limelightName + " Limelight X", x);
+    SmartDashboard.putNumber(limelightName + " Limelight Y", y);
+    SmartDashboard.putNumber(limelightName + " Limelight Area", area);
+    SmartDashboard.putNumber(limelightName + " Limelight ID", id);
   }
 
   public double getPitch() {
@@ -110,9 +110,13 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     else return Constants.VisionConstants.aprilTagConstants.heights.CORAL_STATION_TAG_HEIGHT;
   }
 
+  public boolean isBargeLimelight() {
+    return networkTableKey.equals("limelight-barge");
+  }
+
   private void updateRobotPoseInSmartDashboard() {
     boolean hasTarget = hasValidTargets();
-    SmartDashboard.putBoolean(" Reef Limelight/Has Target", hasTarget);
+    SmartDashboard.putBoolean(limelightName + " Limelight/Has Target", hasTarget);
 
     if (hasTarget) {
       Pose3d pose = getBotPose();
@@ -142,20 +146,6 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight/Rotation/Yaw", 0);
     SmartDashboard.putNumber("Limelight/Distance", 0);
   }
-
-  // public double calculateDistance(int apriltagID){
-  //     //Not meant for targets that are close to the same height as the camera
-  //     if (apriltagID == -1) return 0;
-
-  //     double TARGET_HEIGHT = this.getTagHeight(getID());
-  //     double CAMERA_HEIGHT = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
-  //     double CAMERA_PITCH = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
-
-  //     double angleToSpeakerEntranceDegrees = Math.toRadians(CAMERA_PITCH + getTY());
-  //     double heightDifferenceInches = (TARGET_HEIGHT - CAMERA_HEIGHT) * 39.37;
-
-  //     return Math.abs((heightDifferenceInches) / Math.tan(angleToSpeakerEntranceDegrees))/39.97;
-  // }
 
   // ! Using the april tag area
   public double calculateDistance(double focalLength, double realWidth, double pixelWidth) {
