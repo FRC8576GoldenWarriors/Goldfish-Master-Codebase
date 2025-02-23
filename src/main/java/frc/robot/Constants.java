@@ -72,8 +72,14 @@ public class Constants {
         public static final List<Integer> PROCESSOR_TAG_IDS = Arrays.asList(3, 16);
         public static final List<Integer> CORAL_STATION_TAG_IDS = Arrays.asList(1, 2, 12, 13);
 
-        public static final double BARGE_HEIGHT_INCHES = 80;
-        public static final double REEF_HEIGHT_INCHES = 17.25;
+        public static final List<Integer> RED_TAG_IDS =
+            Arrays.asList(1, 2, 5, 6, 7, 8, 9, 10, 11, 15, 16);
+        
+        public static final List<Integer> BLUE_TAG_IDS =
+            Arrays.asList(3, 4, 12, 13, 14, 17, 18, 19, 20, 21, 22);
+
+        public static final double BARGE_HEIGHT_INCHES = 73.54;
+        public static final double REEF_HEIGHT_INCHES = 12.13;
 
         public static final double BARGE_HEIGHT_METERS = Units.inchesToMeters(BARGE_HEIGHT_INCHES);
         public static final double REEF_HEIGHT_METERS = Units.inchesToMeters(REEF_HEIGHT_INCHES);

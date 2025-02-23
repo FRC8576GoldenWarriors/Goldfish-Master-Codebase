@@ -1,5 +1,7 @@
 package frc.robot.Commands;
 
+import java.util.List;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -91,56 +93,64 @@ public class AlignToAprilTag extends Command {
   public void execute() {
     // drivetrain.setAutoPose(false);
 
-    detectedWidth =
-        realWidth
-            * Math.sqrt(aprilTagStatsLimelight.getArea())
-            / (pixelWidth * focalLength * callibrationFactor);
+    List<Integer> usableTags = aprilTagStatsLimelight.isBlueAlliance() 
+    ? Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS :
+    Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS; 
 
-    tx = aprilTagStatsLimelight.getTX();
-    ty = aprilTagStatsLimelight.getTY();
-
-    currentDistance =
-        Math.abs(
-            aprilTagStatsLimelight.calculateDistance(focalLength, realWidth, detectedWidth) // This is the distance from the camera to the target
-                * 0.0002);
+    if (aprilTagStatsLimelight.hasValidTargets() && usableTags.contains(aprilTagStatsLimelight.getID())) {
     
-    currentDistance *=
-        Math.cos(Math.toRadians(ty + cameraPitch)); // This is the distance from the bot to what the target's wall (adjacent side)
+        detectedWidth =
+            realWidth
+                * Math.sqrt(aprilTagStatsLimelight.getArea())
+                / (pixelWidth * focalLength * callibrationFactor);
 
-    currentDistance = Math.abs(currentDistance);
+        tx = aprilTagStatsLimelight.getTX();
+        ty = aprilTagStatsLimelight.getTY();
+
+        currentDistance =
+            Math.abs(
+                aprilTagStatsLimelight.calculateDistance(focalLength, realWidth, detectedWidth) // This is the distance from the camera to the target
+                    * 0.0002);
+        
+        currentDistance *=
+            Math.cos(Math.toRadians(ty + cameraPitch)); // This is the distance from the bot to what the target's wall (adjacent side)
+
+        currentDistance = Math.abs(currentDistance);
+        
+        // currentDistance += 0.1;
+        // currentDistance *= 1.8;
+        // currentDistance = aprilTagStatsLimelight.calculateDistance();
+
+        goalDistance =
+            aprilTagStatsLimelight.isBargeLimelight() 
+            ? Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_BARGE : 
+            Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;   
+
+
+        rotationOutput = rotationPID.calculate(tx, 0);
+        // if(rotationOutput<0){
+        //     rotationOutput+=(-0.04);
+        // }
+        // else{
+        //     rotationOutput+=0.04;
+        // }
+
+        driveOutput =
+            (currentDistance <= goalDistance) ? 0 : forwardPID.calculate(currentDistance, goalDistance);
+        
+
+        sideOutput = aprilTagStatsLimelight.isBargeLimelight() 
+        ? 0 : 
+        sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
+
+        drivetrain.drive(new Translation2d(driveOutput, sideOutput), rotationOutput, false, true);
     
-    // currentDistance += 0.1;
-    // currentDistance *= 1.8;
-    // currentDistance = aprilTagStatsLimelight.calculateDistance();
-
-    goalDistance =
-        aprilTagStatsLimelight.isBargeLimelight() 
-        ? Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_BARGE : 
-        Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;   
-
-    SmartDashboard.putNumber("Tag distance", currentDistance);
-
-    rotationOutput = rotationPID.calculate(tx, 0);
-    // if(rotationOutput<0){
-    //     rotationOutput+=(-0.04);
-    // }
-    // else{
-    //     rotationOutput+=0.04;
-    // }
-
-    driveOutput =
-        (currentDistance <= goalDistance) ? 0 : forwardPID.calculate(currentDistance, goalDistance);
-    
-
-    sideOutput = aprilTagStatsLimelight.isBargeLimelight() 
-    ? 0 : 
-    sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
-
-    drivetrain.drive(new Translation2d(driveOutput, sideOutput), rotationOutput, false, true);
-    SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
-    SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
-    SmartDashboard.putNumber("Vision PID Side output", sideOutput);
-    SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
+        SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
+        SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
+        SmartDashboard.putNumber("Vision PID Side output", sideOutput);
+        SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
+        SmartDashboard.putNumber("Tag distance", currentDistance);
+    }
   }
 
   @Override

@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -112,6 +113,15 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
   public boolean isBargeLimelight() {
     return networkTableKey.equals("limelight-barge");
+  }
+
+  public boolean isBlueAlliance() {
+    DriverStation.Alliance blueAlliane = DriverStation.Alliance.Blue;
+    var currentAlliance = DriverStation.getAlliance();
+    
+    if (currentAlliance.isEmpty()) return false;
+    else return blueAlliane.equals(currentAlliance.get());
+
   }
 
   private void updateRobotPoseInSmartDashboard() {
