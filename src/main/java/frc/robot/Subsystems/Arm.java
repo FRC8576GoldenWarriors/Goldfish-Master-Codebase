@@ -29,9 +29,11 @@ public class Arm extends SubsystemBase {
             IdleMode.kCoast,
             45);
 
-    armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.HardwareConstants.armEncoderDIO,
-    1.0,
-    Constants.ArmConstants.ControlConstants.armEncoderOffset);
+    armAbsEncoder =
+        new DutyCycleEncoder(
+            Constants.ArmConstants.HardwareConstants.armEncoderDIO,
+            1.0,
+            Constants.ArmConstants.ControlConstants.armEncoderOffset);
 
     armAbsEncoder.setInverted(Constants.ArmConstants.ControlConstants.armEncoderIsInverted);
   }
@@ -79,7 +81,7 @@ public class Arm extends SubsystemBase {
     return armAbsEncoder;
   }
 
-  public void setArmMotorIdleMode(IdleMode idleMode){
+  public void setArmMotorIdleMode(IdleMode idleMode) {
     armMotor.setIdleMode(idleMode);
   }
 }

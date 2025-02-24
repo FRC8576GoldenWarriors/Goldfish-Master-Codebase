@@ -159,31 +159,24 @@ public class Constants {
     public static final int PIGEON_ID = 0;
 
     public static double LEFT_FRONT_OFFSET = 0.330322; // -0.167236; //0.345459;
-    public static double RIGHT_FRONT_OFFSET =0.181885;// -0.318115; // 0.184326;//-0.314453;
-    public static double LEFT_BACK_OFFSET = 0.497803;//0.009277; // 0.012695; //0.014893;
-    public static double RIGHT_BACK_OFFSET = 0.178955;//0.242188; // 0.231445;//0.24951
+    public static double RIGHT_FRONT_OFFSET = 0.181885; // -0.318115; // 0.184326;//-0.314453;
+    public static double LEFT_BACK_OFFSET = 0.497803; // 0.009277; // 0.012695; //0.014893;
+    public static double RIGHT_BACK_OFFSET = 0.178955; // 0.242188; // 0.231445;//0.24951
 
     public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
-    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;//false;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true; // false;
     public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
-    public static boolean LEFT_BACK_DRIVE_INVERTED = true;//false;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = true; // false;
 
     public static boolean LEFT_FRONT_TURN_INVERTED = true;
     public static boolean RIGHT_FRONT_TURN_INVERTED = true;
     public static boolean RIGHT_BACK_TURN_INVERTED = true;
     public static boolean LEFT_BACK_TURN_INVERTED = true;
 
-
-
-
-
-
-
     public static double PRACTICE_LEFT_FRONT_OFFSET = -0.124268;
     public static double PRACTICE_RIGHT_FRONT_OFFSET = -0.406738;
     public static double PRACTICE_LEFT_BACK_OFFSET = 0.166260;
     public static double PRACTICE_RIGHT_BACK_OFFSET = -0.214355;
-
 
     public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = false;
     public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = true;
@@ -265,7 +258,7 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = 0.45; //-0.25
+      public static final double pincherInSpeed = 0.45; // -0.25
       public static final double pincherOutSpeed = -1.00;
 
       public static final double pincherInRunExtension = 0.25;
@@ -278,8 +271,6 @@ public class Constants {
 
       public static final int armMotorID = 21;
       public static final int armEncoderDIO = 3;
-
-      
     }
 
     public static final class ControlConstants {
@@ -288,10 +279,10 @@ public class Constants {
 
       public static final double kS = 0;
       public static final double kG = 0.25;
-      public static final double kV = 0.117;//0.117;
+      public static final double kV = 0.117; // 0.117;
       public static final double kA = 0;
 
-      public static final double kP = 0.4;//0.3;
+      public static final double kP = 0.4; // 0.3;
       public static final double kI = 0;
       public static final double kD = 0.05;
 
@@ -342,11 +333,11 @@ public class Constants {
   public static final class ShintakeConstants {
     public static class HardwareConstants {
 
-      public static final int rollerMotorLowID = 32 ;//32;
+      public static final int rollerMotorLowID = 32; // 32;
       public static final boolean rollerMotorLowIsInverted = false;
 
       public static final int rollerMotorHighID = 33;
-      public static final boolean rollerMotorHighIsInverted = true;//false;
+      public static final boolean rollerMotorHighIsInverted = true; // false;
 
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;

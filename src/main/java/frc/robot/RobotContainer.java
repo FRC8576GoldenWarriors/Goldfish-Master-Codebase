@@ -65,13 +65,13 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
-      m_ledStrip = new LEDStrip(Constants.LEDConstants.HardwareConstants.kLEDPort, Constants.LEDConstants.HardwareConstants.kLEDLength);
-
-
-
+      m_ledStrip =
+          new LEDStrip(
+              Constants.LEDConstants.HardwareConstants.kLEDPort,
+              Constants.LEDConstants.HardwareConstants.kLEDLength);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
-      
+
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();
@@ -90,23 +90,18 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    
-
 
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-        // Driver controller
-        driverController.y().onTrue(new ArmController(m_arm, 0.25));
-
-
-
+      // Driver controller
+      driverController.y().onTrue(new ArmController(m_arm, 0.25));
 
       // Operator controller
       operatorController
           .y()
           .whileTrue(
               new StartEndCommand(
-                  (() -> m_shintake.setRollersSpeed(0.85, 0.80)), //1.0 0.95
+                  (() -> m_shintake.setRollersSpeed(0.85, 0.80)), // 1.0 0.95
                   (() -> m_shintake.setRollersSpeed(0.0)),
                   m_shintake)); // Y Shintake Shoot
 
