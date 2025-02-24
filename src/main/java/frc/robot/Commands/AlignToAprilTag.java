@@ -140,7 +140,15 @@ public class AlignToAprilTag extends Command {
         
 
         if (aprilTagStatsLimelight.isBargeLimelight()) {
-            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
+            if (aprilTagStatsLimelight.isBlueAlliance()) {
+                rotationOutput = (aprilTagStatsLimelight.getID() == 14) ? 
+                rotationPID.calculate(drivetrain.getHeading(), 0) : 
+                rotationPID.calculate(drivetrain.getHeading(), 180);
+            } else {
+                rotationOutput = (aprilTagStatsLimelight.getID() == 5) ? 
+                rotationPID.calculate(drivetrain.getHeading(), 0) : 
+                rotationPID.calculate(drivetrain.getHeading(), 180);
+            }
             sideOutput = -RobotContainer.driverController.getLeftX();
         } else {
             rotationOutput = rotationPID.calculate(tx, 0);
