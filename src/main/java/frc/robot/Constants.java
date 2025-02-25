@@ -32,15 +32,14 @@ public class Constants {
 
         public static class DistanceConstants {
 
-          public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE = 0.3; // MAKE SURE TO TUNE THIS
-
+          public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
+              2.2; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
           public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
           public static final double CAMERA_PITCH = 45; // In degrees
         }
-
       }
 
       public static class ReefLimelightConstants {
@@ -49,16 +48,14 @@ public class Constants {
 
         public static class DistanceConstants {
 
-          public static final double DESIRED_APRIL_TAG_DISTANCE_REEF = 0.3; // MAKE SURE TO TUNE THIS
-
+          public static final double DESIRED_APRIL_TAG_DISTANCE_REEF =
+              0.3; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
           public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
           public static final double CAMERA_PITCH = -45; // In degrees
         }
-
-
       }
     }
 
@@ -74,7 +71,7 @@ public class Constants {
 
         public static final List<Integer> RED_TAG_IDS =
             Arrays.asList(1, 2, 5, 6, 7, 8, 9, 10, 11, 15, 16);
-        
+
         public static final List<Integer> BLUE_TAG_IDS =
             Arrays.asList(3, 4, 12, 13, 14, 17, 18, 19, 20, 21, 22);
 
@@ -83,7 +80,6 @@ public class Constants {
 
         public static final double BARGE_HEIGHT_METERS = Units.inchesToMeters(BARGE_HEIGHT_INCHES);
         public static final double REEF_HEIGHT_METERS = Units.inchesToMeters(REEF_HEIGHT_INCHES);
-
       }
 
       public static class heights {
@@ -93,7 +89,6 @@ public class Constants {
         public static final double PROCESSOR_TAG_HEIGHT = 1.305;
         public static final double CORAL_STATION_TAG_HEIGHT = 1.485;
       }
-
     }
 
     public static class nameConstants {

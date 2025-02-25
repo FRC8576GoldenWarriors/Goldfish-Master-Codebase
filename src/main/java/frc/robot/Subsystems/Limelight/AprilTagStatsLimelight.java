@@ -118,10 +118,9 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   public boolean isBlueAlliance() {
     DriverStation.Alliance blueAlliane = DriverStation.Alliance.Blue;
     var currentAlliance = DriverStation.getAlliance();
-    
+
     if (currentAlliance.isEmpty()) return false;
     else return blueAlliane.equals(currentAlliance.get());
-
   }
 
   private void updateRobotPoseInSmartDashboard() {

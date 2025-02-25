@@ -69,12 +69,14 @@ public class RobotContainer {
       m_climber = new Climber();
 
       reefTagStatsLimelight =
-        new AprilTagStatsLimelight(
-            Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.REEF_NETWORKTABLE_KEY);
-      bargeTagStatsLimelight = 
-        new AprilTagStatsLimelight(
-            Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.BARGE_NETWORKTABLE_KEY);
-    
+          new AprilTagStatsLimelight(
+              Constants.VisionConstants.LimelightConstants.ReefLimelightConstants
+                  .REEF_NETWORKTABLE_KEY);
+      bargeTagStatsLimelight =
+          new AprilTagStatsLimelight(
+              Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
+                  .BARGE_NETWORKTABLE_KEY);
+
       m_drivetrain.setDefaultCommand(new SwerveDrive());
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       System.out.println("is sim");
@@ -198,20 +200,12 @@ public class RobotContainer {
                   m_climber));
 
       // up arrow align reef
-      driverController
-          .povUp()
-          .whileTrue(
-              new AlignToAprilTag(
-                reefTagStatsLimelight, 
-                m_drivetrain));
+      //driverController.povUp().whileTrue(new AlignToAprilTag(reefTagStatsLimelight, m_drivetrain));
 
       // down arrow align barge
       driverController
           .povDown()
-          .whileTrue(
-              new AlignToAprilTag(
-                reefTagStatsLimelight, 
-                m_drivetrain));
+          .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
     }
   }
 
