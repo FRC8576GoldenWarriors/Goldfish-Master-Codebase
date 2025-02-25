@@ -72,9 +72,6 @@ public class AlignToAprilTag extends Command {
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
 
-
-
-
   @Override
   public void execute() {
     // drivetrain.setAutoPose(false);
@@ -83,8 +80,10 @@ public class AlignToAprilTag extends Command {
         aprilTagStatsLimelight.isBlueAlliance()
             ? Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS
             : Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS;
-    SmartDashboard.putBoolean("Can align", aprilTagStatsLimelight.hasValidTargets()
-    && usableTags.contains(aprilTagStatsLimelight.getID()));
+    SmartDashboard.putBoolean(
+        "Can align",
+        aprilTagStatsLimelight.hasValidTargets()
+            && usableTags.contains(aprilTagStatsLimelight.getID()));
 
     if (aprilTagStatsLimelight.hasValidTargets()
         && usableTags.contains(aprilTagStatsLimelight.getID())) {
@@ -140,13 +139,17 @@ public class AlignToAprilTag extends Command {
           if (aprilTagStatsLimelight.getID() == 14) {
             rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
           } else {
-            rotationOutput = rotationPID.calculate(drivetrain.get360Val(), 180);
+            rotationOutput =
+                rotationPID.calculate(
+                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
           }
         } else {
           if (aprilTagStatsLimelight.getID() == 5) {
             rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
           } else {
-            rotationOutput = rotationPID.calculate(drivetrain.get360Val(), 180);
+            rotationOutput =
+                rotationPID.calculate(
+                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
           }
         }
         sideOutput = -RobotContainer.driverController.getLeftX();
@@ -175,8 +178,7 @@ public class AlignToAprilTag extends Command {
   @Override
   public boolean isFinished() {
     return (!aprilTagStatsLimelight.hasValidTargets()
-            && (rotationPID.atSetpoint()
-            && forwardPID.atSetpoint()))
+            && (rotationPID.atSetpoint() && forwardPID.atSetpoint()))
         || ((currentDistance == 0));
   }
 }

@@ -441,9 +441,6 @@ public class Drivetrain extends SubsystemBase {
     leftBack.setDesiredState(moduleStates[2]);
     rightBack.setDesiredState(moduleStates[3]);
   }
-  public double get360Val(){
-    return gyro.getYaw().getValueAsDouble()%360; // clamp heading between -180 and 180
-  }
 
   // public void setModuleZero(){ Not Called Anywhere
   //   leftFront.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
