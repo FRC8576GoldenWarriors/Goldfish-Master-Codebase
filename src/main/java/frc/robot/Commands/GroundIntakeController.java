@@ -27,6 +27,7 @@ public class GroundIntakeController extends Command {
   public GroundIntakeController(GroundIntake intake, double desiredAngle, double rollerSpeed) {
     this.intake = intake;
     this.encoder = intake.getEncoder();
+    this.rollerSpeed = rollerSpeed;
 
     this.desiredAngle = desiredAngle;
 
@@ -62,6 +63,7 @@ public class GroundIntakeController extends Command {
     }
 
     intake.setPivotSpeed(motorOutput);
+    intake.setRollerSpeed(rollerSpeed);
     
     SmartDashboard.putNumber("Intake Pivot Motor Output", motorOutput);
   }
@@ -75,6 +77,6 @@ public class GroundIntakeController extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isFinished;
+    return false;
   }
 }

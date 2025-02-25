@@ -95,8 +95,8 @@ public class RobotContainer {
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
       // Driver controller
-        driverController.y().onTrue(new ArmController(m_arm, 0.40));
-        driverController.x().onTrue(new ArmController(m_arm, 0.31));
+        // driverController.y().onTrue(new ArmController(m_arm, 0.40));
+        // driverController.b().onTrue(new ArmController(m_arm, 0.31));
 
       // Operator controller
       operatorController.y().onTrue(new ArmController(m_arm, 0.40));
@@ -156,16 +156,10 @@ public class RobotContainer {
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
       // right bumper intake in
-      operatorController
-          .rightBumper()
-          .whileTrue(
-              new GroundIntakeController(
-                  m_groundIntake,
-                  0.08,
-                  Constants.GroundIntakeConstants.ControlConstants.groundIntakeInSpeed));
+ 
 
       // left arrow pivot down
-      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.21, 0));
+      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.21, -0.3));
       // right arrow pivot up
       operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.09, 0));
 
