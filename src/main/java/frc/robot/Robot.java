@@ -31,8 +31,8 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putBoolean(
         "Algae Photoelectric", !RobotContainer.m_endEffector.getAlgaeDigitalInput().get());
-    SmartDashboard.putBoolean(
-        "Coral Photoelectric", !RobotContainer.m_endEffector.getCoralDigitalInput().get());
+    // SmartDashboard.putBoolean(
+    //     "Coral Photoelectric", !RobotContainer.m_endEffector.getCoralDigitalInput().get());
     SmartDashboard.putBoolean(
         "Hold Photoelectric", !RobotContainer.m_groundIntake.getDigitalInput().get());
 

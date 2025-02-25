@@ -124,22 +124,24 @@ public class LEDStrip extends SubsystemBase {
       blink(
           Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlink,
           Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlinkSpeed);
+    }
 
-    } else if (!RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
-      breathe(
-          Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
-          Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
-      // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
-      //   blink(
-      //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
-      //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
-      // coral motor running
-      // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
-      //   blink(
-      //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
-      //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
-      // coral motor running
-    } else if (DriverStation.isDisabled()) { // disabled
+    // } else if (!RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
+    //   breathe(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
+    // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
+    // coral motor running
+    // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
+    // coral motor running
+    //  }
+    else if (DriverStation.isDisabled()) { // disabled
       scroll(
           Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,
           Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);

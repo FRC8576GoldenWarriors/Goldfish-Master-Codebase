@@ -34,6 +34,7 @@ public class ArmController extends Command {
   private double voltage;
 
   private double COMOffset;
+  private boolean isFinished;
 
   public ArmController(Arm arm, double setpoint) {
 
@@ -59,6 +60,8 @@ public class ArmController extends Command {
     this.encoder = arm.getEncoder();
 
     this.COMOffset = 0.013194;
+
+    isFinished = true;
 
     addRequirements(arm);
   }
@@ -88,6 +91,10 @@ public class ArmController extends Command {
 
     arm.setArmVoltage(voltage);
     SmartDashboard.putNumber("Arm Total Controller Voltage", voltage);
+
+    if (Math.abs(encoder.get() - setpoint) < 0.02) {
+      isFinished = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -99,7 +106,7 @@ public class ArmController extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
 
     // return encoder.get() > Constants.ArmConstants.ControlConstants.highSoftStopPosition
     //     || encoder.get() < Constants.ArmConstants.ControlConstants.lowSoftStopPositon; // make

@@ -34,7 +34,6 @@ public class GroundIntakeController extends Command {
     pid = new PIDController(1.0, 0.0, 0.0);
 
     addRequirements(intake);
-  
   }
 
   // Called when the command is initially scheduled.
@@ -44,9 +43,6 @@ public class GroundIntakeController extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-
-   
 
     if (encoder.get() - desiredAngle < 0) { // going down
       motorOutput = 0.3;
@@ -64,7 +60,7 @@ public class GroundIntakeController extends Command {
 
     intake.setPivotSpeed(motorOutput);
     intake.setRollerSpeed(rollerSpeed);
-    
+
     SmartDashboard.putNumber("Intake Pivot Motor Output", motorOutput);
   }
 
