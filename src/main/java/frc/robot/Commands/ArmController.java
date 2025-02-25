@@ -5,9 +5,9 @@
 package frc.robot.Commands;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,6 +23,9 @@ public class ArmController extends Command {
 
   private ArmFeedforward feedForward;
   private PIDController feedback;
+
+  // private ProfiledPIDController feedback;
+  private TrapezoidProfile profile;
 
   private double setpoint;
 
@@ -49,6 +52,8 @@ public class ArmController extends Command {
             Constants.ArmConstants.ControlConstants.kI,
             Constants.ArmConstants.ControlConstants.kD);
 
+    profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(0.5, 1.0));
+
     this.setpoint = setpoint;
 
     this.encoder = arm.getEncoder();
@@ -66,7 +71,7 @@ public class ArmController extends Command {
   @Override
   public void execute() {
 
-    FFVoltage = feedForward.calculate(setpoint + COMOffset, arm.getArmVelocity());
+    FFVoltage = feedForward.calculate(setpoint + COMOffset, 1.0);
 
     PIDVoltage = feedback.calculate(encoder.get(), setpoint);
 
@@ -74,19 +79,15 @@ public class ArmController extends Command {
 
     SmartDashboard.putNumber("Arm FF Voltage", FFVoltage);
     SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);
-    
-    if(encoder.get()<0.02 || encoder.get()>0.6){
+
+    if (encoder.get() < 0.02 || encoder.get() > 0.6) {
       voltage = 0.0;
       arm.setArmSpeed(0);
       arm.setArmMotorIdleMode(IdleMode.kBrake);
     }
-        
-            
-
 
     arm.setArmVoltage(voltage);
     SmartDashboard.putNumber("Arm Total Controller Voltage", voltage);
-    
   }
 
   // Called once the command ends or is interrupted.

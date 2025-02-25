@@ -21,7 +21,7 @@ public class Climber extends SubsystemBase {
             Constants.ClimberConstants.HardwareConstants.motorID,
             MotorType.kBrushless,
             Constants.ClimberConstants.HardwareConstants.motorIsInverted,
-            IdleMode.kBrake);
+            IdleMode.kCoast);
 
     climbEncoder = climbMotor.getEncoder();
   }

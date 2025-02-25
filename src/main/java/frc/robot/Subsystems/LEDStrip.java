@@ -114,24 +114,26 @@ public class LEDStrip extends SubsystemBase {
       blink(
           Constants.LEDConstants.PatternConfig.kAprilTags,
           Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
-   
-    } else if (RobotContainer.m_groundIntake.getDigitalInput().get()) { // algae ground intake/hold
+
+    } else if (!RobotContainer.m_groundIntake.getDigitalInput().get()) { // algae ground intake/hold
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreathe,
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreatheSpeed);
-    } else if (RobotContainer.m_endEffector.getAlgaeDigitalInput().get()) { //algae end effector
-        blink(
-            Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlink,
-            Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlinkSpeed);
 
-    } else if (RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
+    } else if (!RobotContainer.m_endEffector.getAlgaeDigitalInput().get()) { // algae end effector
+      blink(
+          Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlink,
+          Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlinkSpeed);
+
+    } else if (!RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
           Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
-    // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
-    //   blink(
-    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
-    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be coral motor running
+      // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
+      //   blink(
+      //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
+      //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
+      // coral motor running
     } else if (DriverStation.isDisabled()) { // disabled
       scroll(
           Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,

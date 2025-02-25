@@ -28,6 +28,14 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
     SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
+
+    SmartDashboard.putBoolean(
+        "Algae Photoelectric", !RobotContainer.m_endEffector.getAlgaeDigitalInput().get());
+    SmartDashboard.putBoolean(
+        "Coral Photoelectric", !RobotContainer.m_endEffector.getCoralDigitalInput().get());
+    SmartDashboard.putBoolean(
+        "Hold Photoelectric", !RobotContainer.m_groundIntake.getDigitalInput().get());
+
     CommandScheduler.getInstance().run();
   }
 

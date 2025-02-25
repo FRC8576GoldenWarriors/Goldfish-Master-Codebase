@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.ArmController;
 import frc.robot.Commands.EndEffectorIntake;
+import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
@@ -65,13 +66,13 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
-      m_ledStrip = new LEDStrip(Constants.LEDConstants.HardwareConstants.kLEDPort, Constants.LEDConstants.HardwareConstants.kLEDLength);
-
-
-
+      m_ledStrip =
+          new LEDStrip(
+              Constants.LEDConstants.HardwareConstants.kLEDPort,
+              Constants.LEDConstants.HardwareConstants.kLEDLength);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
-      
+
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();
@@ -90,33 +91,32 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    
-
 
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-        // Driver controller
-        driverController.y().onTrue(new ArmController(m_arm, 0.25));
-
-
-
+      // Driver controller
+        driverController.y().onTrue(new ArmController(m_arm, 0.40));
+        driverController.x().onTrue(new ArmController(m_arm, 0.31));
 
       // Operator controller
-      operatorController
-          .y()
-          .whileTrue(
-              new StartEndCommand(
-                  (() -> m_shintake.setRollersSpeed(0.85, 0.80)), //1.0 0.95
-                  (() -> m_shintake.setRollersSpeed(0.0)),
-                  m_shintake)); // Y Shintake Shoot
+      operatorController.y().onTrue(new ArmController(m_arm, 0.40));
+      operatorController.b().onTrue(new ArmController(m_arm, 0.31));
 
-      operatorController
-          .b()
-          .whileTrue(
-              new StartEndCommand(
-                  (() -> m_shintake.setRollersSpeed(-0.4, -0.4)),
-                  (() -> m_shintake.setRollersSpeed(0.0)),
-                  m_shintake)); // B Shintake Intake
+      //   operatorController
+      //       .y()
+      //       .whileTrue(
+      //           new StartEndCommand(
+      //               (() -> m_shintake.setRollersSpeed(0.85, 0.80)), // 1.0 0.95
+      //               (() -> m_shintake.setRollersSpeed(0.0)),
+      //               m_shintake)); // Y Shintake Shoot
+
+      //   operatorController
+      //       .b()
+      //       .whileTrue(
+      //           new StartEndCommand(
+      //               (() -> m_shintake.setRollersSpeed(-0.4, -0.4)),
+      //               (() -> m_shintake.setRollersSpeed(0.0)),
+      //               m_shintake)); // B Shintake Intake
 
       operatorController
           .x()
@@ -159,27 +159,15 @@ public class RobotContainer {
       operatorController
           .rightBumper()
           .whileTrue(
-              new StartEndCommand(
-                  () -> m_groundIntake.setRollerSpeed(-0.3),
-                  () -> m_groundIntake.setRollerSpeed(0),
-                  m_groundIntake));
+              new GroundIntakeController(
+                  m_groundIntake,
+                  0.08,
+                  Constants.GroundIntakeConstants.ControlConstants.groundIntakeInSpeed));
 
       // left arrow pivot down
-      operatorController
-          .povLeft()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_groundIntake.setPivotSpeed(-0.3),
-                  () -> m_groundIntake.setPivotSpeed(0),
-                  m_groundIntake));
+      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.21, 0));
       // right arrow pivot up
-      operatorController
-          .povRight()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_groundIntake.setPivotSpeed(0.3),
-                  () -> m_groundIntake.setPivotSpeed(0),
-                  m_groundIntake));
+      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.09, 0));
 
       // left center button climber down
       operatorController
@@ -215,6 +203,10 @@ public class RobotContainer {
       NamedCommands.registerCommand(
           "Reset Heading",
           new InstantCommand(() -> m_drivetrain.zeroHeading())
+              .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+      NamedCommands.registerCommand(
+          "Reset Shintake",
+          new InstantCommand(() -> m_shintake.setRollersSpeed(0))
               .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
       //   NamedCommands.registerCommand(
