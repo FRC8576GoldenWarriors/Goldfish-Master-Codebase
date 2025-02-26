@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
-import frc.robot.Commands.EndEffectorIntake;
+import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
@@ -113,44 +113,56 @@ public class RobotContainer {
                   (() -> m_shintake.setRollersSpeed(0.0)),
                   m_shintake)); // Y Shintake Shoot
 
+      
       operatorController
-          .b()
-          .onTrue(
+      .b()
+      .onTrue(
+          new SequentialCommandGroup(
               new SequentialCommandGroup(
-                  new SequentialCommandGroup(
-                      new ParallelCommandGroup(
-                              new ArmController(
-                                  m_arm, Constants.ArmConstants.ControlConstants.A1Position),
-                              new StartEndCommand(
-                                  () ->
-                                      m_endEffector.setSpeed(
-                                          Constants.EndEffectorConstants.ControlConstants
-                                              .pincherInSpeed),
-                                  () -> m_endEffector.setSpeed(0),
-                                  m_endEffector))
-                          .until(() -> m_endEffector.getAlgaeDetected())),
                   new ParallelCommandGroup(
-                      new SequentialCommandGroup(
                           new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.transportPosition),
+                              m_arm, Constants.ArmConstants.ControlConstants.A1Position),
+                          new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
+                      .until(() -> m_endEffector.getAlgaeDetected()),
+                  new ParallelCommandGroup(
+                          new SequentialCommandGroup(
+                                  new ArmController(
+                                          m_arm,
+                                          Constants.ArmConstants.ControlConstants
+                                              .handoffPosition)
+                                      .until(
+                                          () ->
+                                              (Math.abs(
+                                                      m_arm.getEncoder().get()
+                                                          - Constants.ArmConstants
+                                                              .ControlConstants.handoffPosition)
+                                                  < 0.005)))
+                              .andThen(
+                                  new ParallelCommandGroup(
+                                      new ArmController(
+                                          m_arm,
+                                          Constants.ArmConstants.ControlConstants
+                                              .handoffPosition),
+                                              new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))),
                           new StartEndCommand(
-                              () -> m_shintake.setRollersSpeed(0.4),
+                              () -> m_shintake.setRollersSpeed(0.1),
                               () -> m_shintake.setRollersSpeed(0),
-                              m_shintake)))));
+                              m_shintake))
+                      .until(() -> m_groundIntake.getDigitalInputValue()))));
 
       operatorController.y().onTrue(new ArmController(m_arm, 0.31));
 
       operatorController
           .x()
           .whileTrue(
-              new EndEffectorIntake(
+              new EndEffectorController(
                   m_endEffector,
                   Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)); // X Pincher out
 
       operatorController
           .a()
           .whileTrue(
-              new EndEffectorIntake(
+              new EndEffectorController(
                   m_endEffector,
                   Constants.EndEffectorConstants.ControlConstants.pincherOutSpeed)); // A Pincher in
 

@@ -312,10 +312,10 @@ public class Constants {
       public static final double kI = 0;
       public static final double kD = 0;
 
-      public static final double startPosition = 0;
-      public static final double A1Position = 0.3;
-      public static final double A2Position = 0.45;
-      public static final double transportPosition = 0.65;
+      public static final double storedPosition = 0.03;
+      public static final double A1Position = 0.31;
+      public static final double A2Position = 0.40;
+      public static final double handoffPosition = 0.70;
 
       public static final double lowSoftStopPositon = -0.05;
       public static final double highSoftStopPosition = 0.75;

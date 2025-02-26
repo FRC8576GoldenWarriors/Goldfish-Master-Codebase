@@ -7,19 +7,19 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.EndEffector;
 
-public class EndEffectorIntake extends Command {
+public class EndEffectorController extends Command {
 
   private EndEffector algaePincher;
 
   private boolean isFinished;
   private double speed;
 
-  public EndEffectorIntake(EndEffector algaePincher, double speed) {
-    this.algaePincher = algaePincher;
+  public EndEffectorController(EndEffector endEffector, double speed) {
+    this.algaePincher = endEffector;
 
     isFinished = false;
     this.speed = speed;
-    addRequirements(algaePincher);
+    addRequirements(endEffector);
   }
 
   @Override
