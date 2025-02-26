@@ -173,15 +173,15 @@ public class AlignToAprilTag extends Command {
   public void end(boolean interrupted) {
     // drivetrain.setAutoPose(true);
     drivetrain.drive(new Translation2d(0, 0), 0, false, true);
-    //drivetrain.stopModules();
+    // drivetrain.stopModules();
   }
 
   @Override
   public boolean isFinished() {
-    //drivetrain.stopModules();
+    // drivetrain.stopModules();
 
     if (!aprilTagStatsLimelight.hasValidTargets()
-    && (rotationPID.atSetpoint() && forwardPID.atSetpoint())) {
+        && (rotationPID.atSetpoint() && forwardPID.atSetpoint())) {
       drivetrain.stopModules();
       return true;
     }
