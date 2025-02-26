@@ -27,19 +27,12 @@ public class EndEffectorController extends Command {
 
   @Override
   public void execute() {
-    // if (!algaePincher.hasAlgae()) {
-    //   algaePincher.setSpeed(Constants.EndEffectorConstants.pincherInSpeed);
-    // } else {
-    //   isFinished = true;
-    // }
     algaePincher.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-    // new WaitCommand(Constants.EndEffectorConstants.pincherInRunExtension);
 
     algaePincher.setSpeed(0.0);
   }

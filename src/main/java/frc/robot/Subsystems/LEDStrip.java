@@ -123,10 +123,10 @@ public class LEDStrip extends SubsystemBase {
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreathe,
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreatheSpeed);
 
-    } else if (RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
-      breathe(
-          Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
-          Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
+    // } else if (RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
+    //   breathe(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
     } else if (RobotContainer.m_endEffector.motorRunning()) {
       blink(
           Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,

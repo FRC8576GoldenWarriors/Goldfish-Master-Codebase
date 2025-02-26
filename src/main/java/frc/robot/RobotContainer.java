@@ -113,42 +113,46 @@ public class RobotContainer {
                   (() -> m_shintake.setRollersSpeed(0.0)),
                   m_shintake)); // Y Shintake Shoot
 
-      
       operatorController
-      .b()
-      .onTrue(
-          new SequentialCommandGroup(
+          .b()
+          .onTrue(
               new SequentialCommandGroup(
-                  new ParallelCommandGroup(
-                          new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.A1Position),
-                          new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
-                      .until(() -> m_endEffector.getAlgaeDetected()),
-                  new ParallelCommandGroup(
-                          new SequentialCommandGroup(
-                                  new ArmController(
-                                          m_arm,
-                                          Constants.ArmConstants.ControlConstants
-                                              .handoffPosition)
-                                      .until(
-                                          () ->
-                                              (Math.abs(
-                                                      m_arm.getEncoder().get()
-                                                          - Constants.ArmConstants
-                                                              .ControlConstants.handoffPosition)
-                                                  < 0.005)))
-                              .andThen(
-                                  new ParallelCommandGroup(
+                  new SequentialCommandGroup(
+                      new ParallelCommandGroup(
+                              new ArmController(
+                                  m_arm, Constants.ArmConstants.ControlConstants.A1Position),
+                              new EndEffectorController(
+                                  m_endEffector,
+                                  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
+                          .until(() -> m_endEffector.getAlgaeDetected()),
+                      new ParallelCommandGroup(
+                              new SequentialCommandGroup(
                                       new ArmController(
-                                          m_arm,
-                                          Constants.ArmConstants.ControlConstants
-                                              .handoffPosition),
-                                              new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))),
-                          new StartEndCommand(
-                              () -> m_shintake.setRollersSpeed(0.1),
-                              () -> m_shintake.setRollersSpeed(0),
-                              m_shintake))
-                      .until(() -> m_groundIntake.getDigitalInputValue()))));
+                                              m_arm,
+                                              Constants.ArmConstants.ControlConstants
+                                                  .handoffPosition)
+                                          .until(
+                                              () ->
+                                                  (Math.abs(
+                                                          m_arm.getEncoder().get()
+                                                              - Constants.ArmConstants
+                                                                  .ControlConstants.handoffPosition)
+                                                      < 0.005)))
+                                  .andThen(
+                                      new ParallelCommandGroup(
+                                          new ArmController(
+                                              m_arm,
+                                              Constants.ArmConstants.ControlConstants
+                                                  .handoffPosition),
+                                          new EndEffectorController(
+                                              m_endEffector,
+                                              Constants.EndEffectorConstants.ControlConstants
+                                                  .pincherInSpeed))),
+                              new StartEndCommand(
+                                  () -> m_shintake.setRollersSpeed(0.1),
+                                  () -> m_shintake.setRollersSpeed(0),
+                                  m_shintake))
+                          .until(() -> m_groundIntake.getDigitalInputValue()))));
 
       operatorController.y().onTrue(new ArmController(m_arm, 0.31));
 

@@ -284,7 +284,7 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -0.45; // -0.25
+      public static final double pincherInSpeed = -0.65; // -0.25
       public static final double pincherOutSpeed = 1.00;
 
       public static final double pincherInRunExtension = 0.25;
@@ -297,28 +297,31 @@ public class Constants {
 
       public static final int armMotorID = 21;
       public static final int armEncoderDIO = 3;
-
-      public static final boolean motorIsInverted = false;
     }
 
     public static final class ControlConstants {
 
-      public static final double kS = 0.1;
-      public static final double kG = 0.1;
-      public static final double kV = 0.1;
-      public static final double kA = 0.1;
+      public static final boolean motorIsInverted = true;
 
-      public static final double kP = 0.1;
-      public static final double kI = 0;
-      public static final double kD = 0;
+      public static final double kS = 0.003;
+      public static final double kG = 0.2500;
+      public static final double kV = 0.1811;
+      public static final double kA = 0;
 
-      public static final double storedPosition = 0.03;
+      public static final double kP = 20.0;
+      public static final double kI = 0.0;
+      public static final double kD = 0.1;
+
+      public static final double retractedPosition = 0.01;
       public static final double A1Position = 0.31;
       public static final double A2Position = 0.40;
-      public static final double handoffPosition = 0.70;
+      public static final double handoffPosition = 0.77;
 
-      public static final double lowSoftStopPositon = -0.05;
+      public static final double lowSoftStopPositon = 0.0;
       public static final double highSoftStopPosition = 0.75;
+
+      public static final double armEncoderOffset = -0.441;
+      public static final boolean armEncoderIsInverted = true;
     }
   }
 
@@ -330,26 +333,32 @@ public class Constants {
       public static final boolean rollerMotorIsInverted = false;
 
       public static final int pivotMotorID = 31;
-      public static final boolean pivotMotorIsInverted = false;
+      public static final boolean pivotMotorIsInverted = true;
 
       public static final int pivotEncoderDIO = 4;
-      public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = 0.0;
 
       public static final int digitalInputDIO = 5;
     }
 
     public static class ControlConstants {
       public static final double groundIntakeUpPosition = 0.0;
-      public static final double groundIntakeDownPosition = 0.25;
+      public static final double groundIntakeDownPosition = 0.15;
 
       public static final double groundIntakeInSpeed = 0.5;
       public static final double groundIntakeOutSpeed = -0.5;
 
+      public static final double pivotEncoderFullRange = 1.0;
+      public static final double pivotEncoderZero = 0.99;
+      public static final boolean pivotEncoderIsInverted = true;
+
+      public static final double kP = 3.2;
+      public static final double kI = 0;
+      public static final double kD = 0;
+
       public static final double kS = 0;
-      public static final double kG = 0;
-      public static final double kV = 0;
       public static final double kA = 0;
+      public static final double kG = 0.2;
+      public static final double kV = 0;
     }
   }
 
@@ -370,19 +379,19 @@ public class Constants {
   public static final class ClimberConstants {
     public static final class HardwareConstants {
       public static final int motorID = 40;
-      public static final boolean motorIsInverted = false;
+      public static final boolean motorIsInverted = true;
     }
 
     public static final class ControlConstants {
       public static final double windingSpeed = 0.5;
       public static final double unwindingSpeed = -0.5;
-      public static final double brakeVoltage = 0;
+
+      public static final double climberUpPosition = 42.0;
+
       public static final double kS = 0;
       public static final double kG = 0;
       public static final double kV = 0;
       public static final double kA = 0;
-      public static final PIDController windPID = new PIDController(0, 0, 0);
-      public static final PIDController unwindPID = new PIDController(0, 0, -0);
       public static final ElevatorFeedforward climbFeedforward =
           new ElevatorFeedforward(kS, kG, kV, kA);
     }
@@ -390,8 +399,8 @@ public class Constants {
 
   public static final class LEDConstants {
     public static final class HardwareConstants {
-      public static final int kLEDPort = 0;
-      public static final int kLEDLength = 100;
+      public static final int kLEDPort = 1;
+      public static final int kLEDLength = 25;
     }
 
     public static final class PatternConfig {

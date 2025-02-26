@@ -40,8 +40,8 @@ public class GroundIntake extends SubsystemBase {
     encoder =
         new DutyCycleEncoder(
             Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderDIO,
-            Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderFullRange,
-            Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderZero);
+            Constants.GroundIntakeConstants.ControlConstants.pivotEncoderFullRange,
+            Constants.GroundIntakeConstants.ControlConstants.pivotEncoderZero);
 
     algaeSensor =
         new DigitalInput(Constants.GroundIntakeConstants.HardwareConstants.digitalInputDIO);

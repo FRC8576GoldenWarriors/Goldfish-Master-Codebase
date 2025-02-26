@@ -1,20 +1,34 @@
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.controller.BangBangController;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Climber;
 
 public class Climb extends Command {
-  private final Climber climbMech;
-  private boolean isClimbUp;
-  private double FFVal;
-  private double PIDVal;
+  private final Climber climber;
 
-  public Climb(Climber climbMech, boolean isClimbUp) {
-    this.climbMech = climbMech;
-    this.isClimbUp = isClimbUp;
-    addRequirements(climbMech);
+  private final ElevatorFeedforward feedforward;
+
+  private final BangBangController bangBangController;
+
+  private double bangBangVoltage;
+  private double FFVoltage;
+  private double outputVoltage;
+
+  public Climb(Climber climber) {
+    this.climber = climber;
+
+    this.feedforward =
+        new ElevatorFeedforward(
+            Constants.ClimberConstants.ControlConstants.kS,
+            Constants.ClimberConstants.ControlConstants.kG,
+            Constants.ClimberConstants.ControlConstants.kV);
+
+    this.bangBangController = new BangBangController();
+
+    addRequirements(climber);
   }
 
   @Override
@@ -22,37 +36,21 @@ public class Climb extends Command {
 
   @Override
   public void execute() {
-    if (isClimbUp) {
+    bangBangVoltage =
+        bangBangController.calculate(
+            climber.getEncoderPosition(),
+            Constants.ClimberConstants.ControlConstants.climberUpPosition);
 
-      PIDVal =
-          Constants.ClimberConstants.ControlConstants.windPID.calculate(
-              Constants.ClimberConstants.ControlConstants.windingSpeed);
-      SmartDashboard.putNumber("Climb PID", PIDVal);
+    FFVoltage = feedforward.calculate(0);
 
-      FFVal =
-          Constants.ClimberConstants.ControlConstants.climbFeedforward.calculate(
-              Constants.ClimberConstants.ControlConstants.unwindingSpeed);
-      SmartDashboard.putNumber("Climb FeedForward", FFVal);
-      climbMech.setClimbingDirection(true);
-      climbMech.windRope(PIDVal + FFVal);
+    outputVoltage = bangBangVoltage + FFVoltage;
 
-    } else {
-      PIDVal =
-          Constants.ClimberConstants.ControlConstants.unwindPID.calculate(
-              Constants.ClimberConstants.ControlConstants.unwindingSpeed);
-      SmartDashboard.putNumber("Climb PID", FFVal);
-
-      FFVal =
-          Constants.ClimberConstants.ControlConstants.climbFeedforward.calculate(
-              Constants.ClimberConstants.ControlConstants.unwindingSpeed);
-      SmartDashboard.putNumber("Climb FeedForward", FFVal);
-      climbMech.windRope(PIDVal + FFVal);
-    }
+    climber.setMotorVoltage(outputVoltage);
   }
 
   @Override
   public void end(boolean interrupted) {
-    climbMech.stop();
+    climber.setMotorVoltage(0);
   }
 
   @Override
