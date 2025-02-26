@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": -0.5993852459016393,
-        "y": 8.64938524590164
+        "x": 7.254000000000001,
+        "y": 6.150499999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.40061475409836095,
-        "y": 8.64938524590164
+        "x": 6.230250000000002,
+        "y": 6.101750000000001
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": -0.5993852459016393,
-        "y": 8.64938524590164
+        "x": 5.78175,
+        "y": 3.966499999999999
       },
       "prevControl": {
-        "x": -1.5993852459016398,
-        "y": 8.64938524590164
+        "x": 7.107750000000001,
+        "y": 4.05425
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Coral RP",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

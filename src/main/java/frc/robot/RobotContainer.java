@@ -120,12 +120,13 @@ public class RobotContainer {
                                   m_endEffector))
                           .until(() -> m_endEffector.getAlgaeDetected())),
                   new ParallelCommandGroup(
-                      new SequentialCommandGroup(new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.transportPosition),
-                      new StartEndCommand(
-                          () -> m_shintake.setRollersSpeed(0.4),
-                          () -> m_shintake.setRollersSpeed(0),
-                          m_shintake)))));
+                      new SequentialCommandGroup(
+                          new ArmController(
+                              m_arm, Constants.ArmConstants.ControlConstants.transportPosition),
+                          new StartEndCommand(
+                              () -> m_shintake.setRollersSpeed(0.4),
+                              () -> m_shintake.setRollersSpeed(0),
+                              m_shintake)))));
 
       operatorController.y().onTrue(new ArmController(m_arm, 0.31));
 
