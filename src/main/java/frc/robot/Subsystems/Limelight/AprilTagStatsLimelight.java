@@ -18,9 +18,6 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   private final String networkTableKey;
   private final String limelightName;
 
-  // private AprilTagFieldLayout m_layout =
-  // AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
-
   public AprilTagStatsLimelight(String networkTableKey) {
     this.drivetrain = Drivetrain.getInstance();
     this.networkTableKey = networkTableKey;
