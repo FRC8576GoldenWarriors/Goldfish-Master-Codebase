@@ -31,88 +31,88 @@ import frc.robot.Constants.SwerveConstants;
 public class Drivetrain extends SubsystemBase {
 
   // comp
-  private SwerveModule leftFront =
-      new SwerveModule(
-          Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
-          Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
-          Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED,
-          Constants.SwerveConstants.LEFT_FRONT_TURN_INVERTED, // true
-          Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
-          Constants.SwerveConstants.LEFT_FRONT_OFFSET);
-
-  private SwerveModule rightFront =
-      new SwerveModule(
-          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
-          Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
-          Constants.SwerveConstants
-              .RIGHT_FRONT_DRIVE_INVERTED, // used to be true, Might have to change back - Om:
-          // 2/14/24
-          Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
-          Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
-          Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
-
-  private SwerveModule leftBack =
-      new SwerveModule(
-          Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
-          Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-          Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED,
-          Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
-          Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
-          Constants.SwerveConstants.LEFT_BACK_OFFSET);
-
-  private SwerveModule rightBack =
-      new SwerveModule(
-          Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
-          Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
-          Constants.SwerveConstants
-              .RIGHT_BACK_DRIVE_INVERTED, // used to be true, Might have to change back - Om:
-          // 2/14/24
-          Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
-          Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
-          Constants.SwerveConstants.RIGHT_BACK_OFFSET);
-
-  // practice
-  //     private SwerveModule leftFront =
+  // private SwerveModule leftFront =
   //     new SwerveModule(
   //         Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
   //         Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
-  //         Constants.SwerveConstants.PRACTICE_LEFT_FRONT_DRIVE_INVERTED,
-  //         Constants.SwerveConstants.PRACTICE_LEFT_FRONT_TURN_INVERTED, // true
+  //         Constants.SwerveConstants.LEFT_FRONT_DRIVE_INVERTED,
+  //         Constants.SwerveConstants.LEFT_FRONT_TURN_INVERTED, // true
   //         Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
-  //         Constants.SwerveConstants.PRACTICE_LEFT_FRONT_OFFSET);
+  //         Constants.SwerveConstants.LEFT_FRONT_OFFSET);
 
   // private SwerveModule rightFront =
   //     new SwerveModule(
   //         Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
   //         Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
   //         Constants.SwerveConstants
-  //             .PRACTICE_RIGHT_FRONT_DRIVE_INVERTED, // used to be true, Might have to change back
-  // - Om:
+  //             .RIGHT_FRONT_DRIVE_INVERTED, // used to be true, Might have to change back - Om:
   //         // 2/14/24
-  //         Constants.SwerveConstants.PRACTICE_RIGHT_FRONT_TURN_INVERTED,
+  //         Constants.SwerveConstants.RIGHT_FRONT_TURN_INVERTED,
   //         Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
-  //         Constants.SwerveConstants.PRACTICE_RIGHT_FRONT_OFFSET);
+  //         Constants.SwerveConstants.RIGHT_FRONT_OFFSET);
 
   // private SwerveModule leftBack =
   //     new SwerveModule(
   //         Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
   //         Constants.SwerveConstants.LEFT_BACK_TURN_ID,
-  //         Constants.SwerveConstants.PRACTICE_LEFT_BACK_DRIVE_INVERTED,
-  //         Constants.SwerveConstants.PRACTICE_LEFT_BACK_TURN_INVERTED,
+  //         Constants.SwerveConstants.LEFT_BACK_DRIVE_INVERTED,
+  //         Constants.SwerveConstants.LEFT_BACK_TURN_INVERTED,
   //         Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
-  //         Constants.SwerveConstants.PRACTICE_LEFT_BACK_OFFSET);
+  //         Constants.SwerveConstants.LEFT_BACK_OFFSET);
 
   // private SwerveModule rightBack =
   //     new SwerveModule(
   //         Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
   //         Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
   //         Constants.SwerveConstants
-  //             .PRACTICE_RIGHT_BACK_DRIVE_INVERTED, // used to be true, Might have to change back
-  // - Om:
+  //             .RIGHT_BACK_DRIVE_INVERTED, // used to be true, Might have to change back - Om:
   //         // 2/14/24
-  //         Constants.SwerveConstants.PRACTICE_RIGHT_BACK_TURN_INVERTED,
+  //         Constants.SwerveConstants.RIGHT_BACK_TURN_INVERTED,
   //         Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
-  //         Constants.SwerveConstants.PRACTICE_RIGHT_BACK_OFFSET);
+  //         Constants.SwerveConstants.RIGHT_BACK_OFFSET);
+
+  // practice
+  private SwerveModule leftFront =
+      new SwerveModule(
+          Constants.SwerveConstants.LEFT_FRONT_DRIVE_ID,
+          Constants.SwerveConstants.LEFT_FRONT_TURN_ID,
+          Constants.SwerveConstants.PRACTICE_LEFT_FRONT_DRIVE_INVERTED,
+          Constants.SwerveConstants.PRACTICE_LEFT_FRONT_TURN_INVERTED, // true
+          Constants.SwerveConstants.LEFT_FRONT_CANCODER_ID,
+          Constants.SwerveConstants.PRACTICE_LEFT_FRONT_OFFSET);
+
+  private SwerveModule rightFront =
+      new SwerveModule(
+          Constants.SwerveConstants.RIGHT_FRONT_DRIVE_ID,
+          Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
+          Constants.SwerveConstants
+              .PRACTICE_RIGHT_FRONT_DRIVE_INVERTED, // used to be true, Might have to change back -
+          // Om:
+          // 2/14/24
+          Constants.SwerveConstants.PRACTICE_RIGHT_FRONT_TURN_INVERTED,
+          Constants.SwerveConstants.RIGHT_FRONT_CANCODER_ID,
+          Constants.SwerveConstants.PRACTICE_RIGHT_FRONT_OFFSET);
+
+  private SwerveModule leftBack =
+      new SwerveModule(
+          Constants.SwerveConstants.LEFT_BACK_DRIVE_ID,
+          Constants.SwerveConstants.LEFT_BACK_TURN_ID,
+          Constants.SwerveConstants.PRACTICE_LEFT_BACK_DRIVE_INVERTED,
+          Constants.SwerveConstants.PRACTICE_LEFT_BACK_TURN_INVERTED,
+          Constants.SwerveConstants.LEFT_BACK_CANCODER_ID,
+          Constants.SwerveConstants.PRACTICE_LEFT_BACK_OFFSET);
+
+  private SwerveModule rightBack =
+      new SwerveModule(
+          Constants.SwerveConstants.RIGHT_BACK_DRIVE_ID,
+          Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
+          Constants.SwerveConstants
+              .PRACTICE_RIGHT_BACK_DRIVE_INVERTED, // used to be true, Might have to change back -
+          // Om:
+          // 2/14/24
+          Constants.SwerveConstants.PRACTICE_RIGHT_BACK_TURN_INVERTED,
+          Constants.SwerveConstants.RIGHT_BACK_CANCODER_ID,
+          Constants.SwerveConstants.PRACTICE_RIGHT_BACK_OFFSET);
 
   private SlewRateLimiter frontLimiter =
       new SlewRateLimiter(Constants.SwerveConstants.TELE_DRIVE_MAX_ACCELERATION);

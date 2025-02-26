@@ -7,13 +7,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Commands.ArmController;
+import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.EndEffectorIntake;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
@@ -22,7 +20,7 @@ import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
-import frc.robot.Subsystems.LEDStrip;
+import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
 import frc.robot.Subsystems.Shintake;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
 import frc.robot.Subsystems.Simulation.SimConstants;
@@ -52,7 +50,9 @@ public class RobotContainer {
   public static Arm m_arm;
   public static GroundIntake m_groundIntake;
   public static Climber m_climber;
-  public static LEDStrip m_ledStrip;
+
+  public static AprilTagStatsLimelight reefTagStatsLimelight;
+  public static AprilTagStatsLimelight bargeTagStatsLimelight;
 
   public static DrivetrainSim m_drivetrainSim;
   public static SimEndEffector m_SimEndEffector;
@@ -67,13 +67,17 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
-      m_ledStrip =
-          new LEDStrip(
-              Constants.LEDConstants.HardwareConstants.kLEDPort,
-              Constants.LEDConstants.HardwareConstants.kLEDLength);
+
+      reefTagStatsLimelight =
+          new AprilTagStatsLimelight(
+              Constants.VisionConstants.LimelightConstants.ReefLimelightConstants
+                  .REEF_NETWORKTABLE_KEY);
+      bargeTagStatsLimelight =
+          new AprilTagStatsLimelight(
+              Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
+                  .BARGE_NETWORKTABLE_KEY);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
-
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();
@@ -92,42 +96,27 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    // Driver controller
 
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
-      // Driver controller
-      // driverController.y().onTrue(new ArmController(m_arm, 0.40));
-      // driverController.b().onTrue(new ArmController(m_arm, 0.31));
 
       // Operator controller
-      // operatorController.b().onTrue(Macros.GET_A1_DEALGAE_MACRO(m_arm, m_shintake,
-      // m_endEffector));
+      operatorController
+          .y()
+          .whileTrue(
+              new StartEndCommand(
+                  (() -> m_shintake.setRollersSpeed(0.85, 0.80)), // 1.0 0.95
+                  (() -> m_shintake.setRollersSpeed(0.0)),
+                  m_shintake)); // Y Shintake Shoot
 
       operatorController
           .b()
-          .onTrue(
-              new SequentialCommandGroup(
-                  new SequentialCommandGroup(
-                      new ParallelCommandGroup(
-                              new ArmController(
-                                  m_arm, Constants.ArmConstants.ControlConstants.A1Position),
-                              new StartEndCommand(
-                                  () ->
-                                      m_endEffector.setSpeed(
-                                          Constants.EndEffectorConstants.ControlConstants
-                                              .pincherInSpeed),
-                                  () -> m_endEffector.setSpeed(0),
-                                  m_endEffector))
-                          .until(() -> m_endEffector.getAlgaeDetected())),
-                  new ParallelCommandGroup(
-                      new SequentialCommandGroup(new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.transportPosition),
-                      new StartEndCommand(
-                          () -> m_shintake.setRollersSpeed(0.4),
-                          () -> m_shintake.setRollersSpeed(0),
-                          m_shintake)))));
-
-      operatorController.y().onTrue(new ArmController(m_arm, 0.31));
+          .whileTrue(
+              new StartEndCommand(
+                  (() -> m_shintake.setRollersSpeed(-0.4, -0.4)),
+                  (() -> m_shintake.setRollersSpeed(0.0)),
+                  m_shintake)); // B Shintake Intake
 
       operatorController
           .x()
@@ -143,55 +132,81 @@ public class RobotContainer {
                   m_endEffector,
                   Constants.EndEffectorConstants.ControlConstants.pincherOutSpeed)); // A Pincher in
 
-      //   operatorController
-      //       .povUp()
-      //       .whileTrue(
-      //           new StartEndCommand(
-      //               () -> m_arm.setArmSpeed(0.3),
-      //               () -> m_arm.setArmSpeed(0),
-      //               m_arm)); // Up arrow arm rotates to front
-      //   operatorController
-      //       .povDown()
-      //       .whileTrue(
-      //           new StartEndCommand(
-      //               () -> m_arm.setArmSpeed(-0.3),
-      //               () -> m_arm.setArmSpeed(0),
-      //               m_arm)); // Down arrow arm rotates to back
+      operatorController
+          .povUp()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_arm.setArmSpeed(-0.3),
+                  () -> m_arm.setArmSpeed(0),
+                  m_arm)); // Up arrow arm rotates to front
+      operatorController
+          .povDown()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_arm.setArmSpeed(0.3),
+                  () -> m_arm.setArmSpeed(0),
+                  m_arm)); // Down arrow arm rotates to back
 
-      //   // left bumper eject intake
-      //   operatorController
-      //       .leftBumper()
-      //       .whileTrue(
-      //           new StartEndCommand(
-      //               () -> m_groundIntake.setRollerSpeed(0.3),
-      //               () -> m_groundIntake.setRollerSpeed(0),
-      //               m_groundIntake));
-      //   // right bumper intake in
+      // left bumper eject intake
+      operatorController
+          .leftBumper()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_groundIntake.setRollerSpeed(0.3),
+                  () -> m_groundIntake.setRollerSpeed(0),
+                  m_groundIntake));
+      // right bumper intake in
+      operatorController
+          .rightBumper()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_groundIntake.setRollerSpeed(-0.3),
+                  () -> m_groundIntake.setRollerSpeed(0),
+                  m_groundIntake));
 
-      //   // left arrow pivot down
-      //   operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.21,
-      // -0.3));
-      //   // right arrow pivot up
-      //   operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.09,
-      // 0));
+      // left arrow pivot down
+      operatorController
+          .povLeft()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_groundIntake.setPivotSpeed(-0.3),
+                  () -> m_groundIntake.setPivotSpeed(0),
+                  m_groundIntake));
+      // right arrow pivot up
+      operatorController
+          .povRight()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_groundIntake.setPivotSpeed(0.3),
+                  () -> m_groundIntake.setPivotSpeed(0),
+                  m_groundIntake));
 
-      //   // left center button climber down
-      //   operatorController
-      //       .back()
-      //       .whileTrue(
-      //           new StartEndCommand(
-      //               () -> m_climber.setMotorSpeed(-0.9),
-      //               () -> m_climber.setMotorSpeed(0.0),
-      //               m_climber));
+      // left center button climber down
+      operatorController
+          .back()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_climber.setMotorSpeed(-0.9),
+                  () -> m_climber.setMotorSpeed(0.0),
+                  m_climber));
 
-      //   // right center button climb up
-      //   operatorController
-      //       .start()
-      //       .whileTrue(
-      //           new StartEndCommand(
-      //               () -> m_climber.setMotorSpeed(0.9),
-      //               () -> m_climber.setMotorSpeed(0.0),
-      //               m_climber));
+      // right center button climb up
+      operatorController
+          .start()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_climber.setMotorSpeed(0.9),
+                  () -> m_climber.setMotorSpeed(0.0),
+                  m_climber));
+
+      // up arrow align reef
+      // driverController.povUp().whileTrue(new AlignToAprilTag(reefTagStatsLimelight,
+      // m_drivetrain));
+
+      // down arrow align barge
+      driverController
+          .rightBumper()
+          .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
     }
   }
 
@@ -209,10 +224,6 @@ public class RobotContainer {
       NamedCommands.registerCommand(
           "Reset Heading",
           new InstantCommand(() -> m_drivetrain.zeroHeading())
-              .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
-      NamedCommands.registerCommand(
-          "Reset Shintake",
-          new InstantCommand(() -> m_shintake.setRollersSpeed(0))
               .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
       //   NamedCommands.registerCommand(

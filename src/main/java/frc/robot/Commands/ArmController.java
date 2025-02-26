@@ -4,12 +4,9 @@
 
 package frc.robot.Commands;
 
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
@@ -17,28 +14,19 @@ import frc.robot.Subsystems.Arm;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ArmController extends Command {
 
-  private Arm arm;
+  private Arm algaeArm;
 
   private DutyCycleEncoder encoder;
 
   private ArmFeedforward feedForward;
   private PIDController feedback;
 
-  // private ProfiledPIDController feedback;
-  private TrapezoidProfile profile;
-
   private double setpoint;
-
-  private double FFVoltage;
-  private double PIDVoltage;
   private double voltage;
 
-  private double COMOffset;
-  private boolean isFinished;
+  public ArmController(Arm algaeArm, double setpoint) {
 
-  public ArmController(Arm arm, double setpoint) {
-
-    this.arm = arm;
+    this.algaeArm = algaeArm;
 
     this.feedForward =
         new ArmFeedforward(
@@ -53,17 +41,11 @@ public class ArmController extends Command {
             Constants.ArmConstants.ControlConstants.kI,
             Constants.ArmConstants.ControlConstants.kD);
 
-    profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(0.5, 1.0));
-
     this.setpoint = setpoint;
 
-    this.encoder = arm.getEncoder();
+    this.encoder = algaeArm.getEncoder();
 
-    this.COMOffset = 0.013194;
-
-    isFinished = true;
-
-    addRequirements(arm);
+    addRequirements(algaeArm);
   }
 
   // Called when the command is initially scheduled.
@@ -74,39 +56,23 @@ public class ArmController extends Command {
   @Override
   public void execute() {
 
-    FFVoltage = feedForward.calculate(setpoint + COMOffset, 1.0);
+    voltage =
+        feedForward.calculate(encoder.get(), algaeArm.getArmVelocity())
+            + feedback.calculate(encoder.get(), setpoint);
 
-    PIDVoltage = feedback.calculate(encoder.get(), setpoint);
-
-    voltage = FFVoltage + PIDVoltage;
-
-    SmartDashboard.putNumber("Arm FF Voltage", FFVoltage);
-    SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);
-
-    if (encoder.get() < 0.02 || encoder.get() > 0.6) {
-      voltage = 0.0;
-      arm.setArmSpeed(0);
-      arm.setArmMotorIdleMode(IdleMode.kBrake);
-    }
-
-    arm.setArmVoltage(voltage);
-    SmartDashboard.putNumber("Arm Total Controller Voltage", voltage);
-
-    if (Math.abs(encoder.get() - setpoint) < 0.02) {
-      isFinished = true;
-    }
+    algaeArm.setArmVoltage(voltage);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setArmVoltage(0);
+    algaeArm.setArmVoltage(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isFinished;
+    return false;
 
     // return encoder.get() > Constants.ArmConstants.ControlConstants.highSoftStopPosition
     //     || encoder.get() < Constants.ArmConstants.ControlConstants.lowSoftStopPositon; // make
