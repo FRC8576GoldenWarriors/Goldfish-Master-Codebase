@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,16 +15,19 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
   private final Drivetrain drivetrain;
   private final NetworkTable table;
+  private final String networkTableKey;
+  private final String limelightName;
 
   // private AprilTagFieldLayout m_layout =
   // AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
 
-  public AprilTagStatsLimelight() {
+  public AprilTagStatsLimelight(String networkTableKey) {
     this.drivetrain = Drivetrain.getInstance();
+    this.networkTableKey = networkTableKey;
+    this.limelightName = networkTableKey.substring(networkTableKey.indexOf("-") + 1);
     this.table =
         NetworkTableInstance.getDefault()
-            .getTable(
-                Constants.VisionConstants.limelightNetworkTableKey.LIMELIGHT_NETWORKTABLE_KEY);
+            .getTable(networkTableKey); // "limelight-reef"; // "limelight-processor";
     // configureAliance();
   }
 
@@ -34,10 +38,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     double id = getID();
 
     if (hasValidTargets()) {
-      SmartDashboard.putBoolean("Has Targets", true);
+      SmartDashboard.putBoolean(limelightName + " Has Targets", true);
       updateRobotPoseInSmartDashboard();
     } else {
-      SmartDashboard.putBoolean("Has Targets", false);
+      SmartDashboard.putBoolean(limelightName + " Has Targets", false);
     }
 
     updateValues(x, y, area, id);
@@ -52,7 +56,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   public boolean hasValidTargets() {
-    return getEntryValue("tv") == 1;
+    return getEntryValue("tv") == 1.0;
   }
 
   public double getArea() {
@@ -86,10 +90,10 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   private void updateValues(double x, double y, double area, double id) {
-    SmartDashboard.putNumber("Limelight X", x);
-    SmartDashboard.putNumber("Limelight Y", y);
-    SmartDashboard.putNumber("Limelight Area", area);
-    SmartDashboard.putNumber("Limelight ID", id);
+    SmartDashboard.putNumber(limelightName + " Limelight X", x);
+    SmartDashboard.putNumber(limelightName + " Limelight Y", y);
+    SmartDashboard.putNumber(limelightName + " Limelight Area", area);
+    SmartDashboard.putNumber(limelightName + " Limelight ID", id);
   }
 
   public double getPitch() {
@@ -107,9 +111,21 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     else return Constants.VisionConstants.aprilTagConstants.heights.CORAL_STATION_TAG_HEIGHT;
   }
 
+  public boolean isBargeLimelight() {
+    return networkTableKey.equals("limelight-barge");
+  }
+
+  public boolean isBlueAlliance() {
+    DriverStation.Alliance blueAlliane = DriverStation.Alliance.Blue;
+    var currentAlliance = DriverStation.getAlliance();
+
+    if (currentAlliance.isEmpty()) return false;
+    else return blueAlliane.equals(currentAlliance.get());
+  }
+
   private void updateRobotPoseInSmartDashboard() {
     boolean hasTarget = hasValidTargets();
-    SmartDashboard.putBoolean("Limelight/Has Target", hasTarget);
+    SmartDashboard.putBoolean(limelightName + " Limelight/Has Target", hasTarget);
 
     if (hasTarget) {
       Pose3d pose = getBotPose();
@@ -140,20 +156,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight/Distance", 0);
   }
 
-  // public double calculateDistance(int apriltagID){
-  //     //Not meant for targets that are close to the same height as the camera
-  //     if (apriltagID == -1) return 0;
-
-  //     double TARGET_HEIGHT = this.getTagHeight(getID());
-  //     double CAMERA_HEIGHT = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
-  //     double CAMERA_PITCH = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
-
-  //     double angleToSpeakerEntranceDegrees = Math.toRadians(CAMERA_PITCH + getTY());
-  //     double heightDifferenceInches = (TARGET_HEIGHT - CAMERA_HEIGHT) * 39.37;
-
-  //     return Math.abs((heightDifferenceInches) / Math.tan(angleToSpeakerEntranceDegrees))/39.97;
-  // }
-
+  // ! Using the april tag area
   public double calculateDistance(double focalLength, double realWidth, double pixelWidth) {
     if (hasValidTargets()) {
       return (focalLength * realWidth) / pixelWidth;
@@ -161,6 +164,25 @@ public class AprilTagStatsLimelight extends SubsystemBase {
       return 0.0;
     }
   }
+
+  // ! Using trig
+  // public double calculateDistance() {
+  //   int tagID = this.getID();
+  //   SmartDashboard.putNumber("Tag id/calcDis", tagID);
+  //   if (tagID == -1) return 0.0;
+  //   // List<Integer> bargeTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.BARGE_TAG_IDS;
+  //   // List<Integer> reefTagIDs = Constants.VisionConstants.aprilTagConstants.IDs.REEF_TAG_IDS;
+
+  //   double cameraHeight = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_HEIGHT;
+  //   double cameraPitch = Constants.VisionConstants.limeLightDimensionConstants.CAMERA_PITCH;
+
+  //   double heightGroundToTarget = getTagHeight(tagID);
+  //   double angleTargetToDegrees = cameraPitch + getTY();
+  //   double angleTargetToRadians = angleTargetToDegrees * (Math.PI / 180.0);
+  //   double distanceFromTarget =
+  //   (cameraHeight - heightGroundToTarget) / Math.tan(angleTargetToRadians);
+  //   return distanceFromTarget;
+  // }
 
   // public void configureAliance(){
   //     var allianceColor = DriverStation.getAlliance();

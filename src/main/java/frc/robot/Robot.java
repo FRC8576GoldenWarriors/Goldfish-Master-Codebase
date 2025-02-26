@@ -4,12 +4,15 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.VisionConstants.LimelightConstants.BargeLimelightConstants;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Simulation.SimConstants;
 
@@ -18,6 +21,7 @@ public class Robot extends TimedRobot {
 
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
   private RobotContainer m_robotContainer;
+  private List<Integer> usableTags;
 
   @Override
   public void robotInit() {
@@ -26,17 +30,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    usableTags =
+        RobotContainer.bargeTagStatsLimelight.isBlueAlliance()
+            ? Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS
+            : Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS;
     SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
     SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
-
-    SmartDashboard.putBoolean(
-        "Algae Photoelectric", !RobotContainer.m_endEffector.getAlgaeDigitalInput().get());
-    // SmartDashboard.putBoolean(
-    //     "Coral Photoelectric", !RobotContainer.m_endEffector.getCoralDigitalInput().get());
-    SmartDashboard.putBoolean(
-        "Hold Photoelectric", !RobotContainer.m_groundIntake.getDigitalInput().get());
-
     CommandScheduler.getInstance().run();
+    SmartDashboard.putBoolean(
+        "Can align",
+        RobotContainer.bargeTagStatsLimelight.hasValidTargets()
+            && usableTags.contains(RobotContainer.bargeTagStatsLimelight.getID()));
   }
 
   @Override

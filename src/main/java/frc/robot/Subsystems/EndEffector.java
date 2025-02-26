@@ -15,7 +15,7 @@ import org.littletonrobotics.junction.Logger;
 public class EndEffector extends SubsystemBase {
 
   private WarriorSparkMax pincherMotor;
-  // private DigitalInput coralDigitalInput;
+  private DigitalInput coralDigitalInput;
   private DigitalInput algaeDigitalInput;
 
   public EndEffector() {
@@ -27,8 +27,8 @@ public class EndEffector extends SubsystemBase {
             Constants.EndEffectorConstants.HardwareConstants.motorIsInverted,
             IdleMode.kBrake);
 
-    // coralDigitalInput =
-    //     new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.coralDigiSensorID);
+    coralDigitalInput =
+        new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.coralDigiSensorID);
     algaeDigitalInput =
         new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.algaeDigiSensorID);
   }
@@ -37,16 +37,12 @@ public class EndEffector extends SubsystemBase {
     pincherMotor.set(speed);
   }
 
-  // public DigitalInput getCoralDigitalInput() {
-  //   return coralDigitalInput;
-  // }
+  public DigitalInput getCoralDigitalInput() {
+    return coralDigitalInput;
+  }
 
   public DigitalInput getAlgaeDigitalInput() {
     return algaeDigitalInput;
-  }
-
-  public boolean getAlgaeDetected() {
-    return !getAlgaeDigitalInput().get();
   }
 
   public boolean motorRunning() {
@@ -55,8 +51,8 @@ public class EndEffector extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Logger.recordOutput(
-    //     "EndEffector/EndEffector_Coral_Digital_Input", getCoralDigitalInput().get());
+    Logger.recordOutput(
+        "EndEffector/EndEffector_Coral_Digital_Input", getCoralDigitalInput().get());
     Logger.recordOutput(
         "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
   }

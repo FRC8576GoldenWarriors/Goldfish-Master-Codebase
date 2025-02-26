@@ -8,7 +8,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -41,10 +40,8 @@ public class GroundIntake extends SubsystemBase {
     encoder =
         new DutyCycleEncoder(
             Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderDIO,
-            Constants.GroundIntakeConstants.ControlConstants.pivotEncoderFullRange,
-            Constants.GroundIntakeConstants.ControlConstants.pivotEncoderZero);
-
-    encoder.setInverted(Constants.GroundIntakeConstants.ControlConstants.pivotEncoderIsInverted);
+            Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderFullRange,
+            Constants.GroundIntakeConstants.HardwareConstants.pivotEncoderZero);
 
     algaeSensor =
         new DigitalInput(Constants.GroundIntakeConstants.HardwareConstants.digitalInputDIO);
@@ -55,8 +52,6 @@ public class GroundIntake extends SubsystemBase {
     // This method will be called once per scheduler run
     Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
     Logger.recordOutput("Ground_Intake/Ground_Intake_Digital_Input", getDigitalInputValue());
-
-    SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
   }
 
   public void setPivotSpeed(double speed) {

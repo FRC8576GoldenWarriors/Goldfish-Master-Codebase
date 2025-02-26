@@ -3,6 +3,7 @@ package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -15,27 +16,70 @@ import java.util.List;
 public class Constants {
 
   public static class VisionConstants {
-    public static class limeLightDistanceConstants {
-      public static final double DESIRED_APRIL_TAG_DISTANCE = 0.3;
-      public static final double ALLOWED_ANGLE_ERROR = 0.01;
-      public static final double ALLOWED_DISTANCE_ERROR = 0.1;
-    }
 
-    // In meters and degrees
-    // change later once we get true mesurements
-    public static class limeLightDimensionConstants {
-      public static final double CAMERA_HEIGHT = 0.267;
-      // public static final double TARGET_HEIGHT = 2.0; // hight of the speaker
-      public static final double CAMERA_PITCH = 0;
+    public static class LimelightConstants {
+
+      public static final double FOCAL_LENGTH = 4.1;
+      public static final double REAL_WIDTH = 165.0;
+      public static final double PIXEL_WIDTH = 320.0;
+
+      public static final double ALLOWED_ANGLE_ERROR = 2;
+      public static final double ALLOWED_DISTANCE_ERROR = 0.1;
+
+      public static class BargeLimelightConstants {
+
+        public static final String BARGE_NETWORKTABLE_KEY = "limelight-barge";
+
+        public static class DistanceConstants {
+
+          public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
+              2.2; // MAKE SURE TO TUNE THIS
+        }
+
+        public static class DimensionConstants {
+          public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
+          public static final double CAMERA_PITCH = 45; // In degrees
+        }
+      }
+
+      public static class ReefLimelightConstants {
+
+        public static final String REEF_NETWORKTABLE_KEY = "limelight-reef";
+
+        public static class DistanceConstants {
+
+          public static final double DESIRED_APRIL_TAG_DISTANCE_REEF =
+              0.3; // MAKE SURE TO TUNE THIS
+        }
+
+        public static class DimensionConstants {
+          public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
+          public static final double CAMERA_PITCH = -45; // In degrees
+        }
+      }
     }
 
     public static class aprilTagConstants {
+
       public static class IDs {
+
         public static final List<Integer> REEF_TAG_IDS =
             Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
         public static final List<Integer> BARGE_TAG_IDS = Arrays.asList(4, 5, 14, 15);
         public static final List<Integer> PROCESSOR_TAG_IDS = Arrays.asList(3, 16);
         public static final List<Integer> CORAL_STATION_TAG_IDS = Arrays.asList(1, 2, 12, 13);
+
+        public static final List<Integer> RED_TAG_IDS =
+            Arrays.asList(1, 2, 5, 6, 7, 8, 9, 10, 11, 15, 16);
+
+        public static final List<Integer> BLUE_TAG_IDS =
+            Arrays.asList(3, 4, 12, 13, 14, 17, 18, 19, 20, 21, 22);
+
+        public static final double BARGE_HEIGHT_INCHES = 73.54;
+        public static final double REEF_HEIGHT_INCHES = 12.13;
+
+        public static final double BARGE_HEIGHT_METERS = Units.inchesToMeters(BARGE_HEIGHT_INCHES);
+        public static final double REEF_HEIGHT_METERS = Units.inchesToMeters(REEF_HEIGHT_INCHES);
       }
 
       public static class heights {
@@ -47,23 +91,6 @@ public class Constants {
       }
     }
 
-    public static class limelightNetworkTableKey {
-      public static final String LIMELIGHT_NETWORKTABLE_KEY = "limelight";
-    }
-
-    public static class limelightCameraDimensions {
-      public static final double FOCAL_LENGTH = 4.1;
-      public static final double REAL_WIDTH = 165.0;
-      public static final double PIXEL_WIDTH = 320.0;
-    }
-
-    public static class distanceConstants {
-      public static final double goalMeterDistance = 3.0;
-      public static final double visionAngleDegrees = 0.0;
-      public static final List<Integer> useableIDs =
-          Arrays.asList(6, 7, 8, 9, 10, 11, 17, 18, 19, 20, 21, 22);
-    }
-
     public static class nameConstants {
       public static final String cameraName = "Arducam_OV9281_USB_Camera (1)";
       public static final String tabName = "Vision";
@@ -72,7 +99,7 @@ public class Constants {
 
     public static class VisionPIDConstants {
       public static final double rotationkP = 0.08;
-      public static final double rotationkI = 0.008;
+      public static final double rotationkI = 0.01;
       public static final double rotationkD = 0.001;
 
       public static final double forwardkP = 1.5;
@@ -163,23 +190,23 @@ public class Constants {
     public static double RIGHT_BACK_OFFSET = 0.178955; // 0.242188; // 0.231445;//0.24951
 
     public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
-    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true; // false;
     public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
-    public static boolean LEFT_BACK_DRIVE_INVERTED = true;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = true; // false;
 
     public static boolean LEFT_FRONT_TURN_INVERTED = true;
     public static boolean RIGHT_FRONT_TURN_INVERTED = true;
     public static boolean RIGHT_BACK_TURN_INVERTED = true;
     public static boolean LEFT_BACK_TURN_INVERTED = true;
 
-    public static double PRACTICE_LEFT_FRONT_OFFSET = -0.124268;
-    public static double PRACTICE_RIGHT_FRONT_OFFSET = -0.406738;
-    public static double PRACTICE_LEFT_BACK_OFFSET = 0.166260;
-    public static double PRACTICE_RIGHT_BACK_OFFSET = -0.214355;
+    public static double PRACTICE_LEFT_FRONT_OFFSET = 0.377930;
+    public static double PRACTICE_RIGHT_FRONT_OFFSET = 0.094727;
+    public static double PRACTICE_LEFT_BACK_OFFSET = 0.161377;
+    public static double PRACTICE_RIGHT_BACK_OFFSET = 0.274658;
 
-    public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = false;
-    public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = true;
-    public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = false;
+    public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = false;
     public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = true;
 
     public static boolean PRACTICE_LEFT_FRONT_TURN_INVERTED = true;
@@ -257,7 +284,7 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -0.65; // -0.25
+      public static final double pincherInSpeed = -0.45; // -0.25
       public static final double pincherOutSpeed = 1.00;
 
       public static final double pincherInRunExtension = 0.25;
@@ -270,31 +297,28 @@ public class Constants {
 
       public static final int armMotorID = 21;
       public static final int armEncoderDIO = 3;
+
+      public static final boolean motorIsInverted = false;
     }
 
     public static final class ControlConstants {
 
-      public static final boolean motorIsInverted = true;
+      public static final double kS = 0.1;
+      public static final double kG = 0.1;
+      public static final double kV = 0.1;
+      public static final double kA = 0.1;
 
-      public static final double kS = 0.003;
-      public static final double kG = 0.2500;
-      public static final double kV = 0.1811;
-      public static final double kA = 0;
+      public static final double kP = 0.1;
+      public static final double kI = 0;
+      public static final double kD = 0;
 
-      public static final double kP = 20.0;
-      public static final double kI = 0.0;
-      public static final double kD = 0.1;
+      public static final double startPosition = 0;
+      public static final double lowReefPosition = 0.3;
+      public static final double highReefPosition = 0.45;
+      public static final double transportPosition = 0.65;
 
-      public static final double retractedPosition = 0.01;
-      public static final double A1Position = 0.31;
-      public static final double A2Position = 0.40;
-      public static final double transportPosition = 0.77;
-
-      public static final double lowSoftStopPositon = 0.0;
+      public static final double lowSoftStopPositon = -0.05;
       public static final double highSoftStopPosition = 0.75;
-
-      public static final double armEncoderOffset = -0.441;
-      public static final boolean armEncoderIsInverted = true;
     }
   }
 
@@ -306,32 +330,26 @@ public class Constants {
       public static final boolean rollerMotorIsInverted = false;
 
       public static final int pivotMotorID = 31;
-      public static final boolean pivotMotorIsInverted = true;
+      public static final boolean pivotMotorIsInverted = false;
 
       public static final int pivotEncoderDIO = 4;
+      public static final double pivotEncoderFullRange = 1.0;
+      public static final double pivotEncoderZero = 0.0;
 
       public static final int digitalInputDIO = 5;
     }
 
     public static class ControlConstants {
       public static final double groundIntakeUpPosition = 0.0;
-      public static final double groundIntakeDownPosition = 0.15;
+      public static final double groundIntakeDownPosition = 0.25;
 
       public static final double groundIntakeInSpeed = 0.5;
       public static final double groundIntakeOutSpeed = -0.5;
 
-      public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = 0.99;
-      public static final boolean pivotEncoderIsInverted = true;
-
-      public static final double kP = 3.2;
-      public static final double kI = 0;
-      public static final double kD = 0;
-
       public static final double kS = 0;
-      public static final double kA = 0;
-      public static final double kG = 0.2;
+      public static final double kG = 0;
       public static final double kV = 0;
+      public static final double kA = 0;
     }
   }
 
@@ -358,13 +376,13 @@ public class Constants {
     public static final class ControlConstants {
       public static final double windingSpeed = 0.5;
       public static final double unwindingSpeed = -0.5;
-
-      public static final double climberUpPosition = 42.0;
-
+      public static final double brakeVoltage = 0;
       public static final double kS = 0;
       public static final double kG = 0;
       public static final double kV = 0;
       public static final double kA = 0;
+      public static final PIDController windPID = new PIDController(0, 0, 0);
+      public static final PIDController unwindPID = new PIDController(0, 0, -0);
       public static final ElevatorFeedforward climbFeedforward =
           new ElevatorFeedforward(kS, kG, kV, kA);
     }
@@ -372,8 +390,8 @@ public class Constants {
 
   public static final class LEDConstants {
     public static final class HardwareConstants {
-      public static final int kLEDPort = 1;
-      public static final int kLEDLength = 25;
+      public static final int kLEDPort = 0;
+      public static final int kLEDLength = 100;
     }
 
     public static final class PatternConfig {

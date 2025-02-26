@@ -8,7 +8,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -25,17 +24,11 @@ public class Arm extends SubsystemBase {
         new WarriorSparkMax(
             Constants.ArmConstants.HardwareConstants.armMotorID,
             MotorType.kBrushless,
-            Constants.ArmConstants.ControlConstants.motorIsInverted,
-            IdleMode.kCoast,
+            Constants.ArmConstants.HardwareConstants.motorIsInverted,
+            IdleMode.kBrake,
             45);
 
-    armAbsEncoder =
-        new DutyCycleEncoder(
-            Constants.ArmConstants.HardwareConstants.armEncoderDIO,
-            1.0,
-            Constants.ArmConstants.ControlConstants.armEncoderOffset);
-
-    armAbsEncoder.setInverted(Constants.ArmConstants.ControlConstants.armEncoderIsInverted);
+    armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.HardwareConstants.armEncoderDIO);
   }
 
   @Override
@@ -46,10 +39,6 @@ public class Arm extends SubsystemBase {
     Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
     Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
     Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
-
-    SmartDashboard.putNumber("Arm Enocder Position", getEncoderPosition());
-    SmartDashboard.putNumber("Arm Motor Voltage", armMotor.getBusVoltage());
-    SmartDashboard.putNumber("Arm Encoder Velocity", getArmVelocity());
   }
 
   public void setArmVoltage(double volts) {
@@ -79,9 +68,5 @@ public class Arm extends SubsystemBase {
 
   public DutyCycleEncoder getEncoder() {
     return armAbsEncoder;
-  }
-
-  public void setArmMotorIdleMode(IdleMode idleMode) {
-    armMotor.setIdleMode(idleMode);
   }
 }
