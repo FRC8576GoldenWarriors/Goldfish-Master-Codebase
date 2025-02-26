@@ -205,7 +205,7 @@ public class RobotContainer {
 
       // down arrow align barge
       driverController
-          .povDown()
+          .rightBumper()
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
     }
   }

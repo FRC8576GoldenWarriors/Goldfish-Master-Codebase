@@ -23,7 +23,7 @@ public class Constants {
       public static final double REAL_WIDTH = 165.0;
       public static final double PIXEL_WIDTH = 320.0;
 
-      public static final double ALLOWED_ANGLE_ERROR = 3;
+      public static final double ALLOWED_ANGLE_ERROR = 2;
       public static final double ALLOWED_DISTANCE_ERROR = 0.1;
 
       public static class BargeLimelightConstants {
@@ -99,7 +99,7 @@ public class Constants {
 
     public static class VisionPIDConstants {
       public static final double rotationkP = 0.08;
-      public static final double rotationkI = 0.008;
+      public static final double rotationkI = 0.01;
       public static final double rotationkD = 0.001;
 
       public static final double forwardkP = 1.5;

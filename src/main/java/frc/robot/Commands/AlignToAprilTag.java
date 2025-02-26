@@ -152,7 +152,7 @@ public class AlignToAprilTag extends Command {
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
           }
         }
-        sideOutput = -RobotContainer.driverController.getLeftX();
+        sideOutput = -RobotContainer.driverController.getLeftX() * 2;
       } else {
         rotationOutput = rotationPID.calculate(tx, 0);
         sideOutput = sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
@@ -172,13 +172,19 @@ public class AlignToAprilTag extends Command {
   @Override
   public void end(boolean interrupted) {
     // drivetrain.setAutoPose(true);
-    drivetrain.stopModules();
+    drivetrain.drive(new Translation2d(0, 0), 0, false, true);
+    //drivetrain.stopModules();
   }
 
   @Override
   public boolean isFinished() {
-    return (!aprilTagStatsLimelight.hasValidTargets()
-            && (rotationPID.atSetpoint() && forwardPID.atSetpoint()))
-        || ((currentDistance == 0));
+    //drivetrain.stopModules();
+
+    if (!aprilTagStatsLimelight.hasValidTargets()
+    && (rotationPID.atSetpoint() && forwardPID.atSetpoint())) {
+      drivetrain.stopModules();
+      return true;
+    }
+    return false;
   }
 }
