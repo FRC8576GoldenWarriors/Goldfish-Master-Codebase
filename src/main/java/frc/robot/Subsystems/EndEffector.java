@@ -49,6 +49,10 @@ public class EndEffector extends SubsystemBase {
     return pincherMotor.get() != 0;
   }
 
+  public boolean getAlgaeDetected() {
+    return !getAlgaeDigitalInput().get();
+  }
+
   @Override
   public void periodic() {
     Logger.recordOutput(

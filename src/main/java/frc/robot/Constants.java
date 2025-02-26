@@ -313,8 +313,8 @@ public class Constants {
       public static final double kD = 0;
 
       public static final double startPosition = 0;
-      public static final double lowReefPosition = 0.3;
-      public static final double highReefPosition = 0.45;
+      public static final double A1Position = 0.3;
+      public static final double A2Position = 0.45;
       public static final double transportPosition = 0.65;
 
       public static final double lowSoftStopPositon = -0.05;
