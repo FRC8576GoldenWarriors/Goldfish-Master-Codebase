@@ -14,7 +14,7 @@ import frc.robot.Subsystems.GroundIntake;
 public class GroundIntakeController extends Command {
 
   GroundIntake intake;
-  PIDController pid;
+
 
   DutyCycleEncoder encoder;
 
@@ -31,7 +31,7 @@ public class GroundIntakeController extends Command {
 
     this.desiredAngle = desiredAngle;
 
-    pid = new PIDController(1.0, 0.0, 0.0);
+    
 
     addRequirements(intake);
   }
@@ -45,15 +45,15 @@ public class GroundIntakeController extends Command {
   public void execute() {
 
     if (encoder.get() - desiredAngle < 0) { // going down
-      motorOutput = 0.3;
+      motorOutput = 0.4;
       SmartDashboard.putBoolean("True: Going Up, False: Going Down", false);
-      if (Math.abs(encoder.get() - desiredAngle) < 0.025) {
+      if (Math.abs(encoder.get() - desiredAngle) < 0.01) {
         motorOutput = 0.0;
       }
     } else { // going up
-      motorOutput = -0.3;
+      motorOutput = -0.4;
       SmartDashboard.putBoolean("True: Going Up, False: Going Down", true);
-      if (Math.abs(encoder.get() - desiredAngle) < 0.025) {
+      if (Math.abs(encoder.get() - desiredAngle) < 0.01) {
         motorOutput = 0.0;
       }
     }
@@ -68,6 +68,7 @@ public class GroundIntakeController extends Command {
   @Override
   public void end(boolean interrupted) {
     intake.setPivotSpeed(0);
+    intake.setRollerSpeed(0);
   }
 
   // Returns true when the command should end.

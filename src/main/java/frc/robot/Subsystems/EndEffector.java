@@ -25,7 +25,7 @@ public class EndEffector extends SubsystemBase {
             Constants.EndEffectorConstants.HardwareConstants.pincherID,
             MotorType.kBrushless,
             Constants.EndEffectorConstants.HardwareConstants.motorIsInverted,
-            IdleMode.kBrake);
+            IdleMode.kBrake, 60);
 
     // coralDigitalInput =
     //     new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.coralDigiSensorID);

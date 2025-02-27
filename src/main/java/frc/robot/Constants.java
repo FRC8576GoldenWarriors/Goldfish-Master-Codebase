@@ -3,7 +3,6 @@ package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -37,8 +36,8 @@ public class Constants {
         }
 
         public static class DimensionConstants {
-          public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
-          public static final double CAMERA_PITCH = 45; // In degrees
+          public static final double CAMERA_HEIGHT = Units.inchesToMeters(28); // In inches
+          public static final double CAMERA_PITCH = 29.4; // In degrees
         }
       }
 
@@ -241,7 +240,7 @@ public class Constants {
     public static final int DRIVE_CURRENT_LIMIT = 45;
 
     public static final double TRACK_WIDTH = Units.inchesToMeters(25.0); // Y WIDTH
-    public static final double WHEEL_BASE = Units.inchesToMeters(21.0); // X LENGTH
+    public static final double WHEEL_BASE = Units.inchesToMeters(25.0); // X LENGTH
     public static final double DRIVE_BASE_RADIUS =
         Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
 

@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -28,7 +29,7 @@ public class GroundIntake extends SubsystemBase {
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kCoast);
+            IdleMode.kBrake, 60);
 
     rollerMotor =
         new WarriorSparkMax(
@@ -43,6 +44,8 @@ public class GroundIntake extends SubsystemBase {
             Constants.GroundIntakeConstants.ControlConstants.pivotEncoderFullRange,
             Constants.GroundIntakeConstants.ControlConstants.pivotEncoderZero);
 
+    encoder.setInverted(Constants.GroundIntakeConstants.ControlConstants.pivotEncoderIsInverted);
+
     algaeSensor =
         new DigitalInput(Constants.GroundIntakeConstants.HardwareConstants.digitalInputDIO);
   }
@@ -51,7 +54,9 @@ public class GroundIntake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
-    Logger.recordOutput("Ground_Intake/Ground_Intake_Digital_Input", getAlgaeDetected());
+
+    SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
+    SmartDashboard.putBoolean("Hold Photoelectric", getAlgaeDetected());
   }
 
   public void setPivotSpeed(double speed) {
@@ -72,10 +77,6 @@ public class GroundIntake extends SubsystemBase {
 
   public double getEncoderPosition() {
     return getEncoder().get();
-  }
-
-  public DigitalInput getDigitalInput() {
-    return algaeSensor;
   }
 
   public boolean getAlgaeDetected() {

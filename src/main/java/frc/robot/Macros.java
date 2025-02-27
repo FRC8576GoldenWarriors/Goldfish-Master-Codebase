@@ -9,7 +9,7 @@ import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.Shintake;
 
 public class Macros {
-  public static SequentialCommandGroup GET_A1_DEALGAE_MACRO(
+  public static SequentialCommandGroup A1_DEALGAE_MACRO(
       Arm arm, Shintake shintake, EndEffector endEffector) {
     SequentialCommandGroup command =
         new SequentialCommandGroup(
@@ -26,4 +26,11 @@ public class Macros {
 
     return command;
   }
+
+  public static SequentialCommandGroup A2_DEALGAE_MACRO(Arm arm, Shintake shintake, EndEffector endeffector){
+    SequentialCommandGroup command = new SequentialCommandGroup(null);
+    return command;
+  }
+
+  
 }

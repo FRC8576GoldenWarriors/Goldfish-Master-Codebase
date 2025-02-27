@@ -32,16 +32,16 @@ public class Shintake extends SubsystemBase {
             Constants.ShintakeConstants.HardwareConstants.rollerMotorLowID,
             MotorType.kBrushless,
             Constants.ShintakeConstants.HardwareConstants.rollerMotorLowIsInverted,
-            IdleMode.kBrake,
-            40);
+            IdleMode.kCoast,
+            70);
 
     upperRollerMotor =
         new WarriorSparkMax(
             Constants.ShintakeConstants.HardwareConstants.rollerMotorHighID,
             MotorType.kBrushless,
             Constants.ShintakeConstants.HardwareConstants.rollerMotorHighIsInverted,
-            IdleMode.kBrake,
-            40);
+            IdleMode.kCoast,
+            70);
 
     RPMtoVoltage = new InterpolatingDoubleTreeMap(); // use to interpolate (volts, rpm) values
 

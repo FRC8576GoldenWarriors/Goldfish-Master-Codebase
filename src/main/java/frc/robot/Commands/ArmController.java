@@ -5,7 +5,6 @@
 package frc.robot.Commands;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -79,7 +78,7 @@ public class ArmController extends Command {
     SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);
     SmartDashboard.putNumber("Arm Total Voltage", voltage);
 
-    if ( encoder.get() > 0.79) {
+    if (encoder.get() > 0.79) {
       voltage = 0.0;
       arm.setArmSpeed(0);
       arm.setArmMotorIdleMode(IdleMode.kBrake);
@@ -87,8 +86,6 @@ public class ArmController extends Command {
 
     arm.setArmVoltage(voltage);
     SmartDashboard.putNumber("Arm Total Controller Voltage", voltage);
-
-   
   }
 
   // Called once the command ends or is interrupted.
