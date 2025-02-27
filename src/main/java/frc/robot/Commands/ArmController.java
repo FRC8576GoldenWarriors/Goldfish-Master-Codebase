@@ -79,7 +79,7 @@ public class ArmController extends Command {
     SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);
     SmartDashboard.putNumber("Arm Total Voltage", voltage);
 
-    if (encoder.get() < 0.005 || encoder.get() > 0.79) {
+    if ( encoder.get() > 0.79) {
       voltage = 0.0;
       arm.setArmSpeed(0);
       arm.setArmMotorIdleMode(IdleMode.kBrake);

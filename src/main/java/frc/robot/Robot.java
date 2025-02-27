@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     usableTags =
-        RobotContainer.bargeTagStatsLimelight.isBlueAlliance()
+        RobotContainer.reefTagStatsLimelight.isBlueAlliance()
             ? Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS
             : Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS;
     SmartDashboard.putNumber("Time", DriverStation.getMatchTime());
@@ -37,8 +37,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putBoolean(
         "Can align",
-        RobotContainer.bargeTagStatsLimelight.hasValidTargets()
-            && usableTags.contains(RobotContainer.bargeTagStatsLimelight.getID()));
+        RobotContainer.reefTagStatsLimelight.hasValidTargets()
+            && usableTags.contains(RobotContainer.reefTagStatsLimelight.getID()));
   }
 
   @Override

@@ -109,7 +109,8 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   public boolean isBargeLimelight() {
-    return networkTableKey.equals("limelight-barge");
+    //return networkTableKey.equals("limelight-barge");
+    return true;
   }
 
   public boolean isBlueAlliance() {

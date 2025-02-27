@@ -100,7 +100,12 @@ public class LEDStrip extends SubsystemBase {
     //   blinkRed();
     // } else if (driverController.getXButton()) { // red solid progress
     // progress(LEDPattern.solid(Color.kRed), driverController.getLeftTriggerAxis());
-    if (RobotContainer.m_climber.isClimbingUp()) {
+     if (DriverStation.isDisabled()) { // disabled
+      scroll(
+          Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,
+          Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
+    }
+   else  if (RobotContainer.m_climber.isClimbingUp()) {
       rainbowScroll();
       // } else if (RobotContainer.m_drivetrain.getAutoPose()
       //     && RobotContainer.m_shintake.getIsRevved()) {
@@ -114,28 +119,34 @@ public class LEDStrip extends SubsystemBase {
       blink(
           Constants.LEDConstants.PatternConfig.kAprilTags,
           Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
-    } else if (RobotContainer.m_endEffector.getAlgaeDigitalInput().get()) { // algae shintake
-      blink(
-          Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlink,
-          Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlinkSpeed);
-    } else if (RobotContainer.m_groundIntake.getDigitalInput().get()) { // algae pincher
+
+    } else if (!RobotContainer.m_groundIntake.getDigitalInput().get()) { // algae ground intake/hold
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreathe,
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreatheSpeed);
 
-    // } else if (RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
+    } else if (!RobotContainer.m_endEffector.getAlgaeDigitalInput().get()) { // algae end effector
+      blink(
+          Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlink,
+          Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlinkSpeed);
+    }
+
+    // } else if (!RobotContainer.m_endEffector.getCoralDigitalInput().get()) { // coral detected
     //   breathe(
     //       Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreathe,
     //       Constants.LEDConstants.PatternConfig.kLEDCoralDetectedBreatheSpeed);
-    } else if (RobotContainer.m_endEffector.motorRunning()) {
-      blink(
-          Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
-          Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed);
-    } else if (DriverStation.isDisabled()) { // disabled
-      scroll(
-          Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,
-          Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
-    } else { // gold breathe idle
+    // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
+    // coral motor running
+    // } else if (RobotContainer.m_endEffector.motorRunning()) { //?
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlink,
+    //       Constants.LEDConstants.PatternConfig.kLEDCoralIntakeBlinkSpeed); //supposed to be
+    // coral motor running
+    //  }
+    else { // gold breathe idle
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDNoStatusBreathe,
           Constants.LEDConstants.PatternConfig.kLEDNoStatusBreatheSpeed);

@@ -23,6 +23,7 @@ import frc.robot.Subsystems.Climber;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
+import frc.robot.Subsystems.LEDStrip;
 import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
 import frc.robot.Subsystems.Shintake;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
@@ -53,9 +54,10 @@ public class RobotContainer {
   public static Arm m_arm;
   public static GroundIntake m_groundIntake;
   public static Climber m_climber;
+  public static LEDStrip m_led;
 
   public static AprilTagStatsLimelight reefTagStatsLimelight;
-  public static AprilTagStatsLimelight bargeTagStatsLimelight;
+  //public static AprilTagStatsLimelight bargeTagStatsLimelight;
 
   public static DrivetrainSim m_drivetrainSim;
   public static SimEndEffector m_SimEndEffector;
@@ -63,26 +65,27 @@ public class RobotContainer {
   public RobotContainer() {
 
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
-      System.out.println("is real");
+      //System.out.println("is real");
       m_drivetrain = Drivetrain.getInstance();
       m_shintake = new Shintake();
       m_endEffector = new EndEffector();
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
+      m_led = new LEDStrip(1, 25);
 
       reefTagStatsLimelight =
           new AprilTagStatsLimelight(
               Constants.VisionConstants.LimelightConstants.ReefLimelightConstants
                   .REEF_NETWORKTABLE_KEY);
-      bargeTagStatsLimelight =
-          new AprilTagStatsLimelight(
-              Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
-                  .BARGE_NETWORKTABLE_KEY);
+//      bargeTagStatsLimelight =
+//          new AprilTagStatsLimelight(
+//              Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
+//                  .BARGE_NETWORKTABLE_KEY);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
-      System.out.println("is sim");
+      //System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();
       m_SimEndEffector = new SimEndEffector();
       m_drivetrainSim.setDefaultCommand(new SimSwerveDrive());
@@ -105,13 +108,13 @@ public class RobotContainer {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
 
       // Operator controller
-      operatorController
-          .y()
-          .whileTrue(
-              new StartEndCommand(
-                  (() -> m_shintake.setRollersSpeed(0.85, 0.80)), // 1.0 0.95
-                  (() -> m_shintake.setRollersSpeed(0.0)),
-                  m_shintake)); // Y Shintake Shoot
+    //   operatorController
+    //       .y()
+    //       .whileTrue(
+    //           new StartEndCommand(
+    //               (() -> m_shintake.setRollersSpeed(0.85, 0.80)), // 1.0 0.95
+    //               (() -> m_shintake.setRollersSpeed(0.0)),
+    //               m_shintake)); // Y Shintake Shoot
 
       operatorController
           .b()
@@ -125,6 +128,7 @@ public class RobotContainer {
                                   m_endEffector,
                                   Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
                           .until(() -> m_endEffector.getAlgaeDetected()),
+                         
                       new ParallelCommandGroup(
                               new SequentialCommandGroup(
                                       new ArmController(
@@ -138,6 +142,7 @@ public class RobotContainer {
                                                               - Constants.ArmConstants
                                                                   .ControlConstants.handoffPosition)
                                                       < 0.005)))
+                      
                                   .andThen(
                                       new ParallelCommandGroup(
                                           new ArmController(
@@ -147,14 +152,25 @@ public class RobotContainer {
                                           new EndEffectorController(
                                               m_endEffector,
                                               Constants.EndEffectorConstants.ControlConstants
-                                                  .pincherInSpeed))),
+                                                  .pincherInSpeed)))
+                                                  ,
                               new StartEndCommand(
-                                  () -> m_shintake.setRollersSpeed(0.1),
+                                  () -> m_shintake.setRollersSpeed(0.4),
                                   () -> m_shintake.setRollersSpeed(0),
-                                  m_shintake))
-                          .until(() -> m_groundIntake.getDigitalInputValue()))));
+                                  m_shintake))  .until(() -> m_groundIntake.getAlgaeDetected()), 
+                                
+                                  new ParallelCommandGroup(new StartEndCommand( () -> m_shintake.setRollersSpeed(0.4),
+                                  () -> m_shintake.setRollersSpeed(0),
+                                  m_shintake).withTimeout(0.5),
+                                    new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)
 
-      operatorController.y().onTrue(new ArmController(m_arm, 0.31));
+                                  )
+                                  
+                                  )
+                          ));
+                        
+
+      operatorController.y().onTrue(new ArmController(m_arm, 0.72));
 
       operatorController
           .x()
@@ -244,7 +260,7 @@ public class RobotContainer {
       // down arrow align barge
       driverController
           .rightBumper()
-          .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
+          .whileTrue(new AlignToAprilTag(reefTagStatsLimelight, m_drivetrain));
     }
   }
 

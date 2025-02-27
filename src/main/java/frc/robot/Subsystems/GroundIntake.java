@@ -51,7 +51,7 @@ public class GroundIntake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
-    Logger.recordOutput("Ground_Intake/Ground_Intake_Digital_Input", getDigitalInputValue());
+    Logger.recordOutput("Ground_Intake/Ground_Intake_Digital_Input", getAlgaeDetected());
   }
 
   public void setPivotSpeed(double speed) {
@@ -78,7 +78,7 @@ public class GroundIntake extends SubsystemBase {
     return algaeSensor;
   }
 
-  public boolean getDigitalInputValue() {
-    return algaeSensor.get();
+  public boolean getAlgaeDetected() {
+    return !algaeSensor.get();
   }
 }
