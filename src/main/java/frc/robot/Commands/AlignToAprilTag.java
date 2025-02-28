@@ -20,7 +20,6 @@ public class AlignToAprilTag extends Command {
 
   private final PIDController rotationPID;
   private final PIDController forwardPID;
-  private final PIDController sidePID;
 
   private final double focalLength = Constants.VisionConstants.LimelightConstants.FOCAL_LENGTH;
   private final double pixelWidth = Constants.VisionConstants.LimelightConstants.PIXEL_WIDTH;
@@ -62,24 +61,15 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.forwardkD);
     forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
-    sidePID =
-        new PIDController(
-            Constants.VisionConstants.VisionPIDConstants.sidekP,
-            Constants.VisionConstants.VisionPIDConstants.sidekI,
-            Constants.VisionConstants.VisionPIDConstants.sidekD);
-    sidePID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
-
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
 
   @Override
   public void execute() {
-    // drivetrain.setAutoPose(false);
 
     List<Integer> usableTags =
         aprilTagStatsLimelight.isBlueAlliance()
-            ? Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS
-            : Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS;
+            ? Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS : Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS;
     SmartDashboard.putBoolean(
         "Can align",
         aprilTagStatsLimelight.hasValidTargets()
@@ -114,6 +104,8 @@ public class AlignToAprilTag extends Command {
       // currentDistance += 0.1;
       // currentDistance *= 1.8;
       // currentDistance = aprilTagStatsLimelight.calculateDistance();
+
+      SmartDashboard.putBoolean("Is Running", true);
 
       goalDistance =
           aprilTagStatsLimelight.isBargeLimelight()
@@ -152,14 +144,19 @@ public class AlignToAprilTag extends Command {
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
           }
         }
-        sideOutput = -RobotContainer.driverController.getLeftX() * 2;
+        sideOutput = -RobotContainer.driverController.getLeftX() * 3;
       } else {
         rotationOutput = rotationPID.calculate(tx, 0);
-        sideOutput = sidePID.calculate(goalDistance * Math.tan(Math.toRadians(tx)), 0);
         SmartDashboard.putNumber("Vision PID Side output", sideOutput);
       }
 
       drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
+
+      if (rotationPID.getError() < 4.0 && forwardPID.getError() < 0.25) {
+        aprilTagStatsLimelight.setTagReached(true);
+      } else {
+        aprilTagStatsLimelight.setTagReached(false);
+      }
 
       SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
       SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
@@ -172,8 +169,10 @@ public class AlignToAprilTag extends Command {
   @Override
   public void end(boolean interrupted) {
     // drivetrain.setAutoPose(true);
+    // drivetrain.setAutoPosed(false);
     drivetrain.drive(new Translation2d(0, 0), 0, false, true);
     // drivetrain.stopModules();
+    aprilTagStatsLimelight.setTagReached(false);
   }
 
   @Override

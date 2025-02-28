@@ -9,6 +9,18 @@
           "data": {
             "pathName": "Coral RP Right"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shooter RP"
+          }
         }
       ]
     }

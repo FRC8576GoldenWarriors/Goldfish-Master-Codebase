@@ -94,7 +94,7 @@ public class Shintake extends SubsystemBase {
 
   public void setRollersSpeed(double lowRollerSpeed, double upperRollerSpeed) {
     setLowerRollerSpeed(-lowRollerSpeed);
-    setUpperRollerSpeed(upperRollerSpeed);
+    setUpperRollerSpeed(-upperRollerSpeed);
   }
 
   public void setRollersVoltage(double voltage) {

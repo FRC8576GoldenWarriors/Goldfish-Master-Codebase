@@ -22,8 +22,8 @@ public class Constants {
       public static final double REAL_WIDTH = 165.0;
       public static final double PIXEL_WIDTH = 320.0;
 
-      public static final double ALLOWED_ANGLE_ERROR = 2;
-      public static final double ALLOWED_DISTANCE_ERROR = 0.1;
+      public static final double ALLOWED_ANGLE_ERROR = 3;
+      public static final double ALLOWED_DISTANCE_ERROR = 0.2;
 
       public static class BargeLimelightConstants {
 
@@ -98,16 +98,12 @@ public class Constants {
 
     public static class VisionPIDConstants {
       public static final double rotationkP = 0.08;
-      public static final double rotationkI = 0.01;
+      public static final double rotationkI = 0;
       public static final double rotationkD = 0.001;
 
       public static final double forwardkP = 1.5;
-      public static final double forwardkI = 0.001;
+      public static final double forwardkI = 0.0;
       public static final double forwardkD = 0.001;
-
-      public static final double sidekP = 1.5;
-      public static final double sidekI = 0.001;
-      public static final double sidekD = 0.001;
     }
   }
 
@@ -417,11 +413,13 @@ public class Constants {
       public static final double kLEDVisionSearchingBlinkSpeed = 0.075;
 
       // lg ground intake
-      public static final LEDPattern kLEDAlgaeGroundBreathe = LEDPattern.solid(Color.kAqua);
+      public static final LEDPattern kLEDAlgaeGroundBreathe =
+          LEDPattern.solid(new Color(0, 255, 204));
       public static final double kLEDAlgaeGroundBreatheSpeed = 2;
 
       // lg arm intake
-      public static final LEDPattern kLEDAlgaePincherBlink = LEDPattern.solid(Color.kAqua);
+      public static final LEDPattern kLEDAlgaePincherBlink =
+          LEDPattern.solid(new Color(0, 255, 204));
       public static final double kLEDAlgaePincherBlinkSpeed = 0.075;
 
       // coral photoeletric detects coral

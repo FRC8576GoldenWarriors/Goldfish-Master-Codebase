@@ -29,7 +29,8 @@ public class GroundIntake extends SubsystemBase {
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kBrake, 60);
+            IdleMode.kBrake,
+            60);
 
     rollerMotor =
         new WarriorSparkMax(

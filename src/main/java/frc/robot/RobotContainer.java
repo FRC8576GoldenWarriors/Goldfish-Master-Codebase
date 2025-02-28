@@ -8,14 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
-import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
@@ -58,7 +56,7 @@ public class RobotContainer {
   public static LEDStrip m_led;
 
   public static AprilTagStatsLimelight reefTagStatsLimelight;
-  // public static AprilTagStatsLimelight bargeTagStatsLimelight;
+  public static AprilTagStatsLimelight bargeTagStatsLimelight;
 
   public static DrivetrainSim m_drivetrainSim;
   public static SimEndEffector m_SimEndEffector;
@@ -79,10 +77,10 @@ public class RobotContainer {
           new AprilTagStatsLimelight(
               Constants.VisionConstants.LimelightConstants.ReefLimelightConstants
                   .REEF_NETWORKTABLE_KEY);
-      //      bargeTagStatsLimelight =
-      //          new AprilTagStatsLimelight(
-      //              Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
-      //                  .BARGE_NETWORKTABLE_KEY);
+      bargeTagStatsLimelight =
+          new AprilTagStatsLimelight(
+              Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
+                  .BARGE_NETWORKTABLE_KEY);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
@@ -103,103 +101,60 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // Driver controller
 
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
       resetHeading_Start.onTrue(new InstantCommand(m_drivetrain::zeroHeading, m_drivetrain));
 
-      // Operator controller
-      //   operatorController
-      //       .y()
-      //       .whileTrue(
-      //           new StartEndCommand(
-      //               (() -> m_shintake.setRollersSpeed(0.85, 0.80)), // 1.0 0.95
-      //               (() -> m_shintake.setRollersSpeed(0.0)),
-      //               m_shintake)); // Y Shintake Shoot
+      // Driver controller
+
+      driverController
+          .leftBumper()
+          .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
+
+      driverController
+          .rightBumper()
+          .whileTrue(
+              new ParallelCommandGroup(
+                  new StartEndCommand(
+                      () -> m_groundIntake.setRollerSpeed(-0.3),
+                      () -> m_groundIntake.setRollerSpeed(0),
+                      m_groundIntake),
+                  new StartEndCommand(
+                      () -> m_shintake.setRollersSpeed(0.65, 0.70),
+                      () -> m_shintake.setRollersSpeed(0),
+                      m_shintake)));
+
+    //   driverController
+    //       .start()
+    //       .whileTrue(
+    //           new StartEndCommand(
+    //               () -> m_climber.setMotorSpeed(0.9),
+    //               () -> m_climber.setMotorSpeed(0.0),
+    //               m_climber));
+
+    //   driverController
+    //       .back()
+    //       .whileTrue(
+    //           new StartEndCommand(
+    //               () -> m_climber.setMotorSpeed(-0.9),
+    //               () -> m_climber.setMotorSpeed(0.0),
+    //               m_climber));
+
+        driverController.povDown().whileTrue(new StartEndCommand(()-> m_endEffector.setSpeed(0.2), ()->m_endEffector.setSpeed(0.0), m_endEffector));
+        driverController.povUp().whileTrue(new ArmController(m_arm, 0.715));
+      // operator controller
 
       operatorController
           .b()
-          .onTrue(
-              new SequentialCommandGroup(
-                  new SequentialCommandGroup(
-                      new ParallelCommandGroup(
-                              new ArmController(
-                                  m_arm, Constants.ArmConstants.ControlConstants.A1Position),
-                              new EndEffectorController(
-                                  m_endEffector,
-                                  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
-                          .until(() -> m_endEffector.getAlgaeDetected()),
-                      new ParallelCommandGroup(
-                              new SequentialCommandGroup(
-                                      new ArmController(
-                                              m_arm,
-                                              Constants.ArmConstants.ControlConstants
-                                                  .handoffPosition)
-                                          .until(
-                                              () ->
-                                                  (Math.abs(
-                                                          m_arm.getEncoder().get()
-                                                              - Constants.ArmConstants
-                                                                  .ControlConstants.handoffPosition)
-                                                      < 0.005)))
-                                  .andThen(
-                                      new ParallelCommandGroup(
-                                          new ArmController(
-                                              m_arm,
-                                              Constants.ArmConstants.ControlConstants
-                                                  .handoffPosition),
-                                          new EndEffectorController(
-                                              m_endEffector,
-                                              Constants.EndEffectorConstants.ControlConstants
-                                                  .pincherInSpeed)), 
-                                                  new GroundIntakeController(m_groundIntake, 0.175, 0.0)), 
-                              new StartEndCommand(
-                                  () -> m_shintake.setRollersSpeed(0.4),
-                                  () -> m_shintake.setRollersSpeed(0),
-                                  m_shintake))
-                          .until(() -> m_groundIntake.getAlgaeDetected()),
-                      new ParallelCommandGroup(
-                          (new StartEndCommand(
-                                  () -> m_shintake.setRollersSpeed(0.25),
-                                  () -> m_shintake.setRollersSpeed(0),
-                                  m_shintake)
-                              .withTimeout(0.25).
-                              andThen(new StartEndCommand( //replace with instant or runnable command later
-                                () -> m_shintake.setRollersSpeed(0.75, 0.8), //tune
-                                () -> m_shintake.setRollersSpeed(0.75, 0.8),
-                                m_shintake))),
-                              new GroundIntakeController(m_groundIntake, 0.175, 0.3).withTimeout(0.535), 
-                              
-                          new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.storedPosition))
-
-                               
-                              
-                              )));
-
-
-    operatorController
-    .rightBumper()
-    .whileTrue(new ParallelCommandGroup( new StartEndCommand(
-    () -> m_groundIntake.setRollerSpeed(-0.3),
-    () -> m_groundIntake.setRollerSpeed(0),
-    m_groundIntake), new StartEndCommand(()->m_shintake.setRollersSpeed(0.75,0.8), ()->m_shintake.setRollersSpeed(0), m_shintake)));
-
-      operatorController.y().onTrue(new ArmController(m_arm, 0.72));
+          .onTrue(Macros.A1_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
 
       operatorController
-          .x()
-          .whileTrue(
-              new EndEffectorController(
-                  m_endEffector,
-                  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)); // X Pincher out
+          .y()
+          .onTrue(Macros.A2_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
 
-      operatorController
-          .a()
-          .whileTrue(
-              new EndEffectorController(
-                  m_endEffector,
-                  Constants.EndEffectorConstants.ControlConstants.pincherOutSpeed)); // A Pincher in
+      operatorController.a().onTrue(Macros.GROUND_INTAKE_DOWN(m_groundIntake));
+
+      operatorController.x().onTrue(Macros.GROUND_INTAKE_UP(m_groundIntake));
 
       operatorController
           .povUp()
@@ -224,38 +179,22 @@ public class RobotContainer {
                   () -> m_groundIntake.setRollerSpeed(0.3),
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
+    operatorController
+    .povRight()
+    .onTrue(
+        new GroundIntakeController(m_groundIntake, 0.2, 0));
+
+
+        
       // right bumper intake in
 
-
-     
       // right arrow pivot up
-      operatorController
-          .povRight()
-          .onTrue(
-              new GroundIntakeController(m_groundIntake, 0.07, 0.0));
+      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0.0));
 
       // left center button climber down
-      operatorController
-          .povLeft()
-          .onTrue(new GroundIntakeController(m_groundIntake, 0.17, 0.0));
+      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.17, 0.0));
 
-      // right center button climb up
-      operatorController
-          .start()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_climber.setMotorSpeed(0.9),
-                  () -> m_climber.setMotorSpeed(0.0),
-                  m_climber));
-
-      // up arrow align reef
-      // driverController.povUp().whileTrue(new AlignToAprilTag(reefTagStatsLimelight,
-      // m_drivetrain));
-
-      // down arrow align barge
-      driverController
-          .rightBumper()
-          .whileTrue(new AlignToAprilTag(reefTagStatsLimelight, m_drivetrain));
+      
     }
   }
 
@@ -265,16 +204,25 @@ public class RobotContainer {
 
   public void registerNamedCommands() {
     if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
-      NamedCommands.registerCommand(
-          "Reset Swerve Encoders",
-          new InstantCommand(() -> m_drivetrain.resetAllEncoders())
-              .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+      //   NamedCommands.registerCommand(
+      //       "Reset Swerve Encoders",
+      //       new InstantCommand(() -> m_drivetrain.resetAllEncoders())
+      //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+
+      //   NamedCommands.registerCommand(
+      //       "Reset Heading",
+      //       new InstantCommand(() -> m_drivetrain.zeroHeading())
+      //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
       NamedCommands.registerCommand(
-          "Reset Heading",
-          new InstantCommand(() -> m_drivetrain.zeroHeading())
-              .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+          "Reset Climb",
+          new InstantCommand(() -> m_climber.setMotorSpeed(0.2))
+              .withDeadline(new InstantCommand(() -> new WaitCommand(0.3))));
 
+      NamedCommands.registerCommand(
+          "Shooter RP",
+          new InstantCommand(() -> m_endEffector.setSpeed(1))
+              .withDeadline(new InstantCommand(() -> new WaitCommand(4))));
       //   NamedCommands.registerCommand(
       //       "Auton Reset",
       //       new InstantCommand(() -> m_drivetrain.autonReset())

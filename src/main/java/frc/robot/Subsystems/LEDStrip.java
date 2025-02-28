@@ -106,9 +106,9 @@ public class LEDStrip extends SubsystemBase {
           Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
     } else if (RobotContainer.m_climber.isClimbingUp()) {
       rainbowScroll();
-      // } else if (RobotContainer.m_drivetrain.getAutoPose()
-      //     && RobotContainer.m_shintake.getIsRevved()) {
-      //   solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
+    } else if (RobotContainer.bargeTagStatsLimelight.isTagReached()
+        && RobotContainer.m_shintake.getIsRevved()) {
+      solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
       // } else if (RobotContainer.m_drivetrain.getAutoPose()
       //     || RobotContainer.m_shintake.getIsRevved()) {
       //   blink(

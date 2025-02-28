@@ -128,7 +128,7 @@ public class Drivetrain extends SubsystemBase {
   private static final Drivetrain drivetrain = new Drivetrain();
 
   private RobotConfig config;
-
+  public boolean autoPosed;
   // getHeadingRotation2d()
   public SwerveDriveOdometry odometry =
       new SwerveDriveOdometry(

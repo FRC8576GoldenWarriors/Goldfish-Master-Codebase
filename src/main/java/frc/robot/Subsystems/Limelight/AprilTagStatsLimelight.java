@@ -18,6 +18,9 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   private final String networkTableKey;
   private final String limelightName;
 
+  private boolean tagIsDetected;
+  private boolean tagIsReached;
+
   public AprilTagStatsLimelight(String networkTableKey) {
     this.drivetrain = Drivetrain.getInstance();
     this.networkTableKey = networkTableKey;
@@ -26,6 +29,8 @@ public class AprilTagStatsLimelight extends SubsystemBase {
         NetworkTableInstance.getDefault()
             .getTable(networkTableKey); // "limelight-reef"; // "limelight-processor";
     // configureAliance();
+
+    tagIsReached = false;
   }
 
   public void updateStats() {
@@ -119,6 +124,22 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
     if (currentAlliance.isEmpty()) return false;
     else return blueAlliane.equals(currentAlliance.get());
+  }
+
+  public boolean isTagDetected() {
+    return tagIsDetected;
+  }
+
+  public boolean isTagReached() {
+    return tagIsReached;
+  }
+
+  public void setTagDetected(boolean isDetected) {
+    tagIsDetected = isDetected;
+  }
+
+  public void setTagReached(boolean isReached) {
+    tagIsReached = isReached;
   }
 
   private void updateRobotPoseInSmartDashboard() {
