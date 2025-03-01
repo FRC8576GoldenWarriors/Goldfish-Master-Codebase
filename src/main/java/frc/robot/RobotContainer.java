@@ -9,11 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlignToAprilTag;
-import frc.robot.Commands.ArmController;
 import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
@@ -116,85 +114,78 @@ public class RobotContainer {
           .whileTrue(
               new ParallelCommandGroup(
                   new StartEndCommand(
-                      () -> m_groundIntake.setRollerSpeed(-0.3),
+                      () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
                       () -> m_groundIntake.setRollerSpeed(0),
                       m_groundIntake),
                   new StartEndCommand(
-                      () -> m_shintake.setRollersSpeed(0.65, 0.70),
+                      () -> m_shintake.setRollersSpeed(0.9286, 1.0), // 0.65 0.7
                       () -> m_shintake.setRollersSpeed(0),
                       m_shintake)));
 
-    //   driverController
-    //       .start()
-    //       .whileTrue(
-    //           new StartEndCommand(
-    //               () -> m_climber.setMotorSpeed(0.9),
-    //               () -> m_climber.setMotorSpeed(0.0),
-    //               m_climber));
+      driverController
+          .y()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_climber.setMotorSpeed(0.9),
+                  () -> m_climber.setMotorSpeed(0.0),
+                  m_climber));
 
-    //   driverController
-    //       .back()
-    //       .whileTrue(
-    //           new StartEndCommand(
-    //               () -> m_climber.setMotorSpeed(-0.9),
-    //               () -> m_climber.setMotorSpeed(0.0),
-    //               m_climber));
-
-        driverController.povDown().whileTrue(new StartEndCommand(()-> m_endEffector.setSpeed(0.2), ()->m_endEffector.setSpeed(0.0), m_endEffector));
-        driverController.povUp().whileTrue(new ArmController(m_arm, 0.715));
-      // operator controller
-
-      operatorController
+      driverController
           .b()
-          .onTrue(Macros.A1_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_climber.setMotorSpeed(-0.9),
+                  () -> m_climber.setMotorSpeed(0.0),
+                  m_climber));
+
+      // operator controller
 
       operatorController
           .y()
           .onTrue(Macros.A2_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
 
-      operatorController.a().onTrue(Macros.GROUND_INTAKE_DOWN(m_groundIntake));
+      operatorController
+          .b()
+          .onTrue(Macros.A1_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
 
       operatorController.x().onTrue(Macros.GROUND_INTAKE_UP(m_groundIntake));
 
-      operatorController
-          .povUp()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_groundIntake.setPivotSpeed(-0.3),
-                  () -> m_groundIntake.setPivotSpeed(0),
-                  m_groundIntake)); // Up arrow arm rotates to front
-      operatorController
-          .povDown()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_groundIntake.setPivotSpeed(0.3),
-                  () -> m_groundIntake.setPivotSpeed(0),
-                  m_groundIntake)); // Down arrow arm rotates to back
+      operatorController.a().onTrue(Macros.GROUND_INTAKE_DOWN(m_groundIntake));
 
-      // left bumper eject intake
+      operatorController
+          .start()
+          .whileTrue(
+              new StartEndCommand(
+                  () ->
+                      m_endEffector.setSpeed(
+                          Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
+                  () -> m_endEffector.setSpeed(0.0),
+                  m_endEffector));
+
+      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0.0));
+
+      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.175, 0.3));
+
+      // processor
+      operatorController
+          .rightBumper()
+          .whileTrue(
+              new ParallelCommandGroup(
+                  new StartEndCommand(
+                      () -> m_shintake.setRollersSpeed(-0.4, 0),
+                      () -> m_shintake.setRollersSpeed(0),
+                      m_shintake),
+                  new StartEndCommand(
+                      () -> m_groundIntake.setRollerSpeed(0.4),
+                      () -> m_groundIntake.setRollerSpeed(0),
+                      m_groundIntake)));
       operatorController
           .leftBumper()
           .whileTrue(
               new StartEndCommand(
-                  () -> m_groundIntake.setRollerSpeed(0.3),
+                  () -> m_groundIntake.setRollerSpeed(-0.4),
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
-    operatorController
-    .povRight()
-    .onTrue(
-        new GroundIntakeController(m_groundIntake, 0.2, 0));
-
-
-        
-      // right bumper intake in
-
-      // right arrow pivot up
-      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0.0));
-
-      // left center button climber down
-      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.17, 0.0));
-
-      
     }
   }
 
@@ -215,14 +206,10 @@ public class RobotContainer {
       //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
       NamedCommands.registerCommand(
-          "Reset Climb",
-          new InstantCommand(() -> m_climber.setMotorSpeed(0.2))
-              .withDeadline(new InstantCommand(() -> new WaitCommand(0.3))));
+          "Reset Climb", new InstantCommand(() -> m_climber.setMotorSpeed(0.9)).withTimeout(3.0));
 
       NamedCommands.registerCommand(
-          "Shooter RP",
-          new InstantCommand(() -> m_endEffector.setSpeed(1))
-              .withDeadline(new InstantCommand(() -> new WaitCommand(4))));
+          "Shooter RP", new InstantCommand(() -> m_endEffector.setSpeed(-1.0)).withTimeout(4.0));
       //   NamedCommands.registerCommand(
       //       "Auton Reset",
       //       new InstantCommand(() -> m_drivetrain.autonReset())

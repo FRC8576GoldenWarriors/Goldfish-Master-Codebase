@@ -45,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "180 Deg Rotation Test",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

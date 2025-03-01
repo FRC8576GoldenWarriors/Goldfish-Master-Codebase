@@ -4,7 +4,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
@@ -40,9 +39,6 @@ public class AlignToAprilTag extends Command {
 
   private double goalDistance;
 
-  private CommandXboxController c =
-      new CommandXboxController(Constants.ControllerConstants.driverControllerPort);
-
   public AlignToAprilTag(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
     this.aprilTagStatsLimelight = aprilTagStatsLimelight;
     this.drivetrain = drivetrain;
@@ -69,14 +65,19 @@ public class AlignToAprilTag extends Command {
 
     List<Integer> usableTags =
         aprilTagStatsLimelight.isBlueAlliance()
-            ? Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS : Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS;
+            ? Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS
+            : Constants.VisionConstants.aprilTagConstants.IDs.RED_TAG_IDS;
     SmartDashboard.putBoolean(
         "Can align",
         aprilTagStatsLimelight.hasValidTargets()
             && usableTags.contains(aprilTagStatsLimelight.getID()));
 
+    // if tag detected
     if (aprilTagStatsLimelight.hasValidTargets()
         && usableTags.contains(aprilTagStatsLimelight.getID())) {
+
+      aprilTagStatsLimelight.setTagDetected(true);
+
       detectedWidth =
           realWidth
               * Math.sqrt(aprilTagStatsLimelight.getArea())
@@ -144,7 +145,7 @@ public class AlignToAprilTag extends Command {
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
           }
         }
-        sideOutput = -RobotContainer.driverController.getLeftX() * 3;
+        sideOutput = -RobotContainer.driverController.getLeftX() * 4.0;
       } else {
         rotationOutput = rotationPID.calculate(tx, 0);
         SmartDashboard.putNumber("Vision PID Side output", sideOutput);
@@ -164,6 +165,10 @@ public class AlignToAprilTag extends Command {
       SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
       SmartDashboard.putNumber("Tag distance", currentDistance);
     }
+    // tag not detected
+    else {
+      aprilTagStatsLimelight.setTagDetected(false);
+    }
   }
 
   @Override
@@ -173,6 +178,7 @@ public class AlignToAprilTag extends Command {
     drivetrain.drive(new Translation2d(0, 0), 0, false, true);
     // drivetrain.stopModules();
     aprilTagStatsLimelight.setTagReached(false);
+    aprilTagStatsLimelight.setTagDetected(false);
   }
 
   @Override

@@ -27,7 +27,7 @@ public class Arm extends SubsystemBase {
             MotorType.kBrushless,
             Constants.ArmConstants.ControlConstants.motorIsInverted,
             IdleMode.kCoast,
-            45);
+            40);
 
     armAbsEncoder =
         new DutyCycleEncoder(

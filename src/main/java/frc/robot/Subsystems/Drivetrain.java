@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
+import org.littletonrobotics.junction.Logger;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -290,6 +291,7 @@ public class Drivetrain extends SubsystemBase {
     // m_posePublish.set(getPose2d());
     m_ModuleStatesActual.set(getModuleStates());
     m_pose.set(odometry.getPoseMeters());
+    Logger.recordOutput("Robot pose", odometry.getPoseMeters());
     // rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
     // Logger.recordOutput("Robot Angle", getHeading());
@@ -337,6 +339,9 @@ public class Drivetrain extends SubsystemBase {
     // Logger.recordOutput("Drivetrain/Module States", getModuleStates());
 
     odometry.update(getHeadingRotation2d(), getModulePositions());
+
+    SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
+    Logger.recordOutput("Gyro Connected", gyro.isConnected());
   }
 
   public void swerveDrive(

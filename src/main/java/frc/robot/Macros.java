@@ -57,12 +57,7 @@ public class Macros {
                             () -> shintake.setRollersSpeed(0.25),
                             () -> shintake.setRollersSpeed(0),
                             shintake)
-                        .withTimeout(0.25) // .
-                    // andThen(new StartEndCommand( //replace with instant or runnable command later
-                    //   () -> shintake.setRollersSpeed(0.75, 0.8), //tune
-                    //   () -> shintake.setRollersSpeed(0.75, 0.8),
-                    //   shintake))
-                    ),
+                        .withTimeout(0.25)),
                     new ArmController(
                         arm, Constants.ArmConstants.ControlConstants.storedPosition))));
 
@@ -112,12 +107,7 @@ public class Macros {
                             () -> shintake.setRollersSpeed(0.25),
                             () -> shintake.setRollersSpeed(0),
                             shintake)
-                        .withTimeout(0.25)
-                        .andThen(
-                            new StartEndCommand( // replace with instant or runnable command later
-                                () -> shintake.setRollersSpeed(0.75, 0.8), // tune
-                                () -> shintake.setRollersSpeed(0.75, 0.8),
-                                shintake))),
+                        .withTimeout(0.25)),
                     new GroundIntakeController(groundIntake, 0.175, 0.3).withTimeout(0.535),
                     new ArmController(
                         arm, Constants.ArmConstants.ControlConstants.storedPosition))));
@@ -128,7 +118,7 @@ public class Macros {
   public static SequentialCommandGroup GROUND_INTAKE_DOWN(GroundIntake groundIntake) {
     SequentialCommandGroup command =
         new SequentialCommandGroup(
-            new GroundIntakeController(groundIntake, 0.175, 0.3)
+            new GroundIntakeController(groundIntake, 0.22, -0.7) // desired angle 0.175
                 .until(() -> groundIntake.getAlgaeDetected()));
     return command;
   }
@@ -141,8 +131,11 @@ public class Macros {
     return command;
   }
 
-  public static SequentialCommandGroup CLIMB_PREP(Arm arm, GroundIntake groundIntake){
-    SequentialCommandGroup command = new SequentialCommandGroup(new ParallelCommandGroup(new ArmController(arm, 0.715), new GroundIntakeController(groundIntake, 0.2, 0.0)));
+  public static SequentialCommandGroup CLIMB_PREP(Arm arm, GroundIntake groundIntake) {
+    SequentialCommandGroup command =
+        new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                new ArmController(arm, 0.715), new GroundIntakeController(groundIntake, 0.2, 0.0)));
     return command;
   }
 }

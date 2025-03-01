@@ -80,8 +80,11 @@ public class ArmController extends Command {
 
     if (encoder.get() > 0.79) {
       voltage = 0.0;
-      arm.setArmSpeed(0);
       arm.setArmMotorIdleMode(IdleMode.kBrake);
+    }
+
+    if (!encoder.isConnected()) {
+      voltage = 0.0;
     }
 
     arm.setArmVoltage(voltage);

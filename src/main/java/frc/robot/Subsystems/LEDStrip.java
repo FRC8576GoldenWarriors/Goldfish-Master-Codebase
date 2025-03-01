@@ -75,7 +75,7 @@ public class LEDStrip extends SubsystemBase {
   public void breathe(LEDPattern pattern, double speed) {
     SmartDashboard.putString(getName(), "breathe");
 
-    setPattern(pattern.breathe(Second.of(speed)));
+    setPattern(pattern.breathe(Second.of(speed)).scrollAtRelativeSpeed(Percent.per(Second).of(25)));
   }
 
   public void progress(LEDPattern mask, double percentage) {
@@ -106,20 +106,22 @@ public class LEDStrip extends SubsystemBase {
           Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
     } else if (RobotContainer.m_climber.isClimbingUp()) {
       rainbowScroll();
-    } else if (RobotContainer.bargeTagStatsLimelight.isTagReached()
-        && RobotContainer.m_shintake.getIsRevved()) {
+    } else if (RobotContainer.bargeTagStatsLimelight.isTagReached()) {
       solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
-      // } else if (RobotContainer.m_drivetrain.getAutoPose()
-      //     || RobotContainer.m_shintake.getIsRevved()) {
-      //   blink(
-      //       Constants.LEDConstants.PatternConfig.kshooterNotReady,
-      //       Constants.LEDConstants.PatternConfig.kshooterNotReadyBlinkSpeed);
-    } else if (driverController.getLeftBumper()) {
-      blink(
+
+    } else if (RobotContainer.bargeTagStatsLimelight.isTagDetected()) {
+      breathe(
           Constants.LEDConstants.PatternConfig.kAprilTags,
           Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
+    }
 
-    } else if (RobotContainer.m_groundIntake.getAlgaeDetected()) { // algae ground intake/hold
+    // else if (driverController.getLeftBumper()) {
+    //   blink(
+    //       Constants.LEDConstants.PatternConfig.kAprilTags,
+    //       Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
+
+    // }
+    else if (RobotContainer.m_groundIntake.getAlgaeDetected()) { // algae ground intake/hold
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreathe,
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreatheSpeed);

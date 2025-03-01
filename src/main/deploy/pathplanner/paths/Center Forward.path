@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 7.0
+        "x": 7.252561475409835,
+        "y": 4.043
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.0,
-        "y": 7.0
+        "x": 6.6651639344262295,
+        "y": 4.043
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.5,
-        "y": 7.0
+        "x": 5.754,
+        "y": 4.043
       },
       "prevControl": {
-        "x": 7.5,
-        "y": 7.0
+        "x": 6.089869735646774,
+        "y": 4.043
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 180.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -46,11 +41,11 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.5,
+    "velocity": 0,
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Coral RP",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

@@ -31,6 +31,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     // configureAliance();
 
     tagIsReached = false;
+    tagIsDetected = false;
   }
 
   public void updateStats() {
