@@ -176,7 +176,7 @@ public class RobotContainer {
                       () -> m_shintake.setRollersSpeed(0),
                       m_shintake),
                   new StartEndCommand(
-                      () -> m_groundIntake.setRollerSpeed(0.4),
+                      () -> m_groundIntake.setRollerSpeed(1.0),
                       () -> m_groundIntake.setRollerSpeed(0),
                       m_groundIntake)));
       operatorController

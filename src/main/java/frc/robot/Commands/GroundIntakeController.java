@@ -43,13 +43,13 @@ public class GroundIntakeController extends Command {
     if (encoder.get() - desiredAngle < 0) { // going down
       motorOutput = 0.4;
       SmartDashboard.putBoolean("True: Going Up, False: Going Down", false);
-      if (Math.abs(encoder.get() - desiredAngle) < 0.01) {
+      if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
         motorOutput = 0.0;
       }
     } else { // going up
       motorOutput = -0.4;
       SmartDashboard.putBoolean("True: Going Up, False: Going Down", true);
-      if (Math.abs(encoder.get() - desiredAngle) < 0.01) {
+      if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
         motorOutput = 0.0;
       }
     }
