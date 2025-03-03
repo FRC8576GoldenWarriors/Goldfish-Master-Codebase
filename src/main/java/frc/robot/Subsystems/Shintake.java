@@ -123,5 +123,4 @@ public class Shintake extends SubsystemBase {
   public boolean getIsRevved() {
     return isRevved;
   }
-  
 }

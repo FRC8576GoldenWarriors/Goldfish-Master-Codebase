@@ -36,7 +36,7 @@ public class Macros {
                                                     arm.getEncoder().get()
                                                         - Constants.ArmConstants.ControlConstants
                                                             .handoffPosition)
-                                                < 0.005)))
+                                                < 0.01)))
                             .andThen(
                                 new ParallelCommandGroup(
                                     new ArmController(
@@ -118,7 +118,7 @@ public class Macros {
   public static SequentialCommandGroup GROUND_INTAKE_DOWN(GroundIntake groundIntake) {
     SequentialCommandGroup command =
         new SequentialCommandGroup(
-            new GroundIntakeController(groundIntake, 0.23, -1.0) // desired angle 0.175
+            new GroundIntakeController(groundIntake, 0.23, -0.8) // desired angle 0.175 speed: -1
                 .until(() -> groundIntake.getAlgaeDetected()));
     return command;
   }
