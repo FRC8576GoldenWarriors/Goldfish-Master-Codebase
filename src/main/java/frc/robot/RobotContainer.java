@@ -87,9 +87,9 @@ public class RobotContainer {
       m_SimEndEffector = new SimEndEffector();
       m_drivetrainSim.setDefaultCommand(new SimSwerveDrive());
     } else {
-    //   String logPath = LogFileUtil.findReplayLog();
-    //   Logger.setReplaySource(new WPILOGReader(logPath));
-    //   Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+      //   String logPath = LogFileUtil.findReplayLog();
+      //   Logger.setReplaySource(new WPILOGReader(logPath));
+      //   Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
     }
     // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -118,7 +118,7 @@ public class RobotContainer {
                       () -> m_groundIntake.setRollerSpeed(0),
                       m_groundIntake),
                   new StartEndCommand(
-                      () -> m_shintake.setRollersSpeed(0.9286, 1.0), // 0.65 0.7
+                      () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
                       () -> m_shintake.setRollersSpeed(0),
                       m_shintake)));
 
@@ -161,7 +161,6 @@ public class RobotContainer {
                           Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
                   () -> m_endEffector.setSpeed(0.0),
                   m_endEffector));
-
       operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0.0));
 
       operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.175, 0.3));
@@ -194,26 +193,29 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
-    if (SimConstants.currentMode.equals(SimConstants.Mode.REAL)) {
-      //   NamedCommands.registerCommand(
-      //       "Reset Swerve Encoders",
-      //       new InstantCommand(() -> m_drivetrain.resetAllEncoders())
-      //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-      //   NamedCommands.registerCommand(
-      //       "Reset Heading",
-      //       new InstantCommand(() -> m_drivetrain.zeroHeading())
-      //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
+    //   NamedCommands.registerCommand(
+    //       "Reset Swerve Encoders",
+    //       new InstantCommand(() -> m_drivetrain.resetAllEncoders())
+    //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-      NamedCommands.registerCommand(
-          "Reset Climb", new InstantCommand(() -> m_climber.setMotorSpeed(0.9)).withTimeout(3.0));
+    //   NamedCommands.registerCommand(
+    //       "Reset Heading",
+    //       new InstantCommand(() -> m_drivetrain.zeroHeading())
+    //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
 
-      NamedCommands.registerCommand(
-          "Shooter RP", new InstantCommand(() -> m_endEffector.setSpeed(-1.0)).withTimeout(4.0));
-      //   NamedCommands.registerCommand(
-      //       "Auton Reset",
-      //       new InstantCommand(() -> m_drivetrain.autonReset())
-      //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))));
-    }
+    NamedCommands.registerCommand(
+        "Reset Climb", new InstantCommand(() -> m_climber.setMotorSpeed(0.9)).withTimeout(3.0));
+
+    NamedCommands.registerCommand(
+        "Shooter RP",
+        new StartEndCommand(
+                () -> m_endEffector.setSpeed(-1.0), () -> m_endEffector.setSpeed(0), m_endEffector)
+            .withTimeout(
+                5)); // InstantCommand(() -> m_endEffector.setSpeed(-1.0)).withTimeout(4.0));
+    //   //   NamedCommands.registerCommand(
+    //       "Auton Reset",
+    //       new InstantCommand(() -> m_drivetrain.autonReset())
+    //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))))
   }
 }

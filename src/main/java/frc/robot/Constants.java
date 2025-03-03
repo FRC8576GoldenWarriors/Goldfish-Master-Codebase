@@ -32,7 +32,7 @@ public class Constants {
         public static class DistanceConstants {
 
           public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
-              2.2; // MAKE SURE TO TUNE THIS
+              3.2; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
@@ -279,7 +279,7 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -0.65; // -0.25
+      public static final double pincherInSpeed = -0.9; // -0.65
       public static final double pincherOutSpeed = 1.00;
 
       public static final double pincherInRunExtension = 0.25;
