@@ -91,9 +91,8 @@ public class RobotContainer {
       //   Logger.setReplaySource(new WPILOGReader(logPath));
       //   Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
     }
-    // Add all the choices of Autonomous modes to the Smart Dashboard
+    // Add all the choices of Autonomous modes to the Smart Dashboar
     autoChooser = AutoBuilder.buildAutoChooser();
-
     configureBindings();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
