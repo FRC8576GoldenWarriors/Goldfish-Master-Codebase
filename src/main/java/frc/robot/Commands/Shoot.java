@@ -18,7 +18,8 @@ public class Shoot extends Command {
     this.shintake = shintake;
     this.topRollerSpeed = topRollerSpeed;
     this.bottomRollerSpeed = bottomRollerSpeed;
-    // Use addRequirements() here to declare subsystem dependencies.
+    // Use addRequirements() here to declare subsystem dependencies.]
+    addRequirements(shintake);
   }
 
   // Called when the command is initially scheduled.

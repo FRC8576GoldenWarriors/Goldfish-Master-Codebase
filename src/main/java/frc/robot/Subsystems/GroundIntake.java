@@ -55,7 +55,7 @@ public class GroundIntake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
-
+    Logger.recordOutput("Ground_Intake/Algae Detected", getAlgaeDetected());
     SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
     SmartDashboard.putBoolean("Hold Photoelectric", getAlgaeDetected());
   }

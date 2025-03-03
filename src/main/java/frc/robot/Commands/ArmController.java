@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Arm;
+import org.littletonrobotics.junction.Logger;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ArmController extends Command {
@@ -77,6 +78,9 @@ public class ArmController extends Command {
     SmartDashboard.putNumber("Arm FF Voltage", FFVoltage);
     SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);
     SmartDashboard.putNumber("Arm Total Voltage", voltage);
+    Logger.recordOutput("Arm/FF Voltage", FFVoltage);
+    Logger.recordOutput("Arm/PID Voltage", PIDVoltage);
+    Logger.recordOutput("Arm/Total Voltage", voltage);
 
     if (encoder.get() > 0.79) {
       voltage = 0.0;
@@ -88,7 +92,8 @@ public class ArmController extends Command {
     }
 
     arm.setArmVoltage(voltage);
-    SmartDashboard.putNumber("Arm Total Controller Voltage", voltage);
+    SmartDashboard.putNumber("Arm/Total Controller Voltage", voltage);
+    Logger.recordOutput("Arm/Total Controller Voltage", voltage);
   }
 
   // Called once the command ends or is interrupted.

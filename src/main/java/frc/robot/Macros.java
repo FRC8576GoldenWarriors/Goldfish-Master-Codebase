@@ -36,7 +36,7 @@ public class Macros {
                                                     arm.getEncoder().get()
                                                         - Constants.ArmConstants.ControlConstants
                                                             .handoffPosition)
-                                                < 0.005)))
+                                                < 0.01)))
                             .andThen(
                                 new ParallelCommandGroup(
                                     new ArmController(

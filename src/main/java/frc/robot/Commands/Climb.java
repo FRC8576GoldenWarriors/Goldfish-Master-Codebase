@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Climber;
+import org.littletonrobotics.junction.Logger;
 
 public class Climb extends Command {
   private final Climber climber;
@@ -44,6 +45,9 @@ public class Climb extends Command {
     FFVoltage = feedforward.calculate(0);
 
     outputVoltage = bangBangVoltage + FFVoltage;
+    Logger.recordOutput("Climber/Climb Bang Bang Voltage", bangBangVoltage);
+    Logger.recordOutput("Climber/Climb FF Voltage", FFVoltage);
+    Logger.recordOutput("Climber/Climb Total Voltage", outputVoltage);
 
     climber.setMotorVoltage(outputVoltage);
   }

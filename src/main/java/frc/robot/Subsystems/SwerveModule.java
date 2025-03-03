@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class SwerveModule extends SubsystemBase {
 
@@ -74,11 +75,35 @@ public class SwerveModule extends SubsystemBase {
     lastAngle = getState().angle;
   }
 
+  public double getDriveMotorVoltage() {
+    return driveMotor.getBusVoltage();
+  }
+
+  public double getTurnMotorVoltage() {
+    return turnMotor.getBusVoltage();
+  }
+
+  public double getDriveMotorCurrent() {
+    return driveMotor.getOutputCurrent();
+  }
+
+  public double getTurnMotorCurrent() {
+    return turnMotor.getOutputCurrent();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     // SmartDashboard.putNumber(turnMotorId+"", turnMotor.getEncoder().getPosition());
     // SmartDashboard.putNumber(driveMotorId+" Current: ", driveMotor.getOutputCurrent() );
+    Logger.recordOutput(
+        "Drive Motor " + absoluteEncoder.getDeviceID() + " Voltage", getDriveMotorVoltage());
+    Logger.recordOutput(
+        "Turn Motor " + absoluteEncoder.getDeviceID() + " Voltage", getTurnMotorVoltage());
+    Logger.recordOutput(
+        "Drive Motor " + absoluteEncoder.getDeviceID() + " Current", getDriveMotorCurrent());
+    Logger.recordOutput(
+        "Turn Motor " + absoluteEncoder.getDeviceID() + " Current", getTurnMotorCurrent());
   }
 
   public void setBrake(boolean brake) {

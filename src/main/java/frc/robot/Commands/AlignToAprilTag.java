@@ -9,6 +9,7 @@ import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
 import java.util.List;
+import org.littletonrobotics.junction.Logger;
 
 // import frc.robot.subsystems.Limelight.SpeakerAllignment;
 
@@ -71,6 +72,10 @@ public class AlignToAprilTag extends Command {
         "Can align",
         aprilTagStatsLimelight.hasValidTargets()
             && usableTags.contains(aprilTagStatsLimelight.getID()));
+    Logger.recordOutput(
+        "Limelight/Can align",
+        aprilTagStatsLimelight.hasValidTargets()
+            && usableTags.contains(aprilTagStatsLimelight.getID()));
 
     // if tag detected
     if (aprilTagStatsLimelight.hasValidTargets()
@@ -107,6 +112,7 @@ public class AlignToAprilTag extends Command {
       // currentDistance = aprilTagStatsLimelight.calculateDistance();
 
       SmartDashboard.putBoolean("Is Running", true);
+      Logger.recordOutput("Limelight/Is Running", true);
 
       goalDistance =
           aprilTagStatsLimelight.isBargeLimelight()
@@ -164,6 +170,12 @@ public class AlignToAprilTag extends Command {
       SmartDashboard.putNumber("Abs rotation", Math.abs(drivetrain.getHeading()));
       SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
       SmartDashboard.putNumber("Tag distance", currentDistance);
+
+      Logger.recordOutput("Limelight/Vision PID Drive output", driveOutput);
+      Logger.recordOutput("Limelight/Vision PID Rotate output", rotationOutput);
+      Logger.recordOutput("Limelight/Abs rotation", Math.abs(drivetrain.getHeading()));
+      Logger.recordOutput("Limelight/Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
+      Logger.recordOutput("Limelight/Tag distance", currentDistance);
     }
     // tag not detected
     else {

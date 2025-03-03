@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.GroundIntake;
+import org.littletonrobotics.junction.Logger;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class GroundIntakeController extends Command {
@@ -43,12 +44,14 @@ public class GroundIntakeController extends Command {
     if (encoder.get() - desiredAngle < 0) { // going down
       motorOutput = 0.4;
       SmartDashboard.putBoolean("True: Going Up, False: Going Down", false);
+      Logger.recordOutput("Ground_Intake/Ground Intake Up", false);
       if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
         motorOutput = 0.0;
       }
     } else { // going up
       motorOutput = -0.4;
       SmartDashboard.putBoolean("True: Going Up, False: Going Down", true);
+      Logger.recordOutput("Ground_Intake/Ground Intake Up", true);
       if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
         motorOutput = 0.0;
       }
@@ -58,6 +61,7 @@ public class GroundIntakeController extends Command {
     intake.setRollerSpeed(rollerSpeed);
 
     SmartDashboard.putNumber("Intake Pivot Motor Output", motorOutput);
+    Logger.recordOutput("Ground_Intake/Intake Pivot Motor Output", motorOutput);
   }
 
   // Called once the command ends or is interrupted.

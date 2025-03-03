@@ -87,9 +87,9 @@ public class RobotContainer {
       m_SimEndEffector = new SimEndEffector();
       m_drivetrainSim.setDefaultCommand(new SimSwerveDrive());
     } else {
-      String logPath = LogFileUtil.findReplayLog();
-      Logger.setReplaySource(new WPILOGReader(logPath));
-      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+    //   String logPath = LogFileUtil.findReplayLog();
+    //   Logger.setReplaySource(new WPILOGReader(logPath));
+    //   Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
     }
     // Add all the choices of Autonomous modes to the Smart Dashboard
     autoChooser = AutoBuilder.buildAutoChooser();

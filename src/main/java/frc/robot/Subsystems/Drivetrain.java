@@ -287,11 +287,14 @@ public class Drivetrain extends SubsystemBase {
 
     double yaw = gyro.getYaw().getValueAsDouble();
     SmartDashboard.putNumber("Robot Angle", getHeading());
+    Logger.recordOutput("Drivetrain/Robot Angle", getHeading());
     field.setRobotPose(getPose2d());
     // m_posePublish.set(getPose2d());
     m_ModuleStatesActual.set(getModuleStates());
+    Logger.recordOutput("Drivetrain/Swerve States Actual", getModuleStates());
     m_pose.set(odometry.getPoseMeters());
-    Logger.recordOutput("Robot pose", odometry.getPoseMeters());
+    Logger.recordOutput("Drivertrain/Robot pose", getPose2d());
+
     // rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
     // Logger.recordOutput("Robot Angle", getHeading());
@@ -339,9 +342,10 @@ public class Drivetrain extends SubsystemBase {
     // Logger.recordOutput("Drivetrain/Module States", getModuleStates());
 
     odometry.update(getHeadingRotation2d(), getModulePositions());
-
     SmartDashboard.putBoolean("Gyro Connected", gyro.isConnected());
-    Logger.recordOutput("Gyro Connected", gyro.isConnected());
+    Logger.recordOutput("Drivetrain/Gyro Connected", gyro.isConnected());
+
+    Logger.recordOutput("Drivetrain/Module Positions", getModulePositions());
   }
 
   public void swerveDrive(
@@ -384,6 +388,7 @@ public class Drivetrain extends SubsystemBase {
         Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
             chassisSpeeds, centerOfRotation);
     m_ModulePublisherIn.set(moduleStates);
+    Logger.recordOutput("Drivetrain/Swerve States In", moduleStates);
     setModuleStates(moduleStates);
   }
 

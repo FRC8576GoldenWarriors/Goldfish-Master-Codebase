@@ -1,32 +1,8 @@
 [
   {
-    "name": "/Preferences/Spark 2 Flashes",
+    "name": "/Preferences/Spark 7 Flashes",
     "type": "double",
-    "value": 32.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 1 Flashes",
-    "type": "double",
-    "value": 32.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 4 Flashes",
-    "type": "double",
-    "value": 32.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 3 Flashes",
-    "type": "double",
-    "value": 32.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -34,15 +10,15 @@
   {
     "name": "/Preferences/Spark 6 Flashes",
     "type": "double",
-    "value": 32.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Spark 5 Flashes",
+    "name": "/Preferences/Spark 1 Flashes",
     "type": "double",
-    "value": 32.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
@@ -50,79 +26,39 @@
   {
     "name": "/Preferences/Spark 8 Flashes",
     "type": "double",
-    "value": 32.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Spark 7 Flashes",
+    "name": "/Preferences/Spark 4 Flashes",
     "type": "double",
-    "value": 32.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Spark 52 Flashes",
+    "name": "/Preferences/Spark 5 Flashes",
     "type": "double",
-    "value": 29.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Spark 51 Flashes",
+    "name": "/Preferences/Spark 3 Flashes",
     "type": "double",
-    "value": 29.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Spark 54 Flashes",
+    "name": "/Preferences/Spark 2 Flashes",
     "type": "double",
-    "value": 29.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 53 Flashes",
-    "type": "double",
-    "value": 29.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 56 Flashes",
-    "type": "double",
-    "value": 29.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 55 Flashes",
-    "type": "double",
-    "value": 29.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 58 Flashes",
-    "type": "double",
-    "value": 29.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Spark 57 Flashes",
-    "type": "double",
-    "value": 29.0,
+    "value": 1.0,
     "properties": {
       "persistent": true
     }
