@@ -2,6 +2,7 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Climber;
@@ -45,11 +46,17 @@ public class Climb extends Command {
     FFVoltage = feedforward.calculate(0);
 
     outputVoltage = bangBangVoltage + FFVoltage;
+   
+    climber.setMotorVoltage(outputVoltage);
+
+    SmartDashboard.putNumber("Climb Motor Encoder", climber.getEncoderPosition());
+
     Logger.recordOutput("Climber/Climb Bang Bang Voltage", bangBangVoltage);
     Logger.recordOutput("Climber/Climb FF Voltage", FFVoltage);
     Logger.recordOutput("Climber/Climb Total Voltage", outputVoltage);
+    Logger.recordOutput("Climber/Climb Encoder Position", climber.getEncoderPosition());
+    
 
-    climber.setMotorVoltage(outputVoltage);
   }
 
   @Override

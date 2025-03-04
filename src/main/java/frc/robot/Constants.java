@@ -414,12 +414,12 @@ public class Constants {
 
       // lg ground intake
       public static final LEDPattern kLEDAlgaeGroundBreathe =
-          LEDPattern.solid(new Color(0, 255, 180));
+          LEDPattern.solid(new Color(0, 255, 145));
       public static final double kLEDAlgaeGroundBreatheSpeed = 2;
 
       // lg arm intake
       public static final LEDPattern kLEDAlgaePincherBlink =
-          LEDPattern.solid(new Color(0, 255, 180));
+          LEDPattern.solid(new Color(0, 255, 145));
       public static final double kLEDAlgaePincherBlinkSpeed = 0.075;
 
       // coral photoeletric detects coral
@@ -431,7 +431,7 @@ public class Constants {
       public static final double kLEDCoralIntakeBlinkSpeed = 0.075;
 
       // robot idle (no status) - breathing pattern
-      public static final LEDPattern kLEDNoStatusBreathe = LEDPattern.solid(Color.kGoldenrod);
+      public static final LEDPattern kLEDNoStatusBreathe = LEDPattern.solid(Color.kYellow);
       // LEDPattern.gradient(
       //     GradientType.kContinuous, new Color(255, 200, 0), new Color(255, 255, 200));
       public static final double kLEDNoStatusBreatheSpeed = 25;
