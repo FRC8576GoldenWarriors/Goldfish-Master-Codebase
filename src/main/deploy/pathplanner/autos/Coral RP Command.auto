@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Command Test"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Shooter RP"

@@ -12,11 +12,9 @@
     "test paths"
   ],
   "autoFolders": [
-    "Coral Spam Autos",
-    "Dealgae Path",
     "Coral RP",
-    "Tuning Paths",
-    "test paths"
+    "Coral Spam Autos",
+    "Tuning Paths"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

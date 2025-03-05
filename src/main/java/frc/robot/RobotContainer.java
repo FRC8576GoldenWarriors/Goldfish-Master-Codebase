@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -27,7 +26,6 @@ import frc.robot.Subsystems.Shintake;
 import frc.robot.Subsystems.Simulation.DrivetrainSim;
 import frc.robot.Subsystems.Simulation.SimConstants;
 import frc.robot.Subsystems.Simulation.SimEndEffector;
-
 
 public class RobotContainer {
 
@@ -79,6 +77,7 @@ public class RobotContainer {
                   .BARGE_NETWORKTABLE_KEY);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
+      registerNamedCommands();
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       // System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();
@@ -91,6 +90,7 @@ public class RobotContainer {
     }
     // Add all the choices of Autonomous modes to the Smart Dashboar
     autoChooser = AutoBuilder.buildAutoChooser();
+
     configureBindings();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
@@ -158,9 +158,9 @@ public class RobotContainer {
                           Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
                   () -> m_endEffector.setSpeed(0.0),
                   m_endEffector));
-      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0.0));
+      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.09, 0.0));
 
-      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.175, 0.3));
+      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.23, -0.8));
 
       // processor
       operatorController

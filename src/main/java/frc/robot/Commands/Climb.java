@@ -46,7 +46,7 @@ public class Climb extends Command {
     FFVoltage = feedforward.calculate(0);
 
     outputVoltage = bangBangVoltage + FFVoltage;
-   
+
     climber.setMotorVoltage(outputVoltage);
 
     SmartDashboard.putNumber("Climb Motor Encoder", climber.getEncoderPosition());
@@ -55,8 +55,6 @@ public class Climb extends Command {
     Logger.recordOutput("Climber/Climb FF Voltage", FFVoltage);
     Logger.recordOutput("Climber/Climb Total Voltage", outputVoltage);
     Logger.recordOutput("Climber/Climb Encoder Position", climber.getEncoderPosition());
-    
-
   }
 
   @Override

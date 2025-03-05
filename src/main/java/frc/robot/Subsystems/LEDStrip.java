@@ -126,7 +126,7 @@ public class LEDStrip extends SubsystemBase {
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreathe,
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreatheSpeed);
 
-    } else if (!RobotContainer.m_endEffector.getAlgaeDigitalInput().get()) { // algae end effector
+    } else if (RobotContainer.m_endEffector.getAlgaeDetected()) { // algae end effector
       blink(
           Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlink,
           Constants.LEDConstants.PatternConfig.kLEDAlgaePincherBlinkSpeed);
@@ -148,9 +148,7 @@ public class LEDStrip extends SubsystemBase {
     // coral motor running
     //  }
     else { // gold breathe idle
-      breathe(
-          Constants.LEDConstants.PatternConfig.kLEDNoStatusBreathe,
-          Constants.LEDConstants.PatternConfig.kLEDNoStatusBreatheSpeed);
+      scroll(Constants.LEDConstants.PatternConfig.kLEDNoStatusBreathe, 50);
     }
 
     led.setData(buffer);
