@@ -230,7 +230,7 @@ public class Constants {
     public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
 
     public static final double AUTO_KP_TTANSLATION = 1.35; // 1.15
-    public static final double AUTO_KP_ROTATIONAL = 0.1; // 0.1
+    public static final double AUTO_KP_ROTATIONAL = 0.07; // 0.1
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
     public static final int DRIVE_CURRENT_LIMIT = 45;
@@ -242,8 +242,8 @@ public class Constants {
 
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
-            new PIDConstants(AUTO_KP_TTANSLATION, 0, 0),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0));
+            new PIDConstants(AUTO_KP_TTANSLATION, 0, 0.1),
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0.001));
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
     // Swerve Kinematics
@@ -298,14 +298,23 @@ public class Constants {
 
       public static final boolean motorIsInverted = true;
 
-      public static final double kS = 0.003;
-      public static final double kG = 0.2500;
-      public static final double kV = 0.1811;
+      // public static final double kS = 0.003;
+      // public static final double kG = 0.2500;
+      // public static final double kV = 0.1811;
+      // public static final double kA = 0;
+
+      // public static final double kP = 20.0;
+      // public static final double kI = 0.0;
+      // public static final double kD = 0.1;
+
+      public static final double kS = 0.004;
+      public static final double kG = 0.2;
+      public static final double kV = 0.075; // 0.15
       public static final double kA = 0;
 
-      public static final double kP = 20.0;
+      public static final double kP = 50;
       public static final double kI = 0.0;
-      public static final double kD = 0.1;
+      public static final double kD = 1;
 
       public static final double storedPosition = 0.02;
       public static final double A1Position = 0.31;

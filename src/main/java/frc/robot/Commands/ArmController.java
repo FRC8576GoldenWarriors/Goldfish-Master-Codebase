@@ -6,7 +6,8 @@ package frc.robot.Commands;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +23,10 @@ public class ArmController extends Command {
   private DutyCycleEncoder encoder;
 
   private ArmFeedforward feedForward;
-  private PIDController feedback;
+  // private PIDController feedback;
+
+  private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+  private ProfiledPIDController feedback;
 
   private double setpoint;
   private double voltage;
@@ -37,28 +41,39 @@ public class ArmController extends Command {
 
     this.arm = arm;
 
-    this.feedForward =
+    constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+
+    feedback =
+        new ProfiledPIDController(
+            Constants.ArmConstants.ControlConstants.kP,
+            Constants.ArmConstants.ControlConstants.kI,
+            Constants.ArmConstants.ControlConstants.kD,
+            constraints);
+
+    feedForward =
         new ArmFeedforward(
             Constants.ArmConstants.ControlConstants.kS,
             Constants.ArmConstants.ControlConstants.kG,
             Constants.ArmConstants.ControlConstants.kV,
             Constants.ArmConstants.ControlConstants.kA);
 
-    this.feedback =
-        new PIDController(
-            Constants.ArmConstants.ControlConstants.kP,
-            Constants.ArmConstants.ControlConstants.kI,
-            Constants.ArmConstants.ControlConstants.kD);
+    // feedback =
+    //     new PIDController(
+    //         Constants.ArmConstants.ControlConstants.kP,
+    //         Constants.ArmConstants.ControlConstants.kI,
+    //         Constants.ArmConstants.ControlConstants.kD);
 
     this.setpoint = setpoint;
 
-    this.encoder = arm.getEncoder();
+    encoder = arm.getEncoder();
 
-    this.COMOffset = 0.013194;
+    COMOffset = 0.013194;
 
     isFinished = false;
 
     addRequirements(arm);
+
+    SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
   }
 
   // Called when the command is initially scheduled.
@@ -69,7 +84,13 @@ public class ArmController extends Command {
   @Override
   public void execute() {
 
-    FFVoltage = feedForward.calculate(setpoint + COMOffset, 1.0);
+    // double kg =0;
+    // SmartDashboard.getNumber("Arm kg", kg);
+
+    // feedForward.setKg(kg);
+
+    // ff passed in radians
+    FFVoltage = feedForward.calculate((setpoint + COMOffset - 0.25) * Math.PI * 2, 2.0);
 
     PIDVoltage = feedback.calculate(encoder.get(), setpoint);
 
@@ -82,7 +103,7 @@ public class ArmController extends Command {
     Logger.recordOutput("Arm/PID Voltage", PIDVoltage);
     Logger.recordOutput("Arm/Total Voltage", voltage);
 
-    if (encoder.get() > 0.79) {
+    if (encoder.get() > 0.76) { // 0.725) {
       voltage = 0.0;
       arm.setArmMotorIdleMode(IdleMode.kBrake);
     }

@@ -14,6 +14,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Coral RP",
+  "folder": "Auto RP",
   "choreoAuto": false
 }

@@ -8,10 +8,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlignToAprilTag;
+import frc.robot.Commands.ArmController;
+import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
@@ -210,9 +213,63 @@ public class RobotContainer {
                 () -> m_endEffector.setSpeed(-1.0), () -> m_endEffector.setSpeed(0), m_endEffector)
             .withTimeout(
                 5)); // InstantCommand(() -> m_endEffector.setSpeed(-1.0)).withTimeout(4.0));
-    //   //   NamedCommands.registerCommand(
-    //       "Auton Reset",
-    //       new InstantCommand(() -> m_drivetrain.autonReset())
-    //           .withDeadline(new InstantCommand(() -> new WaitCommand(0.1))))
+    NamedCommands.registerCommand(
+        "Dealgae Part 1 A1",
+        new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A1Position),
+                new EndEffectorController(
+                    m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
+                new GroundIntakeController(m_groundIntake, 0.175, 0.3))
+            .until(() -> m_endEffector.getAlgaeDetected()));
+
+    NamedCommands.registerCommand(
+        "Dealgae Part 1 A2",
+        new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position),
+                new EndEffectorController(
+                    m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
+                new GroundIntakeController(m_groundIntake, 0.175, 0.3))
+            .until(() -> m_endEffector.getAlgaeDetected()));
+
+    NamedCommands.registerCommand(
+        "Dealgae Part 2",
+        (new SequentialCommandGroup(
+                new ParallelCommandGroup(
+                        new SequentialCommandGroup(
+                                new ArmController(
+                                        m_arm,
+                                        Constants.ArmConstants.ControlConstants.handoffPosition)
+                                    .until(
+                                        () ->
+                                            (Math.abs(
+                                                    m_arm.getEncoder().get()
+                                                        - Constants.ArmConstants.ControlConstants
+                                                            .handoffPosition)
+                                                < 0.005)))
+                            .andThen(
+                                new ParallelCommandGroup(
+                                    new ArmController(
+                                        m_arm,
+                                        Constants.ArmConstants.ControlConstants.handoffPosition),
+                                    new EndEffectorController(
+                                        m_endEffector,
+                                        Constants.EndEffectorConstants.ControlConstants
+                                            .pincherInSpeed)),
+                                new GroundIntakeController(m_groundIntake, 0.175, 0.0)),
+                        new StartEndCommand(
+                            () -> m_shintake.setRollersSpeed(0.4),
+                            () -> m_shintake.setRollersSpeed(0),
+                            m_shintake))
+                    .until(() -> m_groundIntake.getAlgaeDetected()),
+                new ParallelCommandGroup(
+                    (new StartEndCommand(
+                            () -> m_shintake.setRollersSpeed(0.25),
+                            () -> m_shintake.setRollersSpeed(0),
+                            m_shintake)
+                        .withTimeout(0.25)),
+                    new GroundIntakeController(m_groundIntake, 0.175, 0.3).withTimeout(0.535),
+                    new ArmController(
+                        m_arm, Constants.ArmConstants.ControlConstants.storedPosition))))
+            .withTimeout(5.0)); // tune timeouts
   }
 }

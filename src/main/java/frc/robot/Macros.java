@@ -23,7 +23,7 @@ public class Macros {
                         new EndEffectorController(
                             endEffector,
                             Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
-                        new GroundIntakeController(groundIntake, 0.175, 0.3))
+                        new GroundIntakeController(groundIntake, 0.175, 0.0))
                     .until(() -> endEffector.getAlgaeDetected()),
                 new ParallelCommandGroup(
                         new SequentialCommandGroup(
