@@ -179,15 +179,15 @@ public class Constants {
 
     public static final int PIGEON_ID = 0;
 
-    public static double LEFT_FRONT_OFFSET = 0.330322; // -0.167236; //0.345459;
-    public static double RIGHT_FRONT_OFFSET = 0.181885; // -0.318115; // 0.184326;//-0.314453;
-    public static double LEFT_BACK_OFFSET = 0.497803; // 0.009277; // 0.012695; //0.014893;
-    public static double RIGHT_BACK_OFFSET = 0.178955; // 0.242188; // 0.231445;//0.24951
+    public static double LEFT_FRONT_OFFSET = 0.330322;
+    public static double RIGHT_FRONT_OFFSET = 0.181885;
+    public static double LEFT_BACK_OFFSET = -0.013428;
+    public static double RIGHT_BACK_OFFSET = 0.178955;
 
     public static boolean LEFT_FRONT_DRIVE_INVERTED = true;
-    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true; // false;
+    public static boolean RIGHT_FRONT_DRIVE_INVERTED = true;
     public static boolean RIGHT_BACK_DRIVE_INVERTED = false;
-    public static boolean LEFT_BACK_DRIVE_INVERTED = true; // false;
+    public static boolean LEFT_BACK_DRIVE_INVERTED = false;
 
     public static boolean LEFT_FRONT_TURN_INVERTED = true;
     public static boolean RIGHT_FRONT_TURN_INVERTED = true;
@@ -229,8 +229,8 @@ public class Constants {
     public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5; // 3
     public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
 
-    public static final double AUTO_KP_TTANSLATION = 1.35; // 1.15
-    public static final double AUTO_KP_ROTATIONAL = 0.07; // 0.1
+    public static final double AUTO_KP_TRANSLATION = 1.5; // 1.15
+    public static final double AUTO_KP_ROTATIONAL = 5.5; // 0.07; // 0.1
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
     public static final int DRIVE_CURRENT_LIMIT = 45;
@@ -239,11 +239,11 @@ public class Constants {
     public static final double WHEEL_BASE = Units.inchesToMeters(25.0); // X LENGTH
     public static final double DRIVE_BASE_RADIUS =
         Math.sqrt((Math.pow(TRACK_WIDTH, 2) + Math.pow(WHEEL_BASE, 2))) / 2.0;
-
+    // kevin pfeffer was here
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
-            new PIDConstants(AUTO_KP_TTANSLATION, 0, 0.1),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0.001));
+            new PIDConstants(AUTO_KP_TRANSLATION, 0, 0.1),
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0.01, 0.001));
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
     // Swerve Kinematics
@@ -279,7 +279,7 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -0.9; // -0.65
+      public static final double pincherInSpeed = -1.0; // -0.65
       public static final double pincherOutSpeed = 1.00;
 
       public static final double pincherInRunExtension = 0.25;
@@ -312,7 +312,7 @@ public class Constants {
       public static final double kV = 0.075; // 0.15
       public static final double kA = 0;
 
-      public static final double kP = 50;
+      public static final double kP = 45;
       public static final double kI = 0.0;
       public static final double kD = 1;
 
@@ -384,6 +384,8 @@ public class Constants {
     public static final class HardwareConstants {
       public static final int motorID = 40;
       public static final boolean motorIsInverted = true;
+      public static final int climberEncoderDIO = 6;
+      public static final boolean climberEncoderIsInverted = false;
     }
 
     public static final class ControlConstants {
@@ -398,6 +400,7 @@ public class Constants {
       public static final double kA = 0;
       public static final ElevatorFeedforward climbFeedforward =
           new ElevatorFeedforward(kS, kG, kV, kA);
+      public static final double climberEncoderOffset = 0.0;
     }
   }
 

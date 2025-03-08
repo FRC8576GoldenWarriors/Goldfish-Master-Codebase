@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dealgae Only B3 Start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dealgae Only B3 pt 2"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Dealgae Only Autos",
+  "choreoAuto": false
+}
