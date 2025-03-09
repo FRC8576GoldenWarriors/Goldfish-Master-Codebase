@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.8700819672131148,
-        "y": 5.925051229508195
+        "x": 6.122,
+        "y": 6.784249999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3855532786885245,
-        "y": 5.937038934426229
+        "x": 5.89825,
+        "y": 6.374750000000001
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dealgae B3 3"
     },
     {
       "anchor": {
-        "x": 2.972950819672131,
-        "y": 5.925051229508195
+        "x": 5.187,
+        "y": 5.2145
       },
       "prevControl": {
-        "x": 2.685245901639344,
-        "y": 5.889088114754098
+        "x": 5.3832206913833565,
+        "y": 5.369411072144755
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dealgae B1 1"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 58.781597235653685
   },
   "reversed": false,
-  "folder": "Coral RP",
+  "folder": "Dealgae Only Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

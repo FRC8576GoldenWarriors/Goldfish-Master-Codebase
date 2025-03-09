@@ -13,19 +13,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Dealgae Only B3 Start"
+            "pathName": "Dealgae Only B1 Start"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Dealgae Only B3 pt 2"
+            "pathName": "Deaglae Only pt 2"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Dealgae Only Autos",
+  "folder": "Tuning Paths",
   "choreoAuto": false
 }

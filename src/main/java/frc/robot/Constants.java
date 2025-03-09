@@ -115,11 +115,11 @@ public class Constants {
   public static final class SwerveConstants {
 
     public static class DriverConstants {
-      public static final double xDeadband = 0.0825;
-      public static final double yDeadband = 0.0825;
+      public static final double xDeadband = 0.08;
+      public static final double yDeadband = 0.08;
       public static final double turnDeadband = 0.0825;
-      public static final double xCoefficient = 2.05;
-      public static final double yCoefficient = 2.05;
+      public static final double xCoefficient = 1.8;
+      public static final double yCoefficient = 1.8;
       public static final double turnCoefficient = 1.675;
     }
 
@@ -319,7 +319,7 @@ public class Constants {
       public static final double storedPosition = 0.02;
       public static final double A1Position = 0.31;
       public static final double A2Position = 0.40; // 0.40
-      public static final double handoffPosition = 0.715;
+      public static final double handoffPosition = 0.735;
 
       public static final double lowSoftStopPositon = 0.0;
       public static final double highSoftStopPosition = 0.75;
@@ -348,20 +348,20 @@ public class Constants {
       public static final double groundIntakeUpPosition = 0.0;
       public static final double groundIntakeDownPosition = 0.15;
 
-      public static final double groundIntakeInSpeed = 0.5;
-      public static final double groundIntakeOutSpeed = -0.5;
+      // public static final double groundIntakeInSpeed = 0.5;
+      // public static final double groundIntakeOutSpeed = -0.5;
 
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.99;
       public static final boolean pivotEncoderIsInverted = true;
 
-      public static final double kP = 3.2;
+      public static final double kP = 0;
       public static final double kI = 0;
       public static final double kD = 0;
 
       public static final double kS = 0;
       public static final double kA = 0;
-      public static final double kG = 0.2;
+      public static final double kG = 0;
       public static final double kV = 0;
     }
   }
@@ -414,7 +414,7 @@ public class Constants {
       // climbing
       // rainbowScroll() in LEDStrip
       // Drivetrain posed and shooter rpm ready
-      public static final LEDPattern kLEDPosedSolid = LEDPattern.solid(Color.kGreen);
+      public static final LEDPattern kLEDPosedSolid = LEDPattern.solid(new Color(0, 255, 0));
 
       // Drivetrain posing or Shooter revving
       public static final LEDPattern kLEDPosingBlink = LEDPattern.solid(Color.kYellow);
@@ -426,12 +426,12 @@ public class Constants {
 
       // lg ground intake
       public static final LEDPattern kLEDAlgaeGroundBreathe =
-          LEDPattern.solid(new Color(0, 255, 80));
+          LEDPattern.solid(new Color(0, 255, 65));
       public static final double kLEDAlgaeGroundBreatheSpeed = 2;
 
       // lg arm intake
       public static final LEDPattern kLEDAlgaePincherBlink =
-          LEDPattern.solid(new Color(0, 255, 55));
+          LEDPattern.solid(new Color(0, 255, 65));
       public static final double kLEDAlgaePincherBlinkSpeed = 0.075;
 
       // coral photoeletric detects coral
@@ -445,17 +445,15 @@ public class Constants {
       // robot idle (no status) - breathing pattern
       public static final LEDPattern kLEDNoStatusBreathe =
           LEDPattern.gradient(
-              GradientType.kContinuous, new Color(255, 150, 0), new Color(255, 100, 30));
+              GradientType.kContinuous, new Color(255, 130, 0), new Color(200, 80, 10));
       // LEDPattern.gradient(
       //     GradientType.kContinuous, new Color(255, 200, 0), new Color(255, 255, 200));
       public static final double kLEDNoStatusBreatheSpeed = 25;
 
       // robot disabled - scrolling pattern
       public static final LEDPattern kLEDDisabledScroll =
-          LEDPattern.solid(
-              Color
-                  .kRed); // LEDPattern.gradient(GradientType.kContinuous, new Color(255, 0, 0), new
-      // Color(255, 100, 100));
+          LEDPattern.gradient(
+              GradientType.kContinuous, new Color(255, 0, 0), new Color(255, 5, 5));
 
       public static final double kLEDDisabledScrollSpeed = 2;
       // test

@@ -5,21 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": null
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shooter RP"
+            "waitTime": 0.1
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Auto RP",
+  "folder": "Template",
   "choreoAuto": false
 }

@@ -3,7 +3,6 @@ package frc.robot.Commands;
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.Subsystems.Climber;
 import org.littletonrobotics.junction.Logger;
 
@@ -13,14 +12,18 @@ public class ClimberController extends Command {
   private final BangBangController bangBangController;
 
   private double bangBangVoltage;
-  private double outputVoltage;
+  private double climbAngle;
+  private double motorOutput;
 
-  public ClimberController(Climber climber) {
+  public ClimberController(Climber climber, double climbAngle) {
     this.climber = climber;
 
     this.bangBangController = new BangBangController();
+    this.climbAngle = climbAngle;
 
     addRequirements(climber);
+
+    climber.setClimbing(true);
   }
 
   @Override
@@ -28,25 +31,35 @@ public class ClimberController extends Command {
 
   @Override
   public void execute() {
-    bangBangVoltage =
-        bangBangController.calculate(
-            climber.getEncoderPosition(),
-            Constants.ClimberConstants.ControlConstants.climberUpPosition);
+    if (climber.getEncoderPosition() - climbAngle < 0) { // pivot going down, robot climbing up
+      motorOutput = 1.0;
 
-    outputVoltage = bangBangVoltage;
+      Logger.recordOutput("Climber/Climbing Up", true);
+      if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.01) {
+        motorOutput = 0.0;
+      }
+    } else { // pivot going up, robot going down
+      motorOutput = -1.0;
+      Logger.recordOutput("Climber/Climbing Up", false);
+      if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.01) {
+        motorOutput = 0.0;
+      }
+    }
 
-    climber.setMotorVoltage(outputVoltage);
+    climber.setMotorSpeed(motorOutput);
+  
 
     SmartDashboard.putNumber("Climb Motor Encoder", climber.getEncoderPosition());
 
     Logger.recordOutput("Climber/Climb Bang Bang Voltage", bangBangVoltage);
-    Logger.recordOutput("Climber/Climb Total Voltage", outputVoltage);
+    Logger.recordOutput("Climber/Climb Total Voltage", motorOutput);
     Logger.recordOutput("Climber/Climb Encoder Position", climber.getEncoderPosition());
   }
 
   @Override
   public void end(boolean interrupted) {
-    climber.setMotorVoltage(0);
+    climber.setMotorSpeed(0.0);
+    climber.setClimbing(false);
   }
 
   @Override

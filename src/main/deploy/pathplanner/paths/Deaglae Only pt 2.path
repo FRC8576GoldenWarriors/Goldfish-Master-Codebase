@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.187,
-        "y": 5.215
+        "x": 5.1675,
+        "y": 5.14625
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.962750000005206,
-        "y": 6.413750000004882
+        "x": 4.9822500000000005,
+        "y": 5.828250000000001
       },
       "isLocked": false,
       "linkedName": "Deaglae pt2"
@@ -20,12 +20,12 @@
         "y": 7.2132499999999995
       },
       "prevControl": {
-        "x": 5.216250000005207,
-        "y": 7.252250000004881
+        "x": 5.45025,
+        "y": 7.27175
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dealgae B1 2"
     }
   ],
   "rotationTargets": [],

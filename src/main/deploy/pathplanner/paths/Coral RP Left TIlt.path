@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.148,
-        "y": 5.097499999999999
+        "x": 5.21625,
+        "y": 5.234
       },
       "prevControl": {
-        "x": 5.54775,
-        "y": 5.38025
+        "x": 5.616,
+        "y": 5.516750000000001
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Left rp pt 2"
     }
   ],
   "rotationTargets": [],
@@ -47,8 +47,8 @@
   "reversed": false,
   "folder": "Coral RP",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 45.0
+    "velocity": 0.0,
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

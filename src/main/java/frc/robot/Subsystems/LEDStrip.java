@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -63,6 +62,17 @@ public class LEDStrip extends SubsystemBase {
     setPattern(pattern);
   }
 
+  public void climbProgress() {
+    double percent =
+        RobotContainer.m_climber.getEncoderPosition()
+            / Constants.ClimberConstants.ControlConstants.climberUpPosition;
+    LEDPattern progress = LEDPattern.progressMaskLayer(() -> percent);
+    LEDPattern base = Constants.LEDConstants.PatternConfig.kLEDNoStatusBreathe;
+    LEDPattern pattern = base.mask(progress);
+
+    setPattern(pattern);
+  }
+
   public void scroll(LEDPattern pattern, double speed) {
     setPattern(pattern.scrollAtRelativeSpeed(Percent.per(Second).of(speed)));
   }
@@ -93,19 +103,13 @@ public class LEDStrip extends SubsystemBase {
   @Override
   public void periodic() {
     // testing inputs change later
-    XboxController driverController = RobotContainer.driverController.getHID();
-    // if (driverController.getAButton()) { // rainbow scroll with black margin
-    //   rainbowScroll();
-    // } else if (driverController.getYButton()){ // red blink
-    //   blinkRed();
-    // } else if (driverController.getXButton()) { // red solid progress
-    // progress(LEDPattern.solid(Color.kRed), driverController.getLeftTriggerAxis());
+
     if (DriverStation.isDisabled()) { // disabled
       scroll(
           Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,
           Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
-    } else if (RobotContainer.m_climber.isClimbingUp()) {
-      rainbowScroll();
+    } else if (RobotContainer.m_climber.isClimbing()) {
+      climbProgress();
     } else if (RobotContainer.bargeTagStatsLimelight.isTagReached()) {
       solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
 

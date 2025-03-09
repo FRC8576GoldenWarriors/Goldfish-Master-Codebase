@@ -269,7 +269,17 @@ public class RobotContainer {
                         .withTimeout(0.25)),
                     new GroundIntakeController(m_groundIntake, 0.175, 0.3).withTimeout(0.535),
                     new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.storedPosition))))
-            .withTimeout(5.0)); // tune timeouts
+                        m_arm, Constants.ArmConstants.ControlConstants.storedPosition)))));
+            //.withTimeout(5.0)); // tune timeouts
+
+            NamedCommands.registerCommand("Shoot", new ParallelCommandGroup(
+                new StartEndCommand(
+                    () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
+                    () -> m_groundIntake.setRollerSpeed(0),
+                    m_groundIntake).withTimeout(2),
+                new StartEndCommand(
+                    () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
+                    () -> m_shintake.setRollersSpeed(0),
+                    m_shintake)).withTimeout(2));
   }
 }

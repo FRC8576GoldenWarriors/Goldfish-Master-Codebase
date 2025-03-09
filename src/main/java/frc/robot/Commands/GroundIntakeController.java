@@ -4,9 +4,12 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Subsystems.GroundIntake;
 import org.littletonrobotics.junction.Logger;
 
@@ -21,7 +24,12 @@ public class GroundIntakeController extends Command {
   double motorOutput;
   double rollerSpeed;
 
-  boolean isFinished;
+  private TrapezoidProfile.Constraints constraints;
+  private ProfiledPIDController pid;
+
+
+  
+  boolean angleReached;
 
   public GroundIntakeController(GroundIntake intake, double desiredAngle, double rollerSpeed) {
     this.intake = intake;
@@ -29,7 +37,11 @@ public class GroundIntakeController extends Command {
     this.rollerSpeed = rollerSpeed;
 
     this.desiredAngle = desiredAngle;
-
+    
+    constraints  = new TrapezoidProfile.Constraints(3.0, 5.0);
+    pid = new ProfiledPIDController(Constants.GroundIntakeConstants.ControlConstants.kP, Constants.GroundIntakeConstants.ControlConstants.kI, Constants.GroundIntakeConstants.ControlConstants.kD, constraints);
+    
+    motorOutput = 0.0;
     addRequirements(intake);
   }
 
@@ -41,23 +53,33 @@ public class GroundIntakeController extends Command {
   @Override
   public void execute() {
 
-    if (encoder.get() - desiredAngle < 0) { // going down
-      motorOutput = 0.4;
-      SmartDashboard.putBoolean("True: Going Up, False: Going Down", false);
-      Logger.recordOutput("Ground_Intake/Ground Intake Up", false);
-      if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
-        motorOutput = 0.0;
-      }
-    } else { // going up
-      motorOutput = -0.4;
-      SmartDashboard.putBoolean("True: Going Up, False: Going Down", true);
-      Logger.recordOutput("Ground_Intake/Ground Intake Up", true);
-      if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
-        motorOutput = 0.0;
-      }
-    }
+    // if (encoder.get() - desiredAngle < 0) { // going down
+    //   motorOutput = 0.4;
+    //   SmartDashboard.putBoolean("True: Going Up, False: Going Down", false);
+    //   Logger.recordOutput("Ground_Intake/Ground Intake Up", false);
+    //   if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
+    //     motorOutput = 0.0;
+    //     angleReached = true;
+    //   }
+    // } else { // going up
+    //   motorOutput = -0.4;
+    //   SmartDashboard.putBoolean("True: Going Up, False: Going Down", true);
+    //   Logger.recordOutput("Ground_Intake/Ground Intake Up", true);
+    //   if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
+    //     motorOutput = 0.0;
+    //     angleReached = true;
+    //   }
+    // }
 
-    intake.setPivotSpeed(motorOutput);
+    // if(angleReached){
+    //   motorOutput = 0.0;
+    // }
+
+    //intake.setPivotSpeed(motorOutput);
+    motorOutput = pid.calculate(intake.getEncoderPosition(), desiredAngle);
+    
+
+    intake.setPivotSpeed(0.0); //CHANGE AFTER INTAKE IS REATTAHCHED
     intake.setRollerSpeed(rollerSpeed);
 
     SmartDashboard.putNumber("Intake Pivot Motor Output", motorOutput);

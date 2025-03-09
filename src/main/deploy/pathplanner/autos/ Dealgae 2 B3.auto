@@ -21,6 +21,18 @@
           "data": {
             "pathName": "Dealgae Only B3 pt 2"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dealgae 2 B3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Deaglae Only pt 2"
+          }
         }
       ]
     }

@@ -11,9 +11,28 @@
           }
         },
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dealgae Only B1 Start"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Dealgae Only B3 Start"
+            "pathName": "Deaglae Only pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dealgae Only pt 3"
           }
         },
         {

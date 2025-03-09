@@ -28,20 +28,20 @@
         "y": 1.8466573744028911
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dealgae B3 Waypoint"
     },
     {
       "anchor": {
-        "x": 6.22,
+        "x": 6.122,
         "y": 6.784249999999999
       },
       "prevControl": {
-        "x": 5.82075,
+        "x": 5.7227500000000004,
         "y": 6.140750000000001
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Dealgae B3 3"
     }
   ],
   "rotationTargets": [],
