@@ -75,7 +75,7 @@ public class Drivetrain extends SubsystemBase {
 
   private Pigeon2 gyro = new Pigeon2(Constants.SwerveConstants.PIGEON_ID);
 
-  //private static final Drivetrain drivetrain = new Drivetrain();
+  // private static final Drivetrain drivetrain = new Drivetrain();
 
   private RobotConfig config;
 

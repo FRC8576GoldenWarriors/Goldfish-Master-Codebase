@@ -89,16 +89,15 @@ public class Constants {
     public static final int operatorControllerPort = 1;
   }
 
-
   public static final class SwerveConstants {
 
     public static class DriverConstants {
       public static final double xDeadband = 0.0825;
       public static final double yDeadband = 0.0825;
       public static final double turnDeadband = 0.0825;
-      public static final double xCoefficient = 2.05;
-      public static final double yCoefficient = 2.05;
-      public static final double turnCoefficient = 1.675;
+      public static final double xCoefficient = 2.05 / 3;
+      public static final double yCoefficient = 2.05 / 3;
+      public static final double turnCoefficient = 1.675 * 2;
     }
 
     public static class PoseConfig {

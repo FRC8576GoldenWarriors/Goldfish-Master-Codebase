@@ -5,8 +5,6 @@
 package frc.robot.Subsystems.Simulation;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.hardware.core.CorePigeon2;
-import com.ctre.phoenix6.sim.Pigeon2SimState;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -29,7 +27,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Subsystems.Simulation.SwerveModuleSim;
 
 public class DrivetrainSim extends SubsystemBase {
 
@@ -308,19 +305,19 @@ public class DrivetrainSim extends SubsystemBase {
     odometry.update(getHeadingRotation2d(), getModulePositions());
   }
 
-//   public void setAllIdleMode(boolean brake) {
-//     if (brake) {
-//       leftFront.setBrake(true);
-//       rightFront.setBrake(true);
-//       leftBack.setBrake(true);
-//       rightBack.setBrake(true);
-//     } else {
-//       leftFront.setBrake(false);
-//       rightFront.setBrake(false);
-//       leftBack.setBrake(false);
-//       rightBack.setBrake(false);
-//     }
-//   }
+  //   public void setAllIdleMode(boolean brake) {
+  //     if (brake) {
+  //       leftFront.setBrake(true);
+  //       rightFront.setBrake(true);
+  //       leftBack.setBrake(true);
+  //       rightBack.setBrake(true);
+  //     } else {
+  //       leftFront.setBrake(false);
+  //       rightFront.setBrake(false);
+  //       leftBack.setBrake(false);
+  //       rightBack.setBrake(false);
+  //     }
+  //   }
 
   public void resetAllEncoders() {
     System.out.println("resetAllEncoders()");
@@ -351,10 +348,12 @@ public class DrivetrainSim extends SubsystemBase {
     double currentHeadingAngle = this.getHeading();
     double turnAngle = states[0].angle.getDegrees();
     double getTurnVelocity = states[0].speedMetersPerSecond;
-    if(states[1].angle.getDegrees()!=turnAngle)
-    this.setHeading(currentHeadingAngle + (turnAngle * getTurnVelocity) * leftFront.getInterval());
-    else
-    return;
+    if (states[1].angle.getDegrees() != turnAngle
+        || states[2].angle.getDegrees() != turnAngle
+        || states[3].angle.getDegrees() != turnAngle)
+      this.setHeading(
+          currentHeadingAngle + (turnAngle * getTurnVelocity) * leftFront.getInterval());
+    else return;
   }
 
   public double getHeading() {
@@ -374,8 +373,7 @@ public class DrivetrainSim extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] moduleStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        moduleStates, SimConstants.Swerve.driveSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, SimConstants.Swerve.driveSpeed);
     leftFront.setDesiredState(moduleStates[0]);
     rightFront.setDesiredState(moduleStates[1]);
     leftBack.setDesiredState(moduleStates[2]);
@@ -383,9 +381,7 @@ public class DrivetrainSim extends SubsystemBase {
     updateSimHeading(moduleStates);
   }
 
-  public void updateMotorPosition() {
-    
-  }
+  public void updateMotorPosition() {}
 
   // public void setModuleZero(){ Not Called Anywhere
   //   leftFront.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
@@ -461,8 +457,7 @@ public class DrivetrainSim extends SubsystemBase {
 
     SwerveModuleState[] moduleStates =
         Constants.SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(
-        moduleStates, SimConstants.Swerve.driveSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, SimConstants.Swerve.driveSpeed);
 
     leftFront.setDesiredState(moduleStates[0]);
     rightFront.setDesiredState(moduleStates[1]);
