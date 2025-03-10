@@ -16,6 +16,11 @@ public class Constants {
 
   public static class VisionConstants {
 
+    public static class DriverCameraConstants{
+      public static final String DRIVER_CAMERA_NT_KEY = "MainDriverCamera";
+      public static final String CAGE_CAMERA_NT_KEY = "CageDriverCamera";
+    }
+
     public static class LimelightConstants {
 
       public static final double FOCAL_LENGTH = 4.1;
@@ -452,8 +457,7 @@ public class Constants {
 
       // robot disabled - scrolling pattern
       public static final LEDPattern kLEDDisabledScroll =
-          LEDPattern.gradient(
-              GradientType.kContinuous, new Color(255, 0, 0), new Color(255, 5, 5));
+          LEDPattern.gradient(GradientType.kContinuous, new Color(255, 0, 0), new Color(255, 5, 5));
 
       public static final double kLEDDisabledScrollSpeed = 2;
       // test

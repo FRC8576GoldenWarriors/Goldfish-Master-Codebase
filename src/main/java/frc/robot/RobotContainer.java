@@ -20,6 +20,7 @@ import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Climber;
+import frc.robot.Subsystems.DriverCamera;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
@@ -51,6 +52,7 @@ public class RobotContainer {
   public static GroundIntake m_groundIntake;
   public static Climber m_climber;
   public static LEDStrip m_led;
+  public static DriverCamera m_DriverCamera;
 
   public static AprilTagStatsLimelight reefTagStatsLimelight;
   public static AprilTagStatsLimelight bargeTagStatsLimelight;
@@ -69,6 +71,7 @@ public class RobotContainer {
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
       m_led = new LEDStrip(1, 25);
+      m_DriverCamera = new DriverCamera();
 
       reefTagStatsLimelight =
           new AprilTagStatsLimelight(
@@ -236,52 +239,54 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "Dealgae Part 2",
         (new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                        new SequentialCommandGroup(
+            new ParallelCommandGroup(
+                    new SequentialCommandGroup(
+                            new ArmController(
+                                    m_arm, Constants.ArmConstants.ControlConstants.handoffPosition)
+                                .until(
+                                    () ->
+                                        (Math.abs(
+                                                m_arm.getEncoder().get()
+                                                    - Constants.ArmConstants.ControlConstants
+                                                        .handoffPosition)
+                                            < 0.005)))
+                        .andThen(
+                            new ParallelCommandGroup(
                                 new ArmController(
-                                        m_arm,
-                                        Constants.ArmConstants.ControlConstants.handoffPosition)
-                                    .until(
-                                        () ->
-                                            (Math.abs(
-                                                    m_arm.getEncoder().get()
-                                                        - Constants.ArmConstants.ControlConstants
-                                                            .handoffPosition)
-                                                < 0.005)))
-                            .andThen(
-                                new ParallelCommandGroup(
-                                    new ArmController(
-                                        m_arm,
-                                        Constants.ArmConstants.ControlConstants.handoffPosition),
-                                    new EndEffectorController(
-                                        m_endEffector,
-                                        Constants.EndEffectorConstants.ControlConstants
-                                            .pincherInSpeed)),
-                                new GroundIntakeController(m_groundIntake, 0.175, 0.0)),
-                        new StartEndCommand(
-                            () -> m_shintake.setRollersSpeed(0.4),
-                            () -> m_shintake.setRollersSpeed(0),
-                            m_shintake))
-                    .until(() -> m_groundIntake.getAlgaeDetected()),
-                new ParallelCommandGroup(
-                    (new StartEndCommand(
-                            () -> m_shintake.setRollersSpeed(0.25),
-                            () -> m_shintake.setRollersSpeed(0),
-                            m_shintake)
-                        .withTimeout(0.25)),
-                    new GroundIntakeController(m_groundIntake, 0.175, 0.3).withTimeout(0.535),
-                    new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.storedPosition)))));
-            //.withTimeout(5.0)); // tune timeouts
+                                    m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+                                new EndEffectorController(
+                                    m_endEffector,
+                                    Constants.EndEffectorConstants.ControlConstants
+                                        .pincherInSpeed)),
+                            new GroundIntakeController(m_groundIntake, 0.175, 0.0)),
+                    new StartEndCommand(
+                        () -> m_shintake.setRollersSpeed(0.4),
+                        () -> m_shintake.setRollersSpeed(0),
+                        m_shintake))
+                .until(() -> m_groundIntake.getAlgaeDetected()),
+            new ParallelCommandGroup(
+                (new StartEndCommand(
+                        () -> m_shintake.setRollersSpeed(0.25),
+                        () -> m_shintake.setRollersSpeed(0),
+                        m_shintake)
+                    .withTimeout(0.25)),
+                new GroundIntakeController(m_groundIntake, 0.175, 0.3).withTimeout(0.535),
+                new ArmController(
+                    m_arm, Constants.ArmConstants.ControlConstants.storedPosition)))));
+    // .withTimeout(5.0)); // tune timeouts
 
-            NamedCommands.registerCommand("Shoot", new ParallelCommandGroup(
+    NamedCommands.registerCommand(
+        "Shoot",
+        new ParallelCommandGroup(
                 new StartEndCommand(
-                    () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-                    () -> m_groundIntake.setRollerSpeed(0),
-                    m_groundIntake).withTimeout(2),
+                        () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
+                        () -> m_groundIntake.setRollerSpeed(0),
+                        m_groundIntake)
+                    .withTimeout(2),
                 new StartEndCommand(
                     () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
                     () -> m_shintake.setRollersSpeed(0),
-                    m_shintake)).withTimeout(2));
+                    m_shintake))
+            .withTimeout(2));
   }
 }
