@@ -27,8 +27,6 @@ public class GroundIntakeController extends Command {
   private TrapezoidProfile.Constraints constraints;
   private ProfiledPIDController pid;
 
-
-  
   boolean angleReached;
 
   public GroundIntakeController(GroundIntake intake, double desiredAngle, double rollerSpeed) {
@@ -37,10 +35,15 @@ public class GroundIntakeController extends Command {
     this.rollerSpeed = rollerSpeed;
 
     this.desiredAngle = desiredAngle;
-    
-    constraints  = new TrapezoidProfile.Constraints(3.0, 5.0);
-    pid = new ProfiledPIDController(Constants.GroundIntakeConstants.ControlConstants.kP, Constants.GroundIntakeConstants.ControlConstants.kI, Constants.GroundIntakeConstants.ControlConstants.kD, constraints);
-    
+
+    constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+    pid =
+        new ProfiledPIDController(
+            Constants.GroundIntakeConstants.ControlConstants.kP,
+            Constants.GroundIntakeConstants.ControlConstants.kI,
+            Constants.GroundIntakeConstants.ControlConstants.kD,
+            constraints);
+
     motorOutput = 0.0;
     addRequirements(intake);
   }
@@ -75,11 +78,10 @@ public class GroundIntakeController extends Command {
     //   motorOutput = 0.0;
     // }
 
-    //intake.setPivotSpeed(motorOutput);
+    // intake.setPivotSpeed(motorOutput);
     motorOutput = pid.calculate(intake.getEncoderPosition(), desiredAngle);
-    
 
-    intake.setPivotSpeed(0.0); //CHANGE AFTER INTAKE IS REATTAHCHED
+    intake.setPivotSpeed(0.0); // CHANGE AFTER INTAKE IS REATTAHCHED
     intake.setRollerSpeed(rollerSpeed);
 
     SmartDashboard.putNumber("Intake Pivot Motor Output", motorOutput);

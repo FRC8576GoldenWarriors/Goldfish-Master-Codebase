@@ -47,7 +47,6 @@ public class ClimberController extends Command {
     }
 
     climber.setMotorSpeed(motorOutput);
-  
 
     SmartDashboard.putNumber("Climb Motor Encoder", climber.getEncoderPosition());
 
