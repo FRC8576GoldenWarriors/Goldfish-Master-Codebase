@@ -19,9 +19,11 @@ import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Commands.Shoot;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
+import frc.robot.Commands.SwitchCamera;
 import frc.robot.Subsystems.Arm;
+import frc.robot.Subsystems.Camera;
 import frc.robot.Subsystems.Climber;
-import frc.robot.Subsystems.DriverCamera;
+import frc.robot.Subsystems.DriverStream;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.EndEffector;
 import frc.robot.Subsystems.GroundIntake;
@@ -53,7 +55,9 @@ public class RobotContainer {
   public static GroundIntake m_groundIntake;
   public static Climber m_climber;
   public static LEDStrip m_led;
-  public static DriverCamera m_DriverCamera;
+  public static Camera m_DriverCamera;
+  public static Camera m_CageCamera;
+  public static DriverStream m_CameraStream;
 
   public static AprilTagStatsLimelight reefTagStatsLimelight;
   public static AprilTagStatsLimelight bargeTagStatsLimelight;
@@ -72,7 +76,12 @@ public class RobotContainer {
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
       m_led = new LEDStrip(1, 25);
-      m_DriverCamera = new DriverCamera();
+
+      m_DriverCamera =
+          new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240, true);
+      m_CageCamera =
+          new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, true);
+      m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
 
       reefTagStatsLimelight =
           new AprilTagStatsLimelight(
@@ -198,6 +207,7 @@ public class RobotContainer {
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
     }
+    driverController.back().onTrue(new SwitchCamera(m_CameraStream));
   }
 
   public Command getAutonomousCommand() {
