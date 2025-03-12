@@ -16,9 +16,9 @@ public class Constants {
 
   public static class VisionConstants {
 
-    public static class DriverCameraConstants{
-      public static final String DRIVER_CAMERA_NT_KEY = "MainDriverCamera";
-      public static final String CAGE_CAMERA_NT_KEY = "CageDriverCamera";
+    public static class CameraConstants {
+      public static final String DRIVER_CAMERA_NAME = "Arducam_OV9782_USB_Camera";
+      public static final String CAGE_CAMERA_NAME = "Arducam_OV9782_USB_Camera (1)";
     }
 
     public static class LimelightConstants {
@@ -93,12 +93,6 @@ public class Constants {
         public static final double PROCESSOR_TAG_HEIGHT = 1.305;
         public static final double CORAL_STATION_TAG_HEIGHT = 1.485;
       }
-    }
-
-    public static class nameConstants {
-      public static final String cameraName = "Arducam_OV9281_USB_Camera (1)";
-      public static final String tabName = "Vision";
-      public static final String publishName = "VisionPose";
     }
 
     public static class VisionPIDConstants {
