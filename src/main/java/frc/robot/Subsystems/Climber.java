@@ -3,6 +3,7 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -31,9 +32,7 @@ public class Climber extends SubsystemBase {
     climbEncoder.setInverted(Constants.ClimberConstants.HardwareConstants.climberEncoderIsInverted);
   }
 
-  public void windRope(double speed) {
-    climbMotor.set(speed); // Adjust speed as needed
-  }
+  
 
   public void stop() {
     climbMotor.set(0);
@@ -69,5 +68,7 @@ public class Climber extends SubsystemBase {
     Logger.recordOutput("Climber/Climb_Current", climbMotor.getOutputCurrent());
     Logger.recordOutput("Climber/Climb_Position", getEncoderPosition());
     Logger.recordOutput("Climber/Climbing", isClimbingUp());
+
+    SmartDashboard.putNumber("Climber Position", getEncoderPosition());
   }
 }

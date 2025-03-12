@@ -13,8 +13,8 @@ public class SwitchCamera extends Command {
 
   public SwitchCamera(DriverStream driverStream) {
 
-    this.driverStream = driverStream;
-    addRequirements(driverStream);
+    // this.driverStream = driverStream;
+    // addRequirements(driverStream);
   }
 
   @Override

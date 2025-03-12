@@ -19,6 +19,8 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.pathplanner.lib.commands.FollowPathCommand;
+
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
@@ -49,6 +51,7 @@ public class Robot extends LoggedRobot {
     Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may
     // be added.
 
+    FollowPathCommand.warmupCommand().schedule();
     m_robotContainer = new RobotContainer();
   }
 

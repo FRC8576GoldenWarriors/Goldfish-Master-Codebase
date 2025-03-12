@@ -20,8 +20,6 @@ public class Shintake extends SubsystemBase {
 
   private WarriorSparkMax pivotMotor;
 
-
-
   private boolean isRevved;
 
   public Shintake() {
@@ -41,21 +39,18 @@ public class Shintake extends SubsystemBase {
             IdleMode.kCoast,
             60);
 
-    lowerRollerMotor.setkF(1/5800.0); //1/4730.0
-    lowerRollerMotor.setkP(0.00035); //0.0005
+    //DO NOT CHANGE WITHOUT OFFICER/DEPUTY SUPERVISION
+    lowerRollerMotor.setkF(1 / 5800.0); // 1/4730.0
+    lowerRollerMotor.setkP(0.0003); // 0.0005
     lowerRollerMotor.setkI(0.0);
-    lowerRollerMotor.setkD(0.0);
-    lowerRollerMotor.setMaxMotion(5500, 1600);
-   
+    lowerRollerMotor.setkD(0.000003);
+    lowerRollerMotor.setMaxMotion(5500, 6000);
 
-    upperRollerMotor.setkF(1/6100.0);
-    upperRollerMotor.setkP(0.00035);
+    upperRollerMotor.setkF(1 / 6100.0);
+    upperRollerMotor.setkP(0.0003);
     upperRollerMotor.setkI(0.0);
-    upperRollerMotor.setkD(0.0);
-    upperRollerMotor.setMaxMotion(5500, 1600);
-
-      
-    
+    upperRollerMotor.setkD(0.000003);
+    upperRollerMotor.setMaxMotion(5500, 6000);
   }
 
   @Override
@@ -72,10 +67,10 @@ public class Shintake extends SubsystemBase {
     Logger.recordOutput(
         "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
 
-    SmartDashboard.putNumber("Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
-    SmartDashboard.putNumber("Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
-
-
+    SmartDashboard.putNumber(
+        "Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber(
+        "Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
   }
 
   public void setPivotSpeed(double speed) {
@@ -123,16 +118,20 @@ public class Shintake extends SubsystemBase {
         / 2.0;
   }
 
-  public void setRollerRPMs(double lowerRPM, double upperRPM){
-    lowerRollerMotor.getClosedLoopController().setReference(lowerRPM, ControlType.kMAXMotionVelocityControl);
-    upperRollerMotor.getClosedLoopController().setReference(upperRPM, ControlType.kMAXMotionVelocityControl);
+  public void setRollerRPMs(double lowerRPM, double upperRPM) {
+    lowerRollerMotor
+        .getClosedLoopController()
+        .setReference(lowerRPM, ControlType.kMAXMotionVelocityControl);
+    upperRollerMotor
+        .getClosedLoopController()
+        .setReference(upperRPM, ControlType.kMAXMotionVelocityControl);
   }
 
-  public WarriorSparkMax getUpperRollerMotor(){
+  public WarriorSparkMax getUpperRollerMotor() {
     return upperRollerMotor;
   }
 
-  public WarriorSparkMax getLowerRollerMotor(){
+  public WarriorSparkMax getLowerRollerMotor() {
     return lowerRollerMotor;
   }
 

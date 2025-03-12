@@ -5,7 +5,6 @@
 package frc.robot.Commands;
 
 import com.revrobotics.spark.SparkBase.ControlType;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Shintake;
 
@@ -31,10 +30,14 @@ public class Shoot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shintake.getUpperRollerMotor().getClosedLoopController().setReference(upperRollerRPM, ControlType.kMAXMotionVelocityControl);
-    shintake.getLowerRollerMotor().getClosedLoopController().setReference(lowerRollerRPM, ControlType.kMAXMotionVelocityControl);
-
-
+    shintake
+        .getUpperRollerMotor()
+        .getClosedLoopController()
+        .setReference(upperRollerRPM, ControlType.kMAXMotionVelocityControl);
+    shintake
+        .getLowerRollerMotor()
+        .getClosedLoopController()
+        .setReference(lowerRollerRPM, ControlType.kMAXMotionVelocityControl);
   }
 
   // Called once the command ends or is interrupted.

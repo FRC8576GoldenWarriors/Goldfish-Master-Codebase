@@ -19,11 +19,11 @@ public class DriverStream extends SubsystemBase {
   private int curCameraIndex = 0;
 
   public DriverStream(Camera... cameras) {
-    this.cameras = cameras;
-    server = CameraServer.getServer();
-    server.setSource(cameras[curCameraIndex].getCamera());
+    // this.cameras = cameras;
+    // server = CameraServer.getServer();
+    // server.setSource(cameras[curCameraIndex].getCamera());
 
-    camTab.add("Camera Stream", server);
+    // camTab.add("Camera Stream", server);
   }
 
   public void nextStream() {

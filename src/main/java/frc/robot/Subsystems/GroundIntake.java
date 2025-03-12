@@ -72,6 +72,10 @@ public class GroundIntake extends SubsystemBase {
     rollerMotor.set(speed);
   }
 
+  public void setRollerVoltage(double voltage){
+    rollerMotor.setVoltage(voltage);
+  }
+
   public DutyCycleEncoder getEncoder() {
     return encoder;
   }

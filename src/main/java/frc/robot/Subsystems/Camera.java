@@ -17,23 +17,25 @@ public class Camera extends SubsystemBase {
 
   public Camera(String cameraName, int resWidth, int resHeight, boolean keepAlive) {
 
-    this.cameraName = cameraName;
-    this.cameraPort = currentPort;
+    // this.cameraName = cameraName;
+    // this.cameraPort = currentPort;
 
-    photonCamera = new PhotonCamera(cameraName);
-    photonCamera.setDriverMode(true);
+    // photonCamera = new PhotonCamera(cameraName);
+    // if(photonCamera.isConnected()){
+    // photonCamera.setDriverMode(true);
 
-    camera = new HttpCamera(cameraName, "http://10.85.76.11:" + cameraPort + "/stream.mjpg");
+    // camera = new HttpCamera(cameraName, "http://10.85.76.11:" + cameraPort + "/stream.mjpg");
 
-    connectionStrategy =
-        keepAlive
-            ? VideoSource.ConnectionStrategy.kKeepOpen
-            : VideoSource.ConnectionStrategy.kAutoManage;
+    // connectionStrategy =
+    //     keepAlive
+    //         ? VideoSource.ConnectionStrategy.kKeepOpen
+    //         : VideoSource.ConnectionStrategy.kAutoManage;
 
-    camera.setConnectionStrategy(connectionStrategy);
-    camera.setResolution(resWidth, resHeight);
+    // camera.setConnectionStrategy(connectionStrategy);
+    // camera.setResolution(resWidth, resHeight);
 
-    currentPort += 2;
+    // currentPort += 2;
+    // }
   }
 
   public boolean isConnected() {

@@ -19,7 +19,6 @@ public class GroundIntakeController extends Command {
 
   private GroundIntake intake;
 
-  private DutyCycleEncoder encoder;
 
   private double desiredAngle;
   private double rollerSpeed;
@@ -27,7 +26,7 @@ public class GroundIntakeController extends Command {
   private double PIDvoltage;
   private double FFvoltage;
   private double voltage;
-  
+
   private double pivotPositon;
 
   private double COMOffset;
@@ -37,10 +36,9 @@ public class GroundIntakeController extends Command {
 
   private ArmFeedforward feedforward;
 
-
   public GroundIntakeController(GroundIntake intake, double desiredAngle, double rollerSpeed) {
     this.intake = intake;
-    this.encoder = intake.getEncoder();
+  
     this.rollerSpeed = rollerSpeed;
 
     this.desiredAngle = desiredAngle;
@@ -52,14 +50,18 @@ public class GroundIntakeController extends Command {
             Constants.GroundIntakeConstants.ControlConstants.kI,
             Constants.GroundIntakeConstants.ControlConstants.kD,
             constraints);
-    feedforward = new ArmFeedforward(Constants.GroundIntakeConstants.ControlConstants.kS, Constants.GroundIntakeConstants.ControlConstants.kG, Constants.GroundIntakeConstants.ControlConstants.kV);
-    
+    feedforward =
+        new ArmFeedforward(
+            Constants.GroundIntakeConstants.ControlConstants.kS,
+            Constants.GroundIntakeConstants.ControlConstants.kG,
+            Constants.GroundIntakeConstants.ControlConstants.kV);
+
     pivotPositon = 0.0;
     PIDvoltage = 0.0;
     FFvoltage = 0.0;
     voltage = 0.0;
 
-    COMOffset = 0.02778;
+    COMOffset = -0.02778;
 
     addRequirements(intake);
   }
@@ -72,41 +74,37 @@ public class GroundIntakeController extends Command {
   @Override
   public void execute() {
 
-    // if (encoder.get() - desiredAngle < 0) { // going down
-    //   motorOutput = 0.4;
-    //   SmartDashboard.putBoolean("True: Going Up, False: Going Down", false);
-    //   Logger.recordOutput("Ground_Intake/Ground Intake Up", false);
-    //   if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
-    //     motorOutput = 0.0;
-    //     angleReached = true;
-    //   }
-    // } else { // going up
-    //   motorOutput = -0.4;
-    //   SmartDashboard.putBoolean("True: Going Up, False: Going Down", true);
-    //   Logger.recordOutput("Ground_Intake/Ground Intake Up", true);
-    //   if (Math.abs(encoder.get() - desiredAngle) < 0.03) {
-    //     motorOutput = 0.0;
-    //     angleReached = true;
-    //   }
-    // }
-
-    // if(angleReached){
-    //   motorOutput = 0.0;
-    // }
-
-    // intake.setPivotSpeed(motorOutput);
-
     pivotPositon = intake.getEncoderPosition();
 
-    FFvoltage = feedforward.calculate((-pivotPositon+0.25-COMOffset)*Math.PI*2, 1.0); //position in radians, 0 is horizontal
-    PIDvoltage = pid.calculate(intake.getEncoderPosition(), desiredAngle);
+    FFvoltage =
+        feedforward.calculate(
+            (-pivotPositon + 0.25 + COMOffset) * Math.PI * 2,
+            1.0); // position in radians, 0 is horizontal
+    PIDvoltage = -pid.calculate(intake.getEncoderPosition(), desiredAngle);
+
 
     voltage = FFvoltage + PIDvoltage;
 
-    intake.setPivotVoltage(voltage); // CHANGE AFTER INTAKE IS REATTAHCHED
-    intake.setRollerSpeed(rollerSpeed);
+    //if desired angle in coast zone, set to coast voltage
+    if(desiredAngle<Constants.GroundIntakeConstants.ControlConstants.coastZone && intake.getEncoderPosition()<=Constants.GroundIntakeConstants.ControlConstants.coastZone){
+      intake.setPivotVoltage(0.0);
+    }
+    else{
+      intake.setPivotVoltage(voltage); 
+    }
+    
+
+    if(rollerSpeed == 0.0){
+      intake.setRollerVoltage(Constants.GroundIntakeConstants.ControlConstants.rollerIdlekS);
+    }
+    else{
+      intake.setRollerSpeed(rollerSpeed);
+    }
+    
 
     SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);
+    SmartDashboard.putNumber("Intake Pivot FF", FFvoltage);
+    SmartDashboard.putNumber("Intake Pivot PID", PIDvoltage);
     Logger.recordOutput("Ground_Intake/Intake Pivot Voltage Output", voltage);
   }
 

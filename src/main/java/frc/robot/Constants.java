@@ -351,17 +351,21 @@ public class Constants {
       // public static final double groundIntakeOutSpeed = -0.5;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.22;//0.99;
+      public static final double pivotEncoderZero = -0.22; // 0.99;
       public static final boolean pivotEncoderIsInverted = true;
 
-      public static final double kP = 0;
+      public static final double kP = 6.5;
       public static final double kI = 0;
       public static final double kD = 0;
 
-      public static final double kS = 0;
+      public static final double kS = 0.0;//0.1;
       public static final double kA = 0;
-      public static final double kG = 0.37;
-      public static final double kV = 0.28;
+      public static final double kG = 0.24;
+      public static final double kV = 0.15;//0.25;
+
+      public static final double rollerIdlekS = 0.01;
+
+      public static final double coastZone = 0.5;
     }
   }
 
@@ -388,17 +392,11 @@ public class Constants {
     }
 
     public static final class ControlConstants {
-      public static final double windingSpeed = 0.5;
-      public static final double unwindingSpeed = -0.5;
+      public static final double climbUpSpeed = 1.0;
+      public static final double climbDownSpeed = -1.0;
 
-      public static final double climberUpPosition = 42.0;
+      public static final double climberUpPosition = 0.0;
 
-      public static final double kS = 0;
-      public static final double kG = 0;
-      public static final double kV = 0;
-      public static final double kA = 0;
-      public static final ElevatorFeedforward climbFeedforward =
-          new ElevatorFeedforward(kS, kG, kV, kA);
       public static final double climberEncoderOffset = 0.0;
     }
   }

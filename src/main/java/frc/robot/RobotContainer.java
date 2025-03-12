@@ -77,11 +77,11 @@ public class RobotContainer {
       m_climber = new Climber();
       m_led = new LEDStrip(1, 25);
 
-      m_DriverCamera =
-          new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240, true);
-      m_CageCamera =
-          new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, true);
-      m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
+    //   m_DriverCamera =
+    //       new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240, true);
+    //   m_CageCamera =
+    //       new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, true);
+    //   m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
 
       reefTagStatsLimelight =
           new AprilTagStatsLimelight(
@@ -120,34 +120,39 @@ public class RobotContainer {
 
       driverController
           .leftBumper()
-          .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
+          .or(
+              driverController
+                  .leftBumper()
+                  .and(
+                      driverController
+                          .rightBumper())) // or left and right bumper to allow double binding
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
-    //   driverController
-    //       .rightBumper() 
-    //       .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
-    //       .whileTrue(
-    //           new ParallelCommandGroup(
-    //               new StartEndCommand(
-    //                   () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-    //                   () -> m_groundIntake.setRollerSpeed(0),
-    //                   m_groundIntake),
-    //               new StartEndCommand(
-    //                   () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
-    //                   () -> m_shintake.setRollersSpeed(0),
-    //                   m_shintake)));
+        driverController
+            .rightBumper()
+            .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and
+      //right bumper to allow double binding
+            .whileTrue(
+                new ParallelCommandGroup(
+                    new StartEndCommand(
+                        () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
+                        () -> m_groundIntake.setRollerSpeed(0),
+                        m_groundIntake),
+                    new StartEndCommand(
+                        () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65
+      //0.7
+                        () -> m_shintake.setRollersSpeed(0),
+                        m_shintake)));
 
-    driverController.rightBumper().whileTrue(new Shoot(m_shintake, 4500, 4500));
+      //driverController.rightBumper().whileTrue(new Shoot(m_shintake, 4500, 4500));
 
-    driverController
-        .y()
-        .whileTrue(
-            new StartEndCommand(
-                () -> m_climber.setMotorSpeed(0.9),
-                () -> m_climber.setMotorSpeed(0.0),
-                m_climber));
-
-    
+      driverController
+          .y()
+          .whileTrue(
+              new StartEndCommand(
+                  () -> m_climber.setMotorSpeed(0.9),
+                  () -> m_climber.setMotorSpeed(0.0),
+                  m_climber));
 
       driverController
           .b()
@@ -157,7 +162,7 @@ public class RobotContainer {
                   () -> m_climber.setMotorSpeed(0.0),
                   m_climber));
 
-        driverController.a().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0));
+      driverController.a().onTrue(new GroundIntakeController(m_groundIntake, 0.055, 0));
 
       // operator controller
 
@@ -207,7 +212,7 @@ public class RobotContainer {
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
     }
-    driverController.back().onTrue(new SwitchCamera(m_CameraStream));
+    // driverController.back().onTrue(new SwitchCamera(m_CameraStream));
   }
 
   public Command getAutonomousCommand() {
