@@ -4,10 +4,10 @@
 
 package frc.robot.Subsystems;
 
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -20,9 +20,7 @@ public class Shintake extends SubsystemBase {
 
   private WarriorSparkMax pivotMotor;
 
-  private DutyCycleEncoder encoder;
 
-  private InterpolatingDoubleTreeMap RPMtoVoltage;
 
   private boolean isRevved;
 
@@ -33,7 +31,7 @@ public class Shintake extends SubsystemBase {
             MotorType.kBrushless,
             Constants.ShintakeConstants.HardwareConstants.rollerMotorLowIsInverted,
             IdleMode.kCoast,
-            70);
+            60);
 
     upperRollerMotor =
         new WarriorSparkMax(
@@ -41,11 +39,23 @@ public class Shintake extends SubsystemBase {
             MotorType.kBrushless,
             Constants.ShintakeConstants.HardwareConstants.rollerMotorHighIsInverted,
             IdleMode.kCoast,
-            70);
+            60);
 
-    RPMtoVoltage = new InterpolatingDoubleTreeMap(); // use to interpolate (volts, rpm) values
+    lowerRollerMotor.setkF(1/5800.0); //1/4730.0
+    lowerRollerMotor.setkP(0.00035); //0.0005
+    lowerRollerMotor.setkI(0.0);
+    lowerRollerMotor.setkD(0.0);
+    lowerRollerMotor.setMaxMotion(5500, 1600);
+   
 
-    RPMtoVoltage.put(Double.valueOf(0), Double.valueOf(0)); // (0 rpm, 0 voltage)
+    upperRollerMotor.setkF(1/6100.0);
+    upperRollerMotor.setkP(0.00035);
+    upperRollerMotor.setkI(0.0);
+    upperRollerMotor.setkD(0.0);
+    upperRollerMotor.setMaxMotion(5500, 1600);
+
+      
+    
   }
 
   @Override
@@ -61,6 +71,11 @@ public class Shintake extends SubsystemBase {
     Logger.recordOutput("Shintake/Upper_Roller_Motor_Current", upperRollerMotor.getOutputCurrent());
     Logger.recordOutput(
         "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
+
+    SmartDashboard.putNumber("Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
+
+
   }
 
   public void setPivotSpeed(double speed) {
@@ -72,7 +87,7 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setLowerRollerSpeed(double speed) {
-    lowerRollerMotor.set(speed);
+    lowerRollerMotor.set(-speed);
   }
 
   public void setLowerRollerVoltage(double voltage) {
@@ -80,7 +95,7 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setUpperRollerSpeed(double speed) {
-    upperRollerMotor.set(speed);
+    upperRollerMotor.set(-speed);
   }
 
   public void setUpperRollerVoltage(double voltage) {
@@ -93,8 +108,8 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setRollersSpeed(double lowRollerSpeed, double upperRollerSpeed) {
-    setLowerRollerSpeed(-lowRollerSpeed);
-    setUpperRollerSpeed(-upperRollerSpeed);
+    setLowerRollerSpeed(lowRollerSpeed);
+    setUpperRollerSpeed(upperRollerSpeed);
   }
 
   public void setRollersVoltage(double voltage) {
@@ -108,12 +123,17 @@ public class Shintake extends SubsystemBase {
         / 2.0;
   }
 
-  public double calculateMotorVoltage(double rpm) {
-    return RPMtoVoltage.get(Double.valueOf(rpm));
+  public void setRollerRPMs(double lowerRPM, double upperRPM){
+    lowerRollerMotor.getClosedLoopController().setReference(lowerRPM, ControlType.kMAXMotionVelocityControl);
+    upperRollerMotor.getClosedLoopController().setReference(upperRPM, ControlType.kMAXMotionVelocityControl);
   }
 
-  public DutyCycleEncoder getEncoder() {
-    return encoder;
+  public WarriorSparkMax getUpperRollerMotor(){
+    return upperRollerMotor;
+  }
+
+  public WarriorSparkMax getLowerRollerMotor(){
+    return lowerRollerMotor;
   }
 
   public void setIsRevved(boolean isRevved) {

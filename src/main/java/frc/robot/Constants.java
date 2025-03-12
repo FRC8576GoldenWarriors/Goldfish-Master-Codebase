@@ -342,7 +342,7 @@ public class Constants {
       public static final boolean rollerMotorIsInverted = false;
 
       public static final int pivotMotorID = 31;
-      public static final boolean pivotMotorIsInverted = true;
+      public static final boolean pivotMotorIsInverted = false;
 
       public static final int pivotEncoderDIO = 4;
 
@@ -357,7 +357,7 @@ public class Constants {
       // public static final double groundIntakeOutSpeed = -0.5;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = 0.99;
+      public static final double pivotEncoderZero = -0.22;//0.99;
       public static final boolean pivotEncoderIsInverted = true;
 
       public static final double kP = 0;
@@ -366,8 +366,8 @@ public class Constants {
 
       public static final double kS = 0;
       public static final double kA = 0;
-      public static final double kG = 0;
-      public static final double kV = 0;
+      public static final double kG = 0.37;
+      public static final double kV = 0.28;
     }
   }
 
@@ -375,10 +375,10 @@ public class Constants {
     public static class HardwareConstants {
 
       public static final int rollerMotorLowID = 32; // 32;
-      public static final boolean rollerMotorLowIsInverted = false;
+      public static final boolean rollerMotorLowIsInverted = true;
 
       public static final int rollerMotorHighID = 33;
-      public static final boolean rollerMotorHighIsInverted = true; // false;
+      public static final boolean rollerMotorHighIsInverted = false; // false;
 
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;

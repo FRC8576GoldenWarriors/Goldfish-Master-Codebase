@@ -16,6 +16,7 @@ import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
 import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
+import frc.robot.Commands.Shoot;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
 import frc.robot.Subsystems.Arm;
@@ -113,27 +114,31 @@ public class RobotContainer {
           .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
-      driverController
-          .rightBumper() 
-          .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
-          .whileTrue(
-              new ParallelCommandGroup(
-                  new StartEndCommand(
-                      () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-                      () -> m_groundIntake.setRollerSpeed(0),
-                      m_groundIntake),
-                  new StartEndCommand(
-                      () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
-                      () -> m_shintake.setRollersSpeed(0),
-                      m_shintake)));
+    //   driverController
+    //       .rightBumper() 
+    //       .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
+    //       .whileTrue(
+    //           new ParallelCommandGroup(
+    //               new StartEndCommand(
+    //                   () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
+    //                   () -> m_groundIntake.setRollerSpeed(0),
+    //                   m_groundIntake),
+    //               new StartEndCommand(
+    //                   () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
+    //                   () -> m_shintake.setRollersSpeed(0),
+    //                   m_shintake)));
 
-      driverController
-          .y()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_climber.setMotorSpeed(0.9),
-                  () -> m_climber.setMotorSpeed(0.0),
-                  m_climber));
+    driverController.rightBumper().whileTrue(new Shoot(m_shintake, 4500, 4500));
+
+    driverController
+        .y()
+        .whileTrue(
+            new StartEndCommand(
+                () -> m_climber.setMotorSpeed(0.9),
+                () -> m_climber.setMotorSpeed(0.0),
+                m_climber));
+
+    
 
       driverController
           .b()
@@ -142,6 +147,8 @@ public class RobotContainer {
                   () -> m_climber.setMotorSpeed(-0.9),
                   () -> m_climber.setMotorSpeed(0.0),
                   m_climber));
+
+        driverController.a().onTrue(new GroundIntakeController(m_groundIntake, 0.07, 0));
 
       // operator controller
 

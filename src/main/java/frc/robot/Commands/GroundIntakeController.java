@@ -30,6 +30,8 @@ public class GroundIntakeController extends Command {
   
   private double pivotPositon;
 
+  private double COMOffset;
+
   private TrapezoidProfile.Constraints constraints;
   private ProfiledPIDController pid;
 
@@ -56,6 +58,8 @@ public class GroundIntakeController extends Command {
     PIDvoltage = 0.0;
     FFvoltage = 0.0;
     voltage = 0.0;
+
+    COMOffset = 0.02778;
 
     addRequirements(intake);
   }
@@ -94,12 +98,12 @@ public class GroundIntakeController extends Command {
 
     pivotPositon = intake.getEncoderPosition();
 
-    FFvoltage = feedforward.calculate((pivotPositon+0.25)*Math.PI*2, 1.0); //position in radians, 0 is horizontal
+    FFvoltage = feedforward.calculate((-pivotPositon+0.25-COMOffset)*Math.PI*2, 1.0); //position in radians, 0 is horizontal
     PIDvoltage = pid.calculate(intake.getEncoderPosition(), desiredAngle);
 
     voltage = FFvoltage + PIDvoltage;
 
-    intake.setPivotVoltage(0.0); // CHANGE AFTER INTAKE IS REATTAHCHED
+    intake.setPivotVoltage(voltage); // CHANGE AFTER INTAKE IS REATTAHCHED
     intake.setRollerSpeed(rollerSpeed);
 
     SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);

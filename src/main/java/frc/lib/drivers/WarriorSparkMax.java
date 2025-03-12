@@ -51,4 +51,39 @@ public class WarriorSparkMax extends SparkMax {
     config.smartCurrentLimit(currentLimit);
     this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
+
+  public void setkP(double kP){
+    config.closedLoop.p(kP);
+    this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void setkI(double kI){
+    config.closedLoop.i(kI);
+    this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void setkD(double kD){
+    config.closedLoop.d(kD);
+    this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void setkF(double ff){
+    config.closedLoop.velocityFF(ff);
+    this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void setMaxMotion(double maxVel, double maxAccel){
+    config.closedLoop.maxMotion
+    .maxVelocity(maxVel)
+    .maxAcceleration(maxAccel);
+    this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void setOutputRange(double minOutput, double maxOutput){
+    config.closedLoop.outputRange(minOutput, maxOutput);
+    this.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+
+  
 }
