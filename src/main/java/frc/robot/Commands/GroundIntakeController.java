@@ -4,6 +4,7 @@
 
 package frc.robot.Commands;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -16,18 +17,24 @@ import org.littletonrobotics.junction.Logger;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class GroundIntakeController extends Command {
 
-  GroundIntake intake;
+  private GroundIntake intake;
 
-  DutyCycleEncoder encoder;
+  private DutyCycleEncoder encoder;
 
-  double desiredAngle;
-  double motorOutput;
-  double rollerSpeed;
+  private double desiredAngle;
+  private double rollerSpeed;
+
+  private double PIDvoltage;
+  private double FFvoltage;
+  private double voltage;
+  
+  private double pivotPositon;
 
   private TrapezoidProfile.Constraints constraints;
   private ProfiledPIDController pid;
 
-  boolean angleReached;
+  private ArmFeedforward feedforward;
+
 
   public GroundIntakeController(GroundIntake intake, double desiredAngle, double rollerSpeed) {
     this.intake = intake;
@@ -43,8 +50,13 @@ public class GroundIntakeController extends Command {
             Constants.GroundIntakeConstants.ControlConstants.kI,
             Constants.GroundIntakeConstants.ControlConstants.kD,
             constraints);
+    feedforward = new ArmFeedforward(Constants.GroundIntakeConstants.ControlConstants.kS, Constants.GroundIntakeConstants.ControlConstants.kG, Constants.GroundIntakeConstants.ControlConstants.kV);
+    
+    pivotPositon = 0.0;
+    PIDvoltage = 0.0;
+    FFvoltage = 0.0;
+    voltage = 0.0;
 
-    motorOutput = 0.0;
     addRequirements(intake);
   }
 
@@ -79,13 +91,19 @@ public class GroundIntakeController extends Command {
     // }
 
     // intake.setPivotSpeed(motorOutput);
-    motorOutput = pid.calculate(intake.getEncoderPosition(), desiredAngle);
 
-    intake.setPivotSpeed(0.0); // CHANGE AFTER INTAKE IS REATTAHCHED
+    pivotPositon = intake.getEncoderPosition();
+
+    FFvoltage = feedforward.calculate((pivotPositon+0.25)*Math.PI*2, 1.0); //position in radians, 0 is horizontal
+    PIDvoltage = pid.calculate(intake.getEncoderPosition(), desiredAngle);
+
+    voltage = FFvoltage + PIDvoltage;
+
+    intake.setPivotVoltage(0.0); // CHANGE AFTER INTAKE IS REATTAHCHED
     intake.setRollerSpeed(rollerSpeed);
 
-    SmartDashboard.putNumber("Intake Pivot Motor Output", motorOutput);
-    Logger.recordOutput("Ground_Intake/Intake Pivot Motor Output", motorOutput);
+    SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);
+    Logger.recordOutput("Ground_Intake/Intake Pivot Voltage Output", voltage);
   }
 
   // Called once the command ends or is interrupted.

@@ -100,7 +100,7 @@ public class Constants {
       public static final double rotationkI = 0;
       public static final double rotationkD = 0.001;
 
-      public static final double forwardkP = 1.5;
+      public static final double forwardkP = 1.6;
       public static final double forwardkI = 0.0;
       public static final double forwardkD = 0.001;
     }
@@ -242,7 +242,7 @@ public class Constants {
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
             new PIDConstants(AUTO_KP_TRANSLATION, 0, 0.1),
-            new PIDConstants(AUTO_KP_ROTATIONAL, 0.01, 0.001));
+            new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0.001));
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
     // Swerve Kinematics

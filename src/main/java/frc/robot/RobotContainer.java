@@ -119,10 +119,12 @@ public class RobotContainer {
 
       driverController
           .leftBumper()
+          .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
       driverController
-          .rightBumper()
+          .rightBumper() 
+          .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and right bumper to allow double binding
           .whileTrue(
               new ParallelCommandGroup(
                   new StartEndCommand(
