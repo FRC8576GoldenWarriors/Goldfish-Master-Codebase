@@ -16,10 +16,8 @@ import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
 import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
-import frc.robot.Commands.Shoot;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
-import frc.robot.Commands.SwitchCamera;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Camera;
 import frc.robot.Subsystems.Climber;
@@ -77,11 +75,13 @@ public class RobotContainer {
       m_climber = new Climber();
       m_led = new LEDStrip(1, 25);
 
-    //   m_DriverCamera =
-    //       new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240, true);
-    //   m_CageCamera =
-    //       new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, true);
-    //   m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
+      //   m_DriverCamera =
+      //       new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240,
+      // 30, true);
+      //   m_CageCamera =
+      //       new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, 30,
+      // true);
+      //   m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
 
       reefTagStatsLimelight =
           new AprilTagStatsLimelight(
@@ -120,31 +120,24 @@ public class RobotContainer {
 
       driverController
           .leftBumper()
-          .or(
-              driverController
-                  .leftBumper()
-                  .and(
-                      driverController
-                          .rightBumper())) // or left and right bumper to allow double binding
+          .or(driverController.leftBumper().and(driverController .rightBumper())) // or left and right bumper to allow double binding
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
-        driverController
-            .rightBumper()
-            .or(driverController.leftBumper().and(driverController.rightBumper())) //or left and
-      //right bumper to allow double binding
-            .whileTrue(
-                new ParallelCommandGroup(
-                    new StartEndCommand(
-                        () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-                        () -> m_groundIntake.setRollerSpeed(0),
-                        m_groundIntake),
-                    new StartEndCommand(
-                        () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65
-      //0.7
-                        () -> m_shintake.setRollersSpeed(0),
-                        m_shintake)));
+      driverController
+          .rightBumper()
+          .or(driverController.leftBumper().and(driverController.rightBumper())) // or left and right bumper to allow double binding
+          .whileTrue(
+              new ParallelCommandGroup(
+                  new StartEndCommand(
+                      () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
+                      () -> m_groundIntake.setRollerSpeed(0),
+                      m_groundIntake),
+                  new StartEndCommand(
+                      () -> m_shintake.setRollersSpeed(0.743, 0.75), // 0.9286, 1.0 // 0.65
+                      () -> m_shintake.setRollersSpeed(0),
+                      m_shintake)));
 
-      //driverController.rightBumper().whileTrue(new Shoot(m_shintake, 4500, 4500));
+      // driverController.rightBumper().whileTrue(new Shoot(m_shintake, 4500, 4500));
 
       driverController
           .y()
@@ -163,6 +156,8 @@ public class RobotContainer {
                   m_climber));
 
       driverController.a().onTrue(new GroundIntakeController(m_groundIntake, 0.055, 0));
+
+      // driverController.back().onTrue(new SwitchCamera(m_CameraStream));
 
       // operator controller
 
@@ -212,7 +207,6 @@ public class RobotContainer {
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
     }
-    // driverController.back().onTrue(new SwitchCamera(m_CameraStream));
   }
 
   public Command getAutonomousCommand() {
@@ -278,13 +272,12 @@ public class RobotContainer {
                                     m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
                                 new EndEffectorController(
                                     m_endEffector,
-                                    Constants.EndEffectorConstants.ControlConstants
-                                        .pincherInSpeed)),
-                            new GroundIntakeController(m_groundIntake, 0.175, 0.0)),
-                    new StartEndCommand(
-                        () -> m_shintake.setRollersSpeed(0.4),
-                        () -> m_shintake.setRollersSpeed(0),
-                        m_shintake))
+                                    Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
+                                new GroundIntakeController(m_groundIntake, 0.175, 0.0)),
+                            new StartEndCommand(
+                                () -> m_shintake.setRollersSpeed(0.4),
+                                () -> m_shintake.setRollersSpeed(0),
+                                m_shintake)))
                 .until(() -> m_groundIntake.getAlgaeDetected()),
             new ParallelCommandGroup(
                 (new StartEndCommand(

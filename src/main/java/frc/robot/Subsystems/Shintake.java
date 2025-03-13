@@ -39,7 +39,7 @@ public class Shintake extends SubsystemBase {
             IdleMode.kCoast,
             60);
 
-    //DO NOT CHANGE WITHOUT OFFICER/DEPUTY SUPERVISION
+    // DO NOT CHANGE WITHOUT OFFICER/DEPUTY SUPERVISION
     lowerRollerMotor.setkF(1 / 5800.0); // 1/4730.0
     lowerRollerMotor.setkP(0.0003); // 0.0005
     lowerRollerMotor.setkI(0.0);
@@ -82,7 +82,7 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setLowerRollerSpeed(double speed) {
-    lowerRollerMotor.set(-speed);
+    lowerRollerMotor.set(speed);
   }
 
   public void setLowerRollerVoltage(double voltage) {
@@ -90,7 +90,7 @@ public class Shintake extends SubsystemBase {
   }
 
   public void setUpperRollerSpeed(double speed) {
-    upperRollerMotor.set(-speed);
+    upperRollerMotor.set(speed);
   }
 
   public void setUpperRollerVoltage(double voltage) {
@@ -112,12 +112,6 @@ public class Shintake extends SubsystemBase {
     setUpperRollerVoltage(voltage);
   }
 
-  public double getAverageEncoderVelocity() {
-    return (lowerRollerMotor.getEncoder().getVelocity()
-            + upperRollerMotor.getEncoder().getVelocity())
-        / 2.0;
-  }
-
   public void setRollerRPMs(double lowerRPM, double upperRPM) {
     lowerRollerMotor
         .getClosedLoopController()
@@ -125,6 +119,12 @@ public class Shintake extends SubsystemBase {
     upperRollerMotor
         .getClosedLoopController()
         .setReference(upperRPM, ControlType.kMAXMotionVelocityControl);
+  }
+
+  public double getAverageEncoderVelocity() {
+    return (lowerRollerMotor.getEncoder().getVelocity()
+            + upperRollerMotor.getEncoder().getVelocity())
+        / 2.0;
   }
 
   public WarriorSparkMax getUpperRollerMotor() {

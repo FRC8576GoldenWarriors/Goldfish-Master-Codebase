@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import java.util.Map;
+import org.littletonrobotics.junction.Logger;
 
 public class LEDStrip extends SubsystemBase {
   private int port;
@@ -43,6 +44,7 @@ public class LEDStrip extends SubsystemBase {
 
   public void rainbowScroll() {
     SmartDashboard.putString(getName(), "rainbowScroll");
+    Logger.recordOutput(getName(), "rainbowScroll");
 
     Map<Double, Color> maskSteps =
         Map.of(
@@ -74,29 +76,33 @@ public class LEDStrip extends SubsystemBase {
   }
 
   public void scroll(LEDPattern pattern, double speed) {
+    SmartDashboard.putString(getName(), "scroll");
+    Logger.recordOutput(getName(), "scroll");
     setPattern(pattern.scrollAtRelativeSpeed(Percent.per(Second).of(speed)));
   }
 
   public void blink(LEDPattern pattern, double speed) {
     SmartDashboard.putString(getName(), "blink");
+    Logger.recordOutput(getName(), "blink");
     setPattern(pattern.blink(Seconds.of(speed)));
   }
 
   public void breathe(LEDPattern pattern, double speed) {
     SmartDashboard.putString(getName(), "breathe");
-
+    Logger.recordOutput(getName(), "breathe");
     setPattern(pattern.breathe(Second.of(speed)).scrollAtRelativeSpeed(Percent.per(Second).of(25)));
   }
 
   public void progress(LEDPattern mask, double percentage) {
     SmartDashboard.putString(getName(), "progress");
-
+    Logger.recordOutput(getName(), "breathe");
     LEDPattern base = LEDPattern.progressMaskLayer(() -> percentage);
     setPattern(base.mask(mask));
   }
 
   public void solid(LEDPattern pattern) {
     SmartDashboard.putString(getName(), "Solid");
+    Logger.recordOutput(getName(), "Solid");
     setPattern(pattern);
   }
 

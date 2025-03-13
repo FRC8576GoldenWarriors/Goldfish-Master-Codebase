@@ -32,8 +32,6 @@ public class Climber extends SubsystemBase {
     climbEncoder.setInverted(Constants.ClimberConstants.HardwareConstants.climberEncoderIsInverted);
   }
 
-  
-
   public void stop() {
     climbMotor.set(0);
   }

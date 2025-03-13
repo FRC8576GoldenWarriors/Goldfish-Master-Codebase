@@ -2,7 +2,6 @@ package frc.robot;
 
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -37,7 +36,7 @@ public class Constants {
         public static class DistanceConstants {
 
           public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
-              3.2; // MAKE SURE TO TUNE THIS
+              2.2; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
@@ -317,7 +316,7 @@ public class Constants {
 
       public static final double storedPosition = 0.02;
       public static final double A1Position = 0.31;
-      public static final double A2Position = 0.40; // 0.40
+      public static final double A2Position = 0.42; // 0.40
       public static final double handoffPosition = 0.735;
 
       public static final double lowSoftStopPositon = 0.0;
@@ -358,12 +357,12 @@ public class Constants {
       public static final double kI = 0;
       public static final double kD = 0;
 
-      public static final double kS = 0.0;//0.1;
+      public static final double kS = 0.0; // 0.1;
       public static final double kA = 0;
       public static final double kG = 0.24;
-      public static final double kV = 0.15;//0.25;
+      public static final double kV = 0.15; // 0.25;
 
-      public static final double rollerIdlekS = 0.01;
+      public static final double rollerIdlekS = -0.1;
 
       public static final double coastZone = 0.5;
     }
@@ -380,6 +379,11 @@ public class Constants {
 
       public static final double pivotEncoderFullRange = 1.0;
       public static final double pivotEncoderZero = 0.0;
+    }
+
+    public static class ControlConstants{
+      public static final double lowerRollerShootRPM = 4200.0;
+      public static final double upperRollerShootRPM = 4200.0;
     }
   }
 

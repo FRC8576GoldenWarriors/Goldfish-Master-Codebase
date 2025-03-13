@@ -114,7 +114,7 @@ spotless {
     java {
         target fileTree('.') {
             include '**/*.java'
-            exclude '**/build/**', '**/build-*/**', '**/bin/**'
+            exclude '**/build/**', '**/build-*/**', '**/bin/**', '**/Macros.java/**'
         }
         toggleOffOn()
         removeUnusedImports()

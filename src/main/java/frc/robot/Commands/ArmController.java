@@ -103,9 +103,9 @@ public class ArmController extends Command {
     Logger.recordOutput("Arm/PID Voltage", PIDVoltage);
     Logger.recordOutput("Arm/Total Voltage", voltage);
 
-    if (encoder.get() > 0.76) { // 0.725) {
+    if (encoder.get() > 0.78) { // 0.725) {
       voltage = 0.0;
-      arm.setArmMotorIdleMode(IdleMode.kBrake);
+     
     }
 
     if (!encoder.isConnected()) {

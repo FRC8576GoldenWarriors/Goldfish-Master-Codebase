@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain;
+import org.littletonrobotics.junction.Logger;
 
 public class AprilTagStatsLimelight extends SubsystemBase {
 
@@ -42,9 +43,11 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
     if (hasValidTargets()) {
       SmartDashboard.putBoolean(limelightName + " Has Targets", true);
+      Logger.recordOutput(limelightName + "/Has Targets", true);
       updateRobotPoseInSmartDashboard();
     } else {
       SmartDashboard.putBoolean(limelightName + " Has Targets", false);
+      Logger.recordOutput(limelightName + "/Has Targets", false);
     }
 
     updateValues(x, y, area, id);
@@ -97,6 +100,11 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber(limelightName + " Limelight Y", y);
     SmartDashboard.putNumber(limelightName + " Limelight Area", area);
     SmartDashboard.putNumber(limelightName + " Limelight ID", id);
+
+    Logger.recordOutput(limelightName + "/Limelight X", x);
+    Logger.recordOutput(limelightName + "/Limelight Y", y);
+    Logger.recordOutput(limelightName + "/Limelight Area", area);
+    Logger.recordOutput(limelightName + "/Limelight ID", id);
   }
 
   public double getPitch() {
@@ -146,6 +154,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   private void updateRobotPoseInSmartDashboard() {
     boolean hasTarget = hasValidTargets();
     SmartDashboard.putBoolean(limelightName + " Limelight/Has Target", hasTarget);
+    Logger.recordOutput(limelightName + "/Limelight Has Target", hasTarget);
 
     if (hasTarget) {
       Pose3d pose = getBotPose();
@@ -157,6 +166,13 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     }
   }
 
+  public boolean isConnected() {
+    boolean connected = table != null;
+    SmartDashboard.putBoolean("Limelight Connected", connected);
+    Logger.recordOutput("Limelight/Connected", connected);
+    return connected;
+  }
+
   private void updatePoseDashboard(Pose3d pose) {
     SmartDashboard.putNumber("Limelight/Position/X", pose.getX());
     SmartDashboard.putNumber("Limelight/Position/Y", pose.getY());
@@ -164,6 +180,13 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight/Rotation/Roll", Math.toDegrees(pose.getRotation().getX()));
     SmartDashboard.putNumber("Limelight/Rotation/Pitch", Math.toDegrees(pose.getRotation().getY()));
     SmartDashboard.putNumber("Limelight/Rotation/Yaw", Math.toDegrees(pose.getRotation().getZ()));
+
+    Logger.recordOutput("Limelight/Position/X", pose.getX());
+    Logger.recordOutput("Limelight/Position/Y", pose.getY());
+    Logger.recordOutput("Limelight/Position/Z", pose.getZ());
+    Logger.recordOutput("Limelight/Rotation/Roll", Math.toDegrees(pose.getRotation().getX()));
+    Logger.recordOutput("Limelight/Rotation/Pitch", Math.toDegrees(pose.getRotation().getY()));
+    Logger.recordOutput("Limelight/Rotation/Yaw", Math.toDegrees(pose.getRotation().getZ()));
   }
 
   private void clearPoseDashboard() {
@@ -174,6 +197,14 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight/Rotation/Pitch", 0);
     SmartDashboard.putNumber("Limelight/Rotation/Yaw", 0);
     SmartDashboard.putNumber("Limelight/Distance", 0);
+
+    Logger.recordOutput("Limelight/Position/X", 0);
+    Logger.recordOutput("Limelight/Position/Y", 0);
+    Logger.recordOutput("Limelight/Position/Z", 0);
+    Logger.recordOutput("Limelight/Rotation/Roll", 0);
+    Logger.recordOutput("Limelight/Rotation/Pitch", 0);
+    Logger.recordOutput("Limelight/Rotation/Yaw", 0);
+    Logger.recordOutput("Limelight/Distance", 0);
   }
 
   // ! Using the april tag area

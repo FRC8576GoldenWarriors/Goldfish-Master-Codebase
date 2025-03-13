@@ -7,7 +7,6 @@ package frc.robot.Commands;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -18,7 +17,6 @@ import org.littletonrobotics.junction.Logger;
 public class GroundIntakeController extends Command {
 
   private GroundIntake intake;
-
 
   private double desiredAngle;
   private double rollerSpeed;
@@ -38,7 +36,7 @@ public class GroundIntakeController extends Command {
 
   public GroundIntakeController(GroundIntake intake, double desiredAngle, double rollerSpeed) {
     this.intake = intake;
-  
+
     this.rollerSpeed = rollerSpeed;
 
     this.desiredAngle = desiredAngle;
@@ -61,7 +59,7 @@ public class GroundIntakeController extends Command {
     FFvoltage = 0.0;
     voltage = 0.0;
 
-    COMOffset = -0.02778;
+    COMOffset = 0.05;
 
     addRequirements(intake);
   }
@@ -82,37 +80,38 @@ public class GroundIntakeController extends Command {
             1.0); // position in radians, 0 is horizontal
     PIDvoltage = -pid.calculate(intake.getEncoderPosition(), desiredAngle);
 
-
     voltage = FFvoltage + PIDvoltage;
 
-    //if desired angle in coast zone, set to coast voltage
-    if(desiredAngle<Constants.GroundIntakeConstants.ControlConstants.coastZone && intake.getEncoderPosition()<=Constants.GroundIntakeConstants.ControlConstants.coastZone){
-      intake.setPivotVoltage(0.0);
-    }
-    else{
-      intake.setPivotVoltage(voltage); 
-    }
-    
+    // if desired angle in coast zone, set to coast voltage
+    // if(desiredAngle>Constants.GroundIntakeConstants.ControlConstants.coastZone &&
+    // intake.getEncoderPosition()>=Constants.GroundIntakeConstants.ControlConstants.coastZone){
+    //   intake.setPivotVoltage(0.0);
+    // }
+    // else{
+    //   intake.setPivotVoltage(voltage);
+    // }
 
-    if(rollerSpeed == 0.0){
+    intake.setPivotVoltage(voltage);
+
+    if (rollerSpeed == 0.0) {
       intake.setRollerVoltage(Constants.GroundIntakeConstants.ControlConstants.rollerIdlekS);
-    }
-    else{
+    } else {
       intake.setRollerSpeed(rollerSpeed);
     }
-    
 
     SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);
     SmartDashboard.putNumber("Intake Pivot FF", FFvoltage);
     SmartDashboard.putNumber("Intake Pivot PID", PIDvoltage);
     Logger.recordOutput("Ground_Intake/Intake Pivot Voltage Output", voltage);
+    Logger.recordOutput("Ground_Intake/Intake Pivot PID", PIDvoltage);
+    Logger.recordOutput("Ground_Intake/Intake Pivot FF", FFvoltage);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setPivotSpeed(0);
-    intake.setRollerSpeed(0);
+    intake.setPivotVoltage(0); //CHECK LATER
+    intake.setRollerVoltage(0);
   }
 
   // Returns true when the command should end.

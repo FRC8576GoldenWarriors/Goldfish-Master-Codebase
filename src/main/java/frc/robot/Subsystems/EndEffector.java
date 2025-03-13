@@ -59,5 +59,8 @@ public class EndEffector extends SubsystemBase {
     //     "EndEffector/EndEffector_Coral_Digital_Input", getCoralDigitalInput().get());
     Logger.recordOutput(
         "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
+    Logger.recordOutput("EndEffector/Pinch_Motor_Voltage", pincherMotor.getBusVoltage());
+    Logger.recordOutput("EndEffector/Pinch_Motor_Current", pincherMotor.getOutputCurrent());
+    Logger.recordOutput("EndEffector/Pinch_Motor_Running", motorRunning());
   }
 }

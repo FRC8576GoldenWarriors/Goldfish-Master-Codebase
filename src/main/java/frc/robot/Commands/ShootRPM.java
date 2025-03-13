@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Shintake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Shoot extends Command {
+public class ShootRPM extends Command {
   private Shintake shintake;
   private double upperRollerRPM;
   private double lowerRollerRPM;
 
   /** Creates a new Shoot. */
-  public Shoot(Shintake shintake, double upperRollerRPM, double lowerRollerRPM) {
+  public ShootRPM(Shintake shintake, double upperRollerRPM, double lowerRollerRPM) {
     this.shintake = shintake;
     this.upperRollerRPM = upperRollerRPM;
     this.lowerRollerRPM = lowerRollerRPM;

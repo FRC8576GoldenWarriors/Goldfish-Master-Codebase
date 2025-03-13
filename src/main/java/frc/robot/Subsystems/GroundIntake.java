@@ -29,7 +29,7 @@ public class GroundIntake extends SubsystemBase {
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kCoast,
+            IdleMode.kBrake,
             60);
 
     rollerMotor =
@@ -72,7 +72,7 @@ public class GroundIntake extends SubsystemBase {
     rollerMotor.set(speed);
   }
 
-  public void setRollerVoltage(double voltage){
+  public void setRollerVoltage(double voltage) {
     rollerMotor.setVoltage(voltage);
   }
 
