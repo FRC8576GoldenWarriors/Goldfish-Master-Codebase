@@ -293,8 +293,8 @@ public class Drivetrain extends SubsystemBase {
     m_ModuleStatesActual.set(getModuleStates());
     m_pose.set(odometry.getPoseMeters());
     Logger.recordOutput("Drivetrain/Pose2D", odometry.getPoseMeters());
-    // Logger.recordOutput("Drivetrain/Module Positions", getModulePositions());
-    // Logger.recordOutput("Drivetrain/Module States", getModuleStates());
+    Logger.recordOutput("Drivetrain/Module Positions", getModulePositions());
+    Logger.recordOutput("Drivetrain/Module States", getModuleStates());
 
     // rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");

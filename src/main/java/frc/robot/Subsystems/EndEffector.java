@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -54,12 +56,11 @@ public class EndEffector extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Logger.recordOutput(
-    //     "EndEffector/EndEffector_Coral_Digital_Input", getCoralDigitalInput().get());
-    // Logger.recordOutput(
-    //     "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
-    // Logger.recordOutput("EndEffector/Pinch_Motor_Voltage", pincherMotor.getBusVoltage());
-    // Logger.recordOutput("EndEffector/Pinch_Motor_Current", pincherMotor.getOutputCurrent());
-    // Logger.recordOutput("EndEffector/Pinch_Motor_Running", motorRunning());
+  
+    Logger.recordOutput(
+        "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
+    Logger.recordOutput("EndEffector/Pinch_Motor_Voltage", pincherMotor.getBusVoltage());
+    Logger.recordOutput("EndEffector/Pinch_Motor_Current", pincherMotor.getOutputCurrent());
+    Logger.recordOutput("EndEffector/Pinch_Motor_Running", motorRunning());
   }
 }
