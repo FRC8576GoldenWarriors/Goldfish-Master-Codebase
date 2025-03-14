@@ -15,15 +15,35 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Dealgae Only B1 Start"
+                  "name": "Reset Climber"
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Dealgae Part 1 A2"
+                  "commands": [
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Dealgae Only B1 Start"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Dealgae Part 1 A2"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -40,35 +60,9 @@
                 }
               },
               {
-                "type": "race",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 3.0
-                      }
-                    },
-                    {
-                      "type": "sequential",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.5
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "Dealgae Part 2"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
+                  "name": "Dealgae Part 2"
                 }
               }
             ]
