@@ -8,11 +8,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
-import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
   /** Creates a new AlgaeArm. */
@@ -27,7 +25,7 @@ public class Arm extends SubsystemBase {
             MotorType.kBrushless,
             Constants.ArmConstants.ControlConstants.motorIsInverted,
             IdleMode.kCoast,
-            35);
+            40);
 
     armAbsEncoder =
         new DutyCycleEncoder(
@@ -42,14 +40,14 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    Logger.recordOutput("Arm/Arm_Voltage", armMotor.getBusVoltage());
-    Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
-    Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
-    Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
+    // Logger.recordOutput("Arm/Arm_Voltage", armMotor.getBusVoltage());
+    // Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
+    // Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
+    // Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
 
-    SmartDashboard.putNumber("Arm Enocder Position", getEncoderPosition());
-    SmartDashboard.putNumber("Arm Motor Voltage", armMotor.getBusVoltage());
-    SmartDashboard.putNumber("Arm Encoder Velocity", getArmVelocity());
+    // SmartDashboard.putNumber("Arm Enocder Position", getEncoderPosition());
+    // SmartDashboard.putNumber("Arm Motor Voltage", armMotor.getBusVoltage());
+    // SmartDashboard.putNumber("Arm Encoder Velocity", getArmVelocity());
   }
 
   public void setArmVoltage(double volts) {

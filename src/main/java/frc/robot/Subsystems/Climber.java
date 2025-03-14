@@ -3,11 +3,9 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
-import org.littletonrobotics.junction.Logger;
 
 public class Climber extends SubsystemBase {
 
@@ -62,11 +60,11 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Logger.recordOutput("Climber/Climb_Voltage", climbMotor.getBusVoltage());
-    Logger.recordOutput("Climber/Climb_Current", climbMotor.getOutputCurrent());
-    Logger.recordOutput("Climber/Climb_Position", getEncoderPosition());
-    Logger.recordOutput("Climber/Climbing", isClimbingUp());
+    // Logger.recordOutput("Climber/Climb_Voltage", climbMotor.getBusVoltage());
+    // Logger.recordOutput("Climber/Climb_Current", climbMotor.getOutputCurrent());
+    // Logger.recordOutput("Climber/Climb_Position", getEncoderPosition());
+    // Logger.recordOutput("Climber/Climbing", isClimbingUp());
 
-    SmartDashboard.putNumber("Climber Position", getEncoderPosition());
+    // SmartDashboard.putNumber("Climber Position", getEncoderPosition());
   }
 }

@@ -18,7 +18,6 @@ public class ShootSetSpeeds extends Command {
     this.speed = speed;
 
     addRequirements(shintake);
-  
   }
 
   // Called when the command is initially scheduled.

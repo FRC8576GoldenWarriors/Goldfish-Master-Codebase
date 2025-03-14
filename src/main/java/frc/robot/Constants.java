@@ -116,8 +116,8 @@ public class Constants {
       public static final double xDeadband = 0.08;
       public static final double yDeadband = 0.08;
       public static final double turnDeadband = 0.0825;
-      public static final double xCoefficient = 1.8;
-      public static final double yCoefficient = 1.8;
+      public static final double xCoefficient = 1.75;
+      public static final double yCoefficient = 1.75;
       public static final double turnCoefficient = 1.675;
     }
 
@@ -296,27 +296,18 @@ public class Constants {
 
       public static final boolean motorIsInverted = true;
 
-      // public static final double kS = 0.003;
-      // public static final double kG = 0.2500;
-      // public static final double kV = 0.1811;
-      // public static final double kA = 0;
-
-      // public static final double kP = 20.0;
-      // public static final double kI = 0.0;
-      // public static final double kD = 0.1;
-
-      public static final double kS = 0.004;
-      public static final double kG = 0.2;
-      public static final double kV = 0.075; // 0.15
+      public static final double kS = 0.015; // 0.013;
+      public static final double kG = 0.24;
+      public static final double kV = 0.0505; // 0.053;
       public static final double kA = 0;
 
-      public static final double kP = 45;
+      public static final double kP = 20.0;
       public static final double kI = 0.0;
-      public static final double kD = 1;
+      public static final double kD = 0.0;
 
-      public static final double storedPosition = 0.02;
+      public static final double storedPosition = 0.03;
       public static final double A1Position = 0.31;
-      public static final double A2Position = 0.42; // 0.40
+      public static final double A2Position = 0.425;
       public static final double handoffPosition = 0.735;
 
       public static final double lowSoftStopPositon = 0.0;
@@ -353,14 +344,14 @@ public class Constants {
       public static final double pivotEncoderZero = -0.22; // 0.99;
       public static final boolean pivotEncoderIsInverted = true;
 
-      public static final double kP = 6.5;
+      public static final double kP = 16; // 6.5;
       public static final double kI = 0;
-      public static final double kD = 0;
+      public static final double kD = 0.1;
 
-      public static final double kS = 0.0; // 0.1;
+      public static final double kS = 0.003; // 0.1;
       public static final double kA = 0;
-      public static final double kG = 0.24;
-      public static final double kV = 0.15; // 0.25;
+      public static final double kG = 0.14; // 0.24;
+      public static final double kV = 0.038; // 0.15; // 0.25;
 
       public static final double rollerIdlekS = -0.1;
 
@@ -381,7 +372,7 @@ public class Constants {
       public static final double pivotEncoderZero = 0.0;
     }
 
-    public static class ControlConstants{
+    public static class ControlConstants {
       public static final double lowerRollerShootRPM = 4200.0;
       public static final double upperRollerShootRPM = 4200.0;
     }

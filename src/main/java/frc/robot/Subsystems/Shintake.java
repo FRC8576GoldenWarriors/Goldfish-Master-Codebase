@@ -7,11 +7,9 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
-import org.littletonrobotics.junction.Logger;
 
 public class Shintake extends SubsystemBase {
 
@@ -44,33 +42,33 @@ public class Shintake extends SubsystemBase {
     lowerRollerMotor.setkP(0.0003); // 0.0005
     lowerRollerMotor.setkI(0.0);
     lowerRollerMotor.setkD(0.000003);
-    lowerRollerMotor.setMaxMotion(5500, 6000);
+    lowerRollerMotor.setMaxMotion(5500, 9000);
 
     upperRollerMotor.setkF(1 / 6100.0);
     upperRollerMotor.setkP(0.0003);
     upperRollerMotor.setkI(0.0);
     upperRollerMotor.setkD(0.000003);
-    upperRollerMotor.setMaxMotion(5500, 6000);
+    upperRollerMotor.setMaxMotion(5500, 9000);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Logger.recordOutput("Shintake/IsRevved", getIsRevved());
-    Logger.recordOutput("Shintake/Average_Encoder_RPM", getAverageEncoderVelocity());
-    Logger.recordOutput("Shintake/Lower_Roller_Motor_Voltage", lowerRollerMotor.getBusVoltage());
-    Logger.recordOutput("Shintake/Lower_Roller_Motor_Current", lowerRollerMotor.getOutputCurrent());
-    Logger.recordOutput(
-        "Shintake/Lower_Roller_Encoder_RPM", lowerRollerMotor.getEncoder().getVelocity());
-    Logger.recordOutput("Shintake/Upper_Roller_Motor_Voltage", upperRollerMotor.getBusVoltage());
-    Logger.recordOutput("Shintake/Upper_Roller_Motor_Current", upperRollerMotor.getOutputCurrent());
-    Logger.recordOutput(
-        "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
+    // Logger.recordOutput("Shintake/Lower_Roller_Motor_Voltage", lowerRollerMotor.getBusVoltage());
+    // Logger.recordOutput("Shintake/Lower_Roller_Motor_Current",
+    // lowerRollerMotor.getOutputCurrent());
+    // Logger.recordOutput(
+    //     "Shintake/Lower_Roller_Encoder_RPM", lowerRollerMotor.getEncoder().getVelocity());
+    // Logger.recordOutput("Shintake/Upper_Roller_Motor_Voltage", upperRollerMotor.getBusVoltage());
+    // Logger.recordOutput("Shintake/Upper_Roller_Motor_Current",
+    // upperRollerMotor.getOutputCurrent());
+    // Logger.recordOutput(
+    //     "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
 
-    SmartDashboard.putNumber(
-        "Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
-    SmartDashboard.putNumber(
-        "Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
+    // SmartDashboard.putNumber(
+    //     "Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
+    // SmartDashboard.putNumber(
+    //     "Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
   }
 
   public void setPivotSpeed(double speed) {

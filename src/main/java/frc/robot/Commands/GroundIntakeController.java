@@ -25,8 +25,6 @@ public class GroundIntakeController extends Command {
   private double FFvoltage;
   private double voltage;
 
-  private double pivotPositon;
-
   private double COMOffset;
 
   private TrapezoidProfile.Constraints constraints;
@@ -54,12 +52,11 @@ public class GroundIntakeController extends Command {
             Constants.GroundIntakeConstants.ControlConstants.kG,
             Constants.GroundIntakeConstants.ControlConstants.kV);
 
-    pivotPositon = 0.0;
     PIDvoltage = 0.0;
     FFvoltage = 0.0;
     voltage = 0.0;
 
-    COMOffset = 0.05;
+    COMOffset = 0.0;
 
     addRequirements(intake);
   }
@@ -72,15 +69,16 @@ public class GroundIntakeController extends Command {
   @Override
   public void execute() {
 
-    pivotPositon = intake.getEncoderPosition();
-
     FFvoltage =
         feedforward.calculate(
-            (-pivotPositon + 0.25 + COMOffset) * Math.PI * 2,
+            (-desiredAngle + 0.25 + COMOffset) * Math.PI * 2,
             1.0); // position in radians, 0 is horizontal
     PIDvoltage = -pid.calculate(intake.getEncoderPosition(), desiredAngle);
 
     voltage = FFvoltage + PIDvoltage;
+
+    intake.setPivotVoltage(voltage);
+    intake.setRollerSpeed(rollerSpeed);
 
     // if desired angle in coast zone, set to coast voltage
     // if(desiredAngle>Constants.GroundIntakeConstants.ControlConstants.coastZone &&
@@ -91,13 +89,11 @@ public class GroundIntakeController extends Command {
     //   intake.setPivotVoltage(voltage);
     // }
 
-    intake.setPivotVoltage(voltage);
-
-    if (rollerSpeed == 0.0) {
-      intake.setRollerVoltage(Constants.GroundIntakeConstants.ControlConstants.rollerIdlekS);
-    } else {
-      intake.setRollerSpeed(rollerSpeed);
-    }
+    // if (rollerSpeed == 0.0) {
+    //   intake.setRollerVoltage(Constants.GroundIntakeConstants.ControlConstants.rollerIdlekS);
+    // } else {
+    //   intake.setRollerSpeed(rollerSpeed);
+    // }
 
     SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);
     SmartDashboard.putNumber("Intake Pivot FF", FFvoltage);
@@ -110,7 +106,7 @@ public class GroundIntakeController extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setPivotVoltage(0); //CHECK LATER
+    intake.setPivotVoltage(0); // maybe set ff voltage?
     intake.setRollerVoltage(0);
   }
 

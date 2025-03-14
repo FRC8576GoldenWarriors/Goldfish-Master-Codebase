@@ -8,11 +8,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
-import org.littletonrobotics.junction.Logger;
 
 public class GroundIntake extends SubsystemBase {
 
@@ -30,14 +28,15 @@ public class GroundIntake extends SubsystemBase {
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
             IdleMode.kBrake,
-            60);
+            30);
 
     rollerMotor =
         new WarriorSparkMax(
             Constants.GroundIntakeConstants.HardwareConstants.rollerMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.rollerMotorIsInverted,
-            IdleMode.kBrake);
+            IdleMode.kBrake,
+            30);
 
     encoder =
         new DutyCycleEncoder(
@@ -54,10 +53,10 @@ public class GroundIntake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
-    Logger.recordOutput("Ground_Intake/Algae Detected", getAlgaeDetected());
-    SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
-    SmartDashboard.putBoolean("Hold Photoelectric", getAlgaeDetected());
+    // Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
+    // Logger.recordOutput("Ground_Intake/Algae Detected", getAlgaeDetected());
+    // SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
+    // SmartDashboard.putBoolean("Hold Photoelectric", getAlgaeDetected());
   }
 
   public void setPivotSpeed(double speed) {

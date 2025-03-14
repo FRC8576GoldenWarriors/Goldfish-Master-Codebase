@@ -66,10 +66,6 @@ public class Robot extends LoggedRobot {
     Logger.recordOutput("Robot/Match Time", DriverStation.getMatchTime());
     Logger.recordOutput("Robot/Battery Voltage", RobotController.getBatteryVoltage());
     CommandScheduler.getInstance().run();
-    SmartDashboard.putBoolean(
-        "Can align",
-        RobotContainer.reefTagStatsLimelight.hasValidTargets()
-            && usableTags.contains(RobotContainer.reefTagStatsLimelight.getID()));
   }
 
   @Override

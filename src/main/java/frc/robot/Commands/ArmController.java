@@ -4,7 +4,6 @@
 
 package frc.robot.Commands;
 
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -57,12 +56,6 @@ public class ArmController extends Command {
             Constants.ArmConstants.ControlConstants.kV,
             Constants.ArmConstants.ControlConstants.kA);
 
-    // feedback =
-    //     new PIDController(
-    //         Constants.ArmConstants.ControlConstants.kP,
-    //         Constants.ArmConstants.ControlConstants.kI,
-    //         Constants.ArmConstants.ControlConstants.kD);
-
     this.setpoint = setpoint;
 
     encoder = arm.getEncoder();
@@ -73,7 +66,7 @@ public class ArmController extends Command {
 
     addRequirements(arm);
 
-    SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
+    // SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
   }
 
   // Called when the command is initially scheduled.
@@ -90,7 +83,7 @@ public class ArmController extends Command {
     // feedForward.setKg(kg);
 
     // ff passed in radians
-    FFVoltage = feedForward.calculate((setpoint + COMOffset - 0.25) * Math.PI * 2, 2.0);
+    FFVoltage = feedForward.calculate(((setpoint + COMOffset - 0.25) * Math.PI * 2), 2.0);
 
     PIDVoltage = feedback.calculate(encoder.get(), setpoint);
 
@@ -101,14 +94,8 @@ public class ArmController extends Command {
     SmartDashboard.putNumber("Arm Total Voltage", voltage);
     Logger.recordOutput("Arm/FF Voltage", FFVoltage);
     Logger.recordOutput("Arm/PID Voltage", PIDVoltage);
-    Logger.recordOutput("Arm/Total Voltage", voltage);
 
     if (encoder.get() > 0.78) { // 0.725) {
-      voltage = 0.0;
-     
-    }
-
-    if (!encoder.isConnected()) {
       voltage = 0.0;
     }
 
@@ -127,9 +114,5 @@ public class ArmController extends Command {
   @Override
   public boolean isFinished() {
     return isFinished;
-
-    // return encoder.get() > Constants.ArmConstants.ControlConstants.highSoftStopPosition
-    //     || encoder.get() < Constants.ArmConstants.ControlConstants.lowSoftStopPositon; // make
-    // constant later
   }
 }
