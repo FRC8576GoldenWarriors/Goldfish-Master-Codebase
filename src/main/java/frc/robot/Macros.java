@@ -57,7 +57,7 @@ public class Macros {
                 new WaitCommand(0.3), //TUNE
                 new ArmController(arm, Constants.ArmConstants.ControlConstants.storedPosition)
             ),
-            new ShootSetSpeeds(shintake, -0.5).withTimeout(0.2), //TUNE
+            new ShootSetSpeeds(shintake, -0.3).withTimeout(0.2), //TUNE
             new GroundIntakeController(groundIntake, 0.19, 0.3).withTimeout(0.3) //TUNE
         ),
         
@@ -106,7 +106,7 @@ public class Macros {
                     new WaitCommand(0.3), //TUNE
                     new ArmController(arm, Constants.ArmConstants.ControlConstants.storedPosition)
                 ),
-                new ShootSetSpeeds(shintake, -0.5).withTimeout(0.2), //TUNE
+                new ShootSetSpeeds(shintake, -0.3).withTimeout(0.2), //TUNE
                 new GroundIntakeController(groundIntake, 0.19, 0.3).withTimeout(0.3) //TUNE
             ),
             
@@ -135,13 +135,9 @@ public class Macros {
     return command;
   }
 
-  public static SequentialCommandGroup CLIMB_PREP(Arm arm, GroundIntake groundIntake) {
-    SequentialCommandGroup command =
-        new SequentialCommandGroup(
-            new ParallelCommandGroup(
-                new ArmController(arm, 0.715), new GroundIntakeController(groundIntake, 0.2, 0.0)));
-    return command;
-  }
+
+
+
 
 
 

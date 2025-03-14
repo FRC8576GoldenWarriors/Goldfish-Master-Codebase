@@ -2,6 +2,7 @@ package frc.robot.Subsystems;
 
 import org.littletonrobotics.junction.Logger;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -61,6 +62,16 @@ public class Climber extends SubsystemBase {
     return climbEncoder.get();
   }
 
+  public double getRelativeEncoderPosition(){
+    return climbMotor.getEncoder().getPosition();
+  }
+
+  public RelativeEncoder getRelativeEncoder(){
+    return climbMotor.getEncoder();
+  }
+
+  
+
   @Override
   public void periodic() {
     Logger.recordOutput("Climber/Climb_Voltage", climbMotor.getBusVoltage());
@@ -69,5 +80,6 @@ public class Climber extends SubsystemBase {
     Logger.recordOutput("Climber/Climbing", isClimbingUp());
 
     SmartDashboard.putNumber("Climber Position", getEncoderPosition());
+    SmartDashboard.putNumber("Climb Relative Motor Encoder Position", getRelativeEncoderPosition());
   }
 }
