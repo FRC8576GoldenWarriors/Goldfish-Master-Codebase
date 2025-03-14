@@ -4,9 +4,13 @@
 
 package frc.robot.Subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -53,22 +57,22 @@ public class Shintake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    // Logger.recordOutput("Shintake/Lower_Roller_Motor_Voltage", lowerRollerMotor.getBusVoltage());
-    // Logger.recordOutput("Shintake/Lower_Roller_Motor_Current",
-    // lowerRollerMotor.getOutputCurrent());
-    // Logger.recordOutput(
-    //     "Shintake/Lower_Roller_Encoder_RPM", lowerRollerMotor.getEncoder().getVelocity());
-    // Logger.recordOutput("Shintake/Upper_Roller_Motor_Voltage", upperRollerMotor.getBusVoltage());
-    // Logger.recordOutput("Shintake/Upper_Roller_Motor_Current",
-    // upperRollerMotor.getOutputCurrent());
-    // Logger.recordOutput(
-    //     "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
+    
+    Logger.recordOutput("Shintake/Lower_Roller_Motor_Voltage", lowerRollerMotor.getBusVoltage());
+    Logger.recordOutput("Shintake/Lower_Roller_Motor_Current",
+    lowerRollerMotor.getOutputCurrent());
+    Logger.recordOutput(
+        "Shintake/Lower_Roller_Encoder_RPM", lowerRollerMotor.getEncoder().getVelocity());
+    Logger.recordOutput("Shintake/Upper_Roller_Motor_Voltage", upperRollerMotor.getBusVoltage());
+    Logger.recordOutput("Shintake/Upper_Roller_Motor_Current",
+    upperRollerMotor.getOutputCurrent());
+    Logger.recordOutput(
+        "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
 
-    // SmartDashboard.putNumber(
-    //     "Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
-    // SmartDashboard.putNumber(
-    //     "Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber(
+        "Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber(
+        "Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
   }
 
   public void setPivotSpeed(double speed) {

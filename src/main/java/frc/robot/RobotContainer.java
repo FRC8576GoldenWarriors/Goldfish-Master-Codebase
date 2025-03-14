@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
+import frc.robot.Commands.ClimberController;
 import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Commands.ShootRPM;
@@ -175,78 +176,11 @@ public class RobotContainer {
                   () -> m_climber.setMotorSpeed(0.0),
                   m_climber));
 
-      driverController
-          .a()
-          .onTrue(
-              new SequentialCommandGroup(
-
-                  // HOLDING A1 UNTIL ALGAE DETECTED
-                  new ParallelCommandGroup(
-                          new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.A1Position),
-                          new EndEffectorController(
-                              m_endEffector,
-                              Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
-                      .until(() -> m_endEffector.getAlgaeDetected()),
-                  // ALGAE INTAKE RUN EXTENSION AFTER DETECTION
-                  new ParallelRaceGroup(
-                      new ParallelDeadlineGroup(
-                          new WaitCommand(0.1),
-                          new EndEffectorController(
-                              m_endEffector,
-                              Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)),
-                      new ArmController(
-                          m_arm,
-                          Constants.ArmConstants.ControlConstants
-                              .A1Position) // TUNE TIMEOUT AS NEEDED
-                      ),
-                  // HANDOFF ANGLE AND GROUND INTAKE OUT PREP
-                  new ParallelCommandGroup(
-                          new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-                          new GroundIntakeController(m_groundIntake, 0.175, 0.0) // TUNE ANGLE
-                          )
-                      .until(
-                          () ->
-                              Math.abs(
-                                      m_arm.getEncoderPosition()
-                                          - Constants.ArmConstants.ControlConstants.handoffPosition)
-                                  < 0.01), // WHEN ARM IN ERROR, CONTINUE ON
-
-                  // HANDOFF AND BEGIN TRANSFER TO HOLD
-                  new ParallelCommandGroup(
-                          new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-                          new SequentialCommandGroup(
-                              new WaitCommand(0.15), // TUNE
-                              new EndEffectorController(
-                                  m_endEffector,
-                                  Constants.EndEffectorConstants.ControlConstants
-                                      .pincherInSpeed) // SMALL DELAY TO ENSURE FF INITIALIZES
-                              ),
-                          new ShootSetSpeeds(m_shintake, -0.6),
-                          new GroundIntakeController(m_groundIntake, 0.175, 0.0))
-                      .until(
-                          () ->
-                              m_groundIntake
-                                  .getAlgaeDetected()), // MOVES ON WHEN IN FIRST PART OF HOLD
-
-                  // CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
-                  new ParallelCommandGroup(
-                      new SequentialCommandGroup( // SAFETY WAIT COMMAND
-                          new WaitCommand(0.3), // TUNE
-                          new ArmController(
-                              m_arm, Constants.ArmConstants.ControlConstants.storedPosition)),
-                      new ShootSetSpeeds(m_shintake, -0.5).withTimeout(0.6), // TUNE
-                      new GroundIntakeController(m_groundIntake, 0.175, 0.3)
-                          .withTimeout(0.6) // TUNE
-                      )
-
-                  // SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME
-                  // REASON
-
-                  ));
-      driverController.x().onTrue(new ArmController(m_arm, 0.6));
+      driverController.a().onTrue( new SequentialCommandGroup(
+        new ClimberController(m_climber, 0.01).until(()->Math.abs(m_climber.getEncoderPosition()-0.01)<0.005),
+        new StartEndCommand(()-> m_climber.setMotorSpeed(Constants.ClimberConstants.ControlConstants.climbDownSpeed), ()-> m_climber.setMotorSpeed(0), m_climber)
+        .withTimeout(2.8)
+         ));
 
       // driverController.back().onTrue(new SwitchCamera(m_CameraStream));
 
@@ -336,53 +270,39 @@ public class RobotContainer {
         "Dealgae Part 2",
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-                new ParallelDeadlineGroup(
-                    new WaitCommand(0.1),
-                    new EndEffectorController(
-                        m_endEffector,
-                        Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)),
-                new ArmController(m_arm, m_arm.getEncoderPosition()) // TUNE TIMEOUT AS NEEDED
+                new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)),
+                new ArmController(m_arm, m_arm.getEncoderPosition() ) //TUNE TIMEOUT AS NEEDED
+           ),
+
+            new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+                new GroundIntakeController(m_groundIntake, 0.19, 0.0), //TUNE ANGLE
+                new ShootSetSpeeds(m_shintake, -0.3)
+           )
+           .until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
+    
+           //HANDOFF AND BEGIN TRANSFER TO HOLD
+            new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+                new SequentialCommandGroup(
+                    new WaitCommand(0.0), //TUNE
+                    new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
                 ),
-            // HANDOFF ANGLE AND GROUND INTAKE OUT PREP
+                new ShootSetSpeeds(m_shintake, -0.5),
+                new GroundIntakeController(m_groundIntake, 0.19, 0.0)
+            ).until(()->m_groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
+    
+            //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
             new ParallelCommandGroup(
-                    new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-                    new GroundIntakeController(m_groundIntake, 0.175, 0.0) // TUNE ANGLE
-                    )
-                .until(
-                    () ->
-                        Math.abs(
-                                m_arm.getEncoderPosition()
-                                    - Constants.ArmConstants.ControlConstants.handoffPosition)
-                            < 0.005), // WHEN ARM IN ERROR, CONTINUE ON
-
-            // HANDOFF AND BEGIN TRANSFER TO HOLD
-            new ParallelCommandGroup(
-                    new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-                    new SequentialCommandGroup(
-                        new WaitCommand(0.15), // TUNE
-                        new EndEffectorController(
-                            m_endEffector, -0.5) // SMALL DELAY TO ENSURE FF INITIALIZES
-                        // Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
-                        ),
-                    new ShootSetSpeeds(m_shintake, -0.4),
-                    new GroundIntakeController(m_groundIntake, 0.175, 0.0))
-                .until(
-                    () -> m_groundIntake.getAlgaeDetected()), // MOVES ON WHEN IN FIRST PART OF HOLD
-
-            // CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
-            new ParallelCommandGroup(
-                new SequentialCommandGroup( // SAFETY WAIT COMMAND
-                    new WaitCommand(0.3), // TUNE
-                    new ArmController(
-                        m_arm, Constants.ArmConstants.ControlConstants.storedPosition)),
-                new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.2), // TUNE
-                new GroundIntakeController(m_groundIntake, 0.175, 0.3).withTimeout(0.3) // TUNE
+                new SequentialCommandGroup( //SAFETY WAIT COMMAND
+                    new WaitCommand(0.3), //TUNE
+                    new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)
                 ),
-
-            // SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
-            new GroundIntakeController(m_groundIntake, 0.175, 0)));
+                new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.2), //TUNE
+                new GroundIntakeController(m_groundIntake, 0.19, 0.3).withTimeout(0.3) //TUNE
+            )
+        )
+    );
     // .withTimeout(5.0)); // tune timeouts
 
     NamedCommands.registerCommand(
@@ -398,5 +318,16 @@ public class RobotContainer {
                     () -> m_shintake.setRollersSpeed(0),
                     m_shintake))
             .withTimeout(2));
+
+    NamedCommands.registerCommand(
+        "Reset Climber",
+        new SequentialCommandGroup(
+            new ClimberController(m_climber, 0.01).until(()->Math.abs(m_climber.getEncoderPosition()-0.01)<0.005),
+            new StartEndCommand(()-> m_climber.setMotorSpeed(Constants.ClimberConstants.ControlConstants.climbDownSpeed), ()-> m_climber.setMotorSpeed(0), m_climber)
+            .withTimeout(2.8)
+        )
+    );
   }
+
+  
 }
