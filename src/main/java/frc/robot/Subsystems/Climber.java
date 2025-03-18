@@ -1,7 +1,5 @@
 package frc.robot.Subsystems;
 
-import org.littletonrobotics.junction.Logger;
-
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -10,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class Climber extends SubsystemBase {
 
@@ -62,15 +61,13 @@ public class Climber extends SubsystemBase {
     return climbEncoder.get();
   }
 
-  public double getRelativeEncoderPosition(){
+  public double getRelativeEncoderPosition() {
     return climbMotor.getEncoder().getPosition();
   }
 
-  public RelativeEncoder getRelativeEncoder(){
+  public RelativeEncoder getRelativeEncoder() {
     return climbMotor.getEncoder();
   }
-
-  
 
   @Override
   public void periodic() {

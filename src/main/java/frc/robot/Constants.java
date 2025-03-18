@@ -391,7 +391,6 @@ public class Constants {
       public static final double climbDownSpeed = -1.0;
 
       public static final double climberUpPosition = 0.137;
-      
 
       public static final double climberEncoderOffset = -0.03;
     }

@@ -4,14 +4,13 @@
 
 package frc.robot.Subsystems;
 
-import org.littletonrobotics.junction.Logger;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class EndEffector extends SubsystemBase {
 
@@ -56,7 +55,7 @@ public class EndEffector extends SubsystemBase {
 
   @Override
   public void periodic() {
-  
+
     Logger.recordOutput(
         "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
     Logger.recordOutput("EndEffector/Pinch_Motor_Voltage", pincherMotor.getBusVoltage());

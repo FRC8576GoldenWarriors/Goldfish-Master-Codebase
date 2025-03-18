@@ -6,8 +6,6 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,8 +23,8 @@ public class ArmController extends Command {
   private ArmFeedforward feedForward;
   // private PIDController feedback;
 
-  //private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
-  //private ProfiledPIDController feedback;
+  // private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+  // private ProfiledPIDController feedback;
   private PIDController feedback;
   private double setpoint;
   private double voltage;
@@ -41,7 +39,7 @@ public class ArmController extends Command {
 
     this.arm = arm;
 
-    //constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+    // constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
 
     feedback =
         // new ProfiledPIDController(

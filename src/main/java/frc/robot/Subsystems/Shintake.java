@@ -4,16 +4,14 @@
 
 package frc.robot.Subsystems;
 
-import org.littletonrobotics.junction.Logger;
-
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+import org.littletonrobotics.junction.Logger;
 
 public class Shintake extends SubsystemBase {
 
@@ -57,15 +55,13 @@ public class Shintake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
     Logger.recordOutput("Shintake/Lower_Roller_Motor_Voltage", lowerRollerMotor.getBusVoltage());
-    Logger.recordOutput("Shintake/Lower_Roller_Motor_Current",
-    lowerRollerMotor.getOutputCurrent());
+    Logger.recordOutput("Shintake/Lower_Roller_Motor_Current", lowerRollerMotor.getOutputCurrent());
     Logger.recordOutput(
         "Shintake/Lower_Roller_Encoder_RPM", lowerRollerMotor.getEncoder().getVelocity());
     Logger.recordOutput("Shintake/Upper_Roller_Motor_Voltage", upperRollerMotor.getBusVoltage());
-    Logger.recordOutput("Shintake/Upper_Roller_Motor_Current",
-    upperRollerMotor.getOutputCurrent());
+    Logger.recordOutput("Shintake/Upper_Roller_Motor_Current", upperRollerMotor.getOutputCurrent());
     Logger.recordOutput(
         "Shintake/Upper_Roller_Encoder_RPM", upperRollerMotor.getEncoder().getVelocity());
 
