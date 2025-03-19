@@ -327,6 +327,11 @@ public class RobotContainer {
             .withTimeout(2.8)
         )
     );
+    NamedCommands.registerCommand(
+        "Auto Allign",
+        new AlignToAprilTag(bargeTagStatsLimelight,m_drivetrain).withTimeout(4)
+    );
+
   }
 
   

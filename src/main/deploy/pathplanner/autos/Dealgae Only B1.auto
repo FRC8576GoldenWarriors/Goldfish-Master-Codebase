@@ -54,15 +54,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Deaglae Only pt 2"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Dealgae Part 2"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Deaglae Only pt 2"
                 }
               }
             ]
