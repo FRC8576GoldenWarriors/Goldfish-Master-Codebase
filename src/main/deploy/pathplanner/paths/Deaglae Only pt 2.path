@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.1675,
-        "y": 5.14625
+        "x": 5.02125,
+        "y": 5.097499999999999
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.9822500000000005,
-        "y": 5.828250000000001
+        "x": 4.836,
+        "y": 5.7795
       },
       "isLocked": false,
       "linkedName": "Deaglae pt2"
     },
     {
       "anchor": {
-        "x": 6.122,
-        "y": 7.2132499999999995
+        "x": 6.075,
+        "y": 7.262
       },
       "prevControl": {
-        "x": 5.45025,
-        "y": 7.27175
+        "x": 5.403250000000001,
+        "y": 7.3205
       },
       "nextControl": null,
       "isLocked": false,

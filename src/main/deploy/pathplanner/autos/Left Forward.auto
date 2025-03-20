@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Left Forward"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Forward"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reset Climber"
+                }
+              }
+            ]
           }
         }
       ]

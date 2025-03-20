@@ -21,7 +21,7 @@
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
@@ -42,36 +42,36 @@
                           }
                         ]
                       }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Deaglae Only pt 2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Dealgae Part 2"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Shoot"
+                      }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Deaglae Only pt 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Dealgae Part 2"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
           }
         }
       ]

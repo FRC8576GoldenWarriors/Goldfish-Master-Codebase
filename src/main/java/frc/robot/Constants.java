@@ -27,7 +27,7 @@ public class Constants {
       public static final double PIXEL_WIDTH = 320.0;
 
       public static final double ALLOWED_ANGLE_ERROR = 5.0;
-      public static final double ALLOWED_DISTANCE_ERROR = 0.1;
+      public static final double ALLOWED_DISTANCE_ERROR = 0.03; //0.1
 
       public static class BargeLimelightConstants {
 
@@ -36,7 +36,7 @@ public class Constants {
         public static class DistanceConstants {
 
           public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
-              2.2; // MAKE SURE TO TUNE THIS
+              2.7; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
@@ -118,7 +118,7 @@ public class Constants {
       public static final double turnDeadband = 0.0825;
       public static final double xCoefficient = 1.75;
       public static final double yCoefficient = 1.75;
-      public static final double turnCoefficient = 1.675;
+      public static final double turnCoefficient = 1.55;
     }
 
     // 24K constants
@@ -227,7 +227,7 @@ public class Constants {
     public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5; // 3
     public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
 
-    public static final double AUTO_KP_TRANSLATION = 1.5; // 1.15
+    public static final double AUTO_KP_TRANSLATION = 1.6; // 1.5
     public static final double AUTO_KP_ROTATIONAL = 5.5; // 0.07; // 0.1
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
@@ -240,7 +240,7 @@ public class Constants {
     // kevin pfeffer was here
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
-            new PIDConstants(AUTO_KP_TRANSLATION, 0, 0.1),
+            new PIDConstants(AUTO_KP_TRANSLATION, 0, 0.001),
             new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0.001));
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
@@ -273,11 +273,11 @@ public class Constants {
       public static final int coralDigiSensorID = 1;
       public static final int algaeDigiSensorID = 2;
 
-      public static final boolean motorIsInverted = false;
+      public static final boolean motorIsInverted = true;
     }
 
     public static final class ControlConstants {
-      public static final double pincherInSpeed = -1.0; // -0.65
+      public static final double pincherInSpeed =-1.0; // -0.65
       public static final double pincherOutSpeed = 1.00;
 
       public static final double pincherInRunExtension = 0.25;
@@ -296,18 +296,18 @@ public class Constants {
 
       public static final boolean motorIsInverted = true;
 
-      public static final double kS = 0.015; // 0.013;
-      public static final double kG = 0.24;
-      public static final double kV = 0.0505; // 0.053;
+      public static final double kS = 0.011; // 0.015;
+      public static final double kG = 0.22; //0.24
+      public static final double kV = 0.044; 
       public static final double kA = 0;
 
-      public static final double kP = 20.0;
+      public static final double kP = 26.0;
       public static final double kI = 0.0;
       public static final double kD = 0.0;
 
       public static final double storedPosition = 0.03;
       public static final double A1Position = 0.31;
-      public static final double A2Position = 0.425;
+      public static final double A2Position = 0.4;
       public static final double handoffPosition = 0.735;
 
       public static final double lowSoftStopPositon = 0.0;
@@ -341,7 +341,7 @@ public class Constants {
       // public static final double groundIntakeOutSpeed = -0.5;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.22; // 0.99;
+      public static final double pivotEncoderZero = -0.85; // 0.99;
       public static final boolean pivotEncoderIsInverted = true;
 
       public static final double kP = 16; // 6.5;
@@ -350,7 +350,7 @@ public class Constants {
 
       public static final double kS = 0.003; // 0.1;
       public static final double kA = 0;
-      public static final double kG = 0.14; // 0.24;
+      public static final double kG = 0.1417; // 0.24;
       public static final double kV = 0.038; // 0.15; // 0.25;
 
       public static final double rollerIdlekS = -0.1;
@@ -390,10 +390,10 @@ public class Constants {
       public static final double climbUpSpeed = 1.0;
       public static final double climbDownSpeed = -1.0;
 
-      public static final double climberUpPosition = 0.137;
+      public static final double climberUpPosition = 0.18;
       
 
-      public static final double climberEncoderOffset = -0.03;
+      public static final double climberEncoderOffset = -0.19;
     }
   }
 
@@ -437,15 +437,14 @@ public class Constants {
 
       // robot idle (no status) - breathing pattern
       public static final LEDPattern kLEDNoStatusBreathe =
-          LEDPattern.gradient(
-              GradientType.kContinuous, new Color(255, 130, 0), new Color(200, 80, 10));
+          LEDPattern.solid(Color.kRed);
       // LEDPattern.gradient(
       //     GradientType.kContinuous, new Color(255, 200, 0), new Color(255, 255, 200));
       public static final double kLEDNoStatusBreatheSpeed = 25;
 
       // robot disabled - scrolling pattern
       public static final LEDPattern kLEDDisabledScroll =
-          LEDPattern.gradient(GradientType.kContinuous, new Color(255, 0, 0), new Color(255, 5, 5));
+          LEDPattern.gradient(GradientType.kContinuous, new Color(255, 0, 0), new Color(255, 0, 3));
 
       public static final double kLEDDisabledScrollSpeed = 2;
       // test

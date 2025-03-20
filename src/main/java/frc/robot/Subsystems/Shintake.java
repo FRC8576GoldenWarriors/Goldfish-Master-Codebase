@@ -46,13 +46,13 @@ public class Shintake extends SubsystemBase {
     lowerRollerMotor.setkP(0.0003); // 0.0005
     lowerRollerMotor.setkI(0.0);
     lowerRollerMotor.setkD(0.000003);
-    lowerRollerMotor.setMaxMotion(5500, 9000);
+    lowerRollerMotor.setMaxMotion(5600, 12000);
 
     upperRollerMotor.setkF(1 / 6100.0);
     upperRollerMotor.setkP(0.0003);
     upperRollerMotor.setkI(0.0);
     upperRollerMotor.setkD(0.000003);
-    upperRollerMotor.setMaxMotion(5500, 9000);
+    upperRollerMotor.setMaxMotion(5600, 12000);
   }
 
   @Override

@@ -118,6 +118,8 @@ public class Robot extends LoggedRobot {
       SmartDashboard.putNumber(
           "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
     }
+
+    Logger.recordOutput("Shoot Button", RobotContainer.driverController.getHID().getRightBumperButtonPressed());
   }
 
   @Override

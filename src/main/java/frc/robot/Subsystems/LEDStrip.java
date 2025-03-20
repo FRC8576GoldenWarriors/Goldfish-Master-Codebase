@@ -116,9 +116,11 @@ public class LEDStrip extends SubsystemBase {
       scroll(
           Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,
           Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
-    } else if (RobotContainer.m_climber.isClimbing()) {
-      climbProgress();
-    } else if (RobotContainer.bargeTagStatsLimelight.isTagReached()) {
+    }
+    //  else if (RobotContainer.m_climber.isClimbing()) {
+    //   climbProgress();
+    // } 
+    else if (RobotContainer.bargeTagStatsLimelight.isTagReached()) {
       solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
 
     } else if (RobotContainer.bargeTagStatsLimelight.isTagDetected()) {
@@ -127,12 +129,6 @@ public class LEDStrip extends SubsystemBase {
           Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
     }
 
-    // else if (driverController.getLeftBumper()) {
-    //   blink(
-    //       Constants.LEDConstants.PatternConfig.kAprilTags,
-    //       Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
-
-    // }
     else if (RobotContainer.m_groundIntake.getAlgaeDetected()) { // algae ground intake/hold
       breathe(
           Constants.LEDConstants.PatternConfig.kLEDAlgaeGroundBreathe,

@@ -9,7 +9,6 @@ import org.littletonrobotics.junction.Logger;
 public class ClimberController extends Command {
   private final Climber climber;
 
-  private final BangBangController bangBangController;
 
   private double bangBangVoltage;
   private double climbAngle;
@@ -18,7 +17,6 @@ public class ClimberController extends Command {
   public ClimberController(Climber climber, double climbAngle) {
     this.climber = climber;
 
-    this.bangBangController = new BangBangController();
     this.climbAngle = climbAngle;
 
     addRequirements(climber);
@@ -31,7 +29,7 @@ public class ClimberController extends Command {
 
   @Override
   public void execute() {
-    if (climber.getEncoderPosition() - climbAngle < 0) { // pivot going down, robot climbing up
+    if (climber.getEncoderPosition() < climbAngle ) { // pivot going down, robot climbing up
       motorOutput = 1.0;
 
       Logger.recordOutput("Climber/Climbing Up", true);
@@ -44,6 +42,11 @@ public class ClimberController extends Command {
       if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.005) {
         motorOutput = 0.0;
       }
+    }
+
+
+    if(climber.getEncoderPosition()>0.20){
+      motorOutput = 0.0;
     }
 
     climber.setMotorSpeed(motorOutput);

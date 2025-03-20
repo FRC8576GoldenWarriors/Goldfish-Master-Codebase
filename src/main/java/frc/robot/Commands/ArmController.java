@@ -93,7 +93,7 @@ public class ArmController extends Command {
 
     PIDVoltage = feedback.calculate(encoder.get(), setpoint);
 
-    voltage = FFVoltage + PIDVoltage;
+    voltage = FFVoltage+ PIDVoltage;
 
     SmartDashboard.putNumber("Arm FF Voltage", FFVoltage);
     SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);

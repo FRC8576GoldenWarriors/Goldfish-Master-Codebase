@@ -134,55 +134,70 @@ public class RobotContainer {
                           .rightBumper())) // or left and right bumper to allow double binding
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
-      //   driverController
-      //       .rightBumper()
-      //       .or(
-      //           driverController
-      //               .leftBumper()
-      //               .and(
-      //                   driverController
-      //                       .rightBumper())) // or left and right bumper to allow double binding
-      //       .whileTrue(
-      //           new ParallelCommandGroup(
-      //               new StartEndCommand(
-      //                   () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-      //                   () -> m_groundIntake.setRollerSpeed(0),
-      //                   m_groundIntake),
-      //               new StartEndCommand(
-      //                   () -> m_shintake.setRollersSpeed(0.743, 0.75), // 0.9286, 1.0 // 0.65
-      //                   () -> m_shintake.setRollersSpeed(0),
-      //                   m_shintake)));
+        driverController
+            .rightBumper()
+            .or(
+                driverController
+                    .leftBumper()
+                    .and(
+                        driverController
+                            .rightBumper())) // or left and right bumper to allow double binding
+            .whileTrue(
+                new ParallelCommandGroup(
+                    new StartEndCommand(
+                        () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
+                        () -> m_groundIntake.setRollerSpeed(0),
+                        m_groundIntake),
+                    new StartEndCommand(
+                        () -> m_shintake.setRollersSpeed(0.743, 0.75), // 0.9286, 1.0 // 0.65
+                        () -> m_shintake.setRollersSpeed(0),
+                        m_shintake)));
 
       driverController
           .rightBumper()
           .whileTrue(
               new ParallelCommandGroup(
-                  new ShootRPM(m_shintake, 4200, 4400),
+                  new ShootRPM(m_shintake, 4850, 5300),
                   new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
+        
+       
 
-      driverController
-          .y()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_climber.setMotorSpeed(0.9),
-                  () -> m_climber.setMotorSpeed(0.0),
-                  m_climber));
+            
 
-      driverController
-          .b()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_climber.setMotorSpeed(-0.9),
-                  () -> m_climber.setMotorSpeed(0.0),
-                  m_climber));
+      driverController.y().onTrue(
+        new ClimberController(m_climber, Constants.ClimberConstants.ControlConstants.climberUpPosition)
+        );
+   
+      driverController.b().onTrue(
+        new SequentialCommandGroup(
+            new ClimberController(m_climber, 0.02).until(()->Math.abs(m_climber.getEncoderPosition()-0.01)<0.005),
+            new StartEndCommand(()-> m_climber.setMotorSpeed(Constants.ClimberConstants.ControlConstants.climbDownSpeed), ()-> m_climber.setMotorSpeed(0), m_climber)
+            .withTimeout(2.8)
+            )
+        );
+    
+        driverController
+        .x()
+        .whileTrue(
+            new StartEndCommand(
+                () -> m_climber.setMotorSpeed(0.9),
+                () -> m_climber.setMotorSpeed(0.0),
+                m_climber));
 
-      driverController.a().onTrue( new SequentialCommandGroup(
-        new ClimberController(m_climber, 0.01).until(()->Math.abs(m_climber.getEncoderPosition()-0.01)<0.005),
-        new StartEndCommand(()-> m_climber.setMotorSpeed(Constants.ClimberConstants.ControlConstants.climbDownSpeed), ()-> m_climber.setMotorSpeed(0), m_climber)
-        .withTimeout(2.8)
-         ));
+    driverController
+        .a()
+        .whileTrue(
+            new StartEndCommand(
+                () -> m_climber.setMotorSpeed(-0.9),
+                () -> m_climber.setMotorSpeed(0.0),
+                m_climber));
+
+      
+
+        
 
       // driverController.back().onTrue(new SwitchCamera(m_CameraStream));
+
 
       // operator controller
 
@@ -207,10 +222,9 @@ public class RobotContainer {
                           Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
                   () -> m_endEffector.setSpeed(0.0),
                   m_endEffector));
-      operatorController.povLeft().onTrue(new GroundIntakeController(m_groundIntake, 0.09, 0.0));
-
-      operatorController.povRight().onTrue(new GroundIntakeController(m_groundIntake, 0.23, -0.8));
-
+   
+                //unslack
+        operatorController.povUp().onTrue(new ClimberController(m_climber, 0.02));
       // processor
       operatorController
           .rightBumper()
@@ -240,9 +254,7 @@ public class RobotContainer {
 
   public void registerNamedCommands() {
 
-    NamedCommands.registerCommand(
-        "Reset Climb", new InstantCommand(() -> m_climber.setMotorSpeed(0.9)).withTimeout(3.0));
-
+   
     NamedCommands.registerCommand(
         "Shooter RP",
         new StartEndCommand(
@@ -270,38 +282,42 @@ public class RobotContainer {
         "Dealgae Part 2",
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-                new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)),
-                new ArmController(m_arm, m_arm.getEncoderPosition() ) //TUNE TIMEOUT AS NEEDED
-           ),
+            new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)),
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position ) //TUNE TIMEOUT AS NEEDED
+       ),
+       //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
+       new ParallelCommandGroup(
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+            new GroundIntakeController(m_groundIntake, 0.19, 0.0), //TUNE ANGLE
+            new ShootSetSpeeds(m_shintake, -0.3)
+       )
+       .until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
 
-            new ParallelCommandGroup(
-                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-                new GroundIntakeController(m_groundIntake, 0.19, 0.0), //TUNE ANGLE
-                new ShootSetSpeeds(m_shintake, -0.3)
-           )
-           .until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
-    
-           //HANDOFF AND BEGIN TRANSFER TO HOLD
-            new ParallelCommandGroup(
-                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-                new SequentialCommandGroup(
-                    new WaitCommand(0.0), //TUNE
-                    new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
-                ),
-                new ShootSetSpeeds(m_shintake, -0.5),
-                new GroundIntakeController(m_groundIntake, 0.19, 0.0)
-            ).until(()->m_groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
-    
-            //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
-            new ParallelCommandGroup(
-                new SequentialCommandGroup( //SAFETY WAIT COMMAND
-                    new WaitCommand(0.3), //TUNE
-                    new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)
-                ),
-                new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.2), //TUNE
-                new GroundIntakeController(m_groundIntake, 0.19, 0.3).withTimeout(0.3) //TUNE
-            )
-        )
+       //HANDOFF AND BEGIN TRANSFER TO HOLD
+        new ParallelCommandGroup(
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+            new SequentialCommandGroup(
+                new WaitCommand(0.0), //TUNE
+                new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
+            ),
+            new ShootSetSpeeds(m_shintake, -0.5),
+            new GroundIntakeController(m_groundIntake, 0.19, 0.0)
+        ).until(()->m_groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
+
+        //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
+        new ParallelCommandGroup(
+            new SequentialCommandGroup( //SAFETY WAIT COMMAND
+                new WaitCommand(0.3), //TUNE
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)
+            ),
+            new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.35), //TUNE
+            new GroundIntakeController(m_groundIntake, 0.19, 0.3).withTimeout(0.4) //TUNE
+        ),
+        
+        //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
+        new GroundIntakeController(m_groundIntake, 0.18, 0)
+        )   
+        .withTimeout(5) //TUNE LATER
     );
     // .withTimeout(5.0)); // tune timeouts
 
@@ -317,12 +333,12 @@ public class RobotContainer {
                     () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
                     () -> m_shintake.setRollersSpeed(0),
                     m_shintake))
-            .withTimeout(2));
+            .withTimeout(1.4));
 
     NamedCommands.registerCommand(
         "Reset Climber",
         new SequentialCommandGroup(
-            new ClimberController(m_climber, 0.01).until(()->Math.abs(m_climber.getEncoderPosition()-0.01)<0.005),
+            new ClimberController(m_climber, 0.02).until(()->Math.abs(m_climber.getEncoderPosition()-0.02)<0.005),
             new StartEndCommand(()-> m_climber.setMotorSpeed(Constants.ClimberConstants.ControlConstants.climbDownSpeed), ()-> m_climber.setMotorSpeed(0), m_climber)
             .withTimeout(2.8)
         )

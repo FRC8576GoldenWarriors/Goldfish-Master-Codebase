@@ -39,7 +39,7 @@ public class GroundIntake extends SubsystemBase {
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.rollerMotorIsInverted,
             IdleMode.kBrake,
-            30);
+            22);
 
     encoder =
         new DutyCycleEncoder(
@@ -58,6 +58,8 @@ public class GroundIntake extends SubsystemBase {
     // This method will be called once per scheduler run
     Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
     Logger.recordOutput("Ground_Intake/Algae Detected", getAlgaeDetected());
+    Logger.recordOutput("Ground_Intake/Roller Motor Applied Voltage", rollerMotor.getAppliedOutput());
+    Logger.recordOutput("Ground_Intake/Roller Motor Current", rollerMotor.getOutputCurrent());
     SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
     SmartDashboard.putBoolean("Hold Photoelectric", getAlgaeDetected());
   }

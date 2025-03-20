@@ -4,10 +4,13 @@
 
 package frc.robot.Subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
@@ -40,14 +43,14 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    // Logger.recordOutput("Arm/Arm_Voltage", armMotor.getBusVoltage());
-    // Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
-    // Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
-    // Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
+    Logger.recordOutput("Arm/Arm_Voltage", armMotor.getBusVoltage());
+    Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
+    Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
+    Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
 
-    // SmartDashboard.putNumber("Arm Enocder Position", getEncoderPosition());
-    // SmartDashboard.putNumber("Arm Motor Voltage", armMotor.getBusVoltage());
-    // SmartDashboard.putNumber("Arm Encoder Velocity", getArmVelocity());
+    SmartDashboard.putNumber("Arm Enocder Position", getEncoderPosition());
+    SmartDashboard.putNumber("Arm Motor Voltage", armMotor.getBusVoltage());
+    SmartDashboard.putNumber("Arm Encoder Velocity", getArmVelocity());
   }
 
   public void setArmVoltage(double volts) {
@@ -64,7 +67,7 @@ public class Arm extends SubsystemBase {
 
   // radians per second
   public double getArmVelocity() {
-    return (getMotor().getEncoder().getVelocity() / 60.0); // rpm/60
+    return (getMotor().getEncoder().getVelocity()); // rpm/60
   }
 
   public DutyCycleEncoder getDutyCycleEncoder() {

@@ -24,7 +24,7 @@ public class Climber extends SubsystemBase {
             Constants.ClimberConstants.HardwareConstants.motorID,
             MotorType.kBrushless,
             Constants.ClimberConstants.HardwareConstants.motorIsInverted,
-            IdleMode.kBrake);
+            IdleMode.kBrake, 80);
 
     climbEncoder =
         new DutyCycleEncoder(
@@ -32,6 +32,8 @@ public class Climber extends SubsystemBase {
             1.0,
             Constants.ClimberConstants.ControlConstants.climberEncoderOffset);
     climbEncoder.setInverted(Constants.ClimberConstants.HardwareConstants.climberEncoderIsInverted);
+
+    isClimbing = false;
   }
 
   public void stop() {
@@ -55,6 +57,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void setMotorSpeed(double speed) {
+    
     climbMotor.set(speed);
   }
 

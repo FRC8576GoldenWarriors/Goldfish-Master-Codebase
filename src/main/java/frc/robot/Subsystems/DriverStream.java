@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -23,6 +25,12 @@ public class DriverStream extends SubsystemBase {
     // server.setSource(cameras[curCameraIndex].getCamera());
 
     // camTab.add("Camera Stream", server);
+  }
+
+  public DriverStream() {
+    // server = CameraServer.getServer();
+    // UsbCamera cam = CameraServer.startAutomaticCapture();
+    // server.setSource(cam);
   }
 
   public void nextStream() {

@@ -9,6 +9,25 @@
           "data": {
             "waitTime": 0.1
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reset Climber"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": []
+                }
+              }
+            ]
+          }
         }
       ]
     }

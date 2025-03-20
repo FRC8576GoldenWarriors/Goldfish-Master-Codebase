@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.122,
-        "y": 7.2132499999999995
+        "x": 6.075,
+        "y": 7.262
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.122,
-        "y": 7.2132499999999995
+        "x": 7.075,
+        "y": 7.262
       },
       "isLocked": false,
       "linkedName": "Dealgae B1 2"
