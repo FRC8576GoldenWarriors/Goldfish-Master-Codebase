@@ -88,7 +88,6 @@ public class Drivetrain extends SubsystemBase {
   //         Constants.SwerveConstants.RIGHT_FRONT_TURN_ID,
   //         Constants.SwerveConstants
   //             .PRACTICE_RIGHT_FRONT_DRIVE_INVERTED, // used to be true, Might have to change back
-  // -
   //         // Om:
   //         // 2/14/24
   //         Constants.SwerveConstants.PRACTICE_RIGHT_FRONT_TURN_INVERTED,
@@ -110,7 +109,6 @@ public class Drivetrain extends SubsystemBase {
   //         Constants.SwerveConstants.RIGHT_BACK_TURN_ID,
   //         Constants.SwerveConstants
   //             .PRACTICE_RIGHT_BACK_DRIVE_INVERTED, // used to be true, Might have to change back
-  // -
   //         // Om:
   //         // 2/14/24
   //         Constants.SwerveConstants.PRACTICE_RIGHT_BACK_TURN_INVERTED,

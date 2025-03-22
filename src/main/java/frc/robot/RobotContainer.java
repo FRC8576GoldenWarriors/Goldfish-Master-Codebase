@@ -192,6 +192,8 @@ public class RobotContainer {
                 () -> m_climber.setMotorSpeed(0.0),
                 m_climber));
 
+    
+
       
 
         
@@ -209,9 +211,14 @@ public class RobotContainer {
           .b()
           .onTrue(Macros.A1_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
 
+    operatorController.povRight().onTrue(Macros.LOLIPOP_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
+    
+
       operatorController.x().onTrue(Macros.GROUND_INTAKE_UP(m_groundIntake));
 
       operatorController.a().onTrue(Macros.GROUND_INTAKE_DOWN(m_groundIntake));
+
+
 
       operatorController
           .start()
@@ -219,12 +226,23 @@ public class RobotContainer {
               new StartEndCommand(
                   () ->
                       m_endEffector.setSpeed(
-                          Constants.EndEffectorConstants.ControlConstants.pincherInSpeed),
+                          Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed),
                   () -> m_endEffector.setSpeed(0.0),
                   m_endEffector));
-   
-                //unslack
-        operatorController.povUp().onTrue(new ClimberController(m_climber, 0.02));
+    operatorController
+    .back()
+    .whileTrue(
+        new StartEndCommand(
+            () ->
+                m_endEffector.setSpeed(
+                    Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed),
+            () -> m_endEffector.setSpeed(0.0),
+            m_endEffector));
+
+
+    operatorController.povDown().whileTrue(new StartEndCommand(()-> m_groundIntake.setRollerSpeed(-0.2), ()-> m_groundIntake.setRollerSpeed(0), m_groundIntake));
+    //unslack
+    operatorController.povUp().onTrue(new ClimberController(m_climber, 0.02));
       // processor
       operatorController
           .rightBumper()
@@ -246,6 +264,9 @@ public class RobotContainer {
                   () -> m_groundIntake.setRollerSpeed(0),
                   m_groundIntake));
     }
+    // operatorController
+    // .povLeft()
+    // .onTrue(new EndEffectorController(m_endEffector, 0))
   }
 
   public Command getAutonomousCommand() {
@@ -267,7 +288,7 @@ public class RobotContainer {
         new ParallelCommandGroup(
                 new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A1Position),
                 new EndEffectorController(
-                    m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
+                    m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed))
             .until(() -> m_endEffector.getAlgaeDetected()));
 
     NamedCommands.registerCommand(
@@ -275,14 +296,14 @@ public class RobotContainer {
         new ParallelCommandGroup(
                 new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position),
                 new EndEffectorController(
-                    m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed))
+                    m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed))
             .until(() -> m_endEffector.getAlgaeDetected()));
 
     NamedCommands.registerCommand(
         "Dealgae Part 2",
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-            new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherInSpeed)),
+            new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
             new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position ) //TUNE TIMEOUT AS NEEDED
        ),
        //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
@@ -298,7 +319,7 @@ public class RobotContainer {
             new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
             new SequentialCommandGroup(
                 new WaitCommand(0.0), //TUNE
-                new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherInSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
+                new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
             ),
             new ShootSetSpeeds(m_shintake, -0.5),
             new GroundIntakeController(m_groundIntake, 0.19, 0.0)

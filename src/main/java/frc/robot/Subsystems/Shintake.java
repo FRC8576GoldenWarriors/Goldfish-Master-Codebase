@@ -7,6 +7,8 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drivers.WarriorSparkMax;
@@ -19,6 +21,8 @@ public class Shintake extends SubsystemBase {
   private WarriorSparkMax upperRollerMotor;
 
   private WarriorSparkMax pivotMotor;
+
+  private DigitalInput lowerRollerDigitalInput;
 
   private boolean isRevved;
 
@@ -38,6 +42,10 @@ public class Shintake extends SubsystemBase {
             Constants.ShintakeConstants.HardwareConstants.rollerMotorHighIsInverted,
             IdleMode.kCoast,
             60);
+
+      lowerRollerDigitalInput = new DigitalInput(Constants.ShintakeConstants.HardwareConstants.lowerRollerDigitalInputDIO);
+
+    
 
     // DO NOT CHANGE WITHOUT OFFICER/DEPUTY SUPERVISION
     lowerRollerMotor.setkF(1 / 5800.0); // 1/4730.0
@@ -69,6 +77,8 @@ public class Shintake extends SubsystemBase {
         "Shintake Lower Roller RPM", lowerRollerMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber(
         "Shintake Upper Roller RPM", upperRollerMotor.getEncoder().getVelocity());
+
+    SmartDashboard.putBoolean("Lower Roller Digital Input", getAlgaeDetected());
   }
 
   public void setPivotSpeed(double speed) {
@@ -131,6 +141,10 @@ public class Shintake extends SubsystemBase {
 
   public WarriorSparkMax getLowerRollerMotor() {
     return lowerRollerMotor;
+  }
+
+  public boolean getAlgaeDetected(){
+    return !lowerRollerDigitalInput.get();
   }
 
   public void setIsRevved(boolean isRevved) {
