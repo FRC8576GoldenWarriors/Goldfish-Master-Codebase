@@ -6,13 +6,15 @@
     "Coral RP",
     "Coral Spam B1 Left Station Paths",
     "Dealgae Only Paths",
+    "Push Paths",
     "Tuning Paths"
   ],
   "autoFolders": [
     "Auto RP",
+    "Choreo Autons",
     "Coral Spam Autos",
     "Dealgae Only Autos",
-    "Choreo Autons",
+    "Push Autos",
     "Template",
     "Tuning Paths"
   ],

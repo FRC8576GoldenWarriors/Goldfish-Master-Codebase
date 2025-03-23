@@ -9,29 +9,29 @@ import frc.robot.Subsystems.DriverStream;
 
 public class SwitchCamera extends Command {
 
-  private DriverStream driverStream;
+  // private DriverStream driverStream;
 
-  public SwitchCamera(DriverStream driverStream) {
+  // public SwitchCamera(DriverStream driverStream) {
 
-    // this.driverStream = driverStream;
-    // addRequirements(driverStream);
-  }
+  //   this.driverStream = driverStream;
+  //   addRequirements(driverStream);
+  // }
 
-  @Override
-  public void initialize() {}
+  // @Override
+  // public void initialize() {}
 
-  @Override
-  public void execute() {
-    driverStream.nextStream();
-  }
+  // @Override
+  // public void execute() {
+  //   driverStream.nextStream();
+  // }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+  // // Called once the command ends or is interrupted.
+  // @Override
+  // public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+  // // Returns true when the command should end.
+  // @Override
+  // public boolean isFinished() {
+  //   return false;
+  // }
 }

@@ -29,7 +29,7 @@ public class GroundIntake extends SubsystemBase {
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kCoast,
+            IdleMode.kBrake,
             30);
 
     rollerMotor =

@@ -5,6 +5,7 @@
 package frc.robot.Subsystems;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -13,39 +14,38 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriverStream extends SubsystemBase {
   /** Creates a new DriverStream. */
-  Camera[] cameras;
+  // Camera[] cameras;
 
-  private ShuffleboardTab camTab = Shuffleboard.getTab("Camera");
-  private VideoSink server;
-  private int curCameraIndex = 0;
+  // private ShuffleboardTab camTab = Shuffleboard.getTab("Camera");
+  // private static VideoSink server;
+  // private int curCameraIndex = 0;
 
-  public DriverStream(Camera... cameras) {
-    // this.cameras = cameras;
-    // server = CameraServer.getServer();
-    // server.setSource(cameras[curCameraIndex].getCamera());
+  // public DriverStream(Camera... cameras) {
+  //   this.cameras = cameras;
+  //   server = CameraServer.getServer();
+  //   server.setSource(cameras[curCameraIndex].getCamera());
+  //   camTab.add("Camera Stream", server);
+  // }
 
-    // camTab.add("Camera Stream", server);
-  }
+  // public DriverStream() {
+  //   server = CameraServer.getServer();
+  //   UsbCamera cam = CameraServer.startAutomaticCapture();
+  //   server.setSource(cam);
+  // }
 
-  public DriverStream() {
-    // server = CameraServer.getServer();
-    // UsbCamera cam = CameraServer.startAutomaticCapture();
-    // server.setSource(cam);
-  }
+  // public void nextStream() {
+  //   curCameraIndex++;
+  //   if (curCameraIndex >= cameras.length) curCameraIndex = 0;
+  //   server.setSource(cameras[curCameraIndex].getCamera());
+  // }
 
-  public void nextStream() {
-    curCameraIndex++;
-    if (curCameraIndex >= cameras.length) curCameraIndex = 0;
-    server.setSource(cameras[curCameraIndex].getCamera());
-  }
+  // public void previousStream() {
+  //   curCameraIndex--;
+  //   if (curCameraIndex < 0) curCameraIndex = cameras.length - 1;
+  //   server.setSource(cameras[curCameraIndex].getCamera());
+  // }
 
-  public void previousStream() {
-    curCameraIndex--;
-    if (curCameraIndex < 0) curCameraIndex = cameras.length - 1;
-    server.setSource(cameras[curCameraIndex].getCamera());
-  }
-
-  public int getCurrentCameraIndex() {
-    return curCameraIndex;
-  }
+  // public int getCurrentCameraIndex() {
+  //   return curCameraIndex;
+  // }
 }

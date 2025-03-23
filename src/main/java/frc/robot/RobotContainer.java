@@ -24,6 +24,7 @@ import frc.robot.Commands.ShootRPM;
 import frc.robot.Commands.ShootSetSpeeds;
 import frc.robot.Commands.SimSwerveDrive;
 import frc.robot.Commands.SwerveDrive;
+import frc.robot.Commands.SwitchCamera;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.Camera;
 import frc.robot.Subsystems.Climber;
@@ -81,13 +82,13 @@ public class RobotContainer {
       m_climber = new Climber();
       m_led = new LEDStrip(1, 25);
 
-      //   m_DriverCamera =
-      //       new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240,
-      // 30, true);
-      //   m_CageCamera =
-      //       new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, 30,
-      // true);
-      //   m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
+    //     m_DriverCamera =
+    //         new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240,
+    //   30, true);
+    //     m_CageCamera =
+    //         new Camera(Constants.VisionConstants.CameraConstants.CAGE_CAMERA_NAME, 320, 240, 30,
+    //   true);
+    //     m_CameraStream = new DriverStream(m_DriverCamera, m_CageCamera);
 
       reefTagStatsLimelight =
           new AprilTagStatsLimelight(
@@ -198,7 +199,7 @@ public class RobotContainer {
 
         
 
-      // driverController.back().onTrue(new SwitchCamera(m_CameraStream));
+    //   driverController.back().onTrue(new SwitchCamera(m_CameraStream));
 
 
       // operator controller
@@ -220,53 +221,50 @@ public class RobotContainer {
 
 
 
-      operatorController
-          .start()
-          .whileTrue(
-              new StartEndCommand(
-                  () ->
-                      m_endEffector.setSpeed(
-                          Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed),
-                  () -> m_endEffector.setSpeed(0.0),
-                  m_endEffector));
     operatorController
-    .back()
-    .whileTrue(
-        new StartEndCommand(
-            () ->
-                m_endEffector.setSpeed(
-                    Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed),
-            () -> m_endEffector.setSpeed(0.0),
-            m_endEffector));
+        .start()
+        .whileTrue(
+            new StartEndCommand(
+                () ->
+                    m_endEffector.setSpeed(
+                        Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed),
+                () -> m_endEffector.setSpeed(0.0),
+                m_endEffector));
 
 
-    operatorController.povDown().whileTrue(new StartEndCommand(()-> m_groundIntake.setRollerSpeed(-0.2), ()-> m_groundIntake.setRollerSpeed(0), m_groundIntake));
     //unslack
-    operatorController.povUp().onTrue(new ClimberController(m_climber, 0.02));
+    operatorController.back().onTrue(new ClimberController(m_climber, 0.02));
       // processor
-      operatorController
-          .rightBumper()
-          .whileTrue(
-              new ParallelCommandGroup(
-                  new StartEndCommand(
-                      () -> m_shintake.setRollersSpeed(-0.4, 0),
-                      () -> m_shintake.setRollersSpeed(0),
-                      m_shintake),
-                  new StartEndCommand(
-                      () -> m_groundIntake.setRollerSpeed(1.0),
-                      () -> m_groundIntake.setRollerSpeed(0),
-                      m_groundIntake)));
-      operatorController
-          .leftBumper()
-          .whileTrue(
-              new StartEndCommand(
-                  () -> m_groundIntake.setRollerSpeed(-0.4),
-                  () -> m_groundIntake.setRollerSpeed(0),
-                  m_groundIntake));
-    }
+    operatorController.rightBumper().whileTrue(Macros.GROUND_INTAKE_PROCESSOR(m_groundIntake, m_shintake));
+
+
     // operatorController
-    // .povLeft()
-    // .onTrue(new EndEffectorController(m_endEffector, 0))
+    //       .leftBumper()
+    //       .whileTrue(
+    //           new StartEndCommand(
+    //               () -> m_groundIntake.setRollerSpeed(-0.4),
+    //               () -> m_groundIntake.setRollerSpeed(0),
+    //               m_groundIntake));
+    }
+
+
+    //L1
+    operatorController.povDown().onTrue(Macros.CORAL_L1(m_endEffector, m_arm, m_groundIntake));
+
+    operatorController.povLeft().whileTrue(Macros.DROP_L1_CORAL(m_endEffector, m_arm, m_groundIntake));
+
+    //L2
+
+    operatorController.povRight().onTrue(Macros.CORAL_L2(m_endEffector, m_arm, m_groundIntake));
+    operatorController.povUp().whileTrue(Macros.DROP_L2_CORAL(m_endEffector, m_arm, m_groundIntake));
+
+    //L3
+    
+    operatorController.leftBumper().and(operatorController.povDown()).onTrue(Macros.CORAL_L3(m_endEffector,m_arm,m_groundIntake));
+    operatorController.leftBumper().and(operatorController.povLeft()).whileTrue(Macros.DROP_L3_CORAL(m_endEffector,m_arm,m_groundIntake));
+
+
+    
   }
 
   public Command getAutonomousCommand() {

@@ -290,6 +290,8 @@ public class Constants {
       public static final double pincherCoralInSpeed = 1.00;
       public static final double pincherCoralOutSpeed = -1.00;
 
+      public static final double pincherCoralL3OutSpeed = -0.6;
+
     }
   }
 
@@ -304,12 +306,12 @@ public class Constants {
 
       public static final boolean motorIsInverted = true;
 
-      public static final double kS = 0.015; // 0.013;
+      public static final double kS = 0.015; 
       public static final double kG = 0.24;
-      public static final double kV = 0.0505; // 0.053;
+      public static final double kV = 0.0505; 
       public static final double kA = 0;
 
-      public static final double kP = 20.0;
+      public static final double kP = 15.0;//30.0;
       public static final double kI = 0.0;
       public static final double kD = 0.0;
 
@@ -319,9 +321,10 @@ public class Constants {
       public static final double A2Position = 0.425;
       public static final double LolipopPosition = 0.224;
 
-      public static final double coralStationPosition = 0.65;
-      public static final double L1Position = 0.7;
-      public static final double L2Position = 0.55;
+      public static final double coralStationPosition = 0.653;
+      public static final double L1Position = 0.745;
+      public static final double L2Position = 0.20;
+      public static final double L3Position = 0.30;
       
       public static final double handoffPosition = 0.735;
 
@@ -341,7 +344,7 @@ public class Constants {
       public static final boolean rollerMotorIsInverted = false;
 
       public static final int pivotMotorID = 31;
-      public static final boolean pivotMotorIsInverted = false;
+      public static final boolean pivotMotorIsInverted = true;
 
       public static final int pivotEncoderDIO = 4;
 
@@ -349,24 +352,26 @@ public class Constants {
     }
 
     public static class ControlConstants {
-      public static final double groundIntakeUpPosition = 0.0;
+      public static final double groundIntakeUpPosition = 0.015;//0.01;
       public static final double groundIntakeDownPosition = 0.15;
 
-      // public static final double groundIntakeInSpeed = 0.5;
-      // public static final double groundIntakeOutSpeed = -0.5;
+      public static final double algaeInSpeed = -1.0;
+      public static final double algaeOutSpeed = 1.0;
+
+      public static final double coralDropSpeed = -0.2;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.85; // 0.99;
+      public static final double pivotEncoderZero = -0.85; 
       public static final boolean pivotEncoderIsInverted = true;
 
-      public static final double kP = 0.0;//16; // 6.5;
+      public static final double kP = 28.0;//16; // 6.5;
       public static final double kI = 0;
-      public static final double kD = 0.0;//0.1;
+      public static final double kD = 0.8;
 
-      public static final double kS = 0.0;//0.003; // 0.1;
+      public static final double kS = 0.0;//0.003;
       public static final double kA = 0;
-      public static final double kG = 0.0;//0.14; // 0.24;
-      public static final double kV = 0.0;//0.038; // 0.15; // 0.25;
+      public static final double kG = 0.31;//0.14;
+      public static final double kV = 0.028;//0.038;
 
       public static final double rollerIdlekS = -0.1;
 

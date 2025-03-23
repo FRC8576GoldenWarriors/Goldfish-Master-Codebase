@@ -72,7 +72,7 @@ public class GroundIntakeController extends Command {
     FFvoltage =
         feedforward.calculate(
             (-desiredAngle + 0.25 + COMOffset) * Math.PI * 2,
-            1.0); // position in radians, 0 is horizontal
+            2.0); // position in radians, 0 is horizontal
     PIDvoltage = -pid.calculate(intake.getEncoderPosition(), desiredAngle);
 
     voltage = FFvoltage + PIDvoltage;
