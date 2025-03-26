@@ -77,6 +77,46 @@ public class ArmController extends Command {
     // SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
   }
 
+  public ArmController(Arm arm, double setpoint, double kP, double kI, double kD) {
+
+    this.arm = arm;
+
+    constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+
+    feedback =
+        new ProfiledPIDController(
+            kP,
+            kI,
+            kD,
+            constraints);
+
+        // new PIDController(
+        //     Constants.ArmConstants.ControlConstants.kP,
+        //     Constants.ArmConstants.ControlConstants.kI,
+        //     Constants.ArmConstants.ControlConstants.kD);
+
+    feedForward =
+        new ArmFeedforward(
+            Constants.ArmConstants.ControlConstants.kS,
+            Constants.ArmConstants.ControlConstants.kG,
+            Constants.ArmConstants.ControlConstants.kV,
+            Constants.ArmConstants.ControlConstants.kA);
+
+    this.setpoint = setpoint;
+
+    encoder = arm.getEncoder();
+
+    COMOffset = 0.013194;
+
+    feedback.reset(arm.getEncoderPosition());
+
+    isFinished = false;
+
+    addRequirements(arm);
+
+    // SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -104,6 +144,10 @@ public class ArmController extends Command {
     Logger.recordOutput("Arm/PID Voltage", PIDVoltage);
 
     if (encoder.get() > 0.78) { // 0.725) {
+      voltage = 0.0;
+    }
+
+    if(!encoder.isConnected()){
       voltage = 0.0;
     }
 

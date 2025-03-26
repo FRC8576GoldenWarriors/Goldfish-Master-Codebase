@@ -16,8 +16,8 @@ public class Constants {
   public static class VisionConstants {
 
     public static class CameraConstants {
-      public static final String DRIVER_CAMERA_NAME = "Arducam_OV9782_USB_Camera";
-      public static final String CAGE_CAMERA_NAME = "Arducam_OV9782_USB_Camera (1)";
+      public static final String DRIVER_CAMERA_NAME = "DriverCamera";
+      public static final String CAGE_CAMERA_NAME = "ClimbCamera";
     }
 
     public static class LimelightConstants {
@@ -321,8 +321,8 @@ public class Constants {
       public static final double A2Position = 0.425;
       public static final double LolipopPosition = 0.224;
 
-      public static final double coralStationPosition = 0.653;
-      public static final double L1Position = 0.745;
+      public static final double coralStationPosition = 0.665;
+      public static final double L1Position = 0.14;//0.745;
       public static final double L2Position = 0.20;
       public static final double L3Position = 0.30;
       

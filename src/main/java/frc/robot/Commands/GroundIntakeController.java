@@ -58,6 +58,8 @@ public class GroundIntakeController extends Command {
 
     COMOffset = 0.0;
 
+    pid.reset(intake.getEncoderPosition());
+
     addRequirements(intake);
   }
 
@@ -77,23 +79,16 @@ public class GroundIntakeController extends Command {
 
     voltage = FFvoltage + PIDvoltage;
 
+    if(!intake.getEncoder().isConnected()){
+      voltage = 0.0;
+    }
+
+    voltage = 0.0;
+
     intake.setPivotVoltage(voltage);
     intake.setRollerSpeed(rollerSpeed);
 
-    // if desired angle in coast zone, set to coast voltage
-    // if(desiredAngle>Constants.GroundIntakeConstants.ControlConstants.coastZone &&
-    // intake.getEncoderPosition()>=Constants.GroundIntakeConstants.ControlConstants.coastZone){
-    //   intake.setPivotVoltage(0.0);
-    // }
-    // else{
-    //   intake.setPivotVoltage(voltage);
-    // }
-
-    // if (rollerSpeed == 0.0) {
-    //   intake.setRollerVoltage(Constants.GroundIntakeConstants.ControlConstants.rollerIdlekS);
-    // } else {
-    //   intake.setRollerSpeed(rollerSpeed);
-    // }
+ 
 
     SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);
     SmartDashboard.putNumber("Intake Pivot FF", FFvoltage);

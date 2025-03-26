@@ -273,7 +273,7 @@ public class Macros {
     SequentialCommandGroup command = new SequentialCommandGroup(
         new ParallelCommandGroup(
             new ArmController(arm, Constants.ArmConstants.ControlConstants.L1Position),
-            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, Constants.GroundIntakeConstants.ControlConstants.coralDropSpeed),
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0),
             new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed)
         )
     );

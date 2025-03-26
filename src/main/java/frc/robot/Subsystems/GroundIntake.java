@@ -59,8 +59,9 @@ public class GroundIntake extends SubsystemBase {
     Logger.recordOutput("Ground_Intake/Algae Detected", getAlgaeDetected());
     Logger.recordOutput("Ground_Intake/Roller Motor Applied Voltage", rollerMotor.getAppliedOutput());
     Logger.recordOutput("Ground_Intake/Roller Motor Current", rollerMotor.getOutputCurrent());
-    SmartDashboard.putNumber("Ground Intake Encoder", encoder.get());
-    SmartDashboard.putBoolean("Hold Photoelectric", getAlgaeDetected());
+    SmartDashboard.putNumber("GroundIntake/encoderPosition", encoder.get());
+    SmartDashboard.putBoolean("GroundIntake/Hold Photoelectric", getAlgaeDetected());
+    SmartDashboard.putBoolean("GroundIntake/Encoder Connected", encoder.isConnected());
   }
 
   public void setPivotSpeed(double speed) {
