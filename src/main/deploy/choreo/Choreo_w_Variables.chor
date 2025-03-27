@@ -1,5 +1,5 @@
 {
- "name":"First_Path",
+ "name":"Choreo_w_Variables",
  "version":1,
  "type":"Swerve",
  "variables":{
@@ -7,58 +7,72 @@
   "poses":{
    "Coral_2":{
     "x":{
-     "exp":"Coral_2.x",
-     "val":6.553582668304443
+     "exp":"6.55 m",
+     "val":6.55
     },
     "y":{
-     "exp":"Coral_2.y",
-     "val":4.008081436157227
+     "exp":"4.01 m",
+     "val":4.01
     },
     "heading":{
-     "exp":"Coral_2.heading",
+     "exp":"0 rad",
+     "val":0.0
+    }
+   },
+   "Start_1":{
+    "x":{
+     "exp":"7.21 m",
+     "val":7.21
+    },
+    "y":{
+     "exp":"4.02 m",
+     "val":4.02
+    },
+    "heading":{
+     "exp":"0 rad",
      "val":0.0
     }
    },
    "Start_2":{
     "x":{
-     "exp":"Start_2.x",
-     "val":5.847738265991211
+     "exp":"5.85 m",
+     "val":5.85
     },
     "y":{
-     "exp":"Start_2.y",
-     "val":4.007992267608643
+     "exp":"4.01 m",
+     "val":4.01
     },
     "heading":{
-     "exp":"Start_2.heading",
+     "exp":"0 rad",
      "val":0.0
     }
    },
    "Start_3":{
     "x":{
-     "exp":"Start_3.x",
-     "val":6.177880764007568
+     "exp":"6.18 m",
+     "val":6.18
     },
     "y":{
-     "exp":"Start_3.y",
-     "val":5.013425827026367
+     "exp":"5.01 m",
+     "val":5.01
     },
     "heading":{
-     "exp":"Start_3.heading",
+     "exp":"0 rad",
      "val":0.0
     }
    },
    "Start_4":{
     "x":{
-     "exp":"Start_4.x",
-     "val":5.1724467277526855
+     "exp":"5.17 m",
+     "val":5.17
     },
     "y":{
-     "exp":"Start_4.y",
-     "val":5.133477687835693
+     "exp":"5.13 m",
+     "val":5.13
     },
     "heading":{
-     "exp":"Start_4.heading",
-     "val":1.0471975511965976
+     "exp":"1.05 rad",
+     "val":1.05
     }
    }
   }
