@@ -15,7 +15,7 @@ public class Camera extends SubsystemBase {
   private String cameraName;
   private VideoSource.ConnectionStrategy connectionStrategy;
 
-  //public Camera(String cameraName, int resWidth, int resHeight, int fps, boolean keepAlive) {
+  // public Camera(String cameraName, int resWidth, int resHeight, int fps, boolean keepAlive) {
 
   //   this.cameraName = cameraName;
   //   this.cameraPort = currentPort;

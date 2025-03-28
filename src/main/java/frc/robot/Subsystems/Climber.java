@@ -23,7 +23,8 @@ public class Climber extends SubsystemBase {
             Constants.ClimberConstants.HardwareConstants.motorID,
             MotorType.kBrushless,
             Constants.ClimberConstants.HardwareConstants.motorIsInverted,
-            IdleMode.kBrake, 80);
+            IdleMode.kBrake,
+            80);
 
     climbEncoder =
         new DutyCycleEncoder(
@@ -56,7 +57,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void setMotorSpeed(double speed) {
-    
+
     climbMotor.set(speed);
   }
 

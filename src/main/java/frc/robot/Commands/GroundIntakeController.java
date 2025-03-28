@@ -79,16 +79,12 @@ public class GroundIntakeController extends Command {
 
     voltage = FFvoltage + PIDvoltage;
 
-    if(!intake.getEncoder().isConnected()){
+    if (!intake.getEncoder().isConnected()) {
       voltage = 0.0;
     }
 
-    voltage = 0.0;
-
     intake.setPivotVoltage(voltage);
     intake.setRollerSpeed(rollerSpeed);
-
- 
 
     SmartDashboard.putNumber("Intake Pivot Voltage Output", voltage);
     SmartDashboard.putNumber("Intake Pivot FF", FFvoltage);

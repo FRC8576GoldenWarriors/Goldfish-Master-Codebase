@@ -5,7 +5,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Limelight.AprilTagStatsLimelight;
 import java.util.List;
@@ -41,7 +40,7 @@ public class AlignToStationTag extends Command {
 
   private double goalDistance;
 
-   public AlignToStationTag(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
+  public AlignToStationTag(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
     this.aprilTagStatsLimelight = aprilTagStatsLimelight;
     this.drivetrain = drivetrain;
 
@@ -59,10 +58,11 @@ public class AlignToStationTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.forwardkD);
     forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
-    strafePID = 
-    new PIDController(Constants.VisionConstants.VisionPIDConstants.strafekP,
-    Constants.VisionConstants.VisionPIDConstants.strafekI,
-    Constants.VisionConstants.VisionPIDConstants.strafekD);
+    strafePID =
+        new PIDController(
+            Constants.VisionConstants.VisionPIDConstants.strafekP,
+            Constants.VisionConstants.VisionPIDConstants.strafekI,
+            Constants.VisionConstants.VisionPIDConstants.strafekD);
     strafePID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_STRAFE_ERROR);
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
@@ -86,7 +86,8 @@ public class AlignToStationTag extends Command {
     // if tag detected
     if (aprilTagStatsLimelight.hasValidTargets()
         && usableTags.contains(aprilTagStatsLimelight.getID())
-        &&Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS.contains(aprilTagStatsLimelight.getID())) {
+        && Constants.VisionConstants.aprilTagConstants.IDs.BLUE_TAG_IDS.contains(
+            aprilTagStatsLimelight.getID())) {
 
       aprilTagStatsLimelight.setTagDetected(true);
 
@@ -122,8 +123,8 @@ public class AlignToStationTag extends Command {
       Logger.recordOutput("Limelight/Is Running", true);
 
       goalDistance =
-         Constants.VisionConstants.LimelightConstants.ReefLimelightConstants
-                  .DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;
+          Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.DistanceConstants
+              .DESIRED_APRIL_TAG_DISTANCE_REEF;
 
       // if(rotationOutput<0){
       //     rotationOutput+=(-0.04);
@@ -139,19 +140,23 @@ public class AlignToStationTag extends Command {
 
       if (aprilTagStatsLimelight.isBargeLimelight()) {
         if (aprilTagStatsLimelight.isBlueAlliance()) {
-          if (aprilTagStatsLimelight.getID() == 12||aprilTagStatsLimelight.getID() == 13) {
-            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -115 : 115);
-          } 
+          if (aprilTagStatsLimelight.getID() == 12 || aprilTagStatsLimelight.getID() == 13) {
+            rotationOutput =
+                rotationPID.calculate(
+                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -115 : 115);
+          }
         } else {
-          if (aprilTagStatsLimelight.getID() == 1||aprilTagStatsLimelight.getID() == 2) {
-            rotationOutput = rotationPID.calculate(drivetrain.getHeading(),drivetrain.getHeading() < 0 ? -115 : 115);
+          if (aprilTagStatsLimelight.getID() == 1 || aprilTagStatsLimelight.getID() == 2) {
+            rotationOutput =
+                rotationPID.calculate(
+                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -115 : 115);
           } else {
             rotationOutput =
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -115 : 115);
           }
         }
-        sideOutput = strafePID.calculate(tx,0.3);
+        sideOutput = strafePID.calculate(tx, 0.3);
       } else {
         rotationOutput = rotationPID.calculate(tx, 115);
         SmartDashboard.putNumber("Vision PID Side output", sideOutput);
@@ -159,7 +164,9 @@ public class AlignToStationTag extends Command {
 
       drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
-      if (rotationPID.getError() < 4.0 && forwardPID.getError() < 0.25&&strafePID.getError()<0.5) {
+      if (rotationPID.getError() < 4.0
+          && forwardPID.getError() < 0.25
+          && strafePID.getError() < 0.5) {
         aprilTagStatsLimelight.setTagReached(true);
       } else {
         aprilTagStatsLimelight.setTagReached(false);
@@ -198,7 +205,7 @@ public class AlignToStationTag extends Command {
     // drivetrain.stopModules();
 
     if (!aprilTagStatsLimelight.hasValidTargets()
-        && (rotationPID.atSetpoint() && forwardPID.atSetpoint()&&strafePID.atSetpoint())) {
+        && (rotationPID.atSetpoint() && forwardPID.atSetpoint() && strafePID.atSetpoint())) {
       drivetrain.stopModules();
       return true;
     }

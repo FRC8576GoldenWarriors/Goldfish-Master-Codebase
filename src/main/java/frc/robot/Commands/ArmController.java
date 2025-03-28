@@ -23,11 +23,12 @@ public class ArmController extends Command {
   private DutyCycleEncoder encoder;
 
   private ArmFeedforward feedForward;
-  // private PIDController feedback;
+  private PIDController feedback;
 
   private TrapezoidProfile.Constraints constraints;
-  private ProfiledPIDController feedback;
- 
+  //private ProfiledPIDController feedback;
+
+
   private double setpoint;
   private double voltage;
 
@@ -41,19 +42,21 @@ public class ArmController extends Command {
 
     this.arm = arm;
 
-    constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
+    constraints = new TrapezoidProfile.Constraints(3.0, 3.5);
+
+    
 
     feedback =
-        new ProfiledPIDController(
-            Constants.ArmConstants.ControlConstants.kP,
-            Constants.ArmConstants.ControlConstants.kI,
-            Constants.ArmConstants.ControlConstants.kD,
-            constraints);
+    //     new ProfiledPIDController(
+    //         Constants.ArmConstants.ControlConstants.kP,
+    //         Constants.ArmConstants.ControlConstants.kI,
+    //         Constants.ArmConstants.ControlConstants.kD,
+    //         constraints);
 
-        // new PIDController(
-        //     Constants.ArmConstants.ControlConstants.kP,
-        //     Constants.ArmConstants.ControlConstants.kI,
-        //     Constants.ArmConstants.ControlConstants.kD);
+    new PIDController(
+        Constants.ArmConstants.ControlConstants.kP,
+        Constants.ArmConstants.ControlConstants.kI,
+        Constants.ArmConstants.ControlConstants.kD);
 
     feedForward =
         new ArmFeedforward(
@@ -68,7 +71,9 @@ public class ArmController extends Command {
 
     COMOffset = 0.013194;
 
-    feedback.reset(arm.getEncoderPosition());
+    // feedback.reset(arm.getEncoderPosition());
+
+    // feedback.setGoal(setpoint);
 
     isFinished = false;
 
@@ -77,45 +82,7 @@ public class ArmController extends Command {
     // SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
   }
 
-  public ArmController(Arm arm, double setpoint, double kP, double kI, double kD) {
 
-    this.arm = arm;
-
-    constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
-
-    feedback =
-        new ProfiledPIDController(
-            kP,
-            kI,
-            kD,
-            constraints);
-
-        // new PIDController(
-        //     Constants.ArmConstants.ControlConstants.kP,
-        //     Constants.ArmConstants.ControlConstants.kI,
-        //     Constants.ArmConstants.ControlConstants.kD);
-
-    feedForward =
-        new ArmFeedforward(
-            Constants.ArmConstants.ControlConstants.kS,
-            Constants.ArmConstants.ControlConstants.kG,
-            Constants.ArmConstants.ControlConstants.kV,
-            Constants.ArmConstants.ControlConstants.kA);
-
-    this.setpoint = setpoint;
-
-    encoder = arm.getEncoder();
-
-    COMOffset = 0.013194;
-
-    feedback.reset(arm.getEncoderPosition());
-
-    isFinished = false;
-
-    addRequirements(arm);
-
-    // SmartDashboard.putNumber("Arm Kg", Constants.ArmConstants.ControlConstants.kG);
-  }
 
   // Called when the command is initially scheduled.
   @Override
@@ -135,7 +102,9 @@ public class ArmController extends Command {
 
     PIDVoltage = feedback.calculate(encoder.get(), setpoint);
 
-    voltage = FFVoltage+ PIDVoltage;
+
+
+    voltage = FFVoltage + PIDVoltage;
 
     SmartDashboard.putNumber("Arm FF Voltage", FFVoltage);
     SmartDashboard.putNumber("Arm PID Voltage", PIDVoltage);
@@ -147,7 +116,7 @@ public class ArmController extends Command {
       voltage = 0.0;
     }
 
-    if(!encoder.isConnected()){
+    if (!encoder.isConnected()) {
       voltage = 0.0;
     }
 

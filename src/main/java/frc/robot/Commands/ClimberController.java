@@ -1,6 +1,5 @@
 package frc.robot.Commands;
 
-import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.Climber;
@@ -8,7 +7,6 @@ import org.littletonrobotics.junction.Logger;
 
 public class ClimberController extends Command {
   private final Climber climber;
-
 
   private double bangBangVoltage;
   private double climbAngle;
@@ -29,7 +27,7 @@ public class ClimberController extends Command {
 
   @Override
   public void execute() {
-    if (climber.getEncoderPosition() < climbAngle ) { // pivot going down, robot climbing up
+    if (climber.getEncoderPosition() < climbAngle) { // pivot going down, robot climbing up
       motorOutput = 1.0;
 
       Logger.recordOutput("Climber/Climbing Up", true);
@@ -44,8 +42,7 @@ public class ClimberController extends Command {
       }
     }
 
-
-    if(climber.getEncoderPosition()>0.20){
+    if (climber.getEncoderPosition() > 0.20) {
       motorOutput = 0.0;
     }
 

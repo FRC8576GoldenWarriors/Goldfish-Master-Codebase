@@ -13,15 +13,13 @@ public class ShootRPM extends Command {
   private double upperRollerRPM;
   private double lowerRollerRPM;
 
- 
   public ShootRPM(Shintake shintake, double upperRollerRPM, double lowerRollerRPM) {
     this.shintake = shintake;
     this.upperRollerRPM = upperRollerRPM;
     this.lowerRollerRPM = lowerRollerRPM;
-    
+
     addRequirements(shintake);
   }
-
 
   @Override
   public void initialize() {}
@@ -38,14 +36,12 @@ public class ShootRPM extends Command {
         .setReference(lowerRollerRPM, ControlType.kMAXMotionVelocityControl);
   }
 
-
   @Override
   public void end(boolean interrupted) {
     shintake.setIsRevved(false);
     shintake.setRollersVoltage(0);
     shintake.setRollersVoltage(0);
   }
-
 
   @Override
   public boolean isFinished() {

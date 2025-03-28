@@ -30,7 +30,6 @@ public class Constants {
       public static final double ALLOWED_DISTANCE_ERROR = 0.1;
       public static final double ALLOWED_STRAFE_ERROR = 1.0;
 
-
       public static class BargeLimelightConstants {
 
         public static final String BARGE_NETWORKTABLE_KEY = "limelight-barge";
@@ -101,7 +100,7 @@ public class Constants {
       public static final double rotationkI = 0;
       public static final double rotationkD = 0.001;
 
-      public static final double forwardkP = 1.6;
+      public static final double forwardkP = 2.3;
       public static final double forwardkI = 0.0;
       public static final double forwardkD = 0.001;
 
@@ -279,8 +278,6 @@ public class Constants {
       public static final int coralLeftDigiSensorID = 1;
       public static final int algaeDigiSensorID = 2;
 
-
-
       public static final boolean motorIsInverted = true;
     }
 
@@ -291,7 +288,6 @@ public class Constants {
       public static final double pincherCoralOutSpeed = -1.00;
 
       public static final double pincherCoralL3OutSpeed = -0.6;
-
     }
   }
 
@@ -306,26 +302,26 @@ public class Constants {
 
       public static final boolean motorIsInverted = true;
 
-      public static final double kS = 0.015; 
+      public static final double kS = 0.015;
       public static final double kG = 0.24;
-      public static final double kV = 0.0505; 
+      public static final double kV = 0.0505;
       public static final double kA = 0;
 
-      public static final double kP = 15.0;//30.0;
+      public static final double kP = 20.0; // 30.0;
       public static final double kI = 0.0;
       public static final double kD = 0.0;
 
       public static final double storedPosition = 0.03;
 
       public static final double A1Position = 0.31;
-      public static final double A2Position = 0.425;
+      public static final double A2Position = 0.41;
       public static final double LolipopPosition = 0.224;
 
       public static final double coralStationPosition = 0.665;
-      public static final double L1Position = 0.14;//0.745;
+      public static final double L1Position = 0.14; // 0.745;
       public static final double L2Position = 0.20;
       public static final double L3Position = 0.30;
-      
+
       public static final double handoffPosition = 0.735;
 
       public static final double lowSoftStopPositon = 0.0;
@@ -352,7 +348,7 @@ public class Constants {
     }
 
     public static class ControlConstants {
-      public static final double groundIntakeUpPosition = 0.015;//0.01;
+      public static final double groundIntakeUpPosition = 0.015; // 0.01;
       public static final double groundIntakeDownPosition = 0.15;
 
       public static final double algaeInSpeed = -1.0;
@@ -361,17 +357,17 @@ public class Constants {
       public static final double coralDropSpeed = -0.2;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.85; 
+      public static final double pivotEncoderZero = -0.24;
       public static final boolean pivotEncoderIsInverted = true;
 
-      public static final double kP = 28.0;//16; // 6.5;
+      public static final double kP = 28.0; // 16; // 6.5;
       public static final double kI = 0;
       public static final double kD = 0.8;
 
-      public static final double kS = 0.0;//0.003;
+      public static final double kS = 0.0; // 0.003;
       public static final double kA = 0;
-      public static final double kG = 0.31;//0.14;
-      public static final double kV = 0.028;//0.038;
+      public static final double kG = 0.31; // 0.14;
+      public static final double kV = 0.028; // 0.038;
 
       public static final double rollerIdlekS = -0.1;
 
@@ -382,7 +378,7 @@ public class Constants {
   public static final class ShintakeConstants {
     public static class HardwareConstants {
 
-      public static final int rollerMotorLowID = 32; 
+      public static final int rollerMotorLowID = 32;
       public static final boolean rollerMotorLowIsInverted = true;
 
       public static final int rollerMotorHighID = 33;
@@ -395,7 +391,7 @@ public class Constants {
     }
 
     public static class ControlConstants {
-      public static final double lowerRollerShootRPM = 4200.0; //not used rn
+      public static final double lowerRollerShootRPM = 4200.0; // not used rn
       public static final double upperRollerShootRPM = 4200.0;
     }
   }
@@ -414,7 +410,7 @@ public class Constants {
 
       public static final double climberUpPosition = 0.137;
 
-      public static final double climberEncoderOffset = -0.03;
+      public static final double climberEncoderOffset = -0.36;
     }
   }
 
@@ -465,8 +461,7 @@ public class Constants {
       public static final double kLEDNoStatusBreatheSpeed = 25;
 
       // robot disabled - scrolling pattern
-      public static final LEDPattern kLEDDisabledScroll =
-          LEDPattern.solid(Color.kRed);
+      public static final LEDPattern kLEDDisabledScroll = LEDPattern.solid(Color.kRed);
 
       public static final double kLEDDisabledScrollSpeed = 2;
       // test

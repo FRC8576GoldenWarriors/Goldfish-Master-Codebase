@@ -119,7 +119,8 @@ public class Robot extends LoggedRobot {
           "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
     }
 
-    Logger.recordOutput("Shoot Button", RobotContainer.driverController.getHID().getRightBumperButtonPressed());
+    Logger.recordOutput(
+        "Shoot Button", RobotContainer.driverController.getHID().getRightBumperButtonPressed());
   }
 
   @Override

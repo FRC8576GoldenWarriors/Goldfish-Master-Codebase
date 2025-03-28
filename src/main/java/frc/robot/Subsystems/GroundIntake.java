@@ -57,7 +57,8 @@ public class GroundIntake extends SubsystemBase {
     // This method will be called once per scheduler run
     Logger.recordOutput("Ground_Intake/Ground_Intake_Position", getEncoderPosition());
     Logger.recordOutput("Ground_Intake/Algae Detected", getAlgaeDetected());
-    Logger.recordOutput("Ground_Intake/Roller Motor Applied Voltage", rollerMotor.getAppliedOutput());
+    Logger.recordOutput(
+        "Ground_Intake/Roller Motor Applied Voltage", rollerMotor.getAppliedOutput());
     Logger.recordOutput("Ground_Intake/Roller Motor Current", rollerMotor.getOutputCurrent());
     SmartDashboard.putNumber("GroundIntake/encoderPosition", encoder.get());
     SmartDashboard.putBoolean("GroundIntake/Hold Photoelectric", getAlgaeDetected());

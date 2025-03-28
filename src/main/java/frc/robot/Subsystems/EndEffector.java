@@ -28,14 +28,12 @@ public class EndEffector extends SubsystemBase {
             Constants.EndEffectorConstants.HardwareConstants.motorIsInverted,
             IdleMode.kBrake,
             60);
-    
+
     algaeDigitalInput =
         new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.algaeDigiSensorID);
 
     coralLeftDigitalInput =
         new DigitalInput(Constants.EndEffectorConstants.HardwareConstants.coralLeftDigiSensorID);
-
-    
   }
 
   public void setSpeed(double speed) {
@@ -58,11 +56,11 @@ public class EndEffector extends SubsystemBase {
     return !getAlgaeDigitalInput().get();
   }
 
-  public boolean getCoralDetected(){
+  public boolean getCoralDetected() {
     return getLeftCoralDetected();
   }
 
-  public boolean getLeftCoralDetected(){
+  public boolean getLeftCoralDetected() {
     return !getLeftCoralDigitalInput().get();
   }
 
@@ -71,7 +69,7 @@ public class EndEffector extends SubsystemBase {
 
     Logger.recordOutput(
         "EndEffector/EndEffector_Algae_Digital_Input", getAlgaeDigitalInput().get());
-    
+
     Logger.recordOutput("EndEffector/Pinch_Motor_Voltage", pincherMotor.getBusVoltage());
     Logger.recordOutput("EndEffector/Pinch_Motor_Current", pincherMotor.getOutputCurrent());
     Logger.recordOutput("EndEffector/Pinch_Motor_Running", motorRunning());

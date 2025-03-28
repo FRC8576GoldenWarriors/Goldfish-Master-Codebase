@@ -7,7 +7,6 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -43,9 +42,8 @@ public class Shintake extends SubsystemBase {
             IdleMode.kCoast,
             60);
 
-      lowerRollerDigitalInput = new DigitalInput(Constants.ShintakeConstants.HardwareConstants.lowerRollerDigitalInputDIO);
-
-    
+    lowerRollerDigitalInput = new
+    DigitalInput(Constants.ShintakeConstants.HardwareConstants.lowerRollerDigitalInputDIO);
 
     // DO NOT CHANGE WITHOUT OFFICER/DEPUTY SUPERVISION
     lowerRollerMotor.setkF(1 / 5800.0); // 1/4730.0
@@ -143,7 +141,7 @@ public class Shintake extends SubsystemBase {
     return lowerRollerMotor;
   }
 
-  public boolean getAlgaeDetected(){
+  public boolean getAlgaeDetected() {
     return !lowerRollerDigitalInput.get();
   }
 

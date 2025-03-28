@@ -129,9 +129,9 @@ public class AlignToAprilTag extends Command {
       // }
 
       driveOutput = forwardPID.calculate(currentDistance, goalDistance);
-          // (currentDistance <= goalDistance)
-          //     ? 0
-          //     : forwardPID.calculate(currentDistance, goalDistance);
+      // (currentDistance <= goalDistance)
+      //     ? 0
+      //     : forwardPID.calculate(currentDistance, goalDistance);
 
       if (aprilTagStatsLimelight.isBargeLimelight()) {
         if (aprilTagStatsLimelight.isBlueAlliance()) {
@@ -159,7 +159,10 @@ public class AlignToAprilTag extends Command {
 
       drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
-      if (rotationPID.getError() < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR*1.1 && forwardPID.getError() < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR*1.1) {
+      if (rotationPID.getError()
+              < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR * 1.1
+          && forwardPID.getError()
+              < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR * 1.1) {
         aprilTagStatsLimelight.setTagReached(true);
       } else {
         aprilTagStatsLimelight.setTagReached(false);
