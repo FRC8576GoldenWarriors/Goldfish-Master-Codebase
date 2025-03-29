@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.075,
-        "y": 7.262
+        "x": 6.28875,
+        "y": 5.572
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.075,
-        "y": 7.262
+        "x": 8.06325,
+        "y": 5.4875
       },
       "isLocked": false,
       "linkedName": "Dealgae B1 2"
     },
     {
       "anchor": {
-        "x": 6.30825,
-        "y": 1.9579999999999995
+        "x": 5.031000000000001,
+        "y": 2.855
       },
       "prevControl": {
-        "x": 6.707767077808563,
-        "y": 2.299522663287964
-      },
-      "nextControl": {
-        "x": 5.70375,
-        "y": 1.44125
-      },
-      "isLocked": false,
-      "linkedName": "Dealgae B3 Waypoint"
-    },
-    {
-      "anchor": {
-        "x": 5.19675,
-        "y": 2.728249999999999
-      },
-      "prevControl": {
-        "x": 5.391749999999999,
-        "y": 2.45525
+        "x": 5.596499999999999,
+        "y": 1.7435
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,12 +29,26 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.6461538461538539,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.75,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

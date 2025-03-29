@@ -154,12 +154,21 @@ public class RobotContainer {
                         () -> m_shintake.setRollersSpeed(0),
                         m_shintake)));
 
+    //shoot
       driverController
           .rightBumper()
           .whileTrue(
               new ParallelCommandGroup(
-                  new ShootRPM(m_shintake, 4850, 5300),
+                  new ShootRPM(m_shintake, 4400, 5300), //4850. 5300
                   new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
+
+    //shoot second layer
+    driverController
+    .povUp()
+    .whileTrue(
+        new ParallelCommandGroup(
+            new ShootRPM(m_shintake, 4400, 5300),
+            new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
         
        
 
@@ -301,7 +310,7 @@ public class RobotContainer {
         "Dealgae Part 2",
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-            new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
+            new ParallelDeadlineGroup(new WaitCommand(0), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
             new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position ) //TUNE TIMEOUT AS NEEDED
        ),
        //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
@@ -329,30 +338,22 @@ public class RobotContainer {
                 new WaitCommand(0.3), //TUNE
                 new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)
             ),
-            new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.35), //TUNE
+            new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.37), //TUNE
             new GroundIntakeController(m_groundIntake, 0.19, 0.3).withTimeout(0.4) //TUNE
         ),
         
         //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
         new GroundIntakeController(m_groundIntake, 0.18, 0)
         )   
-        .withTimeout(5) //TUNE LATER
+        .withTimeout(3.5) //TUNE LATER
     );
     // .withTimeout(5.0)); // tune timeouts
 
     NamedCommands.registerCommand(
         "Shoot",
-        new ParallelCommandGroup(
-                new StartEndCommand(
-                        () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-                        () -> m_groundIntake.setRollerSpeed(0),
-                        m_groundIntake)
-                    .withTimeout(2),
-                new StartEndCommand(
-                    () -> m_shintake.setRollersSpeed(0.83571, 0.9), // 0.9286, 1.0 // 0.65 0.7
-                    () -> m_shintake.setRollersSpeed(0),
-                    m_shintake))
-            .withTimeout(1.4));
+                    new ShootRPM(m_shintake, 4400, 5300)
+                    .withTimeout(1.5)
+    );
 
     NamedCommands.registerCommand(
         "Reset Climber",

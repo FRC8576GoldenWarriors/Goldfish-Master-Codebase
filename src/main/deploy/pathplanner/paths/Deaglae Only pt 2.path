@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.02125,
-        "y": 5.097499999999999
+        "x": 5.0992500000000005,
+        "y": 5.195
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.836,
-        "y": 5.7795
+        "x": 5.391749999999999,
+        "y": 5.702000000000001
       },
       "isLocked": false,
       "linkedName": "Deaglae pt2"
     },
     {
       "anchor": {
-        "x": 6.075,
-        "y": 7.262
+        "x": 6.289,
+        "y": 5.572
       },
       "prevControl": {
-        "x": 5.403250000000001,
-        "y": 7.3205
+        "x": 5.61725,
+        "y": 5.6305000000000005
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.75,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

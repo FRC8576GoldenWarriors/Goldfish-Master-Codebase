@@ -1,7 +1,9 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -17,9 +19,9 @@ public class AlignToStationTag extends Command {
   private AprilTagStatsLimelight aprilTagStatsLimelight;
   private Drivetrain drivetrain;
 
-  private final PIDController rotationPID;
-  private final PIDController forwardPID;
-  private final PIDController strafePID;
+  private final ProfiledPIDController rotationPID;
+  private final ProfiledPIDController forwardPID;
+  private final ProfiledPIDController strafePID;
 
   private final double focalLength = Constants.VisionConstants.LimelightConstants.FOCAL_LENGTH;
   private final double pixelWidth = Constants.VisionConstants.LimelightConstants.PIXEL_WIDTH;
@@ -45,24 +47,26 @@ public class AlignToStationTag extends Command {
     this.drivetrain = drivetrain;
 
     rotationPID =
-        new PIDController(
+        new ProfiledPIDController(
             Constants.VisionConstants.VisionPIDConstants.rotationkP,
             Constants.VisionConstants.VisionPIDConstants.rotationkI,
-            Constants.VisionConstants.VisionPIDConstants.rotationkD);
+            Constants.VisionConstants.VisionPIDConstants.rotationkD,
+            new Constraints(Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_SPEED, Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
     rotationPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR);
 
     forwardPID =
-        new PIDController(
+        new ProfiledPIDController(
             Constants.VisionConstants.VisionPIDConstants.forwardkP,
             Constants.VisionConstants.VisionPIDConstants.forwardkI,
-            Constants.VisionConstants.VisionPIDConstants.forwardkD);
+            Constants.VisionConstants.VisionPIDConstants.forwardkD,
+            new Constraints(Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_SPEED, Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
     forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
-    strafePID =
-        new PIDController(
-            Constants.VisionConstants.VisionPIDConstants.strafekP,
-            Constants.VisionConstants.VisionPIDConstants.strafekI,
-            Constants.VisionConstants.VisionPIDConstants.strafekD);
+    strafePID = 
+    new ProfiledPIDController(Constants.VisionConstants.VisionPIDConstants.strafekP,
+    Constants.VisionConstants.VisionPIDConstants.strafekI,
+    Constants.VisionConstants.VisionPIDConstants.strafekD,
+    new Constraints(Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_SPEED, Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
     strafePID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_STRAFE_ERROR);
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
@@ -164,9 +168,7 @@ public class AlignToStationTag extends Command {
 
       drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
-      if (rotationPID.getError() < 4.0
-          && forwardPID.getError() < 0.25
-          && strafePID.getError() < 0.5) {
+      if (rotationPID.getPositionError() < 4.0 && forwardPID.getPositionError() < 0.25&&strafePID.getPositionError()<0.5) {
         aprilTagStatsLimelight.setTagReached(true);
       } else {
         aprilTagStatsLimelight.setTagReached(false);

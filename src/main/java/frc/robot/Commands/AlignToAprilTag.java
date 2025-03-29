@@ -1,7 +1,9 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -57,6 +59,21 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.forwardkI,
             Constants.VisionConstants.VisionPIDConstants.forwardkD);
     forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
+    // rotationPID =
+    //     new ProfiledPIDController(
+    //         Constants.VisionConstants.VisionPIDConstants.rotationkP,
+    //         Constants.VisionConstants.VisionPIDConstants.rotationkI,
+    //         Constants.VisionConstants.VisionPIDConstants.rotationkD,
+    //         new Constraints(Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_SPEED, Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
+    // rotationPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR);
+
+    // forwardPID =
+    //     new ProfiledPIDController(
+    //         Constants.VisionConstants.VisionPIDConstants.forwardkP,
+    //         Constants.VisionConstants.VisionPIDConstants.forwardkI,
+    //         Constants.VisionConstants.VisionPIDConstants.forwardkD,
+    //         new Constraints(Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_SPEED, Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
+    // forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
@@ -132,6 +149,7 @@ public class AlignToAprilTag extends Command {
       // (currentDistance <= goalDistance)
       //     ? 0
       //     : forwardPID.calculate(currentDistance, goalDistance);
+      sideOutput = -RobotContainer.driverController.getLeftX() * 5.5;
 
       if (aprilTagStatsLimelight.isBargeLimelight()) {
         if (aprilTagStatsLimelight.isBlueAlliance()) {
@@ -141,6 +159,7 @@ public class AlignToAprilTag extends Command {
             rotationOutput =
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
+            sideOutput = -sideOutput;
           }
         } else {
           if (aprilTagStatsLimelight.getID() == 5) {
@@ -149,9 +168,10 @@ public class AlignToAprilTag extends Command {
             rotationOutput =
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
+            sideOutput = -sideOutput;
           }
         }
-        sideOutput = -RobotContainer.driverController.getLeftX() * 4.0;
+        
       } else {
         rotationOutput = rotationPID.calculate(tx, 0);
         SmartDashboard.putNumber("Vision PID Side output", sideOutput);
@@ -159,9 +179,9 @@ public class AlignToAprilTag extends Command {
 
       drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
-      if (rotationPID.getError()
+      if (rotationPID.getPositionError()
               < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR * 1.1
-          && forwardPID.getError()
+          && forwardPID.getPositionError()
               < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR * 1.1) {
         aprilTagStatsLimelight.setTagReached(true);
       } else {

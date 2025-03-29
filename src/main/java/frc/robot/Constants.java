@@ -37,7 +37,7 @@ public class Constants {
         public static class DistanceConstants {
 
           public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
-              2.2; // MAKE SURE TO TUNE THIS
+              2.7; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
@@ -183,7 +183,7 @@ public class Constants {
     public static final int PIGEON_ID = 0;
 
     public static double LEFT_FRONT_OFFSET = 0.330322;
-    public static double RIGHT_FRONT_OFFSET = 0.181885;
+    public static double RIGHT_FRONT_OFFSET = 0.191406;
     public static double LEFT_BACK_OFFSET = -0.013428;
     public static double RIGHT_BACK_OFFSET = 0.178955;
 
@@ -232,7 +232,7 @@ public class Constants {
     public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5; // 3
     public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
 
-    public static final double AUTO_KP_TRANSLATION = 1.5; // 1.15
+    public static final double AUTO_KP_TRANSLATION = 2.4; // 1.15
     public static final double AUTO_KP_ROTATIONAL = 5.5; // 0.07; // 0.1
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
@@ -245,7 +245,7 @@ public class Constants {
     // kevin pfeffer was here
     public static final PPHolonomicDriveController pid_controls =
         new PPHolonomicDriveController(
-            new PIDConstants(AUTO_KP_TRANSLATION, 0, 0.1),
+            new PIDConstants(AUTO_KP_TRANSLATION, 0.2, 0.1),
             new PIDConstants(AUTO_KP_ROTATIONAL, 0, 0.001));
 
     // CREATE NEW CONSTANTS FOR LENGTH AND WIDTH
@@ -357,7 +357,7 @@ public class Constants {
       public static final double coralDropSpeed = -0.2;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.24;
+      public static final double pivotEncoderZero = -0.49;
       public static final boolean pivotEncoderIsInverted = true;
 
       public static final double kP = 28.0; // 16; // 6.5;
@@ -408,7 +408,7 @@ public class Constants {
       public static final double climbUpSpeed = 1.0;
       public static final double climbDownSpeed = -1.0;
 
-      public static final double climberUpPosition = 0.137;
+      public static final double climberUpPosition = 0.146;
 
       public static final double climberEncoderOffset = -0.36;
     }
