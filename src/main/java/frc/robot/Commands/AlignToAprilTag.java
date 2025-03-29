@@ -22,6 +22,7 @@ public class AlignToAprilTag extends Command {
 
   private final PIDController rotationPID;
   private final PIDController forwardPID;
+  private final PIDController strafePID;
 
   private final double focalLength = Constants.VisionConstants.LimelightConstants.FOCAL_LENGTH;
   private final double pixelWidth = Constants.VisionConstants.LimelightConstants.PIXEL_WIDTH;
@@ -59,6 +60,12 @@ public class AlignToAprilTag extends Command {
             Constants.VisionConstants.VisionPIDConstants.forwardkI,
             Constants.VisionConstants.VisionPIDConstants.forwardkD);
     forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
+    strafePID = 
+    new PIDController(Constants.VisionConstants.VisionPIDConstants.strafekP,
+    Constants.VisionConstants.VisionPIDConstants.strafekI,
+    Constants.VisionConstants.VisionPIDConstants.strafekD
+    );
+    strafePID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_STRAFE_ERROR);
     // rotationPID =
     //     new ProfiledPIDController(
     //         Constants.VisionConstants.VisionPIDConstants.rotationkP,
@@ -152,30 +159,56 @@ public class AlignToAprilTag extends Command {
       sideOutput = -RobotContainer.driverController.getLeftX() * 5.5;
 
       if (aprilTagStatsLimelight.isBargeLimelight()) {
+
+        //blue
         if (aprilTagStatsLimelight.isBlueAlliance()) {
+
+          //barge alignment
           if (aprilTagStatsLimelight.getID() == 14) {
             rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
-          } else {
+          } else if(aprilTagStatsLimelight.getID()==4){
             rotationOutput =
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
             sideOutput = -sideOutput;
           }
-        } else {
+          else if(aprilTagStatsLimelight.getID()==12||aprilTagStatsLimelight.getID()==13){
+            rotationOutput = rotationPID.calculate(
+                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -128 : 128);
+            sideOutput = 
+            strafePID.calculate(tx, 0.3);
+            driveOutput=forwardPID.calculate(currentDistance,1.1);
+          }
+          else {
+            aprilTagStatsLimelight.setTagDetected(false);
+          }
+          }
+          
+        } 
+        //red
+        else {
+         
           if (aprilTagStatsLimelight.getID() == 5) {
             rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
-          } else {
+          } else if(aprilTagStatsLimelight.getID()==15) {
             rotationOutput =
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
             sideOutput = -sideOutput;
+          }
+          else if(aprilTagStatsLimelight.getID()==1||aprilTagStatsLimelight.getID()==2){
+            rotationOutput = rotationPID.calculate(
+                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -128 : 128);
+            sideOutput = 
+            strafePID.calculate(tx, 0.3);
+            driveOutput=forwardPID.calculate(currentDistance,1.1);
+          }
+          else {
+            aprilTagStatsLimelight.setTagDetected(false);
           }
         }
         
-      } else {
-        rotationOutput = rotationPID.calculate(tx, 0);
-        SmartDashboard.putNumber("Vision PID Side output", sideOutput);
-      }
+      } 
 
       drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
@@ -201,10 +234,8 @@ public class AlignToAprilTag extends Command {
       Logger.recordOutput("Limelight/Tag distance", currentDistance);
     }
     // tag not detected
-    else {
-      aprilTagStatsLimelight.setTagDetected(false);
-    }
-  }
+    
+
 
   @Override
   public void end(boolean interrupted) {

@@ -315,7 +315,7 @@ public class Constants {
 
       public static final double A1Position = 0.31;
       public static final double A2Position = 0.41;
-      public static final double LolipopPosition = 0.224;
+      public static final double LolipopPosition = 0.19;
 
       public static final double coralStationPosition = 0.665;
       public static final double L1Position = 0.14; // 0.745;
@@ -350,6 +350,8 @@ public class Constants {
     public static class ControlConstants {
       public static final double groundIntakeUpPosition = 0.015; // 0.01;
       public static final double groundIntakeDownPosition = 0.15;
+
+      public static final double algaeHoldPosition = 0.21;
 
       public static final double algaeInSpeed = -1.0;
       public static final double algaeOutSpeed = 1.0;
@@ -408,7 +410,7 @@ public class Constants {
       public static final double climbUpSpeed = 1.0;
       public static final double climbDownSpeed = -1.0;
 
-      public static final double climberUpPosition = 0.146;
+      public static final double climberUpPosition = 0.153;
 
       public static final double climberEncoderOffset = -0.36;
     }

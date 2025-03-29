@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.391749999999999,
-        "y": 5.702000000000001
+        "x": 5.46975,
+        "y": 5.75075
       },
       "isLocked": false,
       "linkedName": "Deaglae pt2"
@@ -20,8 +20,8 @@
         "y": 5.572
       },
       "prevControl": {
-        "x": 5.61725,
-        "y": 5.6305000000000005
+        "x": 5.8305,
+        "y": 5.77025
       },
       "nextControl": null,
       "isLocked": false,

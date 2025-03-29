@@ -37,7 +37,7 @@ public class Macros {
        //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
        new ParallelCommandGroup(
             new ArmController(arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-            new GroundIntakeController(groundIntake, 0.19, 0.0), //TUNE ANGLE
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0), //TUNE ANGLE
             new ShootSetSpeeds(shintake, -0.3)
        )
        .until(() -> Math.abs(arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
@@ -50,7 +50,7 @@ public class Macros {
                 new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
             ),
             new ShootSetSpeeds(shintake, -0.5),
-            new GroundIntakeController(groundIntake, 0.19, 0.0)
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0)
         ).until(()->groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
 
         //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
@@ -60,11 +60,11 @@ public class Macros {
                 new ArmController(arm, Constants.ArmConstants.ControlConstants.storedPosition)
             ),
             new ShootSetSpeeds(shintake, -0.3).withTimeout(0.3), //TUNE
-            new GroundIntakeController(groundIntake, 0.19, 0.3).withTimeout(0.4) //TUNE
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.3).withTimeout(0.4) //TUNE
         ),
         
         //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
-        new GroundIntakeController(groundIntake, 0.18, 0)
+        new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0)
     );
         return command;
       }
@@ -86,7 +86,7 @@ public class Macros {
        //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
        new ParallelCommandGroup(
             new ArmController(arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-            new GroundIntakeController(groundIntake, 0.19, 0.0), //TUNE ANGLE
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0), //TUNE ANGLE
             new ShootSetSpeeds(shintake, -0.3)
        )
        .until(() -> Math.abs(arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
@@ -99,7 +99,7 @@ public class Macros {
                 new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
             ),
             new ShootSetSpeeds(shintake, -0.5),
-            new GroundIntakeController(groundIntake, 0.19, 0.0)
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0)
         ).until(()->groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
 
         //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
@@ -109,11 +109,11 @@ public class Macros {
                 new ArmController(arm, Constants.ArmConstants.ControlConstants.storedPosition)
             ),
             new ShootSetSpeeds(shintake, -0.3).withTimeout(0.37), //TUNE
-            new GroundIntakeController(groundIntake, 0.19, 0.3).withTimeout(0.4) //TUNE
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.3).withTimeout(0.4) //TUNE
         ),
         
         //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
-        new GroundIntakeController(groundIntake, 0.18, 0)
+        new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0)
     );
         return command;
     }
@@ -178,13 +178,13 @@ public class Macros {
         .until(()-> endEffector.getAlgaeDetected()),
         //ALGAE INTAKE RUN EXTENSION AFTER DETECTION
        new ParallelRaceGroup(
-            new ParallelDeadlineGroup(new WaitCommand(0.1), new EndEffectorController(endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
+            new ParallelDeadlineGroup(new WaitCommand(0), new EndEffectorController(endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
             new ArmController(arm, Constants.ArmConstants.ControlConstants.LolipopPosition) //TUNE TIMEOUT AS NEEDED
        ),
        //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
        new ParallelCommandGroup(
             new ArmController(arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-            new GroundIntakeController(groundIntake, 0.19, 0.0), //TUNE ANGLE
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0), //TUNE ANGLE
             new ShootSetSpeeds(shintake, -0.3)
        )
        .until(() -> Math.abs(arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
@@ -197,7 +197,7 @@ public class Macros {
                 new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
             ),
             new ShootSetSpeeds(shintake, -0.5),
-            new GroundIntakeController(groundIntake, 0.19, 0.0)
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0)
         ).until(()->groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
 
         //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
@@ -207,11 +207,11 @@ public class Macros {
                 new ArmController(arm, Constants.ArmConstants.ControlConstants.storedPosition)
             ),
             new ShootSetSpeeds(shintake, -0.3).withTimeout(0.3), //TUNE
-            new GroundIntakeController(groundIntake, 0.19, 0.3).withTimeout(0.4) //TUNE
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.3).withTimeout(0.4) //TUNE
         ),
         
         //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
-        new GroundIntakeController(groundIntake, 0.18, 0)
+        new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0)
         );
         return command;
       }
@@ -223,7 +223,7 @@ public class Macros {
         new SequentialCommandGroup(
             new GroundIntakeController(groundIntake, 0.23, Constants.GroundIntakeConstants.ControlConstants.algaeInSpeed) // desired angle 0.175 speed: -1
                 .until(() -> groundIntake.getAlgaeDetected()),
-            new GroundIntakeController(groundIntake, 0.13, 0)
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0) //0.13
                 );
     return command;
   }

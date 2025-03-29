@@ -100,6 +100,7 @@ public class RobotContainer {
                   .BARGE_NETWORKTABLE_KEY);
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
+      m_groundIntake.setDefaultCommand(Macros.GROUND_INTAKE_UP(m_groundIntake));
       registerNamedCommands();
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       // System.out.println("is sim");
@@ -254,6 +255,7 @@ public class RobotContainer {
     //               () -> m_groundIntake.setRollerSpeed(-0.4),
     //               () -> m_groundIntake.setRollerSpeed(0),
     //               m_groundIntake));
+    operatorController.a().and(operatorController.leftBumper()).onTrue(Macros.LOLIPOP_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
     }
 
 
