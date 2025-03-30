@@ -42,8 +42,8 @@ public class Shintake extends SubsystemBase {
             IdleMode.kCoast,
             60);
 
-    lowerRollerDigitalInput = new
-    DigitalInput(Constants.ShintakeConstants.HardwareConstants.lowerRollerDigitalInputDIO);
+    lowerRollerDigitalInput =
+        new DigitalInput(Constants.ShintakeConstants.HardwareConstants.lowerRollerDigitalInputDIO);
 
     // DO NOT CHANGE WITHOUT OFFICER/DEPUTY SUPERVISION
     lowerRollerMotor.setkF(1 / 5800.0); // 1/4730.0

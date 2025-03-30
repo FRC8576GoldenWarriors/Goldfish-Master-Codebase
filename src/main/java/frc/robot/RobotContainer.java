@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
+import frc.robot.Commands.AutoAlignToAprilTag;
 import frc.robot.Commands.ClimberController;
 import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
@@ -365,6 +366,47 @@ public class RobotContainer {
             .withTimeout(2.8)
         )
     );
+    NamedCommands.registerCommand("L1 Macro", new SequentialCommandGroup(
+        new ParallelCommandGroup(
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.coralStationPosition),
+            new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed)
+        ).until(()->m_endEffector.getCoralDetected())
+,
+        new ParallelRaceGroup(
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.L1Position,14, 0,0),
+            new SequentialCommandGroup(
+            new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed).until(()-> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.L1Position)<0.02),
+            new EndEffectorController(m_endEffector, 0.3).withTimeout(1))
+            )
+        )
+);
+    NamedCommands.registerCommand("L1 Hold", 
+    new ParallelCommandGroup(
+        new ArmController(m_arm, Constants.ArmConstants.ControlConstants.L1Position,14, 0,0),
+        new EndEffectorController(m_endEffector,  0.3)
+        ).withTimeout(4));
+    // NamedCommands.registerCommand("Coral kS", new ParallelRaceGroup(new EndEffectorController(m_endEffector, 0.3),new WaitCommand(2)));
+//     NamedCommands.registerCommand("L1 Out",new SequentialCommandGroup( new ParallelCommandGroup(
+//         new ParallelRaceGroup(new ArmController(m_arm, Constants.ArmConstants.ControlConstants.L1Position,10,0,0),new WaitCommand(2)),
+//         new SequentialCommandGroup(new WaitCommand(0.4),
+//         new ParallelRaceGroup(new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed),new WaitCommand(2))))
+// ));
+
+    NamedCommands.registerCommand("L1 Out", 
+        new SequentialCommandGroup(
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.L1Position,14,0,0).until(()-> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.L1Position)<0.02),
+
+            new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.L1Position,14,0,0),
+                new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed)
+            ).withTimeout(1.5)
+            
+        )
+    );
+           
+
+    NamedCommands.registerCommand("End Effector Hold", new ParallelRaceGroup(new WaitCommand(3),new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)));
+    NamedCommands.registerCommand("Autopose", new AutoAlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
   }
 
   

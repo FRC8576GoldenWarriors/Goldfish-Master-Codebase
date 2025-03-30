@@ -20,6 +20,8 @@ public class Arm extends SubsystemBase {
 
   private DutyCycleEncoder armAbsEncoder;
 
+  public static boolean isCoraling;
+
   public Arm() {
     armMotor =
         new WarriorSparkMax(
@@ -36,6 +38,8 @@ public class Arm extends SubsystemBase {
             Constants.ArmConstants.ControlConstants.armEncoderOffset);
 
     armAbsEncoder.setInverted(Constants.ArmConstants.ControlConstants.armEncoderIsInverted);
+
+    isCoraling = false;
   }
 
   @Override
@@ -83,5 +87,13 @@ public class Arm extends SubsystemBase {
 
   public void setArmMotorIdleMode(IdleMode idleMode) {
     armMotor.setIdleMode(idleMode);
+  }
+
+  public void setCoraling(boolean finished) {
+    isCoraling = finished;
+  }
+
+  public boolean getCoraling() {
+    return isCoraling;
   }
 }

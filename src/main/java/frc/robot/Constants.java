@@ -118,9 +118,9 @@ public class Constants {
   public static final class SwerveConstants {
 
     public static class DriverConstants {
-      public static final double xDeadband = 0.08;
-      public static final double yDeadband = 0.08;
-      public static final double turnDeadband = 0.0825;
+      public static final double xDeadband = 0.07;
+      public static final double yDeadband = 0.07;
+      public static final double turnDeadband = 0.08;
       public static final double xCoefficient = 1.75;
       public static final double yCoefficient = 1.75;
       public static final double turnCoefficient = 1.675;
@@ -307,7 +307,7 @@ public class Constants {
       public static final double kV = 0.0505;
       public static final double kA = 0;
 
-      public static final double kP = 20.0; // 30.0;
+      public static final double kP = 35.0; // 30.0;
       public static final double kI = 0.0;
       public static final double kD = 0.0;
 
@@ -317,8 +317,8 @@ public class Constants {
       public static final double A2Position = 0.41;
       public static final double LolipopPosition = 0.19;
 
-      public static final double coralStationPosition = 0.665;
-      public static final double L1Position = 0.14; // 0.745;
+      public static final double coralStationPosition = 0.675;
+      public static final double L1Position = 0.13;
       public static final double L2Position = 0.20;
       public static final double L3Position = 0.30;
 
@@ -446,6 +446,11 @@ public class Constants {
           LEDPattern.solid(new Color(0, 255, 65));
       public static final double kLEDAlgaePincherBlinkSpeed = 0.075;
 
+      // Coral Alligned
+      public static final LEDPattern kLEDCoralAllignedBlink =
+          LEDPattern.solid(new Color(212, 0, 255));
+      public static final double kLEDCoralAllignedBlinkSpeed = 0.075;
+
       // coral photoeletric detects coral
       public static final LEDPattern kLEDCoralDetectedBreathe = LEDPattern.solid(Color.kPurple);
       public static final double kLEDCoralDetectedBreatheSpeed = 2;
@@ -467,7 +472,7 @@ public class Constants {
 
       public static final double kLEDDisabledScrollSpeed = 2;
       // test
-      public static final double kLEDRainbowScrollSize = 0.5; // 0.0 - 1.0
+      public static final double kLEDRainbowScrollSize = 1.0; // 0.0 - 1.0
       public static final int kLEDRainbowScrollSpeed = 150;
       public static final LEDPattern kLEDProgressGradientPattern =
           LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed, Color.kBlue);

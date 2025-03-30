@@ -13,7 +13,7 @@ import org.littletonrobotics.junction.Logger;
 
 // import frc.robot.subsystems.Limelight.SpeakerAllignment;
 
-public class AlignToAprilTag extends Command {
+public class AutoAlignToAprilTag extends Command {
   // private final SpeakerAllignment speakerAllignment;
   private AprilTagStatsLimelight aprilTagStatsLimelight;
   private Drivetrain drivetrain;
@@ -41,7 +41,7 @@ public class AlignToAprilTag extends Command {
 
   private double goalDistance;
 
-  public AlignToAprilTag(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
+  public AutoAlignToAprilTag(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
     this.aprilTagStatsLimelight = aprilTagStatsLimelight;
     this.drivetrain = drivetrain;
 
@@ -245,11 +245,11 @@ public class AlignToAprilTag extends Command {
   public boolean isFinished() {
     // drivetrain.stopModules();
 
-    // if (!aprilTagStatsLimelight.hasValidTargets()
-    //     ||(rotationPID.atSetpoint() && forwardPID.atSetpoint())) {
-    //   drivetrain.stopModules();
-    //   return true;
-    // }
+    if (!aprilTagStatsLimelight.hasValidTargets()
+        || (rotationPID.atSetpoint() && forwardPID.atSetpoint())) {
+      drivetrain.stopModules();
+      return true;
+    }
     return false;
   }
 }

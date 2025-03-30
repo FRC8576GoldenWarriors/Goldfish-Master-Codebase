@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.754,
-        "y": 5.088
+        "x": 3.800102459016393,
+        "y": 5.181813524590163
       },
       "prevControl": {
-        "x": 2.8179999999999996,
-        "y": 6.121500000000001
+        "x": 2.864102459016393,
+        "y": 6.215313524590164
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Coral Spam B1 Left Station Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -55.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

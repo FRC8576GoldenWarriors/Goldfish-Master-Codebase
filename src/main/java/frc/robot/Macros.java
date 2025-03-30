@@ -263,7 +263,7 @@ public class Macros {
         ).until(()->endEffector.getCoralDetected()),
 
         new ParallelCommandGroup(
-            new ArmController(arm, Constants.ArmConstants.ControlConstants.L1Position),
+            new ArmController(arm, Constants.ArmConstants.ControlConstants.L1Position,14, 0,0),
             new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0),
             new SequentialCommandGroup(
                 new EndEffectorController(endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed).withTimeout(1.2),
@@ -284,7 +284,7 @@ public class Macros {
         ).until(()->endEffector.getCoralDetected()),
 
         new ParallelCommandGroup(
-            new ArmController(arm, Constants.ArmConstants.ControlConstants.L2Position),
+            new ArmController(arm, Constants.ArmConstants.ControlConstants.L2Position,14, 0,0),
             new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0),
             new SequentialCommandGroup(
                 new EndEffectorController(endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed).withTimeout(1.2),
@@ -307,7 +307,7 @@ public class Macros {
         ).until(()->endEffector.getCoralDetected()),
 
         new ParallelCommandGroup(
-            new ArmController(arm, Constants.ArmConstants.ControlConstants.L3Position),
+            new ArmController(arm, Constants.ArmConstants.ControlConstants.L3Position,14, 0,0),
             new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0),
             new SequentialCommandGroup(
                 new EndEffectorController(endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherCoralInSpeed).withTimeout(1.2),

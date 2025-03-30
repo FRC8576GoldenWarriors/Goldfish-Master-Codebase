@@ -2,6 +2,7 @@ package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Subsystems.Climber;
 import org.littletonrobotics.junction.Logger;
 
@@ -19,7 +20,9 @@ public class ClimberController extends Command {
 
     addRequirements(climber);
 
-    climber.setClimbing(true);
+    if (this.climbAngle == Constants.ClimberConstants.ControlConstants.climberUpPosition) {
+      this.climber.setClimbing(true);
+    }
   }
 
   @Override

@@ -117,13 +117,28 @@ public class LEDStrip extends SubsystemBase {
           Constants.LEDConstants.PatternConfig.kLEDDisabledScroll,
           Constants.LEDConstants.PatternConfig.kLEDDisabledScrollSpeed);
     }
-    //  else if (RobotContainer.m_climber.isClimbing()) {
-    //   climbProgress();
+    // climbing
+    // else if(RobotContainer.m_climber.isClimbing()){
+    //   rainbowScroll();
     // }
+    // coral loaded
+    else if (RobotContainer.m_endEffector.getCoralDetected()) {
+      solid(Constants.LEDConstants.PatternConfig.kLEDCoralAllignedBlink);
+    }
+    // coral station ready
+    else if (RobotContainer.m_arm.getCoraling()
+        && RobotContainer.bargeTagStatsLimelight.isTagReached()) {
+      blink(
+          Constants.LEDConstants.PatternConfig.kLEDCoralAllignedBlink,
+          Constants.LEDConstants.PatternConfig.kLEDCoralAllignedBlinkSpeed);
+    }
+    // Aligned to barge
     else if (RobotContainer.bargeTagStatsLimelight.isTagReached()) {
       solid(Constants.LEDConstants.PatternConfig.kShooterIsReady);
 
-    } else if (RobotContainer.bargeTagStatsLimelight.isTagDetected()) {
+    }
+    // Tracking April Tag
+    else if (RobotContainer.bargeTagStatsLimelight.isTagDetected()) {
       breathe(
           Constants.LEDConstants.PatternConfig.kAprilTags,
           Constants.LEDConstants.PatternConfig.kAprilTagBlinkSpeed);
