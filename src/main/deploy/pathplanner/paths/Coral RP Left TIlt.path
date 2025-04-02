@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.9517500000000005,
-        "y": 5.8969999999999985
+        "x": 6.317520491803278,
+        "y": 6.7162397540983605
       },
       "isLocked": false,
       "linkedName": "Left Start"
     },
     {
       "anchor": {
-        "x": 5.21625,
-        "y": 5.234
+        "x": 5.11875,
+        "y": 5.265727459016393
       },
       "prevControl": {
-        "x": 5.616,
-        "y": 5.516750000000001
+        "x": 5.332930327868852,
+        "y": 5.896840163934425
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Coral RP",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

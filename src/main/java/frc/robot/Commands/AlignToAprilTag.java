@@ -176,7 +176,7 @@ public class AlignToAprilTag extends Command {
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -128 : 128);
             sideOutput = strafePID.calculate(tx, -0.15);
-            driveOutput = forwardPID.calculate(currentDistance, 1.15);
+            driveOutput = forwardPID.calculate(currentDistance, 1.1);
           } else {
             aprilTagStatsLimelight.setTagDetected(false);
           }
@@ -192,7 +192,7 @@ public class AlignToAprilTag extends Command {
                 rotationPID.calculate(
                     drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -128 : 128);
             sideOutput = strafePID.calculate(tx, -0.15);
-            driveOutput = forwardPID.calculate(currentDistance, 1.15);
+            driveOutput = forwardPID.calculate(currentDistance, 1.1);
           } else if (aprilTagStatsLimelight.getID() == 15) {
             rotationOutput =
                 rotationPID.calculate(
@@ -203,6 +203,9 @@ public class AlignToAprilTag extends Command {
           }
         }
       }
+    }
+    else{
+      
     }
 
     drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);

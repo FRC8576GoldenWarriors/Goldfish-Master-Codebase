@@ -223,8 +223,10 @@ public class Macros {
         new SequentialCommandGroup(
             new GroundIntakeController(groundIntake, 0.23, Constants.GroundIntakeConstants.ControlConstants.algaeInSpeed) // desired angle 0.175 speed: -1
                 .until(() -> groundIntake.getAlgaeDetected()),
-            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0) //0.13
-                );
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, Constants.GroundIntakeConstants.ControlConstants.algaeInSpeed).withTimeout(0.08)
+                ,
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0)
+        );
     return command;
   }
 

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.754,
-        "y": 4.043
+        "x": 5.849999999999999,
+        "y": 4.019006147540983
       },
       "prevControl": {
-        "x": 6.089869735646774,
-        "y": 4.043
+        "x": 6.185869735646773,
+        "y": 4.019006147540983
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Coral RP",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

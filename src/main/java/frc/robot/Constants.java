@@ -304,11 +304,11 @@ public class Constants {
 
       public static final double kS = 0.015;
       public static final double kG = 0.24;
-      public static final double kV = 0.0505;
+      public static final double kV = 0.0515;
       public static final double kA = 0;
 
-      public static final double kP = 35.0; // 30.0;
-      public static final double kI = 0.0;
+      public static final double kP = 38.0; 
+      public static final double kI = 1.0;
       public static final double kD = 0.0;
 
       public static final double storedPosition = 0.03;
@@ -317,9 +317,9 @@ public class Constants {
       public static final double A2Position = 0.41;
       public static final double LolipopPosition = 0.19;
 
-      public static final double coralStationPosition = 0.675;
-      public static final double L1Position = 0.13;
-      public static final double L2Position = 0.20;
+      public static final double coralStationPosition = 0.66;
+      public static final double L1Position = 0.14;
+      public static final double L2Position = 0.21;
       public static final double L3Position = 0.30;
 
       public static final double handoffPosition = 0.735;
@@ -460,15 +460,14 @@ public class Constants {
       public static final double kLEDCoralIntakeBlinkSpeed = 0.075;
 
       // robot idle (no status) - breathing pattern
-      public static final LEDPattern kLEDNoStatusBreathe =
-          LEDPattern.gradient(
-              GradientType.kContinuous, new Color(255, 130, 0), new Color(200, 80, 10));
-      // LEDPattern.gradient(
-      //     GradientType.kContinuous, new Color(255, 200, 0), new Color(255, 255, 200));
+      public static final LEDPattern kLEDNoStatusBreathe = LEDPattern.solid(Color.kRed);
+
       public static final double kLEDNoStatusBreatheSpeed = 25;
 
       // robot disabled - scrolling pattern
-      public static final LEDPattern kLEDDisabledScroll = LEDPattern.solid(Color.kRed);
+      public static final LEDPattern kLEDDisabledScroll =
+          LEDPattern.gradient(
+              GradientType.kContinuous, new Color(255, 130, 0), new Color(200, 80, 10));
 
       public static final double kLEDDisabledScrollSpeed = 2;
       // test

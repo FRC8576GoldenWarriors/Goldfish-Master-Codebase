@@ -15,13 +15,7 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Reset Climber"
-                }
-              },
-              {
-                "type": "sequential",
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
@@ -33,7 +27,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Shooter RP"
+                        "name": "L1 Out"
                       }
                     }
                   ]

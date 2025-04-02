@@ -204,6 +204,8 @@ public class RobotContainer {
                 () -> m_climber.setMotorSpeed(0.0),
                 m_climber));
 
+    driverController.povDown().onTrue(new ArmController(m_arm, 0.25));
+
     
 
       
