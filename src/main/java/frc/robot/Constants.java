@@ -37,7 +37,7 @@ public class Constants {
         public static class DistanceConstants {
 
           public static final double DESIRED_APRIL_TAG_DISTANCE_BARGE =
-              2.7; // MAKE SURE TO TUNE THIS
+              3.0; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
@@ -232,7 +232,7 @@ public class Constants {
     public static final double TELE_DRIVE_MAX_ACCELERATION = 7.5; // 3
     public static final double TELE_DRIVE_MAX_ANGULAR_ACCELERATION = 15; //
 
-    public static final double AUTO_KP_TRANSLATION = 2.4; // 1.15
+    public static final double AUTO_KP_TRANSLATION = 2.6; // 1.15
     public static final double AUTO_KP_ROTATIONAL = 5.5; // 0.07; // 0.1
 
     public static final int ROTATION_CURRENT_LIMIT = 30;
@@ -307,7 +307,7 @@ public class Constants {
       public static final double kV = 0.0515;
       public static final double kA = 0;
 
-      public static final double kP = 38.0; 
+      public static final double kP = 38.0;
       public static final double kI = 1.0;
       public static final double kD = 0.0;
 
@@ -317,7 +317,7 @@ public class Constants {
       public static final double A2Position = 0.41;
       public static final double LolipopPosition = 0.19;
 
-      public static final double coralStationPosition = 0.66;
+      public static final double coralStationPosition = 0.675; // 0.66;
       public static final double L1Position = 0.14;
       public static final double L2Position = 0.21;
       public static final double L3Position = 0.30;
@@ -359,10 +359,10 @@ public class Constants {
       public static final double coralDropSpeed = -0.2;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.49;
+      public static final double pivotEncoderZero = -0.07;//-0.16;
       public static final boolean pivotEncoderIsInverted = true;
 
-      public static final double kP = 28.0; // 16; // 6.5;
+      public static final double kP = 34; // 16; // 6.5;
       public static final double kI = 0;
       public static final double kD = 0.8;
 
@@ -410,7 +410,7 @@ public class Constants {
       public static final double climbUpSpeed = 1.0;
       public static final double climbDownSpeed = -1.0;
 
-      public static final double climberUpPosition = 0.153;
+      public static final double climberUpPosition = 0.156;
 
       public static final double climberEncoderOffset = -0.36;
     }

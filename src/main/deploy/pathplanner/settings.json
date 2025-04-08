@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.889,
-  "robotLength": 0.889,
+  "robotWidth": 0.9017,
+  "robotLength": 0.9017,
   "holonomicMode": true,
   "pathFolders": [
     "Coral RP",
@@ -36,8 +36,8 @@
   "frModuleX": 0.3175,
   "frModuleY": -0.3175,
   "blModuleX": -0.3175,
-  "blModuleY": 0.3175,
-  "brModuleX": -0.3175,
+  "blModuleY": 0.318,
+  "brModuleX": -0.318,
   "brModuleY": -0.3175,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,

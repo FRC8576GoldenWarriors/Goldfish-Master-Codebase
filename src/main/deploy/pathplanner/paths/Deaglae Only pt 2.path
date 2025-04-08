@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0992500000000005,
-        "y": 5.195
+        "x": 4.938934426229508,
+        "y": 5.085911885245901
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.46975,
-        "y": 5.75075
+        "x": 4.858415853311854,
+        "y": 5.528764036292996
       },
       "isLocked": false,
       "linkedName": "Deaglae pt2"
     },
     {
       "anchor": {
-        "x": 6.289,
-        "y": 5.572
+        "x": 5.989,
+        "y": 5.65
       },
       "prevControl": {
-        "x": 5.8305,
-        "y": 5.77025
+        "x": 5.742110655737705,
+        "y": 5.841137295081967
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Dealgae Only Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 58.782000000000004
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

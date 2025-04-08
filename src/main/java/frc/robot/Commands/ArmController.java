@@ -97,7 +97,7 @@ public class ArmController extends Command {
             Constants.ArmConstants.ControlConstants.kG,
             Constants.ArmConstants.ControlConstants.kV,
             Constants.ArmConstants.ControlConstants.kA);
-    
+
     feedback.setIZone(0.03);
 
     this.setpoint = setpoint;

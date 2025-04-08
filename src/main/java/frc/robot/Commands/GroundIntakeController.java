@@ -5,6 +5,7 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +29,9 @@ public class GroundIntakeController extends Command {
   private double COMOffset;
 
   private TrapezoidProfile.Constraints constraints;
-  private ProfiledPIDController pid;
+  //private ProfiledPIDController pid;
+
+  private PIDController pid;
 
   private ArmFeedforward feedforward;
 
@@ -40,12 +43,18 @@ public class GroundIntakeController extends Command {
     this.desiredAngle = desiredAngle;
 
     constraints = new TrapezoidProfile.Constraints(3.0, 5.0);
-    pid =
-        new ProfiledPIDController(
-            Constants.GroundIntakeConstants.ControlConstants.kP,
-            Constants.GroundIntakeConstants.ControlConstants.kI,
-            Constants.GroundIntakeConstants.ControlConstants.kD,
-            constraints);
+    // pid =
+    //     new ProfiledPIDController(
+    //         Constants.GroundIntakeConstants.ControlConstants.kP,
+    //         Constants.GroundIntakeConstants.ControlConstants.kI,
+    //         Constants.GroundIntakeConstants.ControlConstants.kD,
+    //         constraints);
+
+    pid = new PIDController(
+      Constants.GroundIntakeConstants.ControlConstants.kP,
+    Constants.GroundIntakeConstants.ControlConstants.kI,
+    Constants.GroundIntakeConstants.ControlConstants.kD);
+
     feedforward =
         new ArmFeedforward(
             Constants.GroundIntakeConstants.ControlConstants.kS,
@@ -58,7 +67,7 @@ public class GroundIntakeController extends Command {
 
     COMOffset = 0.0;
 
-    pid.reset(intake.getEncoderPosition());
+    //pid.reset(intake.getEncoderPosition());
 
     addRequirements(intake);
   }
@@ -77,11 +86,17 @@ public class GroundIntakeController extends Command {
             2.0); // position in radians, 0 is horizontal
     PIDvoltage = -pid.calculate(intake.getEncoderPosition(), desiredAngle);
 
-    voltage = FFvoltage + PIDvoltage;
+    voltage = FFvoltage + PIDvoltage; // change after fix
 
     if (!intake.getEncoder().isConnected()) {
       voltage = 0.0;
     }
+
+    // if(intake.getPivotVelocity()*(intake.getEncoderPosition()-desiredAngle)<0){
+    //   voltage = 0.0;
+    // }
+
+
 
     intake.setPivotVoltage(voltage);
     intake.setRollerSpeed(rollerSpeed);

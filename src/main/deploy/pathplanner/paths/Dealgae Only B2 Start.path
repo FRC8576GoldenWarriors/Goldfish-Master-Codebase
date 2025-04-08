@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.26375,
-        "y": 3.9372499999999997
+        "x": 7.1857500000000005,
+        "y": 4.005
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.5855,
-        "y": 5.604500000000001
+        "x": 7.144672131147541,
+        "y": 5.301690573770491
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.0992500000000005,
-        "y": 5.195
+        "x": 4.938934426229508,
+        "y": 5.085911885245901
       },
       "prevControl": {
-        "x": 5.8987500000000015,
-        "y": 6.51075
+        "x": 5.733159836065573,
+        "y": 5.933602459016392
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 58.782000000000004
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Dealgae Only Paths",

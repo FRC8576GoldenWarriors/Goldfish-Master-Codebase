@@ -56,7 +56,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "Dealgae Part 2"
+                              "name": "Dealgae Part 2 L2"
                             }
                           }
                         ]
@@ -113,10 +113,16 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "Dealgae Part 2"
+                              "name": "Dealgae Part 2 L2"
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 200.0
                       }
                     },
                     {

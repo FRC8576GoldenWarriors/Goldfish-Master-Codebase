@@ -173,6 +173,28 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     return connected;
   }
 
+  public double getDistance() {
+    double focalLength = Constants.VisionConstants.LimelightConstants.FOCAL_LENGTH;
+    double pixelWidth = Constants.VisionConstants.LimelightConstants.PIXEL_WIDTH;
+    double callibrationFactor = 1.2;
+    double realWidth = Constants.VisionConstants.LimelightConstants.REAL_WIDTH;
+    double detectedWidth =
+        realWidth * Math.sqrt(getArea()) / (pixelWidth * focalLength * callibrationFactor);
+
+    double currentDistance =
+        Math.abs(
+            calculateDistance(
+                    focalLength,
+                    realWidth,
+                    detectedWidth) // This is the distance from the camera to the target
+                * 0.0002);
+
+    currentDistance *=
+        Math.cos(Math.toRadians(getTY())); // This is the distance from the bot to what the target's
+    // wall (adjacent side)
+    return currentDistance;
+  }
+
   private void updatePoseDashboard(Pose3d pose) {
     SmartDashboard.putNumber("Limelight/Position/X", pose.getX());
     SmartDashboard.putNumber("Limelight/Position/Y", pose.getY());
@@ -180,6 +202,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight/Rotation/Roll", Math.toDegrees(pose.getRotation().getX()));
     SmartDashboard.putNumber("Limelight/Rotation/Pitch", Math.toDegrees(pose.getRotation().getY()));
     SmartDashboard.putNumber("Limelight/Rotation/Yaw", Math.toDegrees(pose.getRotation().getZ()));
+    SmartDashboard.putNumber("Limelight/Distance", getDistance());
 
     Logger.recordOutput("Limelight/Position/X", pose.getX());
     Logger.recordOutput("Limelight/Position/Y", pose.getY());
@@ -187,6 +210,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     Logger.recordOutput("Limelight/Rotation/Roll", Math.toDegrees(pose.getRotation().getX()));
     Logger.recordOutput("Limelight/Rotation/Pitch", Math.toDegrees(pose.getRotation().getY()));
     Logger.recordOutput("Limelight/Rotation/Yaw", Math.toDegrees(pose.getRotation().getZ()));
+    Logger.recordOutput("Limelight/Distance", getDistance());
   }
 
   private void clearPoseDashboard() {
@@ -246,5 +270,15 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   public void updateLimelightTracking() {
     table.getEntry("camMode").setNumber(0); // Sets the vision processing mode
     table.getEntry("ledMode").setNumber(3); // Forces the LED to stay on always
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Limelight/Distance", getDistance());
+    Logger.recordOutput("Limelight/Distance", getDistance());
+
+
+    SmartDashboard.putBoolean("Tag is Reached",tagIsReached);
+    SmartDashboard.putBoolean("Tag is Detected", tagIsDetected);
   }
 }

@@ -23,13 +23,15 @@ public class GroundIntake extends SubsystemBase {
 
   private DigitalInput algaeSensor;
 
+  private double error;
+
   public GroundIntake() {
     pivotMotor =
         new WarriorSparkMax(
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kBrake,
+            IdleMode.kBrake, 
             30);
 
     rollerMotor =
@@ -50,6 +52,9 @@ public class GroundIntake extends SubsystemBase {
 
     algaeSensor =
         new DigitalInput(Constants.GroundIntakeConstants.HardwareConstants.digitalInputDIO);
+
+    
+
   }
 
   @Override
@@ -76,6 +81,13 @@ public class GroundIntake extends SubsystemBase {
   public void setRollerSpeed(double speed) {
     rollerMotor.set(speed);
   }
+  public void setError(double error){
+    this.error+=error;
+  }
+
+  public double getError(){
+    return error;
+  }
 
   public void setRollerVoltage(double voltage) {
     rollerMotor.setVoltage(voltage);
@@ -91,5 +103,9 @@ public class GroundIntake extends SubsystemBase {
 
   public boolean getAlgaeDetected() {
     return !algaeSensor.get();
+  }
+
+  public double getPivotVelocity(){
+    return pivotMotor.getEncoder().getVelocity();
   }
 }

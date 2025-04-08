@@ -34,13 +34,13 @@ public class ClimberController extends Command {
       motorOutput = 1.0;
 
       Logger.recordOutput("Climber/Climbing Up", true);
-      if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.005) {
+      if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.002) {
         motorOutput = 0.0;
       }
     } else { // pivot going up, robot going down
       motorOutput = -1.0;
       Logger.recordOutput("Climber/Climbing Up", false);
-      if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.005) {
+      if (Math.abs(climber.getEncoderPosition() - climbAngle) < 0.002) {
         motorOutput = 0.0;
       }
     }

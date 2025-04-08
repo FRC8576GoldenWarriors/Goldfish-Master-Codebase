@@ -31,13 +31,13 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Dealgae Only B2 Start"
+                              "pathName": "Dealgae2 B2 1"
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "Dealgae Part 1 A2"
+                              "name": "Dealgae Part 1 A1"
                             }
                           }
                         ]
@@ -50,7 +50,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Deaglae Only pt 2"
+                              "pathName": "Dealgae2 B2 2"
                             }
                           },
                           {
@@ -60,6 +60,12 @@
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 200.0
                       }
                     },
                     {
@@ -113,7 +119,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "Dealgae Part 2"
+                              "name": "Dealgae Part 2 L2"
                             }
                           }
                         ]

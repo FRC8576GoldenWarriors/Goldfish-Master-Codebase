@@ -25,19 +25,25 @@
                 "data": {
                   "commands": [
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.2
+                      }
+                    },
+                    {
                       "type": "parallel",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Dealgae Only B3 Start"
+                              "pathName": "Dealgae2 B2 1"
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "Dealgae Part 1 A2"
+                              "name": "Dealgae Part 1 A1"
                             }
                           }
                         ]
@@ -50,13 +56,13 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Dealgae Only B3 pt 2"
+                              "pathName": "Dealgae2 B2 2"
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "Dealgae Part 2 L2"
+                              "name": "Dealgae Part 2"
                             }
                           }
                         ]
@@ -92,22 +98,9 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "sequential",
+                            "type": "path",
                             "data": {
-                              "commands": [
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "Deaglae Only pt 2"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.3
-                                  }
-                                }
-                              ]
+                              "pathName": "Delagae 2 B2 30"
                             }
                           },
                           {

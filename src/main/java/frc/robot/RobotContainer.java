@@ -1,5 +1,7 @@
 package frc.robot;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.XboxController;
@@ -15,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Commands.AlignForCorner;
 import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
 import frc.robot.Commands.AutoAlignToAprilTag;
@@ -81,7 +84,7 @@ public class RobotContainer {
       m_arm = new Arm();
       m_groundIntake = new GroundIntake();
       m_climber = new Climber();
-      m_led = new LEDStrip(1, 25);
+      m_led = new LEDStrip(1, 28);
 
     //     m_DriverCamera =
     //         new Camera(Constants.VisionConstants.CameraConstants.DRIVER_CAMERA_NAME, 320, 240,
@@ -102,7 +105,10 @@ public class RobotContainer {
 
       m_drivetrain.setDefaultCommand(new SwerveDrive());
       m_groundIntake.setDefaultCommand(Macros.GROUND_INTAKE_UP(m_groundIntake));
+
       registerNamedCommands();
+
+
     } else if (SimConstants.currentMode.equals(SimConstants.Mode.SIM)) {
       // System.out.println("is sim");
       m_drivetrainSim = DrivetrainSim.getInstance();
@@ -137,42 +143,22 @@ public class RobotContainer {
                           .rightBumper())) // or left and right bumper to allow double binding
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
-        driverController
-            .rightBumper()
-            .or(
+    //shoot
+      driverController
+          .rightBumper()
+          .or(
                 driverController
                     .leftBumper()
                     .and(
                         driverController
                             .rightBumper())) // or left and right bumper to allow double binding
             .whileTrue(
-                new ParallelCommandGroup(
-                    new StartEndCommand(
-                        () -> m_groundIntake.setRollerSpeed(-0.45), // -0.3
-                        () -> m_groundIntake.setRollerSpeed(0),
-                        m_groundIntake),
-                    new StartEndCommand(
-                        () -> m_shintake.setRollersSpeed(0.743, 0.75), // 0.9286, 1.0 // 0.65
-                        () -> m_shintake.setRollersSpeed(0),
-                        m_shintake)));
-
-    //shoot
-      driverController
-          .rightBumper()
-          .whileTrue(
               new ParallelCommandGroup(
                   new ShootRPM(m_shintake, 4400, 5300), //4850. 5300
                   new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
 
-    //shoot second layer
-    driverController
-    .povUp()
-    .whileTrue(
-        new ParallelCommandGroup(
-            new ShootRPM(m_shintake, 4400, 5300),
-            new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
-        
-       
+        driverController.povDown().whileTrue(new AlignForCorner(bargeTagStatsLimelight, m_drivetrain));
+        driverController.povLeft().whileTrue(new ParallelCommandGroup(new ShootRPM(m_shintake, 5000, 5300),new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
 
             
 
@@ -204,7 +190,6 @@ public class RobotContainer {
                 () -> m_climber.setMotorSpeed(0.0),
                 m_climber));
 
-    driverController.povDown().onTrue(new ArmController(m_arm, 0.25));
 
     
 
@@ -226,7 +211,6 @@ public class RobotContainer {
           .onTrue(Macros.A1_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
 
     operatorController.povRight().onTrue(Macros.LOLIPOP_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));
-    
 
       operatorController.x().onTrue(Macros.GROUND_INTAKE_UP(m_groundIntake));
 
@@ -251,6 +235,11 @@ public class RobotContainer {
     operatorController.rightBumper().whileTrue(Macros.GROUND_INTAKE_PROCESSOR(m_groundIntake, m_shintake));
 
 
+    operatorController.back().and(operatorController.leftBumper()).onTrue(new SequentialCommandGroup(
+        new ClimberController(m_climber, 0.02).until(()->Math.abs(m_climber.getEncoderPosition()-0.01)<0.005),
+        new StartEndCommand(()-> m_climber.setMotorSpeed(Constants.ClimberConstants.ControlConstants.climbDownSpeed), ()-> m_climber.setMotorSpeed(0), m_climber)
+        .withTimeout(2.8)
+        ));
     // operatorController
     //       .leftBumper()
     //       .whileTrue(
@@ -264,19 +253,15 @@ public class RobotContainer {
 
     //L1
     operatorController.povUp().onTrue(Macros.CORAL_L1(m_endEffector, m_arm, m_groundIntake));
-
     operatorController.povLeft().whileTrue(Macros.DROP_L1_CORAL(m_endEffector, m_arm, m_groundIntake));
-
     //L2
 
     operatorController.povRight().onTrue(Macros.CORAL_L2(m_endEffector, m_arm, m_groundIntake));
     operatorController.povDown().whileTrue(Macros.DROP_L2_CORAL(m_endEffector, m_arm, m_groundIntake));
-
     //L3
     
     operatorController.leftBumper().and(operatorController.povRight()).onTrue(Macros.CORAL_L3(m_endEffector,m_arm,m_groundIntake));
     operatorController.leftBumper().and(operatorController.povDown()).whileTrue(Macros.DROP_L3_CORAL(m_endEffector,m_arm,m_groundIntake));
-
 
     
   }
@@ -315,45 +300,96 @@ public class RobotContainer {
         "Dealgae Part 2",
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-            new ParallelDeadlineGroup(new WaitCommand(0), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
-            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position ) //TUNE TIMEOUT AS NEEDED
-       ),
-       //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
-       new ParallelCommandGroup(
-            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-            new GroundIntakeController(m_groundIntake, 0.19, 0.0), //TUNE ANGLE
-            new ShootSetSpeeds(m_shintake, -0.3)
-       )
-       .until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
-
-       //HANDOFF AND BEGIN TRANSFER TO HOLD
-        new ParallelCommandGroup(
-            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
-            new SequentialCommandGroup(
-                new WaitCommand(0.0), //TUNE
-                new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
+                new ParallelDeadlineGroup(new WaitCommand(0), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A1Position ) //TUNE TIMEOUT AS NEEDED
+           ),
+           //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
+           new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+                new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0), //TUNE ANGLE
+                new ShootSetSpeeds(m_shintake, -0.3)
+           )
+           .until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
+    
+           //HANDOFF AND BEGIN TRANSFER TO HOLD
+            new ParallelCommandGroup(
+                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+                new SequentialCommandGroup(
+                    new WaitCommand(0.0), //TUNE
+                    new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
+                ),
+                new ShootSetSpeeds(m_shintake, -0.5),
+                new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0)
+            ).until(()->m_groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
+    
+            //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
+            new ParallelCommandGroup(
+                new SequentialCommandGroup( //SAFETY WAIT COMMAND
+                    new WaitCommand(0.3), //TUNE
+                    new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition).until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.storedPosition) <0.01 )
+                ),
+                new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.36), //0.32
+                new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.3).withTimeout(0.44) //TUNE //0.4
             ),
-            new ShootSetSpeeds(m_shintake, -0.5),
-            new GroundIntakeController(m_groundIntake, 0.19, 0.0)
-        ).until(()->m_groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
-
-        //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
-        new ParallelCommandGroup(
-            new SequentialCommandGroup( //SAFETY WAIT COMMAND
-                new WaitCommand(0.3), //TUNE
-                new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition)
+            new ParallelCommandGroup(
+                new SequentialCommandGroup( //SAFETY WAIT COMMAND
+                    new WaitCommand(0.3), //TUNE
+                    new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition).until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.storedPosition) <0.01 )
+                ),
+                new ShootSetSpeeds(m_shintake, -0.3).until(()->!m_shintake.getAlgaeDetected()), //0.39
+                new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.3).until(()->!m_shintake.getAlgaeDetected())
             ),
-            new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.37), //TUNE
-            new GroundIntakeController(m_groundIntake, 0.19, 0.3).withTimeout(0.4) //TUNE
-        ),
-        
-        //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
-        new GroundIntakeController(m_groundIntake, 0.18, 0)
-        )   
-        .withTimeout(3.5) //TUNE LATER
-    );
+            
+            //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
+            new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0).withTimeout(0.2) //TUNE LATER
+    ));
     // .withTimeout(5.0)); // tune timeouts
 
+    NamedCommands.registerCommand("Dealgae Part 2 L2", new SequentialCommandGroup(new ParallelRaceGroup(
+        new ParallelDeadlineGroup(new WaitCommand(0), new EndEffectorController(m_endEffector,  Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed)),
+        new ArmController(m_arm, Constants.ArmConstants.ControlConstants.A2Position ) //TUNE TIMEOUT AS NEEDED
+   ),
+   //HANDOFF ANGLE AND GROUND INTAKE OUT PREP
+   new ParallelCommandGroup(
+        new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+        new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0), //TUNE ANGLE
+        new ShootSetSpeeds(m_shintake, -0.3)
+   )
+   .until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.handoffPosition) <0.01 ), //WHEN ARM IN ERROR, CONTINUE ON
+
+   //HANDOFF AND BEGIN TRANSFER TO HOLD
+    new ParallelCommandGroup(
+        new ArmController(m_arm, Constants.ArmConstants.ControlConstants.handoffPosition),
+        new SequentialCommandGroup(
+            new WaitCommand(0.0), //TUNE
+            new EndEffectorController(m_endEffector, Constants.EndEffectorConstants.ControlConstants.pincherAlgaeSpeed) //SMALL DELAY TO ENSURE FF INITIALIZES Constants.EndEffectorConstants.ControlConstants.pincherInSpeed
+        ),
+        new ShootSetSpeeds(m_shintake, -0.5),
+        new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.0)
+    ).until(()->m_groundIntake.getAlgaeDetected()), //MOVES ON WHEN IN FIRST PART OF HOLD
+
+    //CONTINUE TO MOVE BALL THROUGH TO INTAKE HOLD
+    new ParallelCommandGroup(
+        new SequentialCommandGroup( //SAFETY WAIT COMMAND
+            new WaitCommand(0.3), //TUNE
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition).until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.storedPosition) <0.01 )
+        ),
+        new ShootSetSpeeds(m_shintake, -0.3).withTimeout(0.44), //0.39
+        new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.3).withTimeout(0.45) //0.4
+    ),
+
+    new ParallelCommandGroup(
+        new SequentialCommandGroup( //SAFETY WAIT COMMAND
+            new WaitCommand(0.3), //TUNE
+            new ArmController(m_arm, Constants.ArmConstants.ControlConstants.storedPosition).until(() -> Math.abs(m_arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.storedPosition) <0.01 )
+        ),
+        new ShootSetSpeeds(m_shintake, -0.3).until(()->!m_shintake.getAlgaeDetected()), //0.39
+        new SequentialCommandGroup(
+        new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.35).until(()->!m_shintake.getAlgaeDetected()),
+        new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0.35).withTimeout(0.1)
+    )),
+    //SHOULD NOT REACH HERE, BUT HOLD POSITION IF ARMCONTROLLER FINISHES FOR SOME REASON
+    new GroundIntakeController(m_groundIntake, Constants.GroundIntakeConstants.ControlConstants.algaeHoldPosition, 0).withTimeout(0.2)));
     NamedCommands.registerCommand(
         "Shoot",
                     new ShootRPM(m_shintake, 4400, 5300)

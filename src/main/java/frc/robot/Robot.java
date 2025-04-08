@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Simulation.SimConstants;
 import java.util.List;
@@ -118,9 +121,66 @@ public class Robot extends LoggedRobot {
       SmartDashboard.putNumber(
           "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
     }
-
+    Logger.recordOutput("Commands/Reset Heading", RobotContainer.driverController.start().getAsBoolean());
     Logger.recordOutput(
-        "Shoot Button", RobotContainer.driverController.getHID().getRightBumperButtonPressed());
+        "Commands/Auto Allign",
+        RobotContainer.driverController.leftBumper().getAsBoolean()
+            || (RobotContainer.driverController.leftBumper().getAsBoolean()
+                && RobotContainer.driverController.rightBumper().getAsBoolean()));
+    Logger.recordOutput(
+        "Commands/Shoot",
+        RobotContainer.driverController.rightBumper().getAsBoolean()
+            || (RobotContainer.driverController.rightBumper().getAsBoolean()
+                && RobotContainer.driverController.leftBumper().getAsBoolean()));
+    Logger.recordOutput(
+        "Commands/Auto Allign Corner", RobotContainer.driverController.povDown().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Reef Shot", RobotContainer.driverController.povLeft().getAsBoolean());
+    Logger.recordOutput("Commands/Climb Up", RobotContainer.driverController.y().getAsBoolean());
+    Logger.recordOutput("Commands/Climb Down", RobotContainer.driverController.b().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Manual Climb Up", RobotContainer.driverController.x().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Manual Climb Down", RobotContainer.driverController.a().getAsBoolean());
+
+    Logger.recordOutput("Commands/A2 Macro", RobotContainer.operatorController.y().getAsBoolean());
+    Logger.recordOutput("Commands/A1 Macro", RobotContainer.operatorController.b().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Intake Up Macro", RobotContainer.operatorController.x().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Ground Intake Macro", RobotContainer.operatorController.a().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Processor", RobotContainer.operatorController.rightBumper().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Kill Macro", RobotContainer.operatorController.start().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Lolipop Macro", RobotContainer.operatorController.povRight().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Coral L1 Macro", RobotContainer.operatorController.povUp().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Drop L1", RobotContainer.operatorController.povLeft().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Coral L2 Macro", RobotContainer.operatorController.povLeft().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Drop L2", RobotContainer.operatorController.povDown().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Coral L3 Macro",
+        RobotContainer.operatorController.leftBumper().getAsBoolean()
+            && RobotContainer.operatorController.povRight().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Drop L3",
+        RobotContainer.operatorController.leftBumper().getAsBoolean()
+            && RobotContainer.operatorController.povDown().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Unslack Climb", RobotContainer.operatorController.back().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Climber Unslack",
+        RobotContainer.operatorController.back().getAsBoolean()
+            && RobotContainer.operatorController.leftBumper().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Lolipop Macro",
+        RobotContainer.operatorController.a().getAsBoolean()
+            && RobotContainer.operatorController.leftBumper().getAsBoolean());
   }
 
   @Override

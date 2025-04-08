@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.031000000000001,
-        "y": 2.855
+        "x": 4.9868852459016395,
+        "y": 3.036014344262295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.2205,
-        "y": 1.8214999999999992
+        "x": 6.634635245901639,
+        "y": 0.6862643442622947
       },
       "isLocked": false,
       "linkedName": "Dealgae B3"
     },
     {
       "anchor": {
-        "x": 6.289,
-        "y": 5.3
+        "x": 5.989,
+        "y": 5.1
       },
       "prevControl": {
-        "x": 6.6885,
-        "y": 5.18525
+        "x": 8.289750000000002,
+        "y": 5.29725
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Dealgae B3 3"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

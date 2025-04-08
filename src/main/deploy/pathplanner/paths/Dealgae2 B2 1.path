@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.989,
-        "y": 5.65
+        "x": 7.264549180327867,
+        "y": 4.00701844262295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.569500000000001,
-        "y": 6.247000000000001
+        "x": 6.653176229508197,
+        "y": 3.9950307377049183
       },
       "isLocked": false,
-      "linkedName": "Dealgae B1 2"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.938934426229508,
-        "y": 5.085911885245901
+        "x": 5.909938524590164,
+        "y": 4.019006147540983
       },
       "prevControl": {
-        "x": 5.1351551176128645,
-        "y": 5.240822957390656
+        "x": 6.305532786885246,
+        "y": 4.00701844262295
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Deaglae pt2"
+      "linkedName": "Dealgae B2 1"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 3.75,
     "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Dealgae Only Paths",
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

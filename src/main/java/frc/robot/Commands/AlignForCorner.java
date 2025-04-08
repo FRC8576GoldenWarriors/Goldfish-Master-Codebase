@@ -13,7 +13,7 @@ import org.littletonrobotics.junction.Logger;
 
 // import frc.robot.subsystems.Limelight.SpeakerAllignment;
 
-public class AlignToAprilTag extends Command {
+public class AlignForCorner extends Command {
   // private final SpeakerAllignment speakerAllignment;
   private AprilTagStatsLimelight aprilTagStatsLimelight;
   private Drivetrain drivetrain;
@@ -41,7 +41,7 @@ public class AlignToAprilTag extends Command {
 
   private double goalDistance;
 
-  public AlignToAprilTag(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
+  public AlignForCorner(AprilTagStatsLimelight aprilTagStatsLimelight, Drivetrain drivetrain) {
     this.aprilTagStatsLimelight = aprilTagStatsLimelight;
     this.drivetrain = drivetrain;
 
@@ -138,12 +138,7 @@ public class AlignToAprilTag extends Command {
       SmartDashboard.putBoolean("Is Running", true);
       Logger.recordOutput("Limelight/Is Running", true);
 
-      goalDistance =
-          aprilTagStatsLimelight.isBargeLimelight()
-              ? Constants.VisionConstants.LimelightConstants.BargeLimelightConstants
-                  .DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_BARGE
-              : Constants.VisionConstants.LimelightConstants.ReefLimelightConstants
-                  .DistanceConstants.DESIRED_APRIL_TAG_DISTANCE_REEF;
+      goalDistance = 3.58;
 
       // if(rotationOutput<0){
       //     rotationOutput+=(-0.04);
@@ -165,18 +160,8 @@ public class AlignToAprilTag extends Command {
 
           // barge alignment
           if (aprilTagStatsLimelight.getID() == 14) {
-            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
-          } else if (aprilTagStatsLimelight.getID() == 4) {
-            rotationOutput =
-                rotationPID.calculate(
-                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
-            sideOutput = -sideOutput;
-          } else if (aprilTagStatsLimelight.getID() == 12 || aprilTagStatsLimelight.getID() == 13) {
-            rotationOutput =
-                rotationPID.calculate(
-                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -128 : 128);
-            sideOutput = strafePID.calculate(tx, -0.15);
-            driveOutput = forwardPID.calculate(currentDistance, 1.1);
+            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 24);
+            sideOutput = strafePID.calculate(ty, -11.1);
           } else {
             aprilTagStatsLimelight.setTagDetected(false);
           }
@@ -186,30 +171,12 @@ public class AlignToAprilTag extends Command {
         else {
 
           if (aprilTagStatsLimelight.getID() == 5) {
-            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 0);
-          } else if (aprilTagStatsLimelight.getID() == 1 || aprilTagStatsLimelight.getID() == 2) {
-            rotationOutput =
-                rotationPID.calculate(
-                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -128 : 128);
-            sideOutput = strafePID.calculate(tx, -0.15);
-            driveOutput = forwardPID.calculate(currentDistance, 1.1);
-          } else if (aprilTagStatsLimelight.getID() == 15) {
-            rotationOutput =
-                rotationPID.calculate(
-                    drivetrain.getHeading(), drivetrain.getHeading() < 0 ? -180 : 180);
-            sideOutput = -sideOutput;
+            rotationOutput = rotationPID.calculate(drivetrain.getHeading(), 24);
+            sideOutput = strafePID.calculate(ty, -11.1);
           } else {
             aprilTagStatsLimelight.setTagDetected(false);
           }
         }
-        if (rotationPID.getPositionError()
-        < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR * 1.05
-        && forwardPID.getPositionError()
-        < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR * 1.05) {
-           aprilTagStatsLimelight.setTagReached(true);
-}       else {
-          aprilTagStatsLimelight.setTagReached(false);
-}
       }
     } else {
       aprilTagStatsLimelight.setTagDetected(false);
@@ -218,7 +185,14 @@ public class AlignToAprilTag extends Command {
 
     drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
-
+    if (rotationPID.getPositionError()
+            < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR * 1.05
+        && forwardPID.getPositionError()
+            < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR * 1.05) {
+      aprilTagStatsLimelight.setTagReached(true);
+    } else {
+      aprilTagStatsLimelight.setTagReached(false);
+    }
 
     SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
     SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
