@@ -53,12 +53,12 @@ public class Constants {
         public static class DistanceConstants {
 
           public static final double DESIRED_APRIL_TAG_DISTANCE_REEF =
-              0.6; // MAKE SURE TO TUNE THIS
+              0.01; // MAKE SURE TO TUNE THIS
         }
 
         public static class DimensionConstants {
           public static final double CAMERA_HEIGHT = Units.inchesToMeters(23); // In inches
-          public static final double CAMERA_PITCH = -45; // In degrees
+          public static final double CAMERA_PITCH = -55; // In degrees
         }
       }
     }
@@ -199,13 +199,13 @@ public class Constants {
 
     public static double PRACTICE_LEFT_FRONT_OFFSET = 0.377930;
     public static double PRACTICE_RIGHT_FRONT_OFFSET = 0.094727;
-    public static double PRACTICE_LEFT_BACK_OFFSET = 0.161377;
+    public static double PRACTICE_LEFT_BACK_OFFSET = -0.084229;//0.161377;
     public static double PRACTICE_RIGHT_BACK_OFFSET = 0.274658;
 
     public static boolean PRACTICE_LEFT_FRONT_DRIVE_INVERTED = true;
     public static boolean PRACTICE_RIGHT_FRONT_DRIVE_INVERTED = false;
     public static boolean PRACTICE_RIGHT_BACK_DRIVE_INVERTED = false;
-    public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = true;
+    public static boolean PRACTICE_LEFT_BACK_DRIVE_INVERTED = false;//true;
 
     public static boolean PRACTICE_LEFT_FRONT_TURN_INVERTED = true;
     public static boolean PRACTICE_RIGHT_FRONT_TURN_INVERTED = true;
@@ -355,6 +355,8 @@ public class Constants {
 
       public static final double algaeInSpeed = -1.0;
       public static final double algaeOutSpeed = 1.0;
+      public static final double algaeHoldSpeed = 0.6;
+      public static final double algaeHoldSpeedLower = 0.05;
 
       public static final double coralDropSpeed = -0.2;
 

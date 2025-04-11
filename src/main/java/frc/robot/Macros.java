@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Commands.ArmController;
 import frc.robot.Commands.EndEffectorController;
 import frc.robot.Commands.GroundIntakeController;
+import frc.robot.Commands.ShootRPM;
 import frc.robot.Commands.ShootSetSpeeds;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Subsystems.EndEffector;
@@ -316,6 +317,17 @@ public class Macros {
             new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0.0)
                 );
           
+    return command;
+  }
+  public static SequentialCommandGroup SHOOT_MACRO(GroundIntake groundIntake,Shintake shintake){
+    SequentialCommandGroup command = 
+    new SequentialCommandGroup(
+    new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeed).withTimeout(0.15),
+    new ParallelCommandGroup(
+    new ShootRPM(shintake, 4400, 5300),
+    new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeedLower).until(()->shintake.getLowerRollerRevved())),
+    new GroundIntakeController(groundIntake,.23,-1.0)
+    );
     return command;
   }
 

@@ -133,6 +133,10 @@ public class Shintake extends SubsystemBase {
         / 2.0;
   }
 
+  public boolean getLowerRollerRevved(){
+    return lowerRollerMotor.getEncoder().getVelocity()>2500;
+  }
+
   public WarriorSparkMax getUpperRollerMotor() {
     return upperRollerMotor;
   }
