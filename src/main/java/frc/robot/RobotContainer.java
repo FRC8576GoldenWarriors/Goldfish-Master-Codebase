@@ -135,31 +135,28 @@ public class RobotContainer {
     // driverController.leftBumper().whileTrue(new AlignToReef(reefTagStatsLimelight, m_drivetrain));
       // Driver controller
 
-      driverController.leftBumper().onTrue(Macros.SHOOT_MACRO(m_groundIntake, m_shintake));
-    //   driverController
-    //       .leftBumper()
-    //       .or(
-    //           driverController
-    //               .leftBumper()
-    //               .and(
-    //                   driverController
-    //                       .rightBumper())) // or left and right bumper to allow double binding
-    //       .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
+     // driverController.leftBumper().onTrue(Macros.SHOOT_MACRO(m_groundIntake, m_shintake));
+      driverController
+          .leftBumper()
+          .or(
+              driverController
+                  .leftBumper()
+                  .and(
+                      driverController
+                          .rightBumper())) // or left and right bumper to allow double binding
+          .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
-    // //shoot
-    //   driverController
-    //       .rightBumper()
-    //       .or(
-    //             driverController
-    //                 .leftBumper()
-    //                 .and(
-    //                     driverController
-    //                         .rightBumper())) // or left and right bumper to allow double binding
-    //         .whileTrue(
-    //             new SequentialCommandGroup(
-    //             new ParallelCommandGroup(
-    //               new ShootRPM(m_shintake, 4400, 5300)), //4850. 5300
-    //               new GroundIntakeController(m_groundIntake, 0.13, -0.45)));
+    //shoot
+      driverController
+          .rightBumper()
+          .or(
+                driverController
+                    .leftBumper()
+                    .and(
+                        driverController
+                            .rightBumper())) // or left and right bumper to allow double binding
+            .onTrue(
+                Macros.SHOOT_MACRO(m_groundIntake, m_shintake));
 
         driverController.povDown().whileTrue(new AlignForCorner(bargeTagStatsLimelight, m_drivetrain));
         driverController.povLeft().whileTrue(new ParallelCommandGroup(new ShootRPM(m_shintake, 5000, 5300),new GroundIntakeController(m_groundIntake, 0.13, -0.45)));

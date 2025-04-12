@@ -317,7 +317,7 @@ public class Constants {
       public static final double A2Position = 0.41;
       public static final double LolipopPosition = 0.19;
 
-      public static final double coralStationPosition = 0.675; // 0.66;
+      public static final double coralStationPosition = 0.65;//0.675; // 0.66;
       public static final double L1Position = 0.14;
       public static final double L2Position = 0.21;
       public static final double L3Position = 0.30;

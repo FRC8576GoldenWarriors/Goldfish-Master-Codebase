@@ -322,11 +322,13 @@ public class Macros {
   public static SequentialCommandGroup SHOOT_MACRO(GroundIntake groundIntake,Shintake shintake){
     SequentialCommandGroup command = 
     new SequentialCommandGroup(
-    new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeed).withTimeout(0.15),
-    new ParallelCommandGroup(
-    new ShootRPM(shintake, 4400, 5300),
+    new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeed).withTimeout(.1),//1.5
+    new ParallelRaceGroup(
+    new ShootRPM(shintake, 4000, 5000),
     new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeedLower).until(()->shintake.getLowerRollerRevved())),
-    new GroundIntakeController(groundIntake,.23,-1.0)
+    new ParallelRaceGroup(
+    new GroundIntakeController(groundIntake,.23,-.2).withTimeout(2),
+    new ShootRPM(shintake,4400,5300).withTimeout(2))
     );
     return command;
   }
