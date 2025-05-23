@@ -1,16 +1,26 @@
 package frc.robot.Subsystems.Limelight;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.Subsystems.Drivetrain;
 import org.littletonrobotics.junction.Logger;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AprilTagStatsLimelight extends SubsystemBase {
 
@@ -19,8 +29,13 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   private final String networkTableKey;
   private final String limelightName;
 
+  private double timeStamp;
+  private double lastTimeStamp;
+  private NetworkTableEntry jsonDumpNetworkTableEntry;
   private boolean tagIsDetected;
   private boolean tagIsReached;
+  private double time;
+  private StructPublisher<Pose2d> m_pose;
 
   public AprilTagStatsLimelight(String networkTableKey) {
     this.drivetrain = Drivetrain.getInstance();
@@ -29,10 +44,30 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     this.table =
         NetworkTableInstance.getDefault()
             .getTable(networkTableKey); // "limelight-reef"; // "limelight-processor";
+    m_pose =
+    NetworkTableInstance.getDefault()
+        .getTable("Goldfish")
+        .getStructTopic("Vision Pose", Pose2d.struct)
+        .publish();
     // configureAliance();
-
+    setLimelightPose(networkTableKey, 
+    (networkTableKey.equals(Constants.VisionConstants.LimelightConstants.ReefLimelightConstants.REEF_NETWORKTABLE_KEY)) ? Constants.VisionConstants.LimelightConstants.BargeLimelightConstants.DimensionConstants.BARGELIMELIGHTPOSE : new Pose3d());
+    jsonDumpNetworkTableEntry = table.getEntry("json");
+    lastTimeStamp = 0;
     tagIsReached = false;
     tagIsDetected = false;
+  }
+
+  public void setLimelightPose(String networkTableKey, Pose3d limelightPose) {
+    LimelightHelpers.setCameraPose_RobotSpace(
+      networkTableKey, 
+      limelightPose.getX(), 
+      limelightPose.getY(), 
+      limelightPose.getZ(), 
+      Units.radiansToDegrees(limelightPose.getRotation().getX()), 
+      Units.radiansToDegrees(limelightPose.getRotation().getY()), 
+      Units.radiansToDegrees(limelightPose.getRotation().getZ())
+    );
   }
 
   public void updateStats() {
@@ -75,7 +110,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
   }
 
   public Pose3d getBotPose() {
-    double[] botpose = table.getEntry("botpose").getDoubleArray(new double[6]);
+    double[] botpose = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);
     if (botpose.length < 6) {
       return null;
     }
@@ -85,6 +120,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
         botpose[2],
         new Rotation3d(
             Math.toRadians(botpose[3]), Math.toRadians(botpose[4]), Math.toRadians(botpose[5])));
+    
   }
 
   private double getEntryValue(String entryName) {
@@ -274,7 +310,16 @@ public class AprilTagStatsLimelight extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    timeStamp = Timer.getTimestamp();
+
+    Pose2d visionPose2d = getBotPose().toPose2d();
+    if(visionPose2d.getX() != 0 && visionPose2d.getY() != 0 && visionPose2d.getRotation().getDegrees() != 0) {
+      m_pose.set(visionPose2d);
+      drivetrain.addVisionPose(getBotPose().toPose2d(), timeStamp);
+    }
     SmartDashboard.putNumber("Limelight/Distance", getDistance());
+    SmartDashboard.putBoolean("Limelight/Can see tag", this.hasValidTargets());
     Logger.recordOutput("Limelight/Distance", getDistance());
 
 

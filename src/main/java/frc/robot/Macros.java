@@ -324,7 +324,7 @@ public class Macros {
     new SequentialCommandGroup(
     new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeed).withTimeout(.1),//1.5
     new ParallelRaceGroup(
-    new ShootRPM(shintake, 4000, 5000),
+    new ShootRPM(shintake, 4400, 5300),
     new GroundIntakeController(groundIntake, .23, Constants.GroundIntakeConstants.ControlConstants.algaeHoldSpeedLower).until(()->shintake.getLowerRollerRevved())),
     new ParallelRaceGroup(
     new GroundIntakeController(groundIntake,.23,-.2).withTimeout(2),

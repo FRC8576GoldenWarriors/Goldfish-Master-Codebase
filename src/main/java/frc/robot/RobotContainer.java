@@ -147,6 +147,17 @@ public class RobotContainer {
           .whileTrue(new AlignToAprilTag(bargeTagStatsLimelight, m_drivetrain));
 
     //shoot
+
+    // driverController
+    //       .rightBumper()
+    //       .or(
+    //             driverController
+    //                 .leftBumper()
+    //                 .and(
+    //                     driverController
+    //                         .rightBumper())) // or left and right bumper to allow double binding
+    //         .whileTrue(
+    //             new ShootRPM(m_shintake, 4400, 5300));
       driverController
           .rightBumper()
           .or(
@@ -192,7 +203,12 @@ public class RobotContainer {
                 m_climber));
 
 
-    
+    driverController
+        .povRight()
+        .whileTrue(
+            new AlignToReef(
+                reefTagStatsLimelight,
+                m_drivetrain));
 
       
 

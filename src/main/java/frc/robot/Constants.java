@@ -2,7 +2,11 @@ package frc.robot;
 
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -43,6 +47,16 @@ public class Constants {
         public static class DimensionConstants {
           public static final double CAMERA_HEIGHT = Units.inchesToMeters(28); // In inches
           public static final double CAMERA_PITCH = 29.4; // In degrees
+          public static final Pose3d BARGELIMELIGHTPOSE = new Pose3d(
+            new Translation3d(
+              -Units.inchesToMeters(10),
+              Units.inchesToMeters(0), 
+              Units.inchesToMeters(28)), 
+              new Rotation3d(
+                Units.degreesToRadians(0),
+                Units.degreesToRadians(-119),
+                Units.degreesToRadians(-180)
+              ));
         }
       }
 
@@ -256,6 +270,15 @@ public class Constants {
             new Translation2d(WHEEL_BASE / 2, -TRACK_WIDTH / 2),
             new Translation2d(-WHEEL_BASE / 2, TRACK_WIDTH / 2),
             new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2));
+
+    public static final double odometryXStateDev = 1;
+    public static final double odometryYStateDev = 1;
+    public static final double odometryZStateDev = .01;
+
+    public static final double visionXStateDev = 8;
+    public static final double visionYStateDev = 8;
+    public static final double visionZStateDev = 3;
+    
   }
 
   public static final class CoralRollerConstants {

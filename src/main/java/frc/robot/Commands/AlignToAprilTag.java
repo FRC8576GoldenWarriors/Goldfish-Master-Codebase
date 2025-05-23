@@ -82,6 +82,7 @@ public class AlignToAprilTag extends Command {
     // Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
     // forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
+
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
 
@@ -218,7 +219,7 @@ public class AlignToAprilTag extends Command {
 
     drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
 
-
+    
 
     SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
     SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
@@ -254,6 +255,6 @@ public class AlignToAprilTag extends Command {
     //   drivetrain.stopModules();
     //   return true;
     // }
-    return false;
+    return !aprilTagStatsLimelight.hasValidTargets();
   }
 }

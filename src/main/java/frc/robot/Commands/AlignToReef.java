@@ -82,6 +82,7 @@ public class AlignToReef extends Command {
     // Constants.SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION));
     // forwardPID.setTolerance(Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR);
 
+
     addRequirements(aprilTagStatsLimelight, drivetrain);
   }
 
@@ -205,8 +206,8 @@ public class AlignToReef extends Command {
         aprilTagStatsLimelight.setTagReached(false);
         }
 
-    SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
-    SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);
+    SmartDashboard.putNumber("Reef/Vision PID Drive output", driveOutput);
+    SmartDashboard.putNumber("Reef/Vision PID Rotate output", rotationOutput);
     SmartDashboard.putNumber("Abs rotation", Math.abs(drivetrain.getHeading()));
     SmartDashboard.putNumber("Side distance", goalDistance * Math.tan(Math.toRadians(tx)));
     SmartDashboard.putNumber("Tag distance", currentDistance);
