@@ -7,16 +7,32 @@ package frc.robot.Subsystems;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism;
 import frc.lib.drivers.WarriorSparkMax;
 import frc.robot.Constants;
+
+import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
+import static edu.wpi.first.units.Units.Rotation;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volt;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Arm extends SubsystemBase {
   /** Creates a new AlgaeArm. */
   private WarriorSparkMax armMotor;
-
+  private SysIdRoutine routine;
   private DutyCycleEncoder armAbsEncoder;
 
   public Arm() {
@@ -29,6 +45,15 @@ public class Arm extends SubsystemBase {
             45);
 
     armAbsEncoder = new DutyCycleEncoder(Constants.ArmConstants.HardwareConstants.armEncoderDIO);
+    routine = new SysIdRoutine(new SysIdRoutine.Config(), new Mechanism(armMotor::setVoltage, log -> {
+                // Record a frame for the shooter motor.
+                log.motor("shooter-wheel")
+                    .voltage(
+                        getVoltage())
+                    .angularPosition(getAngle())
+                    .angularVelocity(getAngularVelocity()
+                        );
+              },this));
   }
 
   @Override
@@ -49,8 +74,18 @@ public class Arm extends SubsystemBase {
     armMotor.set(speed);
   }
 
+  public void readLogs(){
+    
+    Logger.recordOutput("Arm/Arm_Voltage", armMotor.getBusVoltage());
+    Logger.recordOutput("Arm/Arm_Current", armMotor.getOutputCurrent());
+    Logger.recordOutput("Arm/Arm_Encoder_Value", getEncoderPosition());
+    Logger.recordOutput("Arm/Arm_Velocity", getArmVelocity());
+  }
   public SparkMax getMotor() {
     return armMotor;
+  }
+  public Angle getAngle(){
+    return Angle.ofBaseUnits(getArmVelocity(), Rotation);
   }
 
   // radians per second
@@ -62,11 +97,24 @@ public class Arm extends SubsystemBase {
     return armAbsEncoder;
   }
 
+  public AngularVelocity getAngularVelocity(){
+    return AngularVelocity.ofBaseUnits(getArmVelocity(), RotationsPerSecond);
+  }
   public double getEncoderPosition() {
     return armAbsEncoder.get();
   }
 
   public DutyCycleEncoder getEncoder() {
     return armAbsEncoder;
+  }
+   
+  public Voltage getVoltage(){
+    return Voltage.ofBaseUnits(armMotor.getBusVoltage(),Volt);
+  }
+  public Command sysidQualitistic(SysIdRoutine.Direction direction){
+    return routine.quasistatic(direction);
+  }
+  public Command sysidDynamic(SysIdRoutine.Direction direction){
+    return routine.dynamic(direction);
   }
 }
