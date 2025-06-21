@@ -6,7 +6,9 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,8 +24,8 @@ public class ArmController extends Command {
   private DutyCycleEncoder encoder;
 
   private ArmFeedforward feedForward;
-  private PIDController feedback;
-  // private ProfiledPIDController feedback;
+  //private PIDController feedback;
+  private ProfiledPIDController feedback;
 
   private TrapezoidProfile.Constraints constraints;
 
@@ -40,19 +42,19 @@ public class ArmController extends Command {
 
     this.arm = arm;
 
-    constraints = new TrapezoidProfile.Constraints(0.1, 0.1); // 3.0 3.5
+    constraints = new TrapezoidProfile.Constraints(15, 20); //7.5,10 // 3.0 3.5
 
     feedback =
-        // new ProfiledPIDController(
-        //     Constants.ArmConstants.ControlConstants.kP,
-        //     Constants.ArmConstants.ControlConstants.kI,
-        //     Constants.ArmConstants.ControlConstants.kD,
-        //     constraintsP);
-
-        new PIDController(
+        new ProfiledPIDController(
             Constants.ArmConstants.ControlConstants.kP,
             Constants.ArmConstants.ControlConstants.kI,
-            Constants.ArmConstants.ControlConstants.kD);
+            Constants.ArmConstants.ControlConstants.kD,
+            constraints);
+
+        // new PIDController(
+        //     Constants.ArmConstants.ControlConstants.kP,
+        //     Constants.ArmConstants.ControlConstants.kI,
+        //     Constants.ArmConstants.ControlConstants.kD);
 
     feedForward =
         new ArmFeedforward(
@@ -67,7 +69,7 @@ public class ArmController extends Command {
 
     COMOffset = 0.013194;
 
-    // feedback.reset(arm.getEncoderPosition());
+    feedback.reset(arm.getEncoderPosition());
 
     // feedback.setGoal(setpoint);
 
@@ -80,16 +82,16 @@ public class ArmController extends Command {
 
     this.arm = arm;
 
-    constraints = new TrapezoidProfile.Constraints(0.1, 0.1); // 3.0 3.5
+    constraints = new TrapezoidProfile.Constraints(0.5, 1); // 3.0 3.5
 
     feedback =
-        // new ProfiledPIDController(
-        //     Constants.ArmConstants.ControlConstants.kP,
-        //     Constants.ArmConstants.ControlConstants.kI,
-        //     Constants.ArmConstants.ControlConstants.kD,
-        //     constraintsP);
+        new ProfiledPIDController(
+            Constants.ArmConstants.ControlConstants.kP,
+            Constants.ArmConstants.ControlConstants.kI,
+            Constants.ArmConstants.ControlConstants.kD,
+            constraints);
 
-        new PIDController(kP, kI, kD);
+        //new PIDController(kP, kI, kD);
 
     feedForward =
         new ArmFeedforward(
@@ -106,7 +108,7 @@ public class ArmController extends Command {
 
     COMOffset = 0.013194;
 
-    // feedback.reset(arm.getEncoderPosition());
+    feedback.reset(arm.getEncoderPosition());
 
     // feedback.setGoal(setpoint);
     arm.setCoraling(false);
@@ -117,7 +119,9 @@ public class ArmController extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    feedback.reset(arm.getEncoderPosition());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

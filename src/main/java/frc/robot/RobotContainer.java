@@ -258,11 +258,11 @@ public class RobotContainer {
 
     //L1
     operatorController.povUp().onTrue(Macros.CORAL_L1(m_endEffector, m_arm, m_groundIntake));
-    operatorController.povLeft().whileTrue(Macros.DROP_L1_CORAL(m_endEffector, m_arm, m_groundIntake));
+    operatorController.povLeft().onTrue(Macros.DROP_L1_CORAL(m_endEffector, m_arm, m_groundIntake));
     //L2
 
     operatorController.povRight().onTrue(Macros.CORAL_L2(m_endEffector, m_arm, m_groundIntake));
-    operatorController.povDown().whileTrue(Macros.DROP_L2_CORAL(m_endEffector, m_arm, m_groundIntake));
+    operatorController.povDown().onTrue(Macros.DROP_L2_CORAL(m_endEffector, m_arm, m_groundIntake));
     //L3
     
     operatorController.leftBumper().and(operatorController.povRight()).onTrue(Macros.CORAL_L3(m_endEffector,m_arm,m_groundIntake));

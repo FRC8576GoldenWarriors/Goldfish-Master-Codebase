@@ -402,24 +402,24 @@ public class Macros {
 
   public static SequentialCommandGroup DROP_L1_CORAL(EndEffector endEffector, Arm arm, GroundIntake groundIntake){
     SequentialCommandGroup command = new SequentialCommandGroup(
-        new ParallelCommandGroup(
+            new ArmController(arm, Constants.ArmConstants.ControlConstants.L1Position,1.0,0,Constants.ArmConstants.ControlConstants.kD).until(()->Math.abs(arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.L1Position)<0.01),
+            new ParallelCommandGroup(
             new ArmController(arm, Constants.ArmConstants.ControlConstants.L1Position),
             new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0),
-            new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed)
-        )
-    );
+            new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed)).withTimeout(1.5)
+        );
 
     return command;
   }
 
   public static SequentialCommandGroup DROP_L2_CORAL(EndEffector endEffector, Arm arm, GroundIntake groundIntake){
     SequentialCommandGroup command = new SequentialCommandGroup(
-        new ParallelCommandGroup(
-            new ArmController(arm,  Constants.ArmConstants.ControlConstants.L2Position),
-            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, Constants.GroundIntakeConstants.ControlConstants.coralDropSpeed),
-            new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed)
-        )
-    );
+            new ArmController(arm, Constants.ArmConstants.ControlConstants.L2Position,1.0,0,Constants.ArmConstants.ControlConstants.kD).until(()->Math.abs(arm.getEncoderPosition()-Constants.ArmConstants.ControlConstants.L2Position)<0.01),
+            new ParallelCommandGroup(
+            new ArmController(arm, Constants.ArmConstants.ControlConstants.L2Position),
+            new GroundIntakeController(groundIntake, Constants.GroundIntakeConstants.ControlConstants.groundIntakeUpPosition, 0),
+            new EndEffectorController(endEffector, Constants.EndEffectorConstants.ControlConstants.pincherCoralOutSpeed)).withTimeout(1.5)
+        );
 
     return command;
   }
