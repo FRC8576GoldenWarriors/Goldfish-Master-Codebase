@@ -277,8 +277,7 @@ public class AprilTagStatsLimelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight/Distance", getDistance());
     Logger.recordOutput("Limelight/Distance", getDistance());
 
-
-    SmartDashboard.putBoolean("Tag is Reached",tagIsReached);
+    SmartDashboard.putBoolean("Tag is Reached", tagIsReached);
     SmartDashboard.putBoolean("Tag is Detected", tagIsDetected);
   }
 }

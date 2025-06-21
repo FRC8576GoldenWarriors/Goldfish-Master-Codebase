@@ -302,14 +302,14 @@ public class Constants {
 
       public static final boolean motorIsInverted = true;
 
-      public static final double kS = 0.015;
-      public static final double kG = 0.24;
-      public static final double kV = 0.0515;
-      public static final double kA = 0;
+      public static final double kS = 0.020922;//0.015;//0.020922
+      public static final double kG = 0.016366;//0.24;//0.016366
+      public static final double kV = 0.00013576;//0.0515;//0.00013576
+      public static final double kA = 2.928*Math.pow(10,-5);//0;//2.928E-05
 
-      public static final double kP = 38.0;
-      public static final double kI = 1.0;
-      public static final double kD = 0.0;
+      public static final double kP = 40;//0.21344;//38.0;//0.21344
+      public static final double kI = 0;//1.0;
+      public static final double kD = 0.0021014;//0.0;//0.0021014
 
       public static final double storedPosition = 0.03;
 
@@ -359,7 +359,7 @@ public class Constants {
       public static final double coralDropSpeed = -0.2;
 
       public static final double pivotEncoderFullRange = 1.0;
-      public static final double pivotEncoderZero = -0.07;//-0.16;
+      public static final double pivotEncoderZero = -0.07; // -0.16;
       public static final boolean pivotEncoderIsInverted = true;
 
       public static final double kP = 34; // 16; // 6.5;

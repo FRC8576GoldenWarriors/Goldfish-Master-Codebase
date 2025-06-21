@@ -6,7 +6,6 @@ package frc.robot.Commands;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,7 +28,7 @@ public class GroundIntakeController extends Command {
   private double COMOffset;
 
   private TrapezoidProfile.Constraints constraints;
-  //private ProfiledPIDController pid;
+  // private ProfiledPIDController pid;
 
   private PIDController pid;
 
@@ -50,10 +49,11 @@ public class GroundIntakeController extends Command {
     //         Constants.GroundIntakeConstants.ControlConstants.kD,
     //         constraints);
 
-    pid = new PIDController(
-      Constants.GroundIntakeConstants.ControlConstants.kP,
-    Constants.GroundIntakeConstants.ControlConstants.kI,
-    Constants.GroundIntakeConstants.ControlConstants.kD);
+    pid =
+        new PIDController(
+            Constants.GroundIntakeConstants.ControlConstants.kP,
+            Constants.GroundIntakeConstants.ControlConstants.kI,
+            Constants.GroundIntakeConstants.ControlConstants.kD);
 
     feedforward =
         new ArmFeedforward(
@@ -67,7 +67,7 @@ public class GroundIntakeController extends Command {
 
     COMOffset = 0.0;
 
-    //pid.reset(intake.getEncoderPosition());
+    // pid.reset(intake.getEncoderPosition());
 
     addRequirements(intake);
   }
@@ -95,8 +95,6 @@ public class GroundIntakeController extends Command {
     // if(intake.getPivotVelocity()*(intake.getEncoderPosition()-desiredAngle)<0){
     //   voltage = 0.0;
     // }
-
-
 
     intake.setPivotVoltage(voltage);
     intake.setRollerSpeed(rollerSpeed);

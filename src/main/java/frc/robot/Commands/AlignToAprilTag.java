@@ -203,13 +203,13 @@ public class AlignToAprilTag extends Command {
           }
         }
         if (rotationPID.getPositionError()
-        < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR * 1.05
-        && forwardPID.getPositionError()
-        < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR * 1.05) {
-           aprilTagStatsLimelight.setTagReached(true);
-}       else {
+                < Constants.VisionConstants.LimelightConstants.ALLOWED_ANGLE_ERROR * 1.05
+            && forwardPID.getPositionError()
+                < Constants.VisionConstants.LimelightConstants.ALLOWED_DISTANCE_ERROR * 1.05) {
+          aprilTagStatsLimelight.setTagReached(true);
+        } else {
           aprilTagStatsLimelight.setTagReached(false);
-}
+        }
       }
     } else {
       aprilTagStatsLimelight.setTagDetected(false);
@@ -217,8 +217,6 @@ public class AlignToAprilTag extends Command {
     }
 
     drivetrain.drive(new Translation2d(-driveOutput, sideOutput), rotationOutput, false, true);
-
-
 
     SmartDashboard.putNumber("Vision PID Drive output", driveOutput);
     SmartDashboard.putNumber("Vision PID Rotate output", rotationOutput);

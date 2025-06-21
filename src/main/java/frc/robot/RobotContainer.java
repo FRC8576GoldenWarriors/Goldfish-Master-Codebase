@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.AlignForCorner;
 import frc.robot.Commands.AlignToAprilTag;
 import frc.robot.Commands.ArmController;
@@ -202,6 +203,10 @@ public class RobotContainer {
 
       // operator controller
 
+    //   operatorController.x().whileTrue(m_arm.QualID(Direction.kForward));
+    //   operatorController.a().whileTrue(m_arm.QualID(Direction.kReverse));
+    //   operatorController.y().whileTrue(m_arm.DynamicID(Direction.kForward));
+    //   operatorController.b().whileTrue(m_arm.DynamicID(Direction.kReverse));
       operatorController
           .y()
           .onTrue(Macros.A2_DEALGAE_MACRO(m_arm, m_shintake, m_endEffector, m_groundIntake));

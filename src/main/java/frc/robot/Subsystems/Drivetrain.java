@@ -27,11 +27,9 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveConstants;
-
+import frc.robot.RobotContainer;
 import java.util.Stack;
-
 import org.littletonrobotics.junction.Logger;
 
 public class Drivetrain extends SubsystemBase {
@@ -288,9 +286,9 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // RobotContainer.poseEstimator.updateOdometry(getHeadingRotation2d(), getModulePositions());
-    
+
     double yaw = gyro.getYaw().getValueAsDouble();
-    
+
     SmartDashboard.putNumber("Robot Angle", getHeading());
     Logger.recordOutput("Drivetrain/Robot Angle", getHeading());
     field.setRobotPose(getPose2d());
@@ -307,22 +305,22 @@ public class Drivetrain extends SubsystemBase {
 
     gyroStack.push(getHeading());
 
-    if(!RobotContainer.driverController.getHID().getStartButtonPressed()||RobotState.isTeleop()){
-      if(gyroStack.size()>3&&gyro.getResetOccurredChecker().getAsBoolean()){
+    if (!RobotContainer.driverController.getHID().getStartButtonPressed()
+        || RobotState.isTeleop()) {
+      if (gyroStack.size() > 3 && gyro.getResetOccurredChecker().getAsBoolean()) {
         double gyroCurrent = gyroStack.pop();
         double gyroPrev1 = gyroStack.pop();
         double gyroPrev2 = gyroStack.pop();
-        if(Math.abs(gyroCurrent)-Math.abs(gyroPrev1)>50){
+        if (Math.abs(gyroCurrent) - Math.abs(gyroPrev1) > 50) {
           setHeading(gyroPrev1);
           gyroStack.push(gyroPrev2);
           gyroStack.push(gyroPrev1);
-        }
-        else{
+        } else {
           setHeading(gyroPrev2);
           gyroStack.push(gyroPrev2);
         }
       }
-  }
+    }
     // var gyroCurr = gyroStack.pop();
     // if (gyroStack.size() == 3) {
     //   var gyroPrev = gyroStack.pop();
@@ -332,7 +330,6 @@ public class Drivetrain extends SubsystemBase {
     // }
     // gyroStack.push(gyroCurr);
 
-    
     // rates 2 is yaw (XYZ in order )
     /*SmartDashboard.putString("Angular Speed", new DecimalFormat("#.00").format((yaw/ 180)) + "pi rad/s");
     // Logger.recordOutput("Robot Angle", getHeading());

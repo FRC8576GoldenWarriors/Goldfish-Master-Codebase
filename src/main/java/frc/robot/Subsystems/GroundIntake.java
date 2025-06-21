@@ -31,7 +31,7 @@ public class GroundIntake extends SubsystemBase {
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorID,
             MotorType.kBrushless,
             Constants.GroundIntakeConstants.HardwareConstants.pivotMotorIsInverted,
-            IdleMode.kBrake, 
+            IdleMode.kBrake,
             30);
 
     rollerMotor =
@@ -52,9 +52,6 @@ public class GroundIntake extends SubsystemBase {
 
     algaeSensor =
         new DigitalInput(Constants.GroundIntakeConstants.HardwareConstants.digitalInputDIO);
-
-    
-
   }
 
   @Override
@@ -81,11 +78,12 @@ public class GroundIntake extends SubsystemBase {
   public void setRollerSpeed(double speed) {
     rollerMotor.set(speed);
   }
-  public void setError(double error){
-    this.error+=error;
+
+  public void setError(double error) {
+    this.error += error;
   }
 
-  public double getError(){
+  public double getError() {
     return error;
   }
 
@@ -105,7 +103,7 @@ public class GroundIntake extends SubsystemBase {
     return !algaeSensor.get();
   }
 
-  public double getPivotVelocity(){
+  public double getPivotVelocity() {
     return pivotMotor.getEncoder().getVelocity();
   }
 }

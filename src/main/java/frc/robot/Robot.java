@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Commands.GroundIntakeController;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Simulation.SimConstants;
 import java.util.List;
@@ -22,6 +19,7 @@ import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import org.littletonrobotics.urcl.URCL;
 
 public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
@@ -38,6 +36,7 @@ public class Robot extends LoggedRobot {
       Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
       Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
       new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
+      Logger.registerURCL(URCL.startExternal());
     }
     // } else {
     //   setUseTiming(false); // Run as fast as possible
@@ -121,7 +120,8 @@ public class Robot extends LoggedRobot {
       SmartDashboard.putNumber(
           "Ground Intake Abs. Rotation", RobotContainer.m_groundIntake.getEncoderPosition());
     }
-    Logger.recordOutput("Commands/Reset Heading", RobotContainer.driverController.start().getAsBoolean());
+    Logger.recordOutput(
+        "Commands/Reset Heading", RobotContainer.driverController.start().getAsBoolean());
     Logger.recordOutput(
         "Commands/Auto Allign",
         RobotContainer.driverController.leftBumper().getAsBoolean()
